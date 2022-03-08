@@ -143,9 +143,11 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RollerCoaster.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TutoD3d.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RollerCoaster.cpp" />
+    <ClCompile Include="TutoD3d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RollerCoaster.rc" />
