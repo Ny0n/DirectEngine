@@ -34,7 +34,6 @@ repos/Direct-8/.vs/*
 repos/RollerCoaster/Debug
 repos/RollerCoaster/.vs
 repos/Direct-8/Debug
-*.vcxproj
 *.filters
 *.ico
 *.user
