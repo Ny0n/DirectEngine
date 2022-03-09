@@ -14,11 +14,16 @@
 // global declarations
 LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
+LPDIRECT3DVERTEXBUFFER9 v_buffer = NULL;    // the pointer to the vertex buffer
 
 // function prototypes
 void initD3D(HWND hWnd);    // sets up and initializes Direct3D
 void render_frame(void);    // renders a single frame
 void cleanD3D(void);    // closes Direct3D and releases memory
+void init_graphics(void);    // 3D declarations
+
+struct CUSTOMVERTEX { FLOAT X, Y, Z, RHW; DWORD COLOR; };
+#define CUSTOMFVF (D3DFVF_XYZRHW | D3DFVF_DIFFUSE)
 
 // the WindowProc function prototype
 LRESULT CALLBACK WindowProc(HWND hWnd,
@@ -150,6 +155,9 @@ void initD3D(HWND hWnd)
         D3DCREATE_SOFTWARE_VERTEXPROCESSING,
         &d3dpp,
         &d3ddev);
+
+
+    init_graphics();    // call the function to initialize the triangle
 }
 
 // this is the function used to render a single frame
@@ -160,6 +168,15 @@ void render_frame(void)
 
     d3ddev->BeginScene();    // begins the 3D scene
 
+
+        // select which vertex format we are using
+    d3ddev->SetFVF(CUSTOMFVF);
+
+    // select the vertex buffer to display
+    d3ddev->SetStreamSource(0, v_buffer, 0, sizeof(CUSTOMVERTEX));
+
+    // copy the vertex buffer to the back buffer
+    d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
     // do 3D rendering on the back buffer here
 
     d3ddev->EndScene();    // ends the 3D scene
@@ -173,4 +190,40 @@ void cleanD3D(void)
 {
     d3ddev->Release();    // close and release the 3D device
     d3d->Release();    // close and release Direct3D
+}
+
+// this is the function that puts the 3D models into video RAM
+void init_graphics(void)
+{
+    // create the vertices using the CUSTOMVERTEX struct
+    CUSTOMVERTEX vertices[] =
+    {
+        { 40.0f, 560.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), },
+        { 40.0f, 200.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 255, 0), },
+        { 200.0f, 200.0, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 0, 0), },
+    };
+
+    // create the vertices using the CUSTOMVERTEX struct
+    CUSTOMVERTEX vertices2[] =
+    {
+        { 400.0f, 560.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), },
+        { 40.0f, 560.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 255, 0), },
+        { 400.0f, 200.0, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 0, 0), },
+    };
+
+    // create a vertex buffer interface called v_buffer
+    d3ddev->CreateVertexBuffer(3 * sizeof(CUSTOMVERTEX),
+        0,
+        CUSTOMFVF,
+        D3DPOOL_MANAGED,
+        &v_buffer,
+        NULL);
+
+    VOID* pVoid;    // a void pointer
+
+    // lock v_buffer and load the vertices into it
+    v_buffer->Lock(0, 0, (void**)&pVoid, 0);
+    memcpy(pVoid, vertices, sizeof(vertices));
+    memcpy(pVoid, vertices2, sizeof(vertices2));
+    v_buffer->Unlock();
 }
