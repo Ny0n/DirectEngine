@@ -203,13 +203,13 @@ void init_graphics(void)
         { 200.0f, 200.0, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 0, 0), },
     };
 
-    // create the vertices using the CUSTOMVERTEX struct
-    CUSTOMVERTEX vertices2[] =
-    {
-        { 400.0f, 560.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), },
-        { 40.0f, 560.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 255, 0), },
-        { 400.0f, 200.0, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 0, 0), },
-    };
+    //// create the vertices using the CUSTOMVERTEX struct
+    //CUSTOMVERTEX vertices2[] =
+    //{
+    //    { 400.0f, 560.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), },
+    //    { 40.0f, 560.0f, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 255, 0), },
+    //    { 400.0f, 200.0, 0.5f, 1.0f, D3DCOLOR_XRGB(0, 0, 0), },
+    //};
 
     // create a vertex buffer interface called v_buffer
     d3ddev->CreateVertexBuffer(3 * sizeof(CUSTOMVERTEX),
@@ -224,6 +224,6 @@ void init_graphics(void)
     // lock v_buffer and load the vertices into it
     v_buffer->Lock(0, 0, (void**)&pVoid, 0);
     memcpy(pVoid, vertices, sizeof(vertices));
-    memcpy(pVoid, vertices2, sizeof(vertices2));
+    //memcpy(pVoid, vertices2, sizeof(vertices2));
     v_buffer->Unlock();
 }
