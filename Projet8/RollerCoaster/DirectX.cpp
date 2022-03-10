@@ -8,6 +8,8 @@
 #include <thread>
 #include <type_traits>
 
+#include "Profiler.h"
+
 using namespace std;
 using std::chrono::duration_cast;
 using std::chrono::milliseconds;
@@ -18,16 +20,20 @@ using std::chrono::system_clock;
 
 constexpr int TARGET_FPS = 60;
 
+// ************/ Prototypes /************ //
+
+const float targetFrameRate = 1.0f / TARGET_FPS;
+
+Profiler* profiler = new Profiler();
+
 LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
-
-// ************/ Prototypes /************ //
 
 void mainLoop(HWND& hWnd, MSG& msg);
 void update(float runTime, float deltaTime);
 
 void initD3D(HWND hWnd);    // sets up and initializes Direct3D
-void render_frame(float timeSinceStart, float elapsed);    // renders a single frame
+void renderFrame(float timeSinceStart, float elapsed);    // renders a single frame
 void cleanD3D();    // closes Direct3D and releases memory
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam); // the WindowProc function prototype
@@ -53,6 +59,14 @@ float getTimeSinceStart(const long long startTime)
     long long currentMs = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
     currentMs -= startTime;
     return currentMs / 1000.0f;
+}
+
+void displayProfilerData()
+{
+    stringstream ss;
+    ss << "runTime: " << to_string(profiler->runTime) << " FPS: " << to_string(profiler->currentFPS) << " frameRate: " << to_string(profiler->currentFrameRate) << " update: " << to_string(profiler->updateTime);
+    string s = ss.str();
+    println(s);
 }
 
 // ************/ Windows /************ //
@@ -90,7 +104,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         L"WindowClass1",    // name of the window class
         L"Our First Direct3D Program",   // title of the window
         WS_OVERLAPPEDWINDOW,    // window style
-        300,    // x-position of the window
+        600,    // x-position of the window
         300,    // y-position of the window
         800,    // width of the window
         600,    // height of the window
@@ -134,11 +148,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 void mainLoop(HWND& hWnd, MSG& msg)
 {
-	const float frameRate = 1.0f / TARGET_FPS;
-
-    long long start = getStartTime();
-    float last = 0.0f;
-    float current, elapsed;
+    long long startMs = getStartTime();
+    float lastRunTime = 0.0f;
 
     // set up and initialize Direct3D
     initD3D(hWnd);
@@ -160,13 +171,27 @@ void mainLoop(HWND& hWnd, MSG& msg)
 
         // Run game code here
 
-        current = getTimeSinceStart(start);
-        elapsed = current - last;
+        profiler->runTime = getTimeSinceStart(startMs);
+        profiler->currentFrameRate = profiler->runTime - lastRunTime;
 
-        if (elapsed >= frameRate)
+        if (profiler->currentFrameRate >= targetFrameRate)
         {
-            render_frame(current, elapsed);
-            last = current;
+            // new frame
+
+            profiler->currentFPS = 1.0f / profiler->currentFrameRate;
+            lastRunTime = profiler->runTime;
+
+            /*int a = 0;
+            for (int i = 0; i < 100000; i++)
+            {
+                a = i;
+            }*/
+
+            Profiler::timedRunner(profiler->updateTime, renderFrame, profiler->runTime, profiler->currentFrameRate);
+
+            //renderFrame(profiler->runTime, profiler->currentFrameRate);
+
+            displayProfilerData();
         }
     }
 
@@ -198,14 +223,14 @@ void initD3D(HWND hWnd)
 }
 
 // this is the function used to render a single frame
-void render_frame(float timeSinceStart, float elapsed)
+void renderFrame(float timeSinceStart, float elapsed)
 {
     // clear the window to a deep blue
     d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 40, 100), 1.0f, 0);
 
     d3ddev->BeginScene();    // begins the 3D scene
 
-    update(timeSinceStart, elapsed);
+    //update(timeSinceStart, elapsed);
 
     d3ddev->EndScene();    // ends the 3D scene
 
@@ -220,11 +245,18 @@ void cleanD3D()
 }
 
 // ************/ Game /************ //
+long long b = 0;
+void add(int& a)
+{
+    b += a;
+}
 
 void update(float runTime, float deltaTime)
 {
-    stringstream ss;
-    ss << "runTime: " << to_string(runTime) << " deltaTime: " << to_string(deltaTime);
-    string s = ss.str();
-    println(s);
+    //this_thread::sleep_for(milliseconds(10));
+    
+    for (int i = 0; i < 100000; i++)
+    {
+        add(i);
+    }
 }

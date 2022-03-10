@@ -27,6 +27,9 @@
     <ClInclude Include="RollerCoaster.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Profiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX.cpp">
