@@ -29,6 +29,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirectX.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="RollerCoaster.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
