@@ -2,43 +2,66 @@
 #include "framework.h"
 
 #include <iostream>
+#include <string>
+#include <sstream>
 #include <chrono>
+#include <thread>
 #include <type_traits>
 
 using namespace std;
 using std::chrono::duration_cast;
 using std::chrono::milliseconds;
+using std::chrono::seconds;
 using std::chrono::system_clock;
 
-// global declarations
+// ************/ Global declarations /************ //
+
+constexpr int TARGET_FPS = 60;
+
 LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
 
-// function prototypes
-void update(float timeSinceStart, float elapsed);
+// ************/ Prototypes /************ //
+
+void mainLoop(HWND& hWnd, MSG& msg);
+void update(float runTime, float deltaTime);
 
 void initD3D(HWND hWnd);    // sets up and initializes Direct3D
 void render_frame(float timeSinceStart, float elapsed);    // renders a single frame
 void cleanD3D();    // closes Direct3D and releases memory
 
-// the WindowProc function prototype
-LRESULT CALLBACK WindowProc(HWND hWnd,
-    UINT message,
-    WPARAM wParam,
-    LPARAM lParam);
+LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam); // the WindowProc function prototype
 
-float getCurrentTime()
+// ************/ Utils /************ //
+
+void println(string s)
 {
-    long long currentMs = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-    return currentMs * 0.001f;
+    s += "\n";
+    wstring temp(s.begin(), s.end());
+    LPCWSTR lpcwstr = temp.c_str();
+    OutputDebugStringW(lpcwstr);
 }
 
-// the entry point for any Windows program
-int WINAPI WinMain(HINSTANCE hInstance,
-    HINSTANCE hPrevInstance,
-    LPSTR lpCmdLine,
-    int nCmdShow)
+long long getStartTime()
 {
+    long long currentMs = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+    return currentMs;
+}
+
+float getTimeSinceStart(const long long startTime)
+{
+    long long currentMs = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+    currentMs -= startTime;
+    return currentMs / 1000.0f;
+}
+
+// ************/ Windows /************ //
+
+// the entry point for any Windows program
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+    // ** creating the windows class
+
     // this struct holds information for the window class
     WNDCLASSEX wc;
 
@@ -56,6 +79,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
     // register the window class
     RegisterClassEx(&wc);
+
+    // ** creating the window
 
     // the handle for the window, filled by a function
     HWND hWnd;
@@ -77,44 +102,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	// display the window on the screen
     ShowWindow(hWnd, nCmdShow);
 
-    // enter the main loop:
-
-    // set up and initialize Direct3D
-    initD3D(hWnd);
-
-    float start = getCurrentTime();
-    float last = start;
-    float current;
+    // ** entering the main loop:
 
     // this struct holds Windows event messages
     MSG msg;
 
-    // Enter the infinite message loop
-    while (TRUE)
-    {
-        // Check to see if any messages are waiting in the queue
-        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-        {
-            // Translate the message and dispatch it to WindowProc()
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-
-        // If the message is WM_QUIT, exit the while loop
-        if (msg.message == WM_QUIT)
-            break;
-
-        // Run game code here
-
-        current = getCurrentTime();
-
-        render_frame(current - start, current - last);
-
-        last = current;
-    }
-
-    // clean up DirectX and COM
-    cleanD3D();
+    mainLoop(hWnd, msg);
 
     // return this part of the WM_QUIT message to Windows
     return msg.wParam;
@@ -139,9 +132,49 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-/*
- * DirectX
- */
+void mainLoop(HWND& hWnd, MSG& msg)
+{
+	const float frameRate = 1.0f / TARGET_FPS;
+
+    long long start = getStartTime();
+    float last = 0.0f;
+    float current, elapsed;
+
+    // set up and initialize Direct3D
+    initD3D(hWnd);
+
+    // Enter the infinite message loop
+    while (TRUE)
+    {
+        // Check to see if any messages are waiting in the queue
+        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        {
+            // Translate the message and dispatch it to WindowProc()
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+
+        // If the message is WM_QUIT, exit the while loop
+        if (msg.message == WM_QUIT)
+            break;
+
+        // Run game code here
+
+        current = getTimeSinceStart(start);
+        elapsed = current - last;
+
+        if (elapsed >= frameRate)
+        {
+            render_frame(current, elapsed);
+            last = current;
+        }
+    }
+
+    // clean up DirectX and COM
+    cleanD3D();
+}
+
+// ************/ DirectX /************ //
 
 // this function initializes and prepares Direct3D for use
 void initD3D(HWND hWnd)
@@ -186,8 +219,12 @@ void cleanD3D()
     d3d->Release();    // close and release Direct3D
 }
 
-void update(float timeSinceStart, float elapsed)
+// ************/ Game /************ //
+
+void update(float runTime, float deltaTime)
 {
-    // do 3D rendering on the back buffer here
-    cout << "test" << endl;
+    stringstream ss;
+    ss << "runTime: " << to_string(runTime) << " deltaTime: " << to_string(deltaTime);
+    string s = ss.str();
+    println(s);
 }
