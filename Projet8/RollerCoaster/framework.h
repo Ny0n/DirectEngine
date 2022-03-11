@@ -20,3 +20,11 @@
 // include the Direct3D Library file
 #pragma comment (lib, "d3d9.lib")
 
+# pragma comment(lib, "secur32.lib")
+# pragma comment(lib, "winmm.lib")
+# pragma comment(lib, "dmoguids.lib")
+# pragma comment(lib, "wmcodecdspuuid.lib")
+# pragma comment(lib, "msdmo.lib")
+# pragma comment(lib, "Strmiids.lib")
+# pragma comment(lib, "Kernel32.lib")
+

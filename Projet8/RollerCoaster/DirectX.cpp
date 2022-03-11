@@ -1,12 +1,10 @@
 
 #include "framework.h"
 
-#include <iostream>
-#include <string>
 #include <sstream>
 #include <chrono>
 #include <thread>
-#include <type_traits>
+#include <timeapi.h>
 
 #include "Profiler.h"
 
@@ -30,44 +28,15 @@ LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
 
 void mainLoop(HWND& hWnd, MSG& msg);
+void start();
 void update(float runTime, float deltaTime);
 
 void initD3D(HWND hWnd);    // sets up and initializes Direct3D
-void renderFrame(float timeSinceStart, float elapsed);    // renders a single frame
+void startFrame();
+void renderFrame(float timeSinceStart, float elapsed);
 void cleanD3D();    // closes Direct3D and releases memory
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam); // the WindowProc function prototype
-
-// ************/ Utils /************ //
-
-void println(string s)
-{
-    s += "\n";
-    wstring temp(s.begin(), s.end());
-    LPCWSTR lpcwstr = temp.c_str();
-    OutputDebugStringW(lpcwstr);
-}
-
-long long getStartTime()
-{
-    long long currentMs = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-    return currentMs;
-}
-
-float getTimeSinceStart(const long long startTime)
-{
-    long long currentMs = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-    currentMs -= startTime;
-    return currentMs / 1000.0f;
-}
-
-void displayProfilerData()
-{
-    stringstream ss;
-    ss << "runTime: " << to_string(profiler->runTime) << " FPS: " << to_string(profiler->currentFPS) << " frameRate: " << to_string(profiler->currentFrameRate) << " update: " << to_string(profiler->updateTime);
-    string s = ss.str();
-    println(s);
-}
 
 // ************/ Windows /************ //
 
@@ -121,7 +90,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     // this struct holds Windows event messages
     MSG msg;
 
+    // set up and initialize Direct3D
+    initD3D(hWnd);
+
+    profiler->timedRunner(profiler->startTime, startFrame);
     mainLoop(hWnd, msg);
+
+    // clean up DirectX and COM
+    cleanD3D();
 
     // return this part of the WM_QUIT message to Windows
     return msg.wParam;
@@ -148,13 +124,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 void mainLoop(HWND& hWnd, MSG& msg)
 {
-    long long startMs = getStartTime();
-    float lastRunTime = 0.0f, elapsedTime;
-
-    // set up and initialize Direct3D
-    initD3D(hWnd);
-
     // Enter the infinite message loop
+    float lastRunTime = 0.0f, elapsedTime;
     while (TRUE)
     {
         // Check to see if any messages are waiting in the queue
@@ -171,7 +142,7 @@ void mainLoop(HWND& hWnd, MSG& msg)
 
         // Run game code here
 
-        profiler->runTime = getTimeSinceStart(startMs);
+        profiler->runTime = profiler->getSystemTime();
         elapsedTime = profiler->runTime - lastRunTime;
 
         if (elapsedTime >= targetFrameRate) // new frame
@@ -180,14 +151,11 @@ void mainLoop(HWND& hWnd, MSG& msg)
             profiler->currentFPS = 1.0f / elapsedTime;
             lastRunTime = profiler->runTime;
 
-            Profiler::timedRunner(profiler->updateTime, renderFrame, profiler->runTime, profiler->currentFrameRate);
+            profiler->timedRunner(profiler->updateTime, renderFrame, profiler->runTime, profiler->currentFrameRate);
 
-            displayProfilerData();
+            profiler->displayData();
         }
     }
-
-    // clean up DirectX and COM
-    cleanD3D();
 }
 
 // ************/ DirectX /************ //
@@ -213,12 +181,19 @@ void initD3D(HWND hWnd)
         &d3ddev);
 }
 
-// this is the function used to render a single frame
+void startFrame()
+{
+    d3ddev->BeginScene();    // begins the 3D scene
+
+    start();
+
+    d3ddev->EndScene();    // ends the 3D scene
+
+    d3ddev->Present(NULL, NULL, NULL, NULL);    // displays the created frame
+}
+
 void renderFrame(float timeSinceStart, float elapsed)
 {
-    // clear the window to a deep blue
-    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 40, 100), 1.0f, 0);
-
     d3ddev->BeginScene();    // begins the 3D scene
 
     update(timeSinceStart, elapsed);
@@ -243,12 +218,23 @@ void add(int& a)
     b += a;
 }
 
-void update(float runTime, float deltaTime)
+void start()
 {
-    //this_thread::sleep_for(milliseconds(10));
-    
     for (int i = 0; i < 100000; i++)
     {
         add(i);
     }
+}
+
+void update(float runTime, float deltaTime)
+{
+    // clear the window to a deep blue
+    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 40, 100), 1.0f, 0);
+
+    //this_thread::sleep_for(milliseconds(10));
+    
+    /*for (int i = 0; i < 100000; i++)
+    {
+        add(i);
+    }*/
 }

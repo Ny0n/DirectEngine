@@ -1,6 +1,10 @@
 ﻿#pragma once
 
 #include <chrono>
+#include <timeapi.h>
+#include <profileapi.h>
+
+#include "Utils.h"
 
 using namespace std;
 using std::chrono::duration_cast;
@@ -11,16 +15,26 @@ class Profiler {
 
 private:
     template<typename T, typename... Args>
-    static auto timed(float& timeVar, T& func, Args&... args);
+    auto timed(float& timeVar, T& func, Args&... args);
+
+    void initSystemTime();
+
+    float _startTime;
+    bool _isPreciseTime;
+    float _frequency;
+    LONGLONG _startPreciseTime;
 
 public:
-    Profiler() {}
+    Profiler() { initSystemTime(); }
+
+    float getSystemTime();
+    void displayData();
 
     template<typename T, typename... Args>
-    static void* timedRunner(float& timeVar, T& func, Args&... args);
+    void* timedRunner(float& timeVar, T& func, Args&... args);
 
     template<typename T, typename... Args>
-    static auto timedSupplier(float& timeVar, T& func, Args&... args);
+    auto timedSupplier(float& timeVar, T& func, Args&... args);
 
     // *** Profiler Data *** //
 
@@ -29,25 +43,69 @@ public:
     float currentFPS;
     float currentFrameRate;
 
+    float startTime;
     float updateTime;
 
 };
 
 // **************************** //
 
+void Profiler::displayData()
+{
+    stringstream ss;
+    ss << "startTime: " << to_string(startTime) << " runTime: " << to_string(runTime) << " FPS: " << to_string(currentFPS) << " frameRate: " << to_string(currentFrameRate) << " update: " << to_string(updateTime);
+    string s = ss.str();
+    Utils::println(s);
+}
+
+void Profiler::initSystemTime()
+{
+    _startTime = timeGetTime() / 1000.0f;
+    _isPreciseTime = false;
+    _frequency = 0.0f;
+
+    LARGE_INTEGER frequency;
+    memset(&frequency, 0, sizeof(LARGE_INTEGER));
+
+    if (QueryPerformanceFrequency(&frequency) && frequency.QuadPart)
+    {
+        _isPreciseTime = true;
+        _frequency = (float)frequency.QuadPart;
+        LARGE_INTEGER counter;
+        QueryPerformanceCounter(&counter);
+        _startPreciseTime = counter.QuadPart;
+    }
+}
+
+float Profiler::getSystemTime()
+{
+    // Precise
+    if (_isPreciseTime)
+    {
+        LARGE_INTEGER counter;
+        QueryPerformanceCounter(&counter);
+        return (float)(counter.QuadPart - _startPreciseTime) / _frequency;
+    }
+
+    // Classic
+    return (timeGetTime() / 1000.0f) - _startTime;
+}
+
+// **************************** //
+
 template<typename T, typename... Args>
 auto Profiler::timed(float& timeVar, T& func, Args&... args) {
-    long long startMs = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+    float start = getSystemTime();
     // --------------------------------------
 
     auto result = func(args...); // we run the given function
 
     // --------------------------------------
-    long long endMs = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+    float end = getSystemTime();
 
-    long long elapsedMs = endMs - startMs;
+    float elapsed = end - start;
 
-    timeVar = elapsedMs / 1000.0f;
+    timeVar = elapsed;
 
     return result;
 }
