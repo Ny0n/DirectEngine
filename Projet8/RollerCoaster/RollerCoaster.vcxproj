@@ -139,23 +139,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Component.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="MonoBehaviour.h" />
+    <ClInclude Include="MovableCube.h" />
     <ClInclude Include="Profiler.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RollerCoaster.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="DirectX.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="MonoBehaviour.cpp" />
+    <ClCompile Include="MovableCube.cpp" />
     <ClCompile Include="RollerCoaster.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RollerCoaster.rc" />

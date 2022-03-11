@@ -8,7 +8,7 @@ class Utils
 {
 
 public:
-	static void println(std::string s)
+	static void Println(std::string s)
 	{
 		s += "\n";
 		std::wstring temp(s.begin(), s.end());

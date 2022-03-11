@@ -1,15 +1,13 @@
 ﻿#pragma once
 
-#include <chrono>
 #include <timeapi.h>
 #include <profileapi.h>
+#include <string.h>
+#include <sstream>
 
 #include "Utils.h"
 
 using namespace std;
-using std::chrono::duration_cast;
-using std::chrono::milliseconds;
-using std::chrono::system_clock;
 
 class Profiler {
 
@@ -55,7 +53,7 @@ void Profiler::displayData()
     stringstream ss;
     ss << "startTime: " << to_string(startTime) << " runTime: " << to_string(runTime) << " FPS: " << to_string(currentFPS) << " frameRate: " << to_string(currentFrameRate) << " update: " << to_string(updateTime);
     string s = ss.str();
-    Utils::println(s);
+    Utils::Println(s);
 }
 
 void Profiler::initSystemTime()

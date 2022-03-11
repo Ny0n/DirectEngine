@@ -2,34 +2,32 @@
 #include "framework.h"
 
 #include <sstream>
-#include <chrono>
 #include <thread>
 #include <timeapi.h>
 
 #include "Profiler.h"
+#include "Scene.h"
 
 using namespace std;
-using std::chrono::duration_cast;
-using std::chrono::milliseconds;
-using std::chrono::seconds;
-using std::chrono::system_clock;
+
+Profiler* profiler = new Profiler();
+Scene* scene = new Scene();
+
+LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
+LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
 
 // ************/ Global declarations /************ //
 
 constexpr int TARGET_FPS = 60;
+constexpr bool ENABLE_PROFILER = true;
 
 // ************/ Prototypes /************ //
 
 const float targetFrameRate = 1.0f / TARGET_FPS;
 
-Profiler* profiler = new Profiler();
-
-LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
-LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
-
 void mainLoop(HWND& hWnd, MSG& msg);
-void start();
-void update(float runTime, float deltaTime);
+void Start();
+void Update(float runTime, float deltaTime);
 
 void initD3D(HWND hWnd);    // sets up and initializes Direct3D
 void startFrame();
@@ -153,7 +151,8 @@ void mainLoop(HWND& hWnd, MSG& msg)
 
             profiler->timedRunner(profiler->updateTime, renderFrame, profiler->runTime, profiler->currentFrameRate);
 
-            profiler->displayData();
+            if (ENABLE_PROFILER)
+				profiler->displayData();
         }
     }
 }
@@ -185,7 +184,7 @@ void startFrame()
 {
     d3ddev->BeginScene();    // begins the 3D scene
 
-    start();
+    Start();
 
     d3ddev->EndScene();    // ends the 3D scene
 
@@ -196,7 +195,7 @@ void renderFrame(float timeSinceStart, float elapsed)
 {
     d3ddev->BeginScene();    // begins the 3D scene
 
-    update(timeSinceStart, elapsed);
+    Update(timeSinceStart, elapsed);
 
     d3ddev->EndScene();    // ends the 3D scene
 
@@ -218,23 +217,24 @@ void add(int& a)
     b += a;
 }
 
-void start()
+void Start()
 {
-    for (int i = 0; i < 100000; i++)
-    {
-        add(i);
-    }
+	for (GameObject* go : scene->gameObjects)
+	{
+        for (Component* comp : go->components)
+        {
+            comp->Start();
+        }
+	}
 }
 
-void update(float runTime, float deltaTime)
+void Update(float runTime, float deltaTime)
 {
-    // clear the window to a deep blue
-    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 40, 100), 1.0f, 0);
-
-    //this_thread::sleep_for(milliseconds(10));
-    
-    /*for (int i = 0; i < 100000; i++)
+    for (GameObject* go : scene->gameObjects)
     {
-        add(i);
-    }*/
+        for (Component* comp : go->components)
+        {
+            comp->Update(runTime, deltaTime);
+        }
+    }
 }
