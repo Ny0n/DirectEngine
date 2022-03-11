@@ -1,9 +1,6 @@
 ﻿#pragma once
 
-#include <iostream>
-#include <string>
 #include <chrono>
-#include <type_traits>
 
 using namespace std;
 using std::chrono::duration_cast;

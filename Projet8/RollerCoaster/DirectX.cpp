@@ -149,7 +149,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 void mainLoop(HWND& hWnd, MSG& msg)
 {
     long long startMs = getStartTime();
-    float lastRunTime = 0.0f;
+    float lastRunTime = 0.0f, elapsedTime;
 
     // set up and initialize Direct3D
     initD3D(hWnd);
@@ -172,24 +172,15 @@ void mainLoop(HWND& hWnd, MSG& msg)
         // Run game code here
 
         profiler->runTime = getTimeSinceStart(startMs);
-        profiler->currentFrameRate = profiler->runTime - lastRunTime;
+        elapsedTime = profiler->runTime - lastRunTime;
 
-        if (profiler->currentFrameRate >= targetFrameRate)
+        if (elapsedTime >= targetFrameRate) // new frame
         {
-            // new frame
-
-            profiler->currentFPS = 1.0f / profiler->currentFrameRate;
+            profiler->currentFrameRate = elapsedTime;
+            profiler->currentFPS = 1.0f / elapsedTime;
             lastRunTime = profiler->runTime;
 
-            /*int a = 0;
-            for (int i = 0; i < 100000; i++)
-            {
-                a = i;
-            }*/
-
             Profiler::timedRunner(profiler->updateTime, renderFrame, profiler->runTime, profiler->currentFrameRate);
-
-            //renderFrame(profiler->runTime, profiler->currentFrameRate);
 
             displayProfilerData();
         }
@@ -230,7 +221,7 @@ void renderFrame(float timeSinceStart, float elapsed)
 
     d3ddev->BeginScene();    // begins the 3D scene
 
-    //update(timeSinceStart, elapsed);
+    update(timeSinceStart, elapsed);
 
     d3ddev->EndScene();    // ends the 3D scene
 
@@ -245,6 +236,7 @@ void cleanD3D()
 }
 
 // ************/ Game /************ //
+
 long long b = 0;
 void add(int& a)
 {
