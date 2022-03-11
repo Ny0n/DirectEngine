@@ -1,11 +1,15 @@
 ﻿#include "Scene.h"
+#include "Cube.h"
 
 #include "MovableCube.h"
 
 Scene::Scene()
 {
-	GameObject* obj1 = CreateEmpty();
-	obj1->AddComponent(new MovableCube());
+	//GameObject* obj1 = CreateEmpty();
+	//obj1->AddComponent(new MovableCube());
+
+	GameObject* cube = CreateEmpty();
+	cube->AddComponent(new Cube(cube,2.0f));
 }
 
 // **************************** //

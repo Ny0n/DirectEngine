@@ -15,6 +15,8 @@ Scene* scene = new Scene();
 
 LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
+LPDIRECT3DVERTEXBUFFER9 _VBuffer = NULL;
+LPDIRECT3DINDEXBUFFER9 _IBuffer = NULL;
 
 // ************/ Global declarations /************ //
 
@@ -162,15 +164,19 @@ void mainLoop(HWND& hWnd, MSG& msg)
 // this function initializes and prepares Direct3D for use
 void initD3D(HWND hWnd)
 {
-    d3d = Direct3DCreate9(D3D_SDK_VERSION);    // create the Direct3D interface
+    d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
-    D3DPRESENT_PARAMETERS d3dpp;    // create a struct to hold various device information
+    D3DPRESENT_PARAMETERS d3dpp;
 
-    ZeroMemory(&d3dpp, sizeof(d3dpp));    // clear out the struct for use
-    d3dpp.Windowed = TRUE;    // program windowed, not fullscreen
-    d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;    // discard old frames
-    d3dpp.hDeviceWindow = hWnd;    // set the window to be used by Direct3D
-
+    ZeroMemory(&d3dpp, sizeof(d3dpp));
+    d3dpp.Windowed = TRUE;
+    d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+    d3dpp.hDeviceWindow = hWnd;
+    d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
+    d3dpp.BackBufferWidth = SCREEN_WIDTH;
+    d3dpp.BackBufferHeight = SCREEN_HEIGHT;
+    d3dpp.EnableAutoDepthStencil = TRUE;
+    d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
     // create a device class using this information and information from the d3dpp stuct
     d3d->CreateDevice(D3DADAPTER_DEFAULT,
         D3DDEVTYPE_HAL,
@@ -178,6 +184,9 @@ void initD3D(HWND hWnd)
         D3DCREATE_SOFTWARE_VERTEXPROCESSING,
         &d3dpp,
         &d3ddev);
+    d3ddev->SetRenderState(D3DRS_LIGHTING, TRUE);    // turn off the 3D lighting
+    d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(50, 50, 50));    // ambient light
+    d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
 }
 
 void startFrame()
@@ -207,8 +216,30 @@ void cleanD3D()
 {
     d3ddev->Release();    // close and release the 3D device
     d3d->Release();    // close and release Direct3D
+    _VBuffer->Release();    // close and release the vertex buffer
+    _IBuffer->Release();
 }
 
+void initLight(void)
+{
+    D3DLIGHT9 light;    // create the light struct
+    D3DMATERIAL9 material;    // create the material struct
+
+    ZeroMemory(&light, sizeof(light));    // clear out the light struct for use
+    light.Type = D3DLIGHT_DIRECTIONAL;    // make the light type 'directional light'
+    light.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);    // set the light's color
+    light.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);    // set the light's color
+    light.Direction = D3DXVECTOR3(0.0f, -0.3f, 0.0f);
+
+    d3ddev->SetLight(0, &light);    // send the light struct properties to light #0
+    d3ddev->LightEnable(0, TRUE);    // turn on light #0
+
+    ZeroMemory(&material, sizeof(D3DMATERIAL9));    // clear out the struct for use
+    material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set diffuse color to white
+    material.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set ambient color to white
+
+    d3ddev->SetMaterial(&material);    // set the globably-used material to &material
+}
 // ************/ Game /************ //
 
 long long b = 0;
