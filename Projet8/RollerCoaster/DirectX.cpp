@@ -32,6 +32,7 @@ void Start();
 void Update(float runTime, float deltaTime);
 
 void initD3D(HWND hWnd);    // sets up and initializes Direct3D
+void initLight();
 void startFrame();
 void renderFrame(float timeSinceStart, float elapsed);
 void cleanD3D();    // closes Direct3D and releases memory
@@ -58,7 +59,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     wc.hInstance = hInstance;
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-    wc.lpszClassName = L"WindowClass1";
+    wc.lpszClassName = L"WindowClass";
 
     // register the window class
     RegisterClassEx(&wc);
@@ -70,7 +71,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     // create the window and use the result as the handle
     hWnd = CreateWindowEx(NULL,
-        L"WindowClass1",    // name of the window class
+        L"WindowClass",    // name of the window class
         L"Our First Direct3D Program",   // title of the window
         WS_OVERLAPPEDWINDOW,    // window style
         600,    // x-position of the window
@@ -184,6 +185,7 @@ void initD3D(HWND hWnd)
         D3DCREATE_SOFTWARE_VERTEXPROCESSING,
         &d3dpp,
         &d3ddev);
+    initLight();
     d3ddev->SetRenderState(D3DRS_LIGHTING, TRUE);    // turn off the 3D lighting
     d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(50, 50, 50));    // ambient light
     d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
@@ -191,20 +193,25 @@ void initD3D(HWND hWnd)
 
 void startFrame()
 {
-    d3ddev->BeginScene();    // begins the 3D scene
+    //d3ddev->BeginScene();    // begins the 3D scene
 
-    Start();
+    //Start();
+    //d3ddev->EndScene();    // ends the 3D scene
 
-    d3ddev->EndScene();    // ends the 3D scene
-
-    d3ddev->Present(NULL, NULL, NULL, NULL);    // displays the created frame
+    //d3ddev->Present(NULL, NULL, NULL, NULL);    // displays the created frame
 }
 
 void renderFrame(float timeSinceStart, float elapsed)
 {
+    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+    d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
     d3ddev->BeginScene();    // begins the 3D scene
 
     Update(timeSinceStart, elapsed);
+
+    
+ 
+    
 
     d3ddev->EndScene();    // ends the 3D scene
 

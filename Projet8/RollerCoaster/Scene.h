@@ -4,6 +4,8 @@
 
 #include "GameObject.h"
 #include "Component.h"
+#include "Cube.h"
+#include "Camera.h"
 
 class Scene
 {

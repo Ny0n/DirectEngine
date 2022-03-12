@@ -5,7 +5,7 @@
 
 GameObject::GameObject()
 {
-	AddComponent(new Transform());
+	transform =new Transform();
 }
 
 GameObject::~GameObject()
