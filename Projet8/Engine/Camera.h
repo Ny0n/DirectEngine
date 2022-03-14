@@ -6,8 +6,8 @@ class Camera : public Component
 {
 
 public:
-    void Start() override;
-    void Update(float runTime, float deltaTime) override;
- 
-};
+    ComponentType GetType() override { return ComponentType::camera; }
 
+    void Update(float runTime, float deltaTime) override;
+
+};

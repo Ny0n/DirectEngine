@@ -6,9 +6,8 @@ class RainbowBackground : public Component
 {
 
 public:
-	RainbowBackground();
-
-	void Start() override;
+	ComponentType GetType() override { return ComponentType::mono_behaviour; }
+	
 	void Update(float runTime, float deltaTime) override;
 
 };

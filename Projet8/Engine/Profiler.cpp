@@ -12,7 +12,7 @@ Profiler::Profiler()
 void Profiler::DisplayData()
 {
     stringstream ss;
-    ss << "startTime: " << to_string(startTime) << " runTime: " << to_string(runTime) << " FPS: " << to_string(currentFPS) << " frameRate: " << to_string(currentFrameRate) << " update: " << to_string(frameTime);
+    ss << "runTime: " << to_string(runTime) << " FPS: " << to_string(currentFPS) << " frameRate: " << to_string(currentFrameRate) << " frameTime: " << to_string(frameTime) << " startTime: " << to_string(startTime) << " updateTime: " << to_string(updateTime);
     string s = ss.str();
     Utils::Println(s);
 }

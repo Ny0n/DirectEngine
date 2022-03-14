@@ -2,15 +2,13 @@
 
 #include "Scene.h"
 
-Scene::Scene()
-{
-}
-
 GameObject* Scene::CreateEmpty()
 {
 	GameObject* obj = new GameObject();
 	return obj;
 }
+
+// **************************** //
 
 bool Scene::Instantiate(GameObject* prefab)
 {

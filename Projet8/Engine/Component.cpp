@@ -2,20 +2,12 @@
 
 #include "Component.h"
 
-void Component::Start()
+bool Component::TypeEquals(Component* other)
 {
+	return this->GetType() == other->GetType();
 }
 
-void Component::Update(float runTime, float deltaTime)
+bool Component::TypeEquals(ComponentType otherType)
 {
-}
-
-bool Component::typeEquals(Component* other)
-{
-	return this->type == other->type;
-}
-
-bool Component::typeEquals(ComponentType other)
-{
-	return this->type == type;
+	return this->GetType() == otherType;
 }

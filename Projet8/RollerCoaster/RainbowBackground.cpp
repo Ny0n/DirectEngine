@@ -1,14 +1,5 @@
 ﻿#include "RainbowBackground.h"
 
-RainbowBackground::RainbowBackground()
-{
-    type = ComponentType::movable_cube;
-}
-
-void RainbowBackground::Start()
-{
-}
-
 D3DXVECTOR3 va = D3DXVECTOR3(0.5f, 0.5f, 0.5f);
 D3DXVECTOR3 vb = D3DXVECTOR3(0.5f, 0.5f, 0.5f);
 D3DXVECTOR3 vc = D3DXVECTOR3(1.0f, 1.0f, 1.0f);

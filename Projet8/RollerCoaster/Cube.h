@@ -6,17 +6,17 @@ class Cube : public Component
 {
 
 public :
+    ComponentType GetType() override { return ComponentType::mono_behaviour; }
+
     Cube(GameObject* g, float size);
+    
+    void Update(float runTime, float deltaTime) override;
 
-    void Start();
-    void Update(float runTime, float deltaTime);
+private:
+    Transform* _transform;
+    float _size;
 
-    void cubeRender();
-    void cubePlacement();
-
-    Transform* _Transform;
-    float _Size;
-    //LPDIRECT3DVERTEXBUFFER9 _VBuffer;    // the pointer to the vertex buffer
-    //LPDIRECT3DINDEXBUFFER9 _IBuffer;    // the pointer to the index buffer
+    void CubeRender();
+    void CubePlacement();
 
 };

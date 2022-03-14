@@ -9,12 +9,12 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
     switch (message)
     {
         // this message is read when the window is closed
-    case WM_DESTROY:
-    {
-        // close the application entirely
-        PostQuitMessage(0);
-        return 0;
-    } break;
+	    case WM_DESTROY:
+	    {
+	        // close the application entirely
+	        PostQuitMessage(0);
+	        return 0;
+	    } break;
     }
 
     // Handle any messages the switch statement didn't
@@ -52,8 +52,8 @@ void App::Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, i
         WS_OVERLAPPEDWINDOW,    // window style
         0,    // x-position of the window
         0,    // y-position of the window
-        1920,    // width of the window
-        1080,    // height of the window
+        720,    // width of the window
+        480,    // height of the window
         NULL,    // we have no parent window, NULL
         NULL,    // we aren't using menus, NULL
         hInstance,    // application handle
@@ -76,6 +76,6 @@ void App::Uninit()
 {
     _engine->Stop();
 
-    //delete(_engine);
-    //delete(_window);
+    //delete _engine;
+    //delete _window;
 }

@@ -1,14 +1,12 @@
 ﻿#pragma once
 
-#include <list>
-
 #include "GameObject.h"
 
 class Scene
 {
 
 public:
-	Scene();
+	Scene() = default;
 
 	list<GameObject*> gameObjects;
 

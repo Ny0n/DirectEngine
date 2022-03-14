@@ -11,7 +11,8 @@
 #include <windowsx.h>
 
 // C RunTime Header Files
-#include <stdlib.h>
+#include <cstdlib>
+#include <typeinfo>
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
@@ -19,8 +20,10 @@
 #include <algorithm>
 #include <timeapi.h>
 #include <profileapi.h>
-#include <string.h>
+#include <cstring>
 #include <sstream>
+#include <chrono>
+#include <thread>
 
 #include <d3d9.h>
 #include <d3dx9.h>

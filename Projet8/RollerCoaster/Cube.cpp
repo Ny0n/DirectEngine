@@ -2,27 +2,17 @@
 
 Cube::Cube(GameObject* g, float size)
 {
-	_Transform = g->transform;
-	_Size = size;
-
-    type = ComponentType::movable_cube;
-    
-
-}
-
-void Cube::Start()
-{
-
+	_transform = g->transform;
+	_size = size;
 }
 
 void Cube::Update(float runTime, float deltaTime)
 {
-    cubeRender();
-    
-    cubePlacement();
+    CubeRender();
+    CubePlacement();
 }
 
-void Cube::cubeRender()
+void Cube::CubeRender()
 {
     float baseSize;
     baseSize = 1;
@@ -90,7 +80,8 @@ void Cube::cubeRender()
     memcpy(pVoid, indices, sizeof(indices));
     _IBuffer->Unlock();
 }
-void Cube::cubePlacement()
+
+void Cube::CubePlacement()
 {
     D3DXMATRIX matTranslate;    // a matrix to store the translation information
 
@@ -109,13 +100,13 @@ void Cube::cubePlacement()
     D3DXMatrixIdentity(&matScale);
     D3DXMatrixIdentity(&matTranslate);
 
-    D3DXMatrixRotationX(&matRotateX, _Transform->quaternion.x);
-    D3DXMatrixRotationY(&matRotateY, _Transform->quaternion.y);    // the front side
-    D3DXMatrixRotationZ(&matRotateZ, _Transform->quaternion.z);
+    D3DXMatrixRotationX(&matRotateX, _transform->quaternion.x);
+    D3DXMatrixRotationY(&matRotateY, _transform->quaternion.y);    // the front side
+    D3DXMatrixRotationZ(&matRotateZ, _transform->quaternion.z);
 
-    D3DXMatrixScaling(&matScale, _Transform->scale.x, _Transform->scale.y, _Transform->scale.z);
+    D3DXMatrixScaling(&matScale, _transform->scale.x, _transform->scale.y, _transform->scale.z);
 
-    D3DXMatrixTranslation(&matTranslate, _Transform->position.x, _Transform->position.y, _Transform->position.z);
+    D3DXMatrixTranslation(&matTranslate, _transform->position.x, _transform->position.y, _transform->position.z);
 
     matRotate = matRotateX;
     matRotate *= matRotateY;

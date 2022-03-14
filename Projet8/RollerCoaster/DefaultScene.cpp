@@ -4,9 +4,9 @@
 
 DefaultScene::DefaultScene()
 {
-	GameObject* go = CreateEmpty();
-	go->AddComponent(new RainbowBackground());
-	Instantiate(go);
+	GameObject* rgb = CreateEmpty();
+	rgb->AddComponent(new RainbowBackground());
+	Instantiate(rgb);
 
 	/*GameObject* camera = CreateEmpty();
 	camera->AddComponent(new Camera());

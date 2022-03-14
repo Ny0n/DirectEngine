@@ -8,6 +8,7 @@ class Engine
 
 public:
 	Engine(HWND hWnd, Profiler* profiler);
+
 	void Play();
 	void Stop();
 	void Pause();
@@ -18,7 +19,6 @@ public:
 private:
 	HWND _window = nullptr;
 	Profiler* _profiler = nullptr;
-
 	Scene* _scene = nullptr;
 
 	bool _isPlaying = false;

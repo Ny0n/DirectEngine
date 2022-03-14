@@ -2,11 +2,8 @@
 
 #include "GameObject.h"
 
-#include "Utils.h"
-
-GameObject::GameObject()
+GameObject::GameObject() : transform(new Transform())
 {
-	transform = new Transform();
 }
 
 GameObject::~GameObject()
@@ -18,32 +15,44 @@ GameObject::~GameObject()
 	components.clear();
 }
 
-Component* GameObject::GetComponent(ComponentType type)
+// Finds and returns the first fount component of type ComponentType
+// Returns nullptr if not found
+Component* GameObject::GetComponent(ComponentType type) // TODO for get and remove, change type for mono_behaviour (tout changer pour typeid() ?)
 {
 	for (Component* component : components)
 	{
-		if (component->typeEquals(type))
+		if (component->TypeEquals(type))
 			return component;
 	}
+	return nullptr;
 }
 
+// Adds the given component to the gameobject
+// A gameobject can only have one of each time of component, EXCEPT for mono_behaviour types
 bool GameObject::AddComponent(Component* component)
 {
-	for (Component* element : components)
+	if (!component->TypeEquals(ComponentType::mono_behaviour)) // there can have multiple mono_behaviour on a gameobject
 	{
-		if (element->typeEquals(component))
-			return false;
+		for (Component* element : components)
+		{
+			if (element->TypeEquals(component)) // no duplicate components
+				return false;
+		}
 	}
 
 	components.push_back(component);
 	return true;
 }
 
+// Removes the first component of type ComponentType found on the gameobject
 bool GameObject::RemoveComponent(ComponentType type)
 {
+	if (type == ComponentType::transform) // we can't remove the transform
+		return false;
+
 	for (Component* element : components)
 	{
-		if (element->typeEquals(type))
+		if (element->TypeEquals(type))
 		{
 			components.remove(element);
 			delete(element);
@@ -55,14 +64,5 @@ bool GameObject::RemoveComponent(ComponentType type)
 
 bool GameObject::RemoveComponent(Component* component)
 {
-	for (Component* element : components)
-	{
-		if (element->typeEquals(component))
-		{
-			components.remove(element);
-			delete(element);
-			return true;
-		}
-	}
-	return false;
+	return RemoveComponent(component->GetType());
 }

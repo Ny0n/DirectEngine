@@ -2,10 +2,6 @@
 
 #include "Camera.h"
 
-void Camera::Start()
-{
-}
-
 void Camera::Update(float runTime, float deltaTime)
 {
     d3ddev->SetFVF(CUSTOMFVF);

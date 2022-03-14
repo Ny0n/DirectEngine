@@ -19,8 +19,9 @@ struct QUATERNION
 
 class Transform : public Component
 {
-
 public:
+	ComponentType GetType() override { return ComponentType::transform; }
+
 	Vector3 position;
 
 	QUATERNION quaternion;

@@ -10,7 +10,9 @@
 // ************************ //
 
 constexpr int TARGET_FPS = 60;
-constexpr bool ENABLE_PROFILER = false;
+constexpr bool ENABLE_PROFILER = true;
+
+// ************************ //
 
 const float targetFrameRate = 1.0f / TARGET_FPS;
 
@@ -136,10 +138,7 @@ void Engine::Play()
             _profiler->currentFPS = 1.0f / elapsedTime;
             lastRunTime = _profiler->runTime;
 
-            _profiler->TimedRunner(_profiler->frameTime, LAMBDA(NewFrame));
-
-            if (ENABLE_PROFILER)
-				_profiler->DisplayData();
+            _profiler->TimedRunner(_profiler->frameTime, [=]() { NewFrame(); }); // TODO init lambdas once ?
         }
     }
 }
@@ -166,14 +165,16 @@ void Engine::LoadScene(Scene* scene)
 
 void Engine::NewFrame()
 {
-
     d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
     d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
     d3ddev->BeginScene();    // begins the 3D scene
 
-    Start();
-    Update(_profiler->runTime, _profiler->currentFrameRate);
+    _profiler->TimedRunner(_profiler->startTime, [=]() { Start(); });
+    _profiler->TimedRunner(_profiler->updateTime, [=]() { Update(_profiler->runTime, _profiler->currentFrameRate); });
+
+    if (ENABLE_PROFILER)
+        _profiler->DisplayData();
 
     d3ddev->EndScene();    // ends the 3D scene
 
@@ -182,19 +183,13 @@ void Engine::NewFrame()
 
 // ************/ Execution Order /************ //
 
-template<typename T>
-bool Contains(list<T*>* list, T* value)
-{
-	return (find(list->begin(), list->end(), value) != list->end());
-}
-
-void Engine::Start()
+void Engine::Start() // TODO optimize this (init once a new list with all starts and then remove ?)
 {
     for (GameObject* go : _scene->gameObjects)
     {
         for (Component* comp : go->components)
         {
-            if (Contains(&_startedComponents, comp) == false)
+            if (Utils::Contains(&_startedComponents, comp) == false)
             {
                 _startedComponents.push_back(comp);
                 comp->Start();

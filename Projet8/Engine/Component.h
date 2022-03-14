@@ -2,23 +2,23 @@
 
 enum class ComponentType
 {
+	mono_behaviour,
 	transform,
-	mesh,
-	movable_cube
+	camera,
 };
 
 class Component
 {
 
 public:
-	Component() = default;
+	virtual ComponentType GetType() = 0; // this makes the class abstract
+
 	virtual ~Component() = default;
 
-	virtual void Start();
-	virtual void Update(float runTime, float deltaTime);
+	virtual void Start(){}
+	virtual void Update(float runTime, float deltaTime){}
 
-	ComponentType type;
-	bool typeEquals(Component* other);
-	bool typeEquals(ComponentType other);
+	bool TypeEquals(Component* other);
+	bool TypeEquals(ComponentType other);
 
 };
