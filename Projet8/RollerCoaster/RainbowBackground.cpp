@@ -1,8 +1,6 @@
-﻿#include "MovableCube.h"
+﻿#include "RainbowBackground.h"
 
-#include "Utils.h"
-
-MovableCube::MovableCube()
+RainbowBackground::RainbowBackground()
 {
     type = ComponentType::movable_cube;
 }
@@ -11,7 +9,7 @@ unsigned __int8 r = 0;
 unsigned __int8 g = 0;
 unsigned __int8 b = 0;
 
-void MovableCube::Update(float runTime, float deltaTime)
+void RainbowBackground::Update(float runTime, float deltaTime)
 {
     if (r == 255 && g == 255 && b == 255)
     {

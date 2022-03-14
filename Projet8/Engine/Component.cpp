@@ -2,8 +2,6 @@
 
 #include "Component.h"
 
-#include "Utils.h"
-
 void Component::Start()
 {
 }

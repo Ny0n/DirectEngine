@@ -7,6 +7,7 @@
 
 #include "Utils.h"
 
+// ************************ //
 
 constexpr int TARGET_FPS = 60;
 constexpr bool ENABLE_PROFILER = true;

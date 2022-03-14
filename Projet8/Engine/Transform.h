@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include "Component.h"
 
 struct Vector3

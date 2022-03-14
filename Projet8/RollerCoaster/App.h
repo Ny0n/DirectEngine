@@ -1,7 +1,6 @@
 #pragma once
 
-#include "framework.h"
-#include "Engine.h"
+#include "EngineLib.h"
 
 class App
 {
@@ -16,4 +15,3 @@ private:
 	HWND _window = nullptr;
 
 };
-

@@ -48,7 +48,7 @@ public:
 
 // **************************** //
 
-void Profiler::displayData()
+inline void Profiler::displayData()
 {
     stringstream ss;
     ss << "startTime: " << to_string(startTime) << " runTime: " << to_string(runTime) << " FPS: " << to_string(currentFPS) << " frameRate: " << to_string(currentFrameRate) << " update: " << to_string(newFrameTime);
@@ -56,7 +56,7 @@ void Profiler::displayData()
     Utils::Println(s);
 }
 
-void Profiler::initSystemTime()
+inline void Profiler::initSystemTime()
 {
     _startTime = timeGetTime() / 1000.0f;
     _isPreciseTime = false;
@@ -75,7 +75,7 @@ void Profiler::initSystemTime()
     }
 }
 
-float Profiler::getSystemTime()
+inline float Profiler::getSystemTime()
 {
     // Precise
     if (_isPreciseTime)

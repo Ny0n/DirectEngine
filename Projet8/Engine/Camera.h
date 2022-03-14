@@ -1,10 +1,13 @@
 #pragma once
+
 #include "Component.h"
-class Camera :
-    public Component
+
+class Camera : public Component
 {
-    void Start();
-    void Update(float runTime, float deltaTime);
+
+public:
+    void Start() override;
+    void Update(float runTime, float deltaTime) override;
  
 };
 

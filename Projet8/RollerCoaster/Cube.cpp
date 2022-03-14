@@ -1,4 +1,5 @@
 #include "Cube.h"
+
 Cube::Cube(GameObject* g, float size)
 {
 	_Transform = g->transform;

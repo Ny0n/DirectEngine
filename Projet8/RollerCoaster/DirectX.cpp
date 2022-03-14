@@ -1,12 +1,8 @@
-
-#include "framework.h"
-
 #include <sstream>
 #include <thread>
 #include <timeapi.h>
 
-#include "Profiler.h"
-#include "Scene.h"
+#include "EngineLib.h"
 
 using namespace std;
 
@@ -152,7 +148,7 @@ void mainLoop(HWND& hWnd, MSG& msg)
             profiler->currentFPS = 1.0f / elapsedTime;
             lastRunTime = profiler->runTime;
 
-            profiler->timedRunner(profiler->updateTime, renderFrame, profiler->runTime, profiler->currentFrameRate);
+            profiler->timedRunner(profiler->newFrameTime, renderFrame, profiler->runTime, profiler->currentFrameRate);
 
             if (ENABLE_PROFILER)
 				profiler->displayData();

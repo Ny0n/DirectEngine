@@ -1,12 +1,12 @@
 ﻿#pragma once
 
-#include "Component.h"
+#include "EngineLib.h"
 
-class MovableCube : public Component
+class RainbowBackground : public Component
 {
 
 public:
-	MovableCube();
+	RainbowBackground();
 
 	void Update(float runTime, float deltaTime) override;
 
