@@ -10,7 +10,7 @@
 // ************************ //
 
 constexpr int TARGET_FPS = 60;
-constexpr bool ENABLE_PROFILER = true;
+constexpr bool ENABLE_PROFILER = false;
 
 const float targetFrameRate = 1.0f / TARGET_FPS;
 
