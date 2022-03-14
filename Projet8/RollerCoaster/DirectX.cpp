@@ -74,10 +74,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         L"WindowClass",    // name of the window class
         L"Our First Direct3D Program",   // title of the window
         WS_OVERLAPPEDWINDOW,    // window style
-        600,    // x-position of the window
-        300,    // y-position of the window
-        800,    // width of the window
-        600,    // height of the window
+        0,    // x-position of the window
+        0,    // y-position of the window
+        1920,    // width of the window
+        1080,    // height of the window
         NULL,    // we have no parent window, NULL
         NULL,    // we aren't using menus, NULL
         hInstance,    // application handle
