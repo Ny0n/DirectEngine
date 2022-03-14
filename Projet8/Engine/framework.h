@@ -16,6 +16,11 @@
 #include <memory.h>
 #include <tchar.h>
 #include <list>
+#include <algorithm>
+#include <timeapi.h>
+#include <profileapi.h>
+#include <string.h>
+#include <sstream>
 
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -24,15 +29,18 @@
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
 
-# pragma comment(lib, "secur32.lib")
-# pragma comment(lib, "winmm.lib")
-# pragma comment(lib, "dmoguids.lib")
-# pragma comment(lib, "wmcodecdspuuid.lib")
-# pragma comment(lib, "msdmo.lib")
-# pragma comment(lib, "Strmiids.lib")
-# pragma comment(lib, "Kernel32.lib")
+#pragma comment(lib, "secur32.lib")
+#pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "dmoguids.lib")
+#pragma comment(lib, "wmcodecdspuuid.lib")
+#pragma comment(lib, "msdmo.lib")
+#pragma comment(lib, "Strmiids.lib")
+#pragma comment(lib, "Kernel32.lib")
 
 // declare global variables
+
+#define LAMBDA(x) [=]() { x(); }
+
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 

@@ -76,6 +76,6 @@ void App::Uninit()
 {
     _engine->Stop();
 
-    delete(_engine);
-    delete(_window);
+    //delete(_engine);
+    //delete(_window);
 }

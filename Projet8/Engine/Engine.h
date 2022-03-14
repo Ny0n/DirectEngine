@@ -31,4 +31,7 @@ private:
 	void Start();
 	void Update(float runTime, float deltaTime);
 
+private:
+	list<Component*> _startedComponents;
+
 };

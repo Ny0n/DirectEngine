@@ -60,12 +60,6 @@ void Cube::cubeRender()
         { -baseSize, +baseSize, +baseSize, -1.0f, 0.0f, 0.0f, },
 
     };
-    d3ddev->CreateVertexBuffer(24 * sizeof(CUSTOMVERTEX),
-        0,
-        CUSTOMFVF,
-        D3DPOOL_MANAGED,
-        &_VBuffer,
-        NULL);
 
     VOID* pVoid;    // a void pointer
 
@@ -90,14 +84,6 @@ void Cube::cubeRender()
         20, 21, 22,    // side 6
         22, 21, 23,
     };
-
-    // create a index buffer interface called i_buffer
-    d3ddev->CreateIndexBuffer(36 * sizeof(short),
-        0,
-        D3DFMT_INDEX16,
-        D3DPOOL_MANAGED,
-        &_IBuffer,
-        NULL);
 
     // lock i_buffer and load the indices into it
     _IBuffer->Lock(0, 0, (void**)&pVoid, 0);

@@ -74,6 +74,22 @@ void Engine::InitD3D()
     d3ddev->SetRenderState(D3DRS_LIGHTING, false);    // turn off the 3D lighting
     //d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(50, 50, 50));    // ambient light
     d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
+
+    // _VBuffer
+    d3ddev->CreateVertexBuffer(24 * sizeof(CUSTOMVERTEX),
+        0,
+        CUSTOMFVF,
+        D3DPOOL_MANAGED,
+        &_VBuffer,
+        NULL);
+
+    // _IBuffer
+    d3ddev->CreateIndexBuffer(36 * sizeof(short),
+        0,
+        D3DFMT_INDEX16,
+        D3DPOOL_MANAGED,
+        &_IBuffer,
+        NULL);
 }
 
 void Engine::Play()
@@ -83,9 +99,6 @@ void Engine::Play()
 		Utils::Println("A default scene must be set!");
 		return;
 	}
-
-    if (_isPlaying)
-        return;
 
     _isPlaying = true;
 
@@ -97,6 +110,9 @@ void Engine::Play()
 	float lastRunTime = 0.0f;
     while (TRUE)
     {
+        if (!_isPlaying)
+            return;
+
         // Check to see if any messages are waiting in the queue
         while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
@@ -111,7 +127,7 @@ void Engine::Play()
 
         // Run game code here
 
-        _profiler->runTime = _profiler->getSystemTime();
+        _profiler->runTime = _profiler->GetSystemTime();
         const float elapsedTime = _profiler->runTime - lastRunTime;
 
         if (elapsedTime >= targetFrameRate) // new frame
@@ -120,16 +136,18 @@ void Engine::Play()
             _profiler->currentFPS = 1.0f / elapsedTime;
             lastRunTime = _profiler->runTime;
 
-            NewFrame();
+            _profiler->TimedRunner(_profiler->frameTime, LAMBDA(NewFrame));
 
             if (ENABLE_PROFILER)
-				_profiler->displayData();
+				_profiler->DisplayData();
         }
     }
 }
 
 void Engine::Stop()
 {
+    _isPlaying = false;
+
     d3ddev->Release();    // close and release the 3D device
     d3d->Release();    // close and release Direct3D
     _VBuffer->Release();    // close and release the vertex buffer
@@ -164,15 +182,25 @@ void Engine::NewFrame()
 
 // ************/ Execution Order /************ //
 
+template<typename T>
+bool Contains(list<T*>* list, T* value)
+{
+	return (find(list->begin(), list->end(), value) != list->end());
+}
+
 void Engine::Start()
 {
-    /*for (GameObject* go : scene->gameObjects)
+    for (GameObject* go : _scene->gameObjects)
     {
         for (Component* comp : go->components)
         {
-            comp->Start();
+            if (Contains(&_startedComponents, comp) == false)
+            {
+                _startedComponents.push_back(comp);
+                comp->Start();
+            }
         }
-    }*/
+    }
 }
 
 void Engine::Update(float runTime, float deltaTime)
