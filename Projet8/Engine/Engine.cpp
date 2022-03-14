@@ -10,7 +10,7 @@
 // ************************ //
 
 constexpr int TARGET_FPS = 60;
-constexpr bool ENABLE_PROFILER = true;
+constexpr bool ENABLE_PROFILER = false;
 
 // ************************ //
 
@@ -94,6 +94,9 @@ void Engine::InitD3D()
         NULL);
 }
 
+
+bool runLoop = true;
+
 void Engine::Play()
 {
 	if (_scene == nullptr)
@@ -110,7 +113,7 @@ void Engine::Play()
     MSG msg;
 
 	float lastRunTime = 0.0f;
-    while (TRUE)
+    while (runLoop == true)
     {
         if (!_isPlaying)
             return;
@@ -121,11 +124,13 @@ void Engine::Play()
             // Translate the message and dispatch it to WindowProc()
             TranslateMessage(&msg);
             DispatchMessage(&msg);
+            // If the message is WM_QUIT, exit the while loop
+            if (msg.message == WM_QUIT) {
+                runLoop = false;
+                break;
+            }
         }
 
-        // If the message is WM_QUIT, exit the while loop
-        if (msg.message == WM_QUIT)
-            break;
 
         // Run game code here
 
