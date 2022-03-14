@@ -29,10 +29,10 @@ public:
     void displayData();
 
     template<typename T, typename... Args>
-    void* timedRunner(float& timeVar, T& func, Args&... args);
+    void* timedRunner(float& timeVar, const T& func, Args&... args);
 
     template<typename T, typename... Args>
-    auto timedSupplier(float& timeVar, T& func, Args&... args);
+    auto timedSupplier(float& timeVar, const T& func, Args&... args);
 
     // *** Profiler Data *** //
 
@@ -42,7 +42,7 @@ public:
     float currentFrameRate;
 
     float startTime;
-    float updateTime;
+    float newFrameTime;
 
 };
 
@@ -51,7 +51,7 @@ public:
 void Profiler::displayData()
 {
     stringstream ss;
-    ss << "startTime: " << to_string(startTime) << " runTime: " << to_string(runTime) << " FPS: " << to_string(currentFPS) << " frameRate: " << to_string(currentFrameRate) << " update: " << to_string(updateTime);
+    ss << "startTime: " << to_string(startTime) << " runTime: " << to_string(runTime) << " FPS: " << to_string(currentFPS) << " frameRate: " << to_string(currentFrameRate) << " update: " << to_string(newFrameTime);
     string s = ss.str();
     Utils::Println(s);
 }
@@ -111,7 +111,7 @@ auto Profiler::timed(float& timeVar, T& func, Args&... args) {
 // **************************** //
 
 template<typename T, typename... Args>
-void* Profiler::timedRunner(float& timeVar, T& func, Args&... args) {
+void* Profiler::timedRunner(float& timeVar, const T& func, Args&... args) {
     // since returning void is causing problems, i'm transferring the func to an other one that returns void* through a lambda
     // (it's one way to do it)
     auto voidFunc = [=](Args&... args)
@@ -124,6 +124,6 @@ void* Profiler::timedRunner(float& timeVar, T& func, Args&... args) {
 }
 
 template<typename T, typename... Args>
-auto Profiler::timedSupplier(float& timeVar, T& func, Args&... args) {
+auto Profiler::timedSupplier(float& timeVar, const T& func, Args&... args) {
     return timed(timeVar, func, args...);
 }

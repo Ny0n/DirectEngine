@@ -1,6 +1,7 @@
-﻿#include "GameObject.h"
+﻿#include "pch.h"
 
-#include "MovableCube.h"
+#include "GameObject.h"
+
 #include "Utils.h"
 
 GameObject::GameObject()

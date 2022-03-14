@@ -1,11 +1,10 @@
-﻿#include "Scene.h"
+﻿#include "pch.h"
 
-
-#include "MovableCube.h"
+#include "Scene.h"
 
 Scene::Scene()
 {
-	GameObject* camera = CreateEmpty();
+	/*GameObject* camera = CreateEmpty();
 	camera->AddComponent(new Camera());
 	GameObject* obj1 = CreateEmpty();
 	obj1->AddComponent(new MovableCube());
@@ -50,8 +49,7 @@ Scene::Scene()
 	cubeScale2.z = 1.0f;
 	cube2->transform->scale = cubeScale2;
 
-	cube2->AddComponent(new Cube(cube2, 2.0f));
-
+	cube2->AddComponent(new Cube(cube2, 2.0f));*/
 }
 
 // **************************** //

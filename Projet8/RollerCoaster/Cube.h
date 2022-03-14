@@ -4,6 +4,7 @@
 #include "framework.h"
 #include "GameObject.h"
 #include "Utils.h"
+
 class Cube :
     public Component
 {
