@@ -1,17 +1,20 @@
 ﻿#pragma once
 
-enum class ComponentType
+extern list<const char*> engineDefaultComponentTypes;
+extern list<const char*> engineComponentTypes;
+
+enum class ComponentCategory
 {
-	mono_behaviour,
-	transform,
-	camera,
+	unique,
+	behaviour,
 };
 
 class Component
 {
 
 public:
-	virtual ComponentType GetType() = 0; // this makes the class abstract
+	virtual const char* GetType() = 0; // this makes the class abstract
+	virtual ComponentCategory GetCategory() = 0;
 
 	virtual ~Component() = default;
 
@@ -19,6 +22,8 @@ public:
 	virtual void Update(float runTime, float deltaTime){}
 
 	bool TypeEquals(Component* other);
-	bool TypeEquals(ComponentType other);
+	bool TypeEquals(const char* other);
+	bool CategoryEquals(Component* other);
+	bool CategoryEquals(const ComponentCategory other);
 
 };
