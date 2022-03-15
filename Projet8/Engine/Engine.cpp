@@ -9,9 +9,10 @@
 
 // ************************ //
 
-constexpr int TARGET_FPS = 2;
+constexpr int TARGET_FPS = 60;
 
 #define ENABLE_PROFILER true
+#define PROFILER_COOLDOWN 1.0f
 
 // ************************ //
 
@@ -118,7 +119,7 @@ void Engine::Play()
     
     MSG msg; // this struct holds Windows event messages
 	float lastFrameTime = 0.0f;
-	float lastProfilerTime = 0.0f;
+    float profilerCooldown = 0.0f;
 
     while (true)
     {
@@ -151,12 +152,12 @@ void Engine::Play()
             _profiler->TimedRunner(_profiler->frameTime, [=]() { NewFrame(); });
 
 #if ENABLE_PROFILER
-            const float elapsedProfilerTime = _profiler->runTime - lastProfilerTime;
-            if (elapsedProfilerTime >= 1.0f)
+            if (profilerCooldown <= 0.0f)
             {
-                lastProfilerTime = _profiler->runTime;
+                profilerCooldown = PROFILER_COOLDOWN;
                 _profiler->DisplayData();
             }
+            profilerCooldown -= elapsedTime;
 #endif
         }
     }
