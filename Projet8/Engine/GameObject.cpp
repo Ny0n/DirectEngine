@@ -8,16 +8,19 @@ GameObject::GameObject() : transform(new Transform())
 
 GameObject::~GameObject()
 {
-	for (Component* component : components)
+	for (const Component* component : this->components)
 	{
 		delete(component);
 	}
+
+	delete transform;
 	components.clear();
 }
 
 // Finds and returns the first fount component of type ComponentType
 // Returns nullptr if not found
-Component* GameObject::GetComponent(ComponentType type) // TODO for get and remove, change type for mono_behaviour (tout changer pour typeid() ?)
+Component* GameObject::GetComponent(ComponentType type) const
+// TODO for get and remove, change type for mono_behaviour (tout changer pour typeid() ?)
 {
 	for (Component* component : components)
 	{
