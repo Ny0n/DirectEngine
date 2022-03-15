@@ -1,5 +1,8 @@
 ﻿#pragma once
 
+class Transform;
+class GameObject;
+
 enum class ComponentType
 {
 	mono_behaviour,
@@ -9,7 +12,6 @@ enum class ComponentType
 
 class Component
 {
-
 public:
 	virtual ComponentType GetType() = 0; // this makes the class abstract
 
@@ -21,4 +23,7 @@ public:
 	bool TypeEquals(Component* other);
 	bool TypeEquals(ComponentType other);
 
+public:
+	GameObject* gameObject;
+	Transform* transform;
 };

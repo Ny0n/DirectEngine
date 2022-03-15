@@ -6,6 +6,12 @@
 
 
 
+
+Transform::Transform()
+{
+	Identity();
+}
+
 /**
  * \brief Default transform
  */

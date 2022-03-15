@@ -11,6 +11,8 @@ DefaultScene::DefaultScene()
 
 	GameObject* camera = CreateEmpty();
 	camera->AddComponent(new Camera());
+
+	camera->transform->position.z = 60.0f;
 	Instantiate(camera);
 
 	GameObject* cube = CreateEmpty();
