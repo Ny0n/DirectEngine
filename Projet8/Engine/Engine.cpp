@@ -9,7 +9,7 @@
 
 // ************************ //
 
-constexpr int TARGET_FPS = 2;
+constexpr int TARGET_FPS = 60;
 constexpr bool ENABLE_PROFILER = false;
 
 // ************************ //

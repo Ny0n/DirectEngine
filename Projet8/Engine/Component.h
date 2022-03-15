@@ -3,11 +3,10 @@
 extern list<const char*> engineDefaultComponentTypes;
 extern list<const char*> engineComponentTypes;
 
-enum class ComponentCategory
 class Transform;
 class GameObject;
 
-enum class ComponentType
+enum class ComponentCategory
 {
 	unique,
 	behaviour,
@@ -32,4 +31,5 @@ public:
 public:
 	GameObject* gameObject;
 	Transform* transform;
+
 };
