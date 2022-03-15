@@ -63,16 +63,21 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
     MSG msg;
 
-    while (TRUE)
+    bool runLoop = true;
+
+    while (runLoop == true)
     {
         while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
+
+            if (msg.message == WM_QUIT){
+                runLoop = false;
+                break;
+			}
         }
 
-        if (msg.message == WM_QUIT)
-            break;
 
         render_frame();
     }
