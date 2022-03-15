@@ -9,18 +9,18 @@
 
 // ************************ //
 
-constexpr int TARGET_FPS = 60;
+constexpr int TARGET_FPS = 2;
 
 #define ENABLE_PROFILER true
 
 // ************************ //
 
-const float targetFrameRate = 1.0f / TARGET_FPS;
-
 LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
 LPDIRECT3DVERTEXBUFFER9 _VBuffer = NULL;
 LPDIRECT3DINDEXBUFFER9 _IBuffer = NULL;
+
+const float targetFrameRate = 1.0f / TARGET_FPS;
 
 // ************************ //
 
@@ -141,15 +141,6 @@ void Engine::Play()
 
         _profiler->runTime = _profiler->GetSystemTime();
 
-#if ENABLE_PROFILER
-        const float elapsedProfilerTime = _profiler->runTime - lastProfilerTime;
-        if (elapsedProfilerTime >= 1.0f)
-        {
-            lastProfilerTime = _profiler->runTime;
-            _profiler->DisplayData();
-        }
-#endif
-
         const float elapsedTime = _profiler->runTime - lastFrameTime;
         if (elapsedTime >= targetFrameRate) // new frame
         {
@@ -157,7 +148,16 @@ void Engine::Play()
             _profiler->currentFrameRate = elapsedTime;
             _profiler->currentFPS = 1.0f / elapsedTime;
 
-            _profiler->TimedRunner(_profiler->frameTime, [=]() { NewFrame(); }); // TODO init lambdas once ?
+            _profiler->TimedRunner(_profiler->frameTime, [=]() { NewFrame(); });
+
+#if ENABLE_PROFILER
+            const float elapsedProfilerTime = _profiler->runTime - lastProfilerTime;
+            if (elapsedProfilerTime >= 1.0f)
+            {
+                lastProfilerTime = _profiler->runTime;
+                _profiler->DisplayData();
+            }
+#endif
         }
     }
 	stop:;

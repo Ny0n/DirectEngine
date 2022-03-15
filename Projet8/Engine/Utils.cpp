@@ -1,4 +1,5 @@
 ﻿#include "pch.h"
+
 #include "Utils.h"
 
 void Utils::Println(string s)
@@ -8,4 +9,3 @@ void Utils::Println(string s)
 	LPCWSTR lpcwstr = temp.c_str();
 	OutputDebugStringW(lpcwstr);
 }
-
