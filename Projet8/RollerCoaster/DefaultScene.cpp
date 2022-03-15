@@ -48,15 +48,5 @@ DefaultScene::DefaultScene()
 
 DefaultScene::~DefaultScene()
 {
-	FreeMemory(this->gameObjects);
-}
-
-void DefaultScene::FreeMemory(list<GameObject*> listGo)
-{
-	for (const GameObject* element : listGo)
-	{
-		delete(element);
-	}
-
-	listGo.clear();
+	Utils::DeleteList(&gameObjects);
 }

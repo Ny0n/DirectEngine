@@ -6,11 +6,8 @@ class DefaultScene : public Scene
 {
 
 public:
-	~DefaultScene();
+	~DefaultScene() override;
 	DefaultScene();
-
-private:
-	static void FreeMemory(list<GameObject*> listGo);
 	
 };
 
