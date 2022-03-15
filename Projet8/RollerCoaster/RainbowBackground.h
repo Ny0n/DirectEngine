@@ -6,8 +6,9 @@ class RainbowBackground : public Component
 {
 
 public:
-	ComponentType GetType() override { return ComponentType::mono_behaviour; }
+	const char* GetType() override { return NAMEOF(RainbowBackground); }
+	ComponentCategory GetCategory() override { return ComponentCategory::behaviour; }
 	
 	void Update(float runTime, float deltaTime) override;
-
+	
 };

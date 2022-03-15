@@ -2,6 +2,8 @@
 
 #include "GameObject.h"
 
+#include "Utils.h"
+
 GameObject::GameObject() : transform(new Transform())
 {
 }
@@ -19,8 +21,7 @@ GameObject::~GameObject()
 
 // Finds and returns the first fount component of type ComponentType
 // Returns nullptr if not found
-Component* GameObject::GetComponent(ComponentType type) const
-// TODO for get and remove, change type for mono_behaviour (tout changer pour typeid() ?)
+Component* GameObject::GetComponent(const char* type)
 {
 	for (Component* component : components)
 	{
@@ -34,7 +35,7 @@ Component* GameObject::GetComponent(ComponentType type) const
 // A gameobject can only have one of each time of component, EXCEPT for mono_behaviour types
 bool GameObject::AddComponent(Component* component)
 {
-	if (!component->TypeEquals(ComponentType::mono_behaviour)) // there can have multiple mono_behaviour on a gameobject
+	if (component->CategoryEquals(ComponentCategory::unique))
 	{
 		for (Component* element : components)
 		{
@@ -48,9 +49,9 @@ bool GameObject::AddComponent(Component* component)
 }
 
 // Removes the first component of type ComponentType found on the gameobject
-bool GameObject::RemoveComponent(ComponentType type)
+bool GameObject::RemoveComponent(const char* type)
 {
-	if (type == ComponentType::transform) // we can't remove the transform
+	if (Utils::Contains(&engineDefaultComponentTypes, type)) // unremoveable components
 		return false;
 
 	for (Component* element : components)

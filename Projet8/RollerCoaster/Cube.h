@@ -6,7 +6,8 @@ class Cube : public Component
 {
 
 public :
-    ComponentType GetType() override { return ComponentType::mono_behaviour; }
+    const char* GetType() override { return NAMEOF(Cube); }
+    ComponentCategory GetCategory() override { return ComponentCategory::behaviour; }
 
     Cube(GameObject* g, float size);
     
