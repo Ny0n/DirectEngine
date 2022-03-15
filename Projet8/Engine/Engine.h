@@ -7,7 +7,7 @@ class Engine
 {
 
 public:
-	Engine(HWND hWnd, Profiler* profiler);
+	Engine(HWND hWnd);
 	~Engine();
 
 	void Play();

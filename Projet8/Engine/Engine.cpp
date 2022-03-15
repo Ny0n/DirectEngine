@@ -25,7 +25,7 @@ const float targetFrameRate = 1.0f / TARGET_FPS;
 
 // ************************ //
 
-Engine::Engine(HWND hWnd, Profiler* profiler) : _window(hWnd), _profiler(profiler)
+Engine::Engine(HWND hWnd) : _window(hWnd), _profiler(new Profiler())
 {
 }
 
@@ -107,6 +107,9 @@ void Engine::InitD3D()
 
 void Engine::Play()
 {
+    if (_isPlaying)
+        return;
+
 	if (_scene == nullptr)
 	{
 		Utils::Println("A default scene must be set!");
@@ -118,14 +121,14 @@ void Engine::Play()
     InitD3D();
     
     MSG msg; // this struct holds Windows event messages
+
+    // starting the profiler and initializing the variables
+    _profiler->InitSystemTime();
 	float lastFrameTime = 0.0f;
     float profilerCooldown = 0.0f;
 
     while (true)
     {
-        if (!_isPlaying)
-            return;
-
         // Check to see if any messages are waiting in the queue
         while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
@@ -140,24 +143,29 @@ void Engine::Play()
 
         // Run game code here
 
+        if (!_isPlaying)
+            return;
+
         _profiler->runTime = _profiler->GetSystemTime();
 
         const float elapsedTime = _profiler->runTime - lastFrameTime;
         if (elapsedTime >= targetFrameRate) // new frame
         {
             lastFrameTime = _profiler->runTime;
+
+            _profiler->currentFrame++;
             _profiler->currentFrameRate = elapsedTime;
             _profiler->currentFPS = 1.0f / elapsedTime;
 
             _profiler->TimedRunner(_profiler->frameTime, [=]() { NewFrame(); });
 
 #if ENABLE_PROFILER
+            profilerCooldown -= elapsedTime;
             if (profilerCooldown <= 0.0f)
             {
                 profilerCooldown = PROFILER_COOLDOWN;
                 _profiler->DisplayData();
             }
-            profilerCooldown -= elapsedTime;
 #endif
         }
     }

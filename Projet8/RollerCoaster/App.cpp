@@ -65,7 +65,7 @@ void App::Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, i
 
 void App::Loop()
 {
-    _engine = new Engine(_window, new Profiler());
+    _engine = new Engine(_window);
 
     _engine->LoadScene(new DefaultScene());
 

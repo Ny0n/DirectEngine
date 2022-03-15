@@ -6,16 +6,15 @@ private:
     template<typename T, typename... Args>
     auto Timed(float& timeVar, const T& func, Args&... args);
 
-    void InitSystemTime();
-
     float _startTime{};
     bool _isPreciseTime{};
     float _frequency{};
     LONGLONG _startPreciseTime{};
 
 public:
-    Profiler();
+    Profiler() = default;
 
+    void InitSystemTime();
     float GetSystemTime();
     void DisplayData();
 
@@ -48,6 +47,7 @@ public:
 
     float currentFPS{};
     float currentFrameRate{};
+    int currentFrame{};
 
     float frameTime{};
     float startTime{};
