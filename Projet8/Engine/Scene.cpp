@@ -2,10 +2,12 @@
 
 #include "Scene.h"
 
+#include "Utils.h"
+
+
 GameObject* Scene::CreateEmpty()
 {
-	GameObject* obj = new GameObject();
-	return obj;
+	return new GameObject();
 }
 
 // **************************** //
@@ -27,7 +29,7 @@ bool Scene::Destroy(GameObject* go)
 
 // **************************** //
 
-bool Scene::IsInScene(GameObject* go)
+bool Scene::IsInScene(GameObject* go) const
 {
 	for (GameObject* sceneGo : gameObjects)
 	{

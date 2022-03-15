@@ -8,7 +8,7 @@ class App
 public:
 	void Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow);
 	void Loop();
-	void Uninit();
+	void Uninit() const;
 
 private:
 	Engine* _engine = nullptr;

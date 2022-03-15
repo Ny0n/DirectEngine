@@ -27,6 +27,12 @@ Engine::Engine(HWND hWnd, Profiler* profiler) : _window(hWnd), _profiler(profile
 {
 }
 
+Engine::~Engine()
+{
+    delete _profiler;
+    delete _scene;
+}
+
 void Engine::InitLight()
 {
     D3DLIGHT9 light;    // create the light struct

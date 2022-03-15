@@ -9,7 +9,7 @@ public:
 	GameObject();
 	virtual ~GameObject();
 
-	Component* GetComponent(ComponentType type);
+	Component* GetComponent(ComponentType type) const;
 	bool AddComponent(Component* component);
 	bool RemoveComponent(ComponentType type);
 	bool RemoveComponent(Component* component);

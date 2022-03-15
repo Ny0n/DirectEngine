@@ -8,6 +8,7 @@ class Engine
 
 public:
 	Engine(HWND hWnd, Profiler* profiler);
+	~Engine();
 
 	void Play();
 	void Stop();

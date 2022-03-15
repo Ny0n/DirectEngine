@@ -72,10 +72,11 @@ void App::Loop()
     _engine->Play();
 }
 
-void App::Uninit()
+void App::Uninit() const
 {
     _engine->Stop();
 
-    //delete _engine;
-    //delete _window;
+
+    delete _engine;
+
 }

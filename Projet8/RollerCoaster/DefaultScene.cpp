@@ -11,10 +11,11 @@ DefaultScene::DefaultScene()
 
 	GameObject* camera = CreateEmpty();
 	camera->AddComponent(new Camera());
-	
+	Instantiate(camera);
 
 	GameObject* cube = CreateEmpty();
 	cube->transform->Identity();
+	Instantiate(cube);
 
 	D3DXVECTOR3 cubePosition;
 	cubePosition.x = 0.0f;
@@ -30,6 +31,8 @@ DefaultScene::DefaultScene()
 
 	GameObject* cube2 = CreateEmpty();
 	cube2->transform->Identity();
+	Instantiate(cube2);
+
 	D3DXVECTOR3 cubePosition2;
 	cubePosition2.x = -5.0f;
 	cubePosition2.y = 1.0f;
@@ -41,7 +44,20 @@ DefaultScene::DefaultScene()
 
 	cube2->AddComponent(new Cube(cube2, 2.0f));
 
-	Instantiate(camera);
-	Instantiate(cube);
-	Instantiate(cube2);
 }
+
+DefaultScene::~DefaultScene()
+{
+	FreeMemory(this->gameObjects);
+}
+
+void DefaultScene::FreeMemory(list<GameObject*> listGo)
+{
+	for (const GameObject* element : listGo)
+	{
+		delete element;
+	}
+
+	listGo.clear();
+}
+
