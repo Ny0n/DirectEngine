@@ -77,11 +77,11 @@ void Engine::InitD3D()
         &d3dpp,
         &d3ddev);
 
-    //InitLight();
-
-    d3ddev->SetRenderState(D3DRS_LIGHTING, false);    // turn off the 3D lighting
-    //d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(50, 50, 50));    // ambient light
-    d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
+    InitLight();
+    
+    //d3ddev->SetRenderState(D3DRS_LIGHTING, true);    // turn off the 3D lighting
+    //d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(255, 255, 255));    // ambient light
+    //d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
 
     // _VBuffer
     d3ddev->CreateVertexBuffer(24 * sizeof(CUSTOMVERTEX),
@@ -99,7 +99,6 @@ void Engine::InitD3D()
         &_IBuffer,
         NULL);
 }
-
 
 bool runLoop = true;
 

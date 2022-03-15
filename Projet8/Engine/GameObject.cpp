@@ -44,6 +44,8 @@ bool GameObject::AddComponent(Component* component)
 		}
 	}
 
+	component->gameObject = this;
+	component->transform = transform;
 	components.push_back(component);
 	return true;
 }

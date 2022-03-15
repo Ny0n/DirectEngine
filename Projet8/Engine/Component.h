@@ -4,6 +4,10 @@ extern list<const char*> engineDefaultComponentTypes;
 extern list<const char*> engineComponentTypes;
 
 enum class ComponentCategory
+class Transform;
+class GameObject;
+
+enum class ComponentType
 {
 	unique,
 	behaviour,
@@ -11,7 +15,6 @@ enum class ComponentCategory
 
 class Component
 {
-
 public:
 	virtual const char* GetType() = 0; // this makes the class abstract
 	virtual ComponentCategory GetCategory() = 0;
@@ -26,4 +29,7 @@ public:
 	bool CategoryEquals(Component* other);
 	bool CategoryEquals(const ComponentCategory other);
 
+public:
+	GameObject* gameObject;
+	Transform* transform;
 };
