@@ -27,6 +27,23 @@ public:
 
     // *** Profiler Data *** //
 
+    /*void addFPS(float fpsIn)
+    {
+        lastFps.push_back(fpsIn);
+        int size = lastFps.size();
+        if (size > 4000)
+            lastFps.pop_front();
+
+        float avg = 0.0f;
+        for (const float fps : lastFps)
+        {
+            avg += fps;
+        }
+        avg = avg / size;
+
+        currentFPS = avg;
+    }*/
+
     float runTime{};
 
     float currentFPS{};
@@ -35,6 +52,12 @@ public:
     float frameTime{};
     float startTime{};
     float updateTime{};
+    float presentTime{};
+
+    float time1{};
+    float time2{};
+    float time3{};
+    float time4{};
 
 };
 

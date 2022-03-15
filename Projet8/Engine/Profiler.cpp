@@ -12,8 +12,13 @@ Profiler::Profiler()
 void Profiler::DisplayData()
 {
     stringstream ss;
-    ss << "runTime: " << to_string(runTime) << " FPS: " << to_string(currentFPS) << " frameRate: " << to_string(currentFrameRate) << " frameTime: " << to_string(frameTime) << " startTime: " << to_string(startTime) << " updateTime: " << to_string(updateTime);
-    string s = ss.str();
+    ss << "runTime: " << to_string(runTime) << " FPS: " << to_string(currentFPS) << " frameRate: " << to_string(currentFrameRate) << " frameTime: " << to_string(frameTime) << " startTime: " << to_string(startTime) << " updateTime: " << to_string(updateTime) << " presentTime: " << to_string(presentTime);
+    if (time1 != 0.0f)
+    {
+	    ss << " time1: " << to_string(time1) << " time2: " << to_string(time2) << " time3: " << to_string(time3) << " time4: " << to_string(time4);
+    }
+
+	string s = ss.str();
     Utils::Println(s);
 }
 

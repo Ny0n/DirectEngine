@@ -10,7 +10,8 @@
 // ************************ //
 
 constexpr int TARGET_FPS = 60;
-constexpr bool ENABLE_PROFILER = false;
+
+#define ENABLE_PROFILER true
 
 // ************************ //
 
@@ -69,6 +70,8 @@ void Engine::InitD3D()
     d3dpp.BackBufferHeight = SCREEN_HEIGHT;
     d3dpp.EnableAutoDepthStencil = TRUE;
     d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
+    d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+
     // create a device class using this information and information from the d3dpp stuct
     d3d->CreateDevice(D3DADAPTER_DEFAULT,
         D3DDEVTYPE_HAL,
@@ -114,7 +117,8 @@ void Engine::Play()
     InitD3D();
     
     MSG msg; // this struct holds Windows event messages
-	float lastRunTime = 0.0f;
+	float lastFrameTime = 0.0f;
+	float lastProfilerTime = 0.0f;
 
     while (true)
     {
@@ -136,13 +140,22 @@ void Engine::Play()
         // Run game code here
 
         _profiler->runTime = _profiler->GetSystemTime();
-        const float elapsedTime = _profiler->runTime - lastRunTime;
 
+#if ENABLE_PROFILER
+        const float elapsedProfilerTime = _profiler->runTime - lastProfilerTime;
+        if (elapsedProfilerTime >= 1.0f)
+        {
+            lastProfilerTime = _profiler->runTime;
+            _profiler->DisplayData();
+        }
+#endif
+
+        const float elapsedTime = _profiler->runTime - lastFrameTime;
         if (elapsedTime >= targetFrameRate) // new frame
         {
+            lastFrameTime = _profiler->runTime;
             _profiler->currentFrameRate = elapsedTime;
             _profiler->currentFPS = 1.0f / elapsedTime;
-            lastRunTime = _profiler->runTime;
 
             _profiler->TimedRunner(_profiler->frameTime, [=]() { NewFrame(); }); // TODO init lambdas once ?
         }
@@ -174,18 +187,15 @@ void Engine::NewFrame()
 {
     d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
     d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-
+    
     d3ddev->BeginScene();    // begins the 3D scene
 
     _profiler->TimedRunner(_profiler->startTime, [=]() { Start(); });
     _profiler->TimedRunner(_profiler->updateTime, [=]() { Update(_profiler->runTime, _profiler->currentFrameRate); });
-
-    if (ENABLE_PROFILER)
-        _profiler->DisplayData();
-
+    
     d3ddev->EndScene();    // ends the 3D scene
-
-    d3ddev->Present(NULL, NULL, NULL, NULL);    // displays the created frame
+    
+    _profiler->TimedRunner(_profiler->presentTime, [=]() { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
 }
 
 // ************/ Execution Order /************ //
