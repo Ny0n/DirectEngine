@@ -29,8 +29,8 @@ Engine::Engine(HWND hWnd, Profiler* profiler) : _window(hWnd), _profiler(profile
 
 Engine::~Engine()
 {
-    delete _profiler;
-    delete _scene;
+    delete(_profiler);
+    delete(_scene);
 }
 
 void Engine::InitLight()
@@ -100,7 +100,6 @@ void Engine::InitD3D()
         NULL);
 }
 
-bool runLoop = true;
 
 void Engine::Play()
 {
@@ -113,12 +112,11 @@ void Engine::Play()
     _isPlaying = true;
 
     InitD3D();
-
-    // this struct holds Windows event messages
-    MSG msg;
-
+    
+    MSG msg; // this struct holds Windows event messages
 	float lastRunTime = 0.0f;
-    while (runLoop == true)
+
+    while (true)
     {
         if (!_isPlaying)
             return;
@@ -129,13 +127,11 @@ void Engine::Play()
             // Translate the message and dispatch it to WindowProc()
             TranslateMessage(&msg);
             DispatchMessage(&msg);
-            // If the message is WM_QUIT, exit the while loop
-            if (msg.message == WM_QUIT) {
-                runLoop = false;
-                break;
-            }
-        }
 
+            // If the message is WM_QUIT, exit the while loop
+            if (msg.message == WM_QUIT)
+                goto stop;
+        }
 
         // Run game code here
 
@@ -151,6 +147,7 @@ void Engine::Play()
             _profiler->TimedRunner(_profiler->frameTime, [=]() { NewFrame(); }); // TODO init lambdas once ?
         }
     }
+	stop:;
 }
 
 void Engine::Stop()

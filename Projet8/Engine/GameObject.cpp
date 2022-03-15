@@ -15,7 +15,7 @@ GameObject::~GameObject()
 		delete(component);
 	}
 
-	delete transform;
+	delete(transform);
 	components.clear();
 }
 

@@ -41,11 +41,9 @@ DefaultScene::DefaultScene()
 	cubePosition2.z = 1.0f;
 	cube2->transform->position = cubePosition2;
 
-
 	cube2->transform->RotatePitch(45);
 
 	cube2->AddComponent(new Cube(cube2, 2.0f));
-
 }
 
 DefaultScene::~DefaultScene()
@@ -57,9 +55,8 @@ void DefaultScene::FreeMemory(list<GameObject*> listGo)
 {
 	for (const GameObject* element : listGo)
 	{
-		delete element;
+		delete(element);
 	}
 
 	listGo.clear();
 }
-

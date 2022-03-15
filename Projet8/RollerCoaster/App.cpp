@@ -75,8 +75,5 @@ void App::Loop()
 void App::Uninit() const
 {
     _engine->Stop();
-
-
-    delete _engine;
-
+    delete(_engine);
 }

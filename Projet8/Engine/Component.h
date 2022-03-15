@@ -14,6 +14,7 @@ enum class ComponentCategory
 
 class Component
 {
+
 public:
 	virtual const char* GetType() = 0; // this makes the class abstract
 	virtual ComponentCategory GetCategory() = 0;
