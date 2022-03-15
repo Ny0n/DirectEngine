@@ -6,7 +6,8 @@ class Camera : public Component
 {
 
 public:
-    ComponentType GetType() override { return ComponentType::camera; }
+	const char* GetType() override { return NAMEOF(Camera); }
+    ComponentCategory GetCategory() override { return ComponentCategory::unique; }
 
     void Update(float runTime, float deltaTime) override;
 

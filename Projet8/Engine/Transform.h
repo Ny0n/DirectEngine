@@ -2,25 +2,11 @@
 
 #include "Component.h"
 
-struct Vector3
-{
-    float x, y, z;
-};
-
-struct MATRIX
-{
-    float x, y, z;
-};
-
-struct QUATERNION
-{
-    float x, y, z;
-};
-
 class Transform : public Component
 {
 public:
-	ComponentType GetType() override { return ComponentType::transform; }
+    const char* GetType() override { return NAMEOF(Transform); }
+    ComponentCategory GetCategory() override { return ComponentCategory::unique; }
     
     D3DXVECTOR3 scale;
 
@@ -36,6 +22,8 @@ public:
 
 
 public:
+    Transform();
+
     void Identity();
     void FromMatrix(D3DXMATRIX* pMat);
     void UpdateRotationFromVectors();
