@@ -66,6 +66,9 @@
     <ClInclude Include="Scene.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="MeshRender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -91,6 +94,9 @@
     </ClCompile>
     <ClCompile Include="Profiler.cpp">
       <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRender.cpp">
+      <Filter>Source Files\Engine\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

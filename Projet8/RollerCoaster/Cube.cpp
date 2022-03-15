@@ -1,15 +1,17 @@
 #include "Cube.h"
 
-Cube::Cube(GameObject* g, float size)
+
+
+void Cube::Start()
 {
-	_transform = g->transform;
-	_size = size;
+    //transform = &Transform::Transform();
 }
 
 void Cube::Update(float runTime, float deltaTime)
 {
     CubeRender();
     CubePlacement();
+
 }
 
 void Cube::CubeRender()
@@ -83,53 +85,7 @@ void Cube::CubeRender()
 
 void Cube::CubePlacement()
 {
-    D3DXMATRIX matTranslate;    // a matrix to store the translation information
-
-    // build a matrix to move the model 12 units along the x-axis and 4 units along the y-axis
-    // store it to matTranslate
-    D3DXMATRIX matRotate;
-    D3DXMATRIX matRotateX;
-    D3DXMATRIX matRotateY;
-    D3DXMATRIX matRotateZ;
-    D3DXMATRIX matScale;
-    D3DXMATRIX finalMat;
-    //D3DXMATRIX matTranslate;
-    D3DXMatrixIdentity(&matRotateX);
-    //D3DXMatrixIdentity(&matRotateY);
-    D3DXMatrixIdentity(&matRotateZ);
-    D3DXMatrixIdentity(&matScale);
-    D3DXMatrixIdentity(&matTranslate);
-
-    D3DXMatrixRotationX(&matRotateX, _transform->quaternion.x);
-    D3DXMatrixRotationY(&matRotateY, _transform->quaternion.y);    // the front side
-    D3DXMatrixRotationZ(&matRotateZ, _transform->quaternion.z);
-
-    D3DXMatrixScaling(&matScale, _transform->scale.x, _transform->scale.y, _transform->scale.z);
-
-    D3DXMatrixTranslation(&matTranslate, _transform->position.x, _transform->position.y, _transform->position.z);
-
-    matRotate = matRotateX;
-    matRotate *= matRotateY;
-    matRotate *= matRotateZ;
-
-    finalMat = matRotate;
-
-    finalMat *= matTranslate;
-
-
-
-    finalMat *= matScale;
-
-
-    // select the vertex buffer to display
-    d3ddev->SetStreamSource(0, _VBuffer, 0, sizeof(CUSTOMVERTEX));
-    d3ddev->SetIndices(_IBuffer);
-
-    //d3ddev->SetTransform(D3DTS_WORLD, &finalMat);
-    //d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
-    //d3ddev->SetTransform(D3DTS_WORLD, &finalMatB);
-    //d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
-    // draw the Hypercraft
+    D3DXMATRIX finalMat = transform->GetMatrix();
     d3ddev->SetTransform(D3DTS_WORLD, &finalMat);
     d3ddev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 0, 12);
 

@@ -16,8 +16,8 @@ void Camera::Update(float runTime, float deltaTime)
     //auto camPos = D3DXVECTOR3(0, 0, 30.0f);    // the camera position
     auto lookAt = D3DXVECTOR3(0.0f, 0.0f, 0.0f);    // the look-at position
     auto camDir = D3DXVECTOR3(0.0f, 1.0f, 0.0f); // the up directions
-
-    D3DXMatrixLookAtLH(&matView, &transform->position, &lookAt, &camDir);  // the up direction
+    D3DXVECTOR3 pos = transform->GetPosition();
+    D3DXMatrixLookAtLH(&matView, &pos, &lookAt, &camDir);  // the up direction
     float det;
     D3DXMATRIX matViewInversed;
     D3DXMatrixInverse(&matViewInversed, NULL, &matView);
