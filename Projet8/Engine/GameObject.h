@@ -9,9 +9,9 @@ public:
 	GameObject();
 	virtual ~GameObject();
 
-	Component* GetComponent(ComponentType type) const;
+	Component* GetComponent(const char* type);
 	bool AddComponent(Component* component);
-	bool RemoveComponent(ComponentType type);
+	bool RemoveComponent(const char* type);
 	bool RemoveComponent(Component* component);
 
 	list<Component*> components;

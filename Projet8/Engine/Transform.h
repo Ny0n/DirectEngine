@@ -5,7 +5,8 @@
 class Transform : public Component
 {
 public:
-	ComponentType GetType() override { return ComponentType::transform; }
+    const char* GetType() override { return NAMEOF(Transform); }
+    ComponentCategory GetCategory() override { return ComponentCategory::unique; }
     
     D3DXVECTOR3 scale;
 
