@@ -28,12 +28,6 @@ void Transform::Identity()
 
 	D3DXMatrixRotationQuaternion(&rotation, &quaternion); //Default matrix rotation
 
-	//Display the D3DX Matrix
-	/*Utils::Println("11: " + to_string(rotation._11) + "|12: " + to_string(rotation._12) + "|13: " + to_string(rotation._13) + "|14: " + to_string(rotation._14) + "\n" +
-					"21: " + to_string(rotation._21) + "|22: " + to_string(rotation._22) + "|23: " + to_string(rotation._23) + "|24: " + to_string(rotation._24) + "\n" +
-					"31: " + to_string(rotation._31) + "|32: " + to_string(rotation._32) + "|33: " + to_string(rotation._33) + "|34: " + to_string(rotation._34) + "\n" +
-					"41: " + to_string(rotation._41) + "|42: " + to_string(rotation._42) + "|43: " + to_string(rotation._43) + "|44: " + to_string(rotation._44) + "\n");*/
-
 
 	position = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //Default position
 
