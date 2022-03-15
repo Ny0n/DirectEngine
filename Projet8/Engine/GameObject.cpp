@@ -10,13 +10,9 @@ GameObject::GameObject() : transform(new Transform())
 
 GameObject::~GameObject()
 {
-	for (const Component* component : this->components)
-	{
-		delete(component);
-	}
+	Utils::DeleteList(&components);
 
 	delete(transform);
-	components.clear();
 }
 
 // Finds and returns the first fount component of type ComponentType
