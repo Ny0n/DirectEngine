@@ -24,7 +24,7 @@ DefaultScene::DefaultScene()
 
 	GameObject* cube1 = CreateEmpty();
 	cube1->AddComponent(new Cube());
-	cube1->AddComponent(new Rotate(true));
+	cube1->AddComponent(new Rotate(150.0f, true));
 	
 	cube1->transform->SetPosition(D3DXVECTOR3(-5.0f, 0.0f, 0.0f));
 	cube1->transform->Rotate(40, -40, 0);
@@ -33,7 +33,7 @@ DefaultScene::DefaultScene()
 
 	GameObject* cube2 = CreateEmpty();
 	cube2->AddComponent(new Cube());
-	cube2->AddComponent(new Rotate());
+	cube2->AddComponent(new Rotate(150.0f));
 	
 	cube2->transform->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 0.0f));
 	cube2->transform->Rotate(40, 40, 0);
