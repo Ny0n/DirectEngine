@@ -9,6 +9,7 @@ list<const char*> engineDefaultComponentTypes = { // components that we can't re
 list<const char*> engineComponentTypes = { // engine-created components
 	NAMEOF(Transform),
 	NAMEOF(Camera),
+	NAMEOF(MeshRenderer),
 };
 
 bool Component::TypeEquals(Component* other)

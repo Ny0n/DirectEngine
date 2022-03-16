@@ -52,6 +52,13 @@ void Transform::UpdateRotationFromMatrix()
 
 void Transform::UpdateMatrix()
 {
+	matrix = rotation;
+	D3DXMATRIX matScale,matTranslate;
+
+	D3DXMatrixScaling(&matScale, scale.x, scale.y, scale.z);
+	matrix *= matScale;
+	D3DXMatrixTranslation(&matTranslate, position.x, position.y, position.z);
+	matrix *= matTranslate;
 }
 
 void Transform::Rotate(float pitch, float yaw, float roll)
@@ -60,7 +67,6 @@ void Transform::Rotate(float pitch, float yaw, float roll)
 	D3DXQuaternionIdentity(&quatRot);
 
 	D3DXQUATERNION quat;
-	D3DXQuaternionIdentity(&quatRot);
 
 	//rotate x axis
 	D3DXQuaternionRotationAxis(&quat, &right,D3DXToRadian(pitch));
@@ -78,24 +84,25 @@ void Transform::Rotate(float pitch, float yaw, float roll)
 	quaternion *= quatRot;
 
 	//create a new rotation matrix
-	D3DXMATRIX matrixRot;
-	D3DXMatrixRotationQuaternion(&matrixRot, &quaternion);
+	D3DXMatrixRotationQuaternion(&rotation, &quaternion);
 
 	//change axis value
 	//x axis
-	right.x = matrixRot._11;
-	right.y = matrixRot._12;
-	right.z = matrixRot._13;
+	right.x = rotation._11;
+	right.y = rotation._12;
+	right.z = rotation._13;
 
 	//y axis
-	up.x = matrixRot._21;
-	up.y = matrixRot._22;
-	up.z = matrixRot._23;
+	up.x = rotation._21;
+	up.y = rotation._22;
+	up.z = rotation._23;
 
 	//z axis
-	forward.x = matrixRot._31;
-	forward.y = matrixRot._32;
-	forward.z = matrixRot._33;
+	forward.x = rotation._31;
+	forward.y = rotation._32;
+	forward.z = rotation._33;
+
+	UpdateMatrix();
 }
 
 
@@ -141,3 +148,41 @@ void Transform::RotateWorldY(float angle)
 void Transform::RotateWorldZ(float angle)
 {
 }
+
+void Transform::SetQuaternion(D3DXQUATERNION quat)
+{
+	quaternion = quat;
+}
+
+void Transform::SetPosition(D3DXVECTOR3 pos)
+{
+	position = pos;
+}
+
+void Transform::SetScale(D3DXVECTOR3 s)
+{
+	scale = s;
+}
+
+//bool Transform::Equals(Transform* other)
+//{ 
+//	if (position.x != other->position.x &&
+//		position.y != other->position.y &&
+//		position.z != other->position.z &&
+//		quaternion.x != other->quaternion.x &&
+//		quaternion.y != other->quaternion.y &&
+//		quaternion.z != other->quaternion.z &&
+//		quaternion.w != other->quaternion.w)
+//		return false;
+//	for (int i = 0; i < sizeof(rotation) / sizeof(rotation[0]); i++)
+//		if (rotation[i] != other->rotation[i]) 
+//		{
+//			return false;
+//		}
+//	for(int i = 0 ; i < sizeof(matrix)/sizeof(matrix[0]); i++)
+//		if(matrix[i] != other->matrix[i])
+//		{
+//			return false;
+//		}
+//	return true;
+//}

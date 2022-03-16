@@ -12,7 +12,7 @@ DefaultScene::DefaultScene()
 	GameObject* camera = CreateEmpty();
 	camera->AddComponent(new Camera());
 
-	camera->transform->position.z = 60.0f;
+	camera->transform->SetPosition(D3DXVECTOR3(2.0f, 0.0f, 0.0f));
 	Instantiate(camera);
 
 	GameObject* cube = CreateEmpty();
@@ -23,27 +23,29 @@ DefaultScene::DefaultScene()
 	cubePosition.x = 0.0f;
 	cubePosition.y = 0.0f;
 	cubePosition.z = 0.0f;
-	cube->transform->position = cubePosition;
+	camera->transform->SetPosition(cubePosition);
 
-	cube->transform->scale *= 2;
-
-	cube->transform->RotateYaw(45);
+	cube->transform->SetScale(cube->transform->GetScale()*2);
+	static float index = 0; index += 80;
+	cube->transform->RotateYaw(index);
 	
-	cube->AddComponent(new Cube(cube,2.0f));
+	cube->AddComponent(new Cube());
 
-	GameObject* cube2 = CreateEmpty();
-	cube2->transform->Identity();
-	Instantiate(cube2);
-
+	GameObject* tigre = CreateEmpty();
+	tigre->transform->Identity();
+	Instantiate(tigre);
+	
 	D3DXVECTOR3 cubePosition2;
 	cubePosition2.x = -5.0f;
 	cubePosition2.y = 1.0f;
-	cubePosition2.z = 1.0f;
-	cube2->transform->position = cubePosition2;
-
-	cube2->transform->RotatePitch(45);
-
-	cube2->AddComponent(new Cube(cube2, 2.0f));
+	cubePosition2.z = -20.0f;
+	camera->transform->SetPosition(cubePosition2);
+	
+	tigre->transform->RotatePitch(25);
+	
+	LPCWSTR path1 = L"C:\\Users\\fcalvet\\Desktop\\direct8\\Projet8\\RollerCoaster\\Mesh\\tiger.x";
+	LPCWSTR path2 = L"D:\\GitHub\\direct8\\Projet8\\RollerCoaster\\Mesh\\tiger.x";
+	tigre->AddComponent(new MeshRenderer(path2));
 }
 
 DefaultScene::~DefaultScene()

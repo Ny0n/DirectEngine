@@ -6,8 +6,7 @@ class DefaultScene : public Scene
 {
 
 public:
-	~DefaultScene() override;
 	DefaultScene();
+	~DefaultScene() override;
 	
 };
-
