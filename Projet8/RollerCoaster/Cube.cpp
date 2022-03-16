@@ -1,7 +1,5 @@
 #include "Cube.h"
 
-
-
 void Cube::Start()
 {
 }
@@ -10,7 +8,6 @@ void Cube::Update(float runTime, float deltaTime)
 {
     CubeRender();
     CubePlacement();
-
 }
 
 void Cube::CubeRender()

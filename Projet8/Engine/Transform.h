@@ -27,29 +27,35 @@ public:
     void RotateWorldY(float angle);
     void RotateWorldZ(float angle);
 
-    D3DXQUATERNION GetQuaternion() { return quaternion; }
-    void SetQuaternion(D3DXQUATERNION q);
-
-    void SetPosition(D3DXVECTOR3 position);
-    D3DXVECTOR3 GetPosition() { return position; };
-
-    void SetScale(D3DXVECTOR3 s);
-    D3DXVECTOR3 GetScale() { return scale; }
-
-    D3DXMATRIX GetMatrix() { return matrix; }
+    D3DXMATRIX GetMatrix() const { return matrix; }
     //bool Equals(Transform* other);
 
-private :
+    D3DXVECTOR3 GetPosition() const { return position; }
+    void SetPosition(D3DXVECTOR3 position);
+
+    D3DXVECTOR3 GetScale() const { return scale; }
+    void SetScale(D3DXVECTOR3 s);
+
+    D3DXQUATERNION GetQuaternion() const { return quaternion; }
+    void SetQuaternion(D3DXQUATERNION q);
+
+    D3DXMATRIX GetRotation() const { return rotation; }
+
+    D3DXVECTOR3 GetForward() const { return forward; }
+    D3DXVECTOR3 GetRight() const { return right; }
+    D3DXVECTOR3 GetUp() const { return up; }
+
+private:
+    D3DXMATRIX matrix;
+
+    D3DXVECTOR3 position;
     D3DXVECTOR3 scale;
+
+    D3DXQUATERNION quaternion;
+    D3DXMATRIX rotation;
 
     D3DXVECTOR3 forward;
     D3DXVECTOR3 right;
     D3DXVECTOR3 up;
-    D3DXQUATERNION quaternion;
-    D3DXMATRIX rotation;
-
-    D3DXVECTOR3 position;
-
-    D3DXMATRIX matrix;
 
 };

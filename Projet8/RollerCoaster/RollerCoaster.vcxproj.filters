@@ -12,11 +12,11 @@
     <Filter Include="Game">
       <UniqueIdentifier>{de03e27c-7cfd-44df-a836-b6cdea488d0d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Components">
-      <UniqueIdentifier>{2a34c824-fc6f-4dd3-a4fb-0fb4be78c117}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Scenes">
       <UniqueIdentifier>{63460e92-4f1e-4751-9b8b-ce450c5f8f31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scripts">
+      <UniqueIdentifier>{2a34c824-fc6f-4dd3-a4fb-0fb4be78c117}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,10 +27,10 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="RainbowBackground.h">
-      <Filter>Game\Components</Filter>
+      <Filter>Game\Scripts</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
-      <Filter>Game\Components</Filter>
+      <Filter>Game\Scripts</Filter>
     </ClInclude>
     <ClInclude Include="App.h">
       <Filter>Game</Filter>
@@ -38,13 +38,16 @@
     <ClInclude Include="DefaultScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="GoUpAndRoll.h">
+      <Filter>Game\Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RainbowBackground.cpp">
-      <Filter>Game\Components</Filter>
+      <Filter>Game\Scripts</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
-      <Filter>Game\Components</Filter>
+      <Filter>Game\Scripts</Filter>
     </ClCompile>
     <ClCompile Include="App.cpp">
       <Filter>Game</Filter>
@@ -54,6 +57,9 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GoUpAndRoll.cpp">
+      <Filter>Game\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

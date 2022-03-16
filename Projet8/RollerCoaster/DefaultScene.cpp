@@ -1,53 +1,48 @@
 #include "DefaultScene.h"
 
 #include "Cube.h"
+#include "GoUpAndRoll.h"
 #include "RainbowBackground.h"
 
 DefaultScene::DefaultScene()
 {
+	// rgb background
+
 	GameObject* rgb = CreateEmpty();
 	rgb->AddComponent(new RainbowBackground());
 	Instantiate(rgb);
 
-	GameObject* camera = CreateEmpty();
-	camera->AddComponent(new Camera());
+	// camera
 
-	camera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 10.0f));
-	Instantiate(camera);
+	GameObject* mainCamera = CreateEmpty();
+	mainCamera->AddComponent(new Camera());
+	mainCamera->transform->SetPosition(D3DXVECTOR3(-10.0f, 0.0f, -30.0f));
+	Instantiate(mainCamera);
+
+	// cube
 
 	GameObject* cube = CreateEmpty();
-	cube->transform->Identity();
+	cube->AddComponent(new Cube());
+	
+	cube->transform->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 0.0f));
+	cube->transform->SetScale(cube->transform->GetScale()*1);
+	cube->transform->RotatePitch(25);
+	
 	Instantiate(cube);
 
-	D3DXVECTOR3 cubePosition;
-	cubePosition.x = 5.0f;
-	cubePosition.y = 0.0f;
-	cubePosition.z = 0.0f;
-	cube->transform->SetPosition(cubePosition);
-
-	cube->transform->SetScale(cube->transform->GetScale()*1);
-	static float index = 0; index += 80;
-	cube->transform->RotatePitch(25);;
-	
-	cube->AddComponent(new Cube());
+	// tigre
 
 	GameObject* tigre = CreateEmpty();
-	tigre->transform->Identity();
-	Instantiate(tigre);
-	
-	D3DXVECTOR3 cubePosition2;
-	cubePosition2.x = 2.0f;
-	cubePosition2.y = 1.0f;
-	cubePosition2.z = 0.0f;
-	tigre->transform->SetPosition(cubePosition2);
-	
-	tigre->transform->RotatePitch(25);
-	tigre->transform->SetScale(tigre->transform->GetScale() * 2);
-	//LPCWSTR path1 = L"C:\\Users\\fcalvet\\Desktop\\direct8\\Projet8\\RollerCoaster\\Mesh\\tiger.x";
 
 	LPCWSTR path = L"Mesh\\tiger.x";
-	//LPCWSTR path2 = L"D:\\GitHub\\direct8\\Projet8\\RollerCoaster\\Mesh\\tiger.x";
 	tigre->AddComponent(new MeshRenderer(path));
+	tigre->AddComponent(new GoUpAndRoll());
+
+	tigre->transform->SetPosition(D3DXVECTOR3(2.0f, 1.0f, 0.0f));
+	tigre->transform->RotatePitch(25);
+	tigre->transform->SetScale(tigre->transform->GetScale() * 2);
+
+	Instantiate(tigre);
 }
 
 DefaultScene::~DefaultScene()

@@ -12,13 +12,11 @@ public:
     MeshRenderer(LPCWSTR path);
     ~MeshRenderer() override;
 
+    void Start() override;
     void Update(float runTime, float deltaTime) override;
 
 private:
     ID3DXMesh* _pmesh;
     LPCWSTR _path;
-
-    void Render();
-    void Placement();
 
 };
