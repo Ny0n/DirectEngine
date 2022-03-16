@@ -39,7 +39,8 @@ public:
     D3DXQUATERNION GetQuaternion() const { return quaternion; }
     void SetQuaternion(D3DXQUATERNION q);
 
-    D3DXMATRIX GetRotation() const { return rotation; }
+    D3DXVECTOR3 GetRotation() const { return {quaternion.x, quaternion.y, quaternion.z}; }
+    D3DXMATRIX GetRotationMatrix() const { return rotation; }
 
     D3DXVECTOR3 GetForward() const { return forward; }
     D3DXVECTOR3 GetRight() const { return right; }

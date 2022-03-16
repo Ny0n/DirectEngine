@@ -3,6 +3,7 @@
 #include "Camera.h"
 
 #include "Transform.h"
+#include "Utils.h"
 
 void Camera::Start()
 {
@@ -12,14 +13,18 @@ void Camera::Update(float runTime, float deltaTime)
 {
     // camera data
 
-    auto lookAt = D3DXVECTOR3(0.0f, 0.0f, 0.0f); // the look-at position
-    auto camDir = D3DXVECTOR3(0.0f, 1.0f, 0.0f); // the up direction
     auto pos = transform->GetPosition(); // the current position
+    auto lookAt = pos + transform->GetForward(); // the look-at position (we look in front of us)
+    auto camDir = D3DXVECTOR3(0.0f, 1.0f, 0.0f); // the up direction
 
     auto fov = D3DXToRadian(45); // the horizontal field of view
     auto ratio = (FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT; // aspect ratio
     auto nvp = 1.0f; // the near view-plane
     auto fvp = 100.0f; // the far view-plane
+
+    // auto camDir = transform->GetRotation(); // the up direction
+    // string s = "" + to_string(transform->GetRotation().x) + " " + to_string(transform->GetRotation().y) + " " + to_string(transform->GetRotation().z);
+    // Utils::Println(s);
 
 	// **************************** //
 

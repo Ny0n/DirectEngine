@@ -38,7 +38,10 @@
     <ClInclude Include="DefaultScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="GoUpAndRoll.h">
+    <ClInclude Include="GoUp.h">
+      <Filter>Game\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Rotate.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
@@ -58,7 +61,10 @@
     <ClCompile Include="Main.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="GoUpAndRoll.cpp">
+    <ClCompile Include="GoUp.cpp">
+      <Filter>Game\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Rotate.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
