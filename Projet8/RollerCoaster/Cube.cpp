@@ -4,7 +4,6 @@
 
 void Cube::Start()
 {
-    //transform = &Transform::Transform();
 }
 
 void Cube::Update(float runTime, float deltaTime)
@@ -86,9 +85,12 @@ void Cube::CubeRender()
 void Cube::CubePlacement()
 {
     D3DXMATRIX finalMat = transform->GetMatrix();
-    d3ddev->SetTransform(D3DTS_WORLD, &finalMat);
-    d3ddev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 0, 12);
+    d3ddev->SetTransform(D3DTS_WORLD, &(finalMat));
+    d3ddev->SetStreamSource(0, _VBuffer, 0, sizeof(CUSTOMVERTEX));
+    d3ddev->SetIndices(_IBuffer);
 
+    // draw the cube
+    d3ddev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 0, 12);
 
     // copy the vertex buffer to the back buffer
     //d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);

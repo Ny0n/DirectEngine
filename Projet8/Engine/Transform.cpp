@@ -152,16 +152,19 @@ void Transform::RotateWorldZ(float angle)
 void Transform::SetQuaternion(D3DXQUATERNION quat)
 {
 	quaternion = quat;
+	UpdateMatrix();
 }
 
 void Transform::SetPosition(D3DXVECTOR3 pos)
 {
 	position = pos;
+	UpdateMatrix();
 }
 
 void Transform::SetScale(D3DXVECTOR3 s)
 {
 	scale = s;
+	UpdateMatrix();
 }
 
 //bool Transform::Equals(Transform* other)
