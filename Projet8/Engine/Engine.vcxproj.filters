@@ -1,105 +1,104 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Includes">
-      <UniqueIdentifier>{fbd3c415-97c8-406c-9d57-3a3b042604f7}</UniqueIdentifier>
+    <Filter Include="Source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files\Engine">
-      <UniqueIdentifier>{5b7df774-900b-4b26-9b91-055547baef0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Engine">
+    <Filter Include="Source\Engine">
       <UniqueIdentifier>{0249155f-3c08-483d-bd9c-59a2a34f4f37}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Components">
-      <UniqueIdentifier>{2c2334bf-2ef7-4f6e-ada3-fbb74dc099ef}</UniqueIdentifier>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{fbd3c415-97c8-406c-9d57-3a3b042604f7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Components">
+    <Filter Include="Lib">
+      <UniqueIdentifier>{564fc13c-db87-4c0c-a4e6-8c2d3471cedd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Engine\Objects">
+      <UniqueIdentifier>{8c309721-f2ba-4ad3-beee-ff0905217aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Engine\Objects\Components">
       <UniqueIdentifier>{0356116c-afe9-4788-beef-2b43df4194d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Engine\Helpers">
+      <UniqueIdentifier>{e0a2296d-8aab-421d-8187-2996853d76a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
+      <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="EngineLib.h">
-      <Filter>Includes</Filter>
-    </ClInclude>
-    <ClInclude Include="Components.h">
-      <Filter>Includes</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Profiler.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Header Files\Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Header Files\Engine\Components</Filter>
+    <ClInclude Include="framework.h">
+      <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files\Engine\Components</Filter>
+      <Filter>Source\Engine\Objects\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Engine.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files\Engine</Filter>
+    <ClInclude Include="Component.h">
+      <Filter>Source\Engine\Objects\Components</Filter>
     </ClInclude>
     <ClInclude Include="MeshRenderer.h">
-      <Filter>Header Files\Engine\Components</Filter>
+      <Filter>Source\Engine\Objects\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Source\Engine\Objects\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Source\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Source\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineLib.h">
+      <Filter>Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="Components.h">
+      <Filter>Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Source\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Profiler.h">
+      <Filter>Source\Engine\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Source\Engine\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\Engine</Filter>
+      <Filter>Source\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Source Files\Engine\Components</Filter>
+      <Filter>Source\Engine\Objects\Components</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
-      <Filter>Source Files\Engine\Components</Filter>
+      <Filter>Source\Engine\Objects\Components</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Source Files\Engine\Components</Filter>
+      <Filter>Source\Engine\Objects\Components</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Profiler.cpp">
-      <Filter>Source Files\Engine</Filter>
+      <Filter>Source\Engine</Filter>
     </ClCompile>
     <ClCompile Include="MeshRenderer.cpp">
-      <Filter>Source Files\Engine\Components</Filter>
+      <Filter>Source\Engine\Objects\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Profiler.cpp">
+      <Filter>Source\Engine\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Utils.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source\Engine\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
