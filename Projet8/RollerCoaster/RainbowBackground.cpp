@@ -1,5 +1,7 @@
 ﻿#include "RainbowBackground.h"
 
+#include "Application.h"
+
 D3DXVECTOR3 va = D3DXVECTOR3(0.5f, 0.5f, 0.5f);
 D3DXVECTOR3 vb = D3DXVECTOR3(0.5f, 0.5f, 0.5f);
 D3DXVECTOR3 vc = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
@@ -18,8 +20,17 @@ D3DXVECTOR3 palette(float t, D3DXVECTOR3 a, D3DXVECTOR3 b, D3DXVECTOR3 c, D3DXVE
 float speed = 0.2f;
 float progress = 0.0f;
 
+// float t = 0.0f;
+
 void RainbowBackground::Update(float runTime, float deltaTime)
 {
+    // t += 1;
+    // if (t >= 5)
+    // {
+    //     Application::SetTargetFPS(0.1);
+    //     t = -1000;
+    // }
+
     D3DXVECTOR3 result = palette(progress, va, vb, vc, vd) * 255.0f;
     progress += speed * deltaTime;
 

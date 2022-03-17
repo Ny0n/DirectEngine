@@ -115,6 +115,9 @@ void Engine::Play()
 
     // starting the profiler
     _profiler->InitSystemTime();
+    _profiler->runTime = _profiler->GetSystemTime(); // TODO redo this
+
+    NewFrame(); // starting frame
 
     while (true)
     {
@@ -133,9 +136,6 @@ void Engine::Play()
         // Run game code here
 
         if (!_isPlaying)
-            continue;
-
-        if (Application::GetTargetFPS() == 0.0f)
             continue;
 
         _profiler->runTime = _profiler->GetSystemTime();
@@ -172,7 +172,9 @@ void Engine::NewFrame()
     _profiler->lastFrameTime = _profiler->runTime;
 
     _profiler->currentFrame++;
-    _profiler->currentFPS = 1.0f / _profiler->currentFrameRate;
+    _profiler->currentFPS = _profiler->currentFrameRate == 0.0f ? 0.0f : 1.0f / _profiler->currentFrameRate; // TODO redo this
+
+    // TODO update data in Time class
 
     _profiler->TimedRunner(_profiler->frameTime, [=]() { RunFrame(); }); // we run the frame
 

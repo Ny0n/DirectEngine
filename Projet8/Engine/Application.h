@@ -1,6 +1,6 @@
 #pragma once
 
-#define APPLICATION_DEFAULT_FPS 144
+#define APPLICATION_DEFAULT_FPS 60
 
 class Application final
 {
@@ -12,16 +12,9 @@ private:
 public:
 	Application() = delete;
 
-	static float GetTargetFPS() { return _targetFPS; }
-	static void SetTargetFPS(float fps)
-	{
-		_targetFPS = fps;
-		_targetFrameRate = fps < 0.0f ? 0.0f : 1.0f / fps; // fps < 0 means no limit
-	}
+	static float GetTargetFPS();
+	static void SetTargetFPS(float fps);
 
-	static float GetTargetFrameRate() { return _targetFrameRate; }
+	static float GetTargetFrameRate();
 
 };
-
-float Application::_targetFPS = APPLICATION_DEFAULT_FPS;
-float Application::_targetFrameRate = _targetFPS < 0.0f ? 0.0f: 1.0f / _targetFPS;
