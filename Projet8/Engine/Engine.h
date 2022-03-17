@@ -19,6 +19,7 @@ public:
 
 private:
 	HWND _window = nullptr;
+
 	Profiler* _profiler = nullptr;
 	Scene* _scene = nullptr;
 
@@ -28,6 +29,7 @@ private:
 	void InitD3D();
 
 	void NewFrame();
+	void RunFrame();
 
 	void Start();
 	void Update(float runTime, float deltaTime);

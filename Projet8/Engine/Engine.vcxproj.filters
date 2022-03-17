@@ -27,6 +27,9 @@
     <Filter Include="Source\Engine\Helpers">
       <UniqueIdentifier>{e0a2296d-8aab-421d-8187-2996853d76a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Engine\Data">
+      <UniqueIdentifier>{b2c85d0f-737d-453c-a955-3ca5b12e49d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -68,6 +71,9 @@
     <ClInclude Include="Utils.h">
       <Filter>Source\Engine\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Source\Engine\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -99,6 +105,9 @@
     </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Source\Engine\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source\Engine\Data</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

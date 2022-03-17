@@ -22,6 +22,18 @@ void Profiler::DisplayData()
     Utils::Println(s);
 }
 
+// **************************** //
+
+void Profiler::TryDisplayData()
+{
+    _displayCooldown -= currentFrameRate;
+    if (_displayCooldown <= 0.0f)
+    {
+        _displayCooldown = PROFILER_DISPLAY_COOLDOWN;
+        DisplayData();
+    }
+}
+
 void Profiler::InitSystemTime()
 {
     _startTime = timeGetTime() / 1000.0f;

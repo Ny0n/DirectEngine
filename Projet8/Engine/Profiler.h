@@ -1,28 +1,34 @@
 ﻿#pragma once
 
-class Profiler {
+#define PROFILER_DISPLAY_ENABLED true
+#define PROFILER_DISPLAY_COOLDOWN 1 // less or equal to 0 means each frame
+
+class Profiler final {
 
 private:
-    template<typename T, typename... Args>
-    auto Timed(float& timeVar, const T& func, Args&... args);
+    template<typename T>
+    auto Timed(float& timeVar, const T& func);
 
     float _startTime{};
     bool _isPreciseTime{};
     float _frequency{};
     LONGLONG _startPreciseTime{};
 
+    float _displayCooldown{};
+
 public:
     Profiler() = default;
 
     void InitSystemTime();
     float GetSystemTime();
-    void DisplayData();
+    void TryDisplayData();
+    void DisplayData(); // forced instant display
 
-    template<typename T, typename... Args>
-    void* TimedRunner(float& timeVar, const T& func, Args&... args);
+    template<typename T>
+    void* TimedRunner(float& timeVar, const T& func);
 
-    template<typename T, typename... Args>
-    auto TimedSupplier(float& timeVar, const T& func, Args&... args);
+    template<typename T>
+    auto TimedSupplier(float& timeVar, const T& func);
 
     // *** Profiler Data *** //
 
@@ -44,10 +50,11 @@ public:
     }*/
 
     float runTime{};
+    float lastFrameTime{};
 
+    int currentFrame{};
     float currentFPS{};
     float currentFrameRate{};
-    int currentFrame{};
 
     float frameTime{};
     float startTime{};
@@ -63,12 +70,12 @@ public:
 
 // **************************** //
 
-template<typename T, typename... Args>
-auto Profiler::Timed(float& timeVar, const T& func, Args&... args) {
+template<typename T>
+auto Profiler::Timed(float& timeVar, const T& func) {
     float start = GetSystemTime();
     // --------------------------------------
 
-    auto result = func(args...); // we run the given function
+    auto result = func(); // we run the given function
 
     // --------------------------------------
     float end = GetSystemTime();
@@ -82,20 +89,20 @@ auto Profiler::Timed(float& timeVar, const T& func, Args&... args) {
 
 // **************************** //
 
-template<typename T, typename... Args>
-void* Profiler::TimedRunner(float& timeVar, const T& func, Args&... args) {
+template<typename T>
+void* Profiler::TimedRunner(float& timeVar, const T& func) {
     // since returning void is causing problems, i'm transferring the func to an other one that returns void* through a lambda
     // (it's one way to do it)
-    auto voidFunc = [=](Args&... args)
+    auto voidFunc = [=]()
     {
-        func(args...);
+        func();
         return nullptr;
     };
 
-    return Timed(timeVar, voidFunc, args...);
+    return Timed(timeVar, voidFunc);
 }
 
-template<typename T, typename... Args>
-auto Profiler::TimedSupplier(float& timeVar, const T& func, Args&... args) {
-    return Timed(timeVar, func, args...);
+template<typename T>
+auto Profiler::TimedSupplier(float& timeVar, const T& func) {
+    return Timed(timeVar, func);
 }

@@ -5,23 +5,15 @@
 
 #include "Engine.h"
 
+#include "Application.h"
 #include "Utils.h"
 
 // ************************ //
 
-constexpr int TARGET_FPS = 60;
-
-#define ENABLE_PROFILER true
-#define PROFILER_COOLDOWN 1.0f
-
-// ************************ //
-
-LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
-LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
-LPDIRECT3DVERTEXBUFFER9 _VBuffer = NULL;
-LPDIRECT3DINDEXBUFFER9 _IBuffer = NULL;
-
-const float targetFrameRate = 1.0f / TARGET_FPS;
+LPDIRECT3D9 d3d; // the pointer to our Direct3D interface
+LPDIRECT3DDEVICE9 d3ddev; // the pointer to the device class
+LPDIRECT3DVERTEXBUFFER9 _VBuffer = nullptr;
+LPDIRECT3DINDEXBUFFER9 _IBuffer = nullptr;
 
 // ************************ //
 
@@ -104,7 +96,6 @@ void Engine::InitD3D()
         NULL);
 }
 
-
 void Engine::Play()
 {
     if (_isPlaying)
@@ -122,10 +113,8 @@ void Engine::Play()
     
     MSG msg; // this struct holds Windows event messages
 
-    // starting the profiler and initializing the variables
+    // starting the profiler
     _profiler->InitSystemTime();
-	float lastFrameTime = 0.0f;
-    float profilerCooldown = 0.0f;
 
     while (true)
     {
@@ -144,30 +133,16 @@ void Engine::Play()
         // Run game code here
 
         if (!_isPlaying)
-            return;
+            continue;
+
+        if (Application::GetTargetFPS() == 0.0f)
+            continue;
 
         _profiler->runTime = _profiler->GetSystemTime();
+        _profiler->currentFrameRate = _profiler->runTime - _profiler->lastFrameTime;
 
-        const float elapsedTime = _profiler->runTime - lastFrameTime;
-        if (elapsedTime >= targetFrameRate) // new frame
-        {
-            lastFrameTime = _profiler->runTime;
-
-            _profiler->currentFrame++;
-            _profiler->currentFrameRate = elapsedTime;
-            _profiler->currentFPS = 1.0f / elapsedTime;
-
-            _profiler->TimedRunner(_profiler->frameTime, [=]() { NewFrame(); });
-
-#if ENABLE_PROFILER
-            profilerCooldown -= elapsedTime;
-            if (profilerCooldown <= 0.0f)
-            {
-                profilerCooldown = PROFILER_COOLDOWN;
-                _profiler->DisplayData();
-            }
-#endif
-        }
+        if (_profiler->currentFrameRate >= Application::GetTargetFrameRate()) // new frame
+            NewFrame();
     }
 	stop:;
 }
@@ -190,20 +165,36 @@ void Engine::LoadScene(Scene* scene)
 	}
 }
 
-// ************/ Execution /************ //
+// **************************** //
 
 void Engine::NewFrame()
 {
+    _profiler->lastFrameTime = _profiler->runTime;
+
+    _profiler->currentFrame++;
+    _profiler->currentFPS = 1.0f / _profiler->currentFrameRate;
+
+    _profiler->TimedRunner(_profiler->frameTime, [=]() { RunFrame(); }); // we run the frame
+
+#if PROFILER_DISPLAY_ENABLED
+    _profiler->TryDisplayData();
+#endif
+}
+
+// ************/ Execution /************ //
+
+void Engine::RunFrame()
+{
     d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
     d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-    
+
     d3ddev->BeginScene();    // begins the 3D scene
 
     _profiler->TimedRunner(_profiler->startTime, [=]() { Start(); });
     _profiler->TimedRunner(_profiler->updateTime, [=]() { Update(_profiler->runTime, _profiler->currentFrameRate); });
-    
+
     d3ddev->EndScene();    // ends the 3D scene
-    
+
     _profiler->TimedRunner(_profiler->presentTime, [=]() { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
 }
 
