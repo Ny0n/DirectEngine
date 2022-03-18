@@ -2,6 +2,7 @@
 
 float Application::_targetFPS = APPLICATION_DEFAULT_FPS;
 float Application::_targetFrameRate = _targetFPS <= 0.0f ? 0.0f : 1.0f / _targetFPS;
+bool Application::_quit = false;
 
 float Application::GetTargetFPS()
 {
@@ -17,4 +18,14 @@ void Application::SetTargetFPS(float fps)
 float Application::GetTargetFrameRate()
 {
 	return _targetFrameRate;
+}
+
+void Application::Quit()
+{
+	_quit = true;
+}
+
+bool Application::GetQuit()
+{
+	return _quit;
 }

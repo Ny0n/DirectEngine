@@ -6,4 +6,17 @@ void InputTester::Update(float runTime, float deltaTime)
 	{
 		Utils::Println("A");
 	}
+
+	if (Input::GetKeyUp(KeyCode::A))
+	{
+		Utils::Println("A Up");
+	}
+
+	if (Input::GetKeyDown(KeyCode::A))
+	{
+		Utils::Println("A Down");
+	}
+
+	if (Input::GetKeyDown(KeyCode::Escape))
+		Application::Quit();
 }
