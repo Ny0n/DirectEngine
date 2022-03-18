@@ -1,9 +1,5 @@
 ﻿#include "pch.h"
 
-#include "Profiler.h"
-
-#include "Utils.h"
-
 string setSize(string str, int size) // this fills the given string with enough spaces to match the given size
 {
 	const int toAdd = size - static_cast<int>(str.size());

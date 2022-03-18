@@ -1,7 +1,8 @@
 ﻿#pragma once
 
-#include "Profiler.h"
-#include "Scene.h"
+class Component;
+class Profiler;
+class Scene;
 
 class Engine
 {

@@ -1,7 +1,5 @@
 ﻿#include "pch.h"
 
-#include "Transform.h"
-
 Transform::Transform()
 {
 	Identity();

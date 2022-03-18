@@ -1,10 +1,5 @@
 ﻿#include "pch.h"
 
-#include "Scene.h"
-
-#include "Utils.h"
-
-
 GameObject* Scene::CreateEmpty()
 {
 	return new GameObject();

@@ -29,4 +29,3 @@ void Utils::DeleteList(list<T*>* list)
 
 	list->clear();
 }
-

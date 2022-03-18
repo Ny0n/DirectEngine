@@ -59,9 +59,6 @@
     <ClInclude Include="EngineLib.h">
       <Filter>Lib</Filter>
     </ClInclude>
-    <ClInclude Include="EngineComponents.h">
-      <Filter>Lib</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Source\Engine\Objects</Filter>
     </ClInclude>

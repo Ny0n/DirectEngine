@@ -1,7 +1,5 @@
 #include "pch.h"
 
-#include "EngineLib.h"
-
 MeshRenderer::MeshRenderer(LPCWSTR path) : _pmesh(nullptr), _path(path)
 {
 }

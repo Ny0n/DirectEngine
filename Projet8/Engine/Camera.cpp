@@ -1,10 +1,5 @@
 #include "pch.h"
 
-#include "Camera.h"
-
-#include "Transform.h"
-#include "Utils.h"
-
 void Camera::Start()
 {
 }

@@ -1,12 +1,4 @@
-// Engine.cpp : Defines the functions for the static library.
-//
-
 #include "pch.h"
-
-#include "Engine.h"
-
-#include "Application.h"
-#include "Utils.h"
 
 // ************************ //
 

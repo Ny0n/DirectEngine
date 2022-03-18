@@ -1,7 +1,5 @@
 ﻿#include "pch.h"
 
-#include "Utils.h"
-
 void Utils::Println(string s)
 {
 	s += "\n";

@@ -1,7 +1,5 @@
 #include "pch.h"
 
-#include "Application.h"
-
 float Application::_targetFPS = APPLICATION_DEFAULT_FPS;
 float Application::_targetFrameRate = _targetFPS <= 0.0f ? 0.0f : 1.0f / _targetFPS;
 

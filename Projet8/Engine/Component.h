@@ -3,9 +3,6 @@
 extern list<const char*> engineDefaultComponentTypes;
 extern list<const char*> engineComponentTypes;
 
-class Transform;
-class GameObject;
-
 enum class ComponentCategory
 {
 	unique,

@@ -159,7 +159,6 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
-    <ClInclude Include="EngineComponents.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EngineLib.h" />
     <ClInclude Include="framework.h" />

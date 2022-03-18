@@ -1,7 +1,5 @@
 ﻿#include "RainbowBackground.h"
 
-#include "Application.h"
-
 D3DXVECTOR3 va = D3DXVECTOR3(0.5f, 0.5f, 0.5f);
 D3DXVECTOR3 vb = D3DXVECTOR3(0.5f, 0.5f, 0.5f);
 D3DXVECTOR3 vc = D3DXVECTOR3(1.0f, 1.0f, 1.0f);

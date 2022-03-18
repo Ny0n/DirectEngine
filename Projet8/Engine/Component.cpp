@@ -1,7 +1,5 @@
 ﻿#include "pch.h"
 
-#include "EngineComponents.h"
-
 list<const char*> engineDefaultComponentTypes = { // components that we can't remove
 	NAMEOF(Transform),
 };

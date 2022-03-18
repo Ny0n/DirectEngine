@@ -1,9 +1,5 @@
 ﻿#include "pch.h"
 
-#include "GameObject.h"
-
-#include "Utils.h"
-
 GameObject::GameObject() : transform(new Transform())
 {
 }
