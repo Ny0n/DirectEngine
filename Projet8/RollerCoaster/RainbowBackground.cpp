@@ -18,16 +18,10 @@ D3DXVECTOR3 palette(float t, D3DXVECTOR3 a, D3DXVECTOR3 b, D3DXVECTOR3 c, D3DXVE
 float speed = 0.2f;
 float progress = 0.0f;
 
-// float t = 0.0f;
-
 void RainbowBackground::Update(float runTime, float deltaTime)
 {
-    // t += 1;
-    // if (t >= 5)
-    // {
-    //     Application::SetTargetFPS(0.1);
-    //     t = -1000;
-    // }
+    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(80, 140, 220), 1.0f, 0); // light-blue background
+    return;
 
     D3DXVECTOR3 result = palette(progress, va, vb, vc, vd) * 255.0f;
     progress += speed * deltaTime;
@@ -38,9 +32,6 @@ void RainbowBackground::Update(float runTime, float deltaTime)
     float r = result.x;
     float g = result.y;
     float b = result.z;
-
-    //Utils::Println(to_string(progress));
-    //Utils::Println(to_string(r) + " " + to_string(g) + " " + to_string(b));
     
     d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b)), 1.0f, 0);
 }
