@@ -13,6 +13,9 @@ DefaultScene::DefaultScene()
 	rgb->AddComponent(new RainbowBackground());
 	Instantiate(rgb);
 
+	GameObject* aligneBox = CreateEmpty();
+	aligneBox->AddComponent(new AlignedBox());
+	Instantiate(aligneBox);
 	// camera
 
 	GameObject* mainCamera = CreateEmpty();
@@ -26,7 +29,7 @@ DefaultScene::DefaultScene()
 	cube1->AddComponent(new Cube());
 	cube1->AddComponent(new Rotate(150.0f, true));
 	
-	cube1->transform->SetPosition(D3DXVECTOR3(-5.0f, 0.0f, 0.0f));
+	cube1->transform->SetPosition(D3DXVECTOR3(0.0f , 0.0f, 0.0f));
 	cube1->transform->Rotate(40, -40, 0);
 	
 	Instantiate(cube1);

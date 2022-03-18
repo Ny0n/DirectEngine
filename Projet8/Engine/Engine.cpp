@@ -185,8 +185,9 @@ void Engine::RunFrame()
     d3ddev->BeginScene();    // begins the 3D scene
 
     _profiler->TimedRunner(_profiler->startTime, [=]() { Start(); });
+    Collision();
     _profiler->TimedRunner(_profiler->updateTime, [=]() { Update(_profiler->runTime, _profiler->currentFrameRate); });
-
+    
     d3ddev->EndScene();    // ends the 3D scene
 
     _profiler->TimedRunner(_profiler->presentTime, [=]() { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
@@ -216,6 +217,48 @@ void Engine::Update(float runTime, float deltaTime)
         for (Component* comp : go->components)
         {
             comp->Update(runTime, deltaTime);
+        }
+    }
+    
+}
+
+void Engine::Collision()
+{
+    
+    list<AlignedBox*> alignedBoxes ={};
+    list<GameObject*> gameObjects = {};
+	for (GameObject* go : _scene->gameObjects)
+    {
+        AlignedBox* tmpAb =(AlignedBox*)go->GetComponent(NAMEOF(AlignedBox));
+        if (tmpAb != nullptr)
+        {
+            alignedBoxes.push_back(tmpAb);
+        }
+    }
+    for(AlignedBox* box : alignedBoxes)
+    {
+        gameObjects = box->AreIn(_scene->gameObjects);
+    }
+        //for(int i = 0 ; i < gameObjects.size() ; i++)
+        //{
+        //    for (int j = i+1; j < gameObjects.size()-1; j++)
+        //    {
+        //        auto* colliderI = (Collider*)gameObjects[i]->GetComponent(NAMEOF(Collider));
+        //        auto* colliderJ = (Collider*)gameObjects[j]->GetComponent(NAMEOF(Collider));
+        //    }
+        //}
+    for(GameObject* gameObjectA : gameObjects)
+    {
+        for (GameObject* gameObjectB : gameObjects)
+        {
+            if(gameObjectB == gameObjectA)
+                continue;
+            auto* colliderA = (Collider*)gameObjectA->GetComponent(NAMEOF(Collider));
+            auto* colliderB = (Collider*)gameObjectB->GetComponent(NAMEOF(Collider));
+            if(colliderA->IsColliding(colliderB))
+            {
+                Utils::Println("OUi");
+            }
         }
     }
 }

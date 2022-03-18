@@ -8,7 +8,9 @@
 #include "Component.h"
 #include "Transform.h"
 #include "Camera.h"
+#include "Collider.h"
 #include "MeshRenderer.h"
+#include "AlignedBox.h"
 
 #include "Scene.h"
 #include "Application.h"
