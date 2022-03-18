@@ -2,19 +2,19 @@
 
 void InputTester::Update(float runTime, float deltaTime)
 {
+	if (Input::GetKeyDown(KeyCode::A))
+	{
+		Utils::Println("Key Down");
+	}
+
 	if (Input::GetKey(KeyCode::A))
 	{
-		Utils::Println("A");
+		Utils::Println("Key");
 	}
 
 	if (Input::GetKeyUp(KeyCode::A))
 	{
-		Utils::Println("A Up");
-	}
-
-	if (Input::GetKeyDown(KeyCode::A))
-	{
-		Utils::Println("A Down");
+		Utils::Println("Key Up");
 	}
 
 	if (Input::GetKeyDown(KeyCode::Escape))
