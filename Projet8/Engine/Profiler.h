@@ -52,11 +52,13 @@ public:
     float runTime{};
     float lastFrameTime{};
 
-    int currentFrame{};
+    int loopCount{};
+    int frameCount{};
     float currentFPS{};
     float currentFrameRate{};
 
     float frameTime{};
+    float inputTime{};
     float startTime{};
     float updateTime{};
     float presentTime{};

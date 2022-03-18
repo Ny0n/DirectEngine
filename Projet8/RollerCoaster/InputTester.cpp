@@ -2,7 +2,7 @@
 
 void InputTester::Update(float runTime, float deltaTime)
 {
-	if (GetAsyncKeyState(KeyCode::A) & 0x8000)
+	if (Input::GetKey(KeyCode::A))
 	{
 		Utils::Println("A");
 	}

@@ -12,6 +12,7 @@
 
 // C RunTime Header Files
 #include <cstdlib>
+#include <map>
 #include <typeinfo>
 #include <malloc.h>
 #include <memory.h>

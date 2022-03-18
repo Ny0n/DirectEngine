@@ -32,6 +32,7 @@ private:
 	void NewFrame();
 	void RunFrame();
 
+	void Input();
 	void Start();
 	void Update(float runTime, float deltaTime);
 

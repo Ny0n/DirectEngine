@@ -1,6 +1,6 @@
 #pragma once
 
-#define APPLICATION_DEFAULT_FPS 30
+#define APPLICATION_DEFAULT_FPS 144
 
 class Application final
 {

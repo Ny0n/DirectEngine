@@ -113,13 +113,15 @@ void Engine::Play()
 
     while (true)
     {
+        // _profiler->loopCount++;
+
         // Check to see if any messages are waiting in the queue
         while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             // Translate the message and dispatch it to WindowProc()
             TranslateMessage(&msg);
             DispatchMessage(&msg);
-
+        
             // If the message is WM_QUIT, exit the while loop
             if (msg.message == WM_QUIT)
                 goto stop;
@@ -142,6 +144,7 @@ void Engine::Play()
 void Engine::Stop()
 {
     _isPlaying = false;
+    Input::Delete();
 
     d3ddev->Release();    // close and release the 3D device
     d3d->Release();    // close and release Direct3D
@@ -163,7 +166,7 @@ void Engine::NewFrame()
 {
     _profiler->lastFrameTime = _profiler->runTime;
 
-    _profiler->currentFrame++;
+    _profiler->frameCount++;
     _profiler->currentFPS = _profiler->currentFrameRate == 0.0f ? 0.0f : 1.0f / _profiler->currentFrameRate; // TODO redo this
 
     // TODO update data in Time class
@@ -184,6 +187,7 @@ void Engine::RunFrame()
 
     d3ddev->BeginScene();    // begins the 3D scene
 
+    _profiler->TimedRunner(_profiler->inputTime, [=]() { Input(); });
     _profiler->TimedRunner(_profiler->startTime, [=]() { Start(); });
     _profiler->TimedRunner(_profiler->updateTime, [=]() { Update(_profiler->runTime, _profiler->currentFrameRate); });
 
@@ -193,6 +197,11 @@ void Engine::RunFrame()
 }
 
 // ************/ Execution Order /************ //
+
+void Engine::Input()
+{
+    Input::UpdateInputs();
+}
 
 void Engine::Start() // TODO optimize this (init once a new list with all starts and then remove ?)
 {

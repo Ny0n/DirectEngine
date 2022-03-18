@@ -45,7 +45,7 @@
       <Filter>Game\Scripts</Filter>
     </ClInclude>
     <ClInclude Include="InputTester.h">
-      <Filter>Framework</Filter>
+      <Filter>Game\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -70,7 +70,9 @@
     <ClCompile Include="Rotate.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="InputTester.cpp" />
+    <ClCompile Include="InputTester.cpp">
+      <Filter>Game\Scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RollerCoaster.rc">
