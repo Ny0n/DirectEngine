@@ -185,7 +185,8 @@ void Engine::RunFrame()
     d3ddev->BeginScene();    // begins the 3D scene
 
     _profiler->TimedRunner(_profiler->startTime, [=]() { Start(); });
-    Collision();
+    _profiler->TimedRunner(_profiler->startTime, [=]() { Collision(); });
+   
     _profiler->TimedRunner(_profiler->updateTime, [=]() { Update(_profiler->runTime, _profiler->currentFrameRate); });
     
     d3ddev->EndScene();    // ends the 3D scene
@@ -247,6 +248,7 @@ void Engine::Collision()
         //        auto* colliderJ = (Collider*)gameObjects[j]->GetComponent(NAMEOF(Collider));
         //    }
         //}
+   
     for(GameObject* gameObjectA : gameObjects)
     {
         for (GameObject* gameObjectB : gameObjects)

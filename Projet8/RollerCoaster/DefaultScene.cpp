@@ -27,6 +27,7 @@ DefaultScene::DefaultScene()
 
 	GameObject* cube1 = CreateEmpty();
 	cube1->AddComponent(new Cube());
+	cube1->AddComponent(new Collider);
 	cube1->AddComponent(new Rotate(150.0f, true));
 	
 	cube1->transform->SetPosition(D3DXVECTOR3(0.0f , 0.0f, 0.0f));
@@ -36,6 +37,7 @@ DefaultScene::DefaultScene()
 
 	GameObject* cube2 = CreateEmpty();
 	cube2->AddComponent(new Cube());
+	cube2->AddComponent(new Collider);
 	cube2->AddComponent(new Rotate(150.0f));
 	
 	cube2->transform->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 0.0f));
@@ -51,7 +53,7 @@ DefaultScene::DefaultScene()
 	tigre->AddComponent(new MeshRenderer(path));
 	tigre->AddComponent(new GoUp());
 	tigre->AddComponent(new Rotate());
-
+	tigre->AddComponent(new Collider);
 	tigre->transform->SetPosition(D3DXVECTOR3(0.0f, -5.0f, 0.0f));
 	tigre->transform->RotatePitch(25);
 	tigre->transform->SetScale(tigre->transform->GetScale() * 2);

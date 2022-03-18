@@ -9,7 +9,7 @@ void AlignedBox::Update(float runTime, float deltaTime)
 {
 }
 
-list<GameObject*> AlignedBox::AreIn(list<GameObject*> go)
+list<GameObject*> AlignedBox::AreIn(const list<GameObject*> go)
 {
 	const D3DXVECTOR3 pos = transform->GetPosition();
 	const D3DXVECTOR3 scale = transform->GetScale();
