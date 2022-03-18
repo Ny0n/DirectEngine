@@ -4,7 +4,7 @@ class Component;
 class Profiler;
 class Scene;
 
-class Engine
+class Engine final
 {
 
 public:

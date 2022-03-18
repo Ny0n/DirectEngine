@@ -415,7 +415,7 @@ enum class KeyCode : USHORT
 // "(?! )(.*?)(?= = .*)" (regex)
 // "\t{KeyCode::$1, static_cast<USHORT>(KeyCode::$1)},\n" (list function)
 // THIS EXISTS ONLY FOR RUNTIME OPTIMIZATION
-static map<KeyCode, USHORT> KeyCodes = {
+static const map<KeyCode, USHORT> KeyCodes = {
 	{KeyCode::Mouse0, static_cast<USHORT>(KeyCode::Mouse0)},
     {KeyCode::Mouse1, static_cast<USHORT>(KeyCode::Mouse1)},
     {KeyCode::Cancel, static_cast<USHORT>(KeyCode::Cancel)},
