@@ -13,5 +13,8 @@
 #include "Scene.h"
 #include "Application.h"
 
+#include "KeyCode.h"
+#include "Input.h"
+
 #include "Profiler.h"
 #include "Utils.h"

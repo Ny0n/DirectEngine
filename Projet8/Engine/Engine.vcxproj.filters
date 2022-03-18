@@ -71,6 +71,12 @@
     <ClInclude Include="Application.h">
       <Filter>Source\Engine\Data</Filter>
     </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Source\Engine\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyCode.h">
+      <Filter>Source\Engine\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -104,6 +110,9 @@
       <Filter>Source\Engine\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Application.cpp">
+      <Filter>Source\Engine\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
       <Filter>Source\Engine\Data</Filter>
     </ClCompile>
   </ItemGroup>

@@ -2,11 +2,18 @@
 
 #include "Cube.h"
 #include "GoUp.h"
+#include "InputTester.h"
 #include "RainbowBackground.h"
 #include "Rotate.h"
 
 DefaultScene::DefaultScene()
 {
+	// tests
+
+	GameObject* inputTester = CreateEmpty();
+	inputTester->AddComponent(new InputTester());
+	Instantiate(inputTester);
+
 	// rgb background
 
 	GameObject* rgb = CreateEmpty();
