@@ -1,5 +1,7 @@
 ﻿#include "pch.h"
 
+// *** Display *** //
+
 string setSize(string str, int size) // this fills the given string with enough spaces to match the given size
 {
 	const int toAdd = size - static_cast<int>(str.size());
@@ -18,47 +20,64 @@ void Profiler::DisplayData()
     Utils::Println(s);
 }
 
-// **************************** //
-
 void Profiler::TryDisplayData()
 {
-    _displayCooldown -= currentFrameRate;
-    if (_displayCooldown <= 0.0f)
+    displayCooldown -= currentFrameRate;
+    if (displayCooldown <= 0.0f)
     {
-        _displayCooldown = PROFILER_DISPLAY_COOLDOWN;
+        displayCooldown = PROFILER_DISPLAY_COOLDOWN;
         DisplayData();
     }
 }
 
+// **************************** //
+
 void Profiler::InitSystemTime()
 {
-    _startTime = timeGetTime() / 1000.0f;
-    _isPreciseTime = false;
-    _frequency = 0.0f;
+    originalTime = timeGetTime() / 1000.0f;
+    isPreciseTime = false;
+    precisefrequency = 0.0f;
 
     LARGE_INTEGER frequency;
     memset(&frequency, 0, sizeof(LARGE_INTEGER));
 
     if (QueryPerformanceFrequency(&frequency) && frequency.QuadPart)
     {
-        _isPreciseTime = true;
-        _frequency = (float)frequency.QuadPart;
+        isPreciseTime = true;
+        precisefrequency = (float)frequency.QuadPart;
         LARGE_INTEGER counter;
         QueryPerformanceCounter(&counter);
-        _startPreciseTime = counter.QuadPart;
+        originalPreciseTime = counter.QuadPart;
     }
 }
 
 float Profiler::GetSystemTime()
 {
     // Precise
-    if (_isPreciseTime)
+    if (isPreciseTime)
     {
         LARGE_INTEGER counter;
         QueryPerformanceCounter(&counter);
-        return (float)(counter.QuadPart - _startPreciseTime) / _frequency;
+        return (float)(counter.QuadPart - originalPreciseTime) / precisefrequency;
     }
 
     // Classic
-    return (timeGetTime() / 1000.0f) - _startTime;
+    return (timeGetTime() / 1000.0f) - originalTime;
 }
+
+/*void Profiler::AddFPS(float fpsIn)
+{
+    lastFps.push_back(fpsIn);
+    int size = lastFps.size();
+    if (size > 4000)
+        lastFps.pop_front();
+
+    float avg = 0.0f;
+    for (const float fps : lastFps)
+    {
+        avg += fps;
+    }
+    avg = avg / size;
+
+    currentFPS = avg;
+}*/

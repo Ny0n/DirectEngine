@@ -9,7 +9,7 @@ LPDIRECT3DINDEXBUFFER9 _IBuffer = nullptr;
 
 // **************************** //
 
-Engine::Engine(HWND hWnd) : _window(hWnd), _profiler(new Profiler())
+Engine::Engine() : _isPlaying(false), _window(nullptr), _profiler(new Profiler()), _scene(nullptr)
 {
 }
 
@@ -17,7 +17,15 @@ Engine::~Engine()
 {
     delete(_profiler);
     delete(_scene);
+    _startedComponents.clear();
 }
+
+void Engine::LoadScene(Scene* scene)
+{
+    _scene = scene;
+}
+
+// **************************** //
 
 void Engine::InitLight()
 {
@@ -88,10 +96,31 @@ void Engine::InitD3D()
         NULL);
 }
 
-void Engine::Play()
+void Engine::UninitD3D()
+{
+    // close and release Direct3D
+    d3ddev->Release();
+    d3d->Release();
+
+    // close and release the vertex buffer
+    _VBuffer->Release();
+    _IBuffer->Release();
+}
+
+// **************************** //
+
+void Engine::Run(HWND window)
 {
     if (_isPlaying)
         return;
+
+    _window = window;
+
+	if (_window == nullptr)
+	{
+		Utils::Println("A window instance must be set!");
+		return;
+	}
 
 	if (_scene == nullptr)
 	{
@@ -101,13 +130,17 @@ void Engine::Play()
 
     _isPlaying = true;
 
+    // *** Part 1: Initialization *** //
+
     InitD3D();
-    
+
     MSG msg; // this struct holds Windows event messages
 
     // starting the profiler
     _profiler->InitSystemTime();
-    _profiler->runTime = _profiler->GetSystemTime(); // TODO redo this
+    _profiler->runTime = _profiler->GetSystemTime();
+
+    // *** Part 2: Game Loop *** //
 
     NewFrame(); // starting frame
 
@@ -132,9 +165,6 @@ void Engine::Play()
 
         // Run game code here
 
-        if (!_isPlaying)
-            continue;
-
         _profiler->runTime = _profiler->GetSystemTime();
         _profiler->currentFrameRate = _profiler->runTime - _profiler->lastFrameTime;
 
@@ -144,25 +174,12 @@ void Engine::Play()
             NewFrame();
     }
 	stop:;
-}
 
-void Engine::Stop()
-{
-    _isPlaying = false;
+    // *** Part 3: Uninitialization *** //
+
+    UninitD3D();
     Input::Delete();
-
-    d3ddev->Release();    // close and release the 3D device
-    d3d->Release();    // close and release Direct3D
-    _VBuffer->Release();    // close and release the vertex buffer
-    _IBuffer->Release();
-}
-
-void Engine::LoadScene(Scene* scene)
-{
-	if (_scene == nullptr)
-	{
-		_scene = scene;
-	}
+    delete(this);
 }
 
 // **************************** //

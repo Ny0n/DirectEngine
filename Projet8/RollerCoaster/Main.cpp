@@ -16,7 +16,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
     app = new App();
     app->Init(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
-    app->Loop(); // sort après un WM_QUIT
+    app->Run();
     app->Uninit();
     delete(app);
 

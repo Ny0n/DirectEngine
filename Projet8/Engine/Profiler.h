@@ -3,26 +3,32 @@
 #define PROFILER_DISPLAY_ENABLED true
 #define PROFILER_DISPLAY_COOLDOWN 1 // less or equal to 0 means each frame
 
+// Only the Engine has an access to this class, since everything is private
 class Profiler final {
 
-private:
-    template<typename T>
-    auto Timed(float& timeVar, const T& func);
+    friend class Engine;
 
-    float _startTime{};
-    bool _isPreciseTime{};
-    float _frequency{};
-    LONGLONG _startPreciseTime{};
-
-    float _displayCooldown{};
-
-public:
     Profiler() = default;
 
-    void InitSystemTime();
-    float GetSystemTime();
+    // *** Display *** //
+
+    float displayCooldown{};
+
     void TryDisplayData();
     void DisplayData(); // forced instant display
+
+    // *** Initialization *** //
+
+    float originalTime{};
+    bool isPreciseTime{};
+    float precisefrequency{};
+    LONGLONG originalPreciseTime{};
+
+    void InitSystemTime();
+
+    // *** Timing Methods *** //
+
+    float GetSystemTime(); // Returns the current time since InitSystemTime() was last called
 
     template<typename T>
     void* TimedRunner(float& timeVar, const T& func);
@@ -30,24 +36,9 @@ public:
     template<typename T>
     auto TimedSupplier(float& timeVar, const T& func);
 
-    // *** Profiler Data *** //
+    // *** Timing Data *** //
 
-    /*void addFPS(float fpsIn)
-    {
-        lastFps.push_back(fpsIn);
-        int size = lastFps.size();
-        if (size > 4000)
-            lastFps.pop_front();
-
-        float avg = 0.0f;
-        for (const float fps : lastFps)
-        {
-            avg += fps;
-        }
-        avg = avg / size;
-
-        currentFPS = avg;
-    }*/
+    // void AddFPS(float fpsIn);
 
     float runTime{};
     float lastFrameTime{};
@@ -73,25 +64,6 @@ public:
 // **************************** //
 
 template<typename T>
-auto Profiler::Timed(float& timeVar, const T& func) {
-    float start = GetSystemTime();
-    // --------------------------------------
-
-    auto result = func(); // we run the given function
-
-    // --------------------------------------
-    float end = GetSystemTime();
-
-    float elapsed = end - start;
-
-    timeVar = elapsed;
-
-    return result;
-}
-
-// **************************** //
-
-template<typename T>
 void* Profiler::TimedRunner(float& timeVar, const T& func) {
     // since returning void is causing problems, i'm transferring the func to an other one that returns void* through a lambda
     // (it's one way to do it)
@@ -101,10 +73,22 @@ void* Profiler::TimedRunner(float& timeVar, const T& func) {
         return nullptr;
     };
 
-    return Timed(timeVar, voidFunc);
+    return TimedSupplier(timeVar, voidFunc);
 }
 
 template<typename T>
 auto Profiler::TimedSupplier(float& timeVar, const T& func) {
-    return Timed(timeVar, func);
+	const float start = GetSystemTime();
+    // --------------------------------------
+
+    auto result = func(); // we run the given function
+
+    // --------------------------------------
+	const float end = GetSystemTime();
+
+	const float elapsed = end - start;
+
+    timeVar = elapsed;
+
+    return result;
 }
