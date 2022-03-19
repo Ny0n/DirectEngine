@@ -74,7 +74,10 @@
     <ClInclude Include="Input.h">
       <Filter>Source\Engine\Data</Filter>
     </ClInclude>
-    <ClInclude Include="KeyCode.h">
+    <ClInclude Include="KeyCodes.h">
+      <Filter>Source\Engine\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="ApplicationTime.h">
       <Filter>Source\Engine\Data</Filter>
     </ClInclude>
   </ItemGroup>
@@ -113,6 +116,12 @@
       <Filter>Source\Engine\Data</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
+      <Filter>Source\Engine\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="ApplicationTime.cpp">
+      <Filter>Source\Engine\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyCodes.cpp">
       <Filter>Source\Engine\Data</Filter>
     </ClCompile>
   </ItemGroup>

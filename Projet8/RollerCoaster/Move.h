@@ -12,7 +12,7 @@ public:
 	Move() = default;
 	explicit Move(float speed);
 
-	void Update(float runTime, float deltaTime) override;
+	void Update() override;
 
 private:
 	float _speed{ 10.0f };

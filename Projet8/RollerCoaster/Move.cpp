@@ -6,8 +6,7 @@ Move::Move(float speed) : _speed(speed)
 
 // **************************** //
 
-
-void Move::Update(float runTime, float deltaTime)
+void Move::Update()
 {
     // we get the movement vector
 
@@ -27,7 +26,7 @@ void Move::Update(float runTime, float deltaTime)
     // and we apply it to the transform's position
 
     D3DXVECTOR3 pos = transform->GetPosition();
-    pos += movement * _speed * deltaTime;
+    pos += movement * _speed * Time::deltaTime;
 
     transform->SetPosition(pos);
 }

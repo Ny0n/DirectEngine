@@ -1,6 +1,6 @@
 #include "InputTester.h"
 
-void InputTester::Update(float runTime, float deltaTime)
+void InputTester::Update()
 {
 	if (Input::GetKeyDown(KeyCode::A))
 	{

@@ -1,31 +1,35 @@
 #include "pch.h"
 
-map<KeyCode, Input::InputState*> Input::_frameInputs = {};
+map<KeyCode, Input::InputState*> Input::frameInputs = {};
+
+// **************************** //
 
 bool Input::GetKey(KeyCode key)
 {
-	return _frameInputs[key]->key;
+	return frameInputs[key]->key;
 }
 
 bool Input::GetKeyDown(KeyCode key)
 {
-	return _frameInputs[key]->keyDown;
+	return frameInputs[key]->keyDown;
 }
 
 bool Input::GetKeyUp(KeyCode key)
 {
-	return _frameInputs[key]->keyUp;
+	return frameInputs[key]->keyUp;
 }
+
+// **************************** //
 
 void Input::UpdateInputs()
 {
-	for (auto code : KeyCodes)
+	for (auto code : OptimizedKeyCodes::table)
 	{
-		InputState* state = _frameInputs[code.first];
+		InputState* state = frameInputs[code.first];
 		if (state == nullptr)
 		{
-			_frameInputs[code.first] = new InputState();
-			state = _frameInputs[code.first];
+			frameInputs[code.first] = new InputState();
+			state = frameInputs[code.first];
 		}
 
 		const bool isDown = (GetAsyncKeyState(code.second) & 0x8000);
@@ -38,9 +42,9 @@ void Input::UpdateInputs()
 
 void Input::Delete()
 {
-	for (auto code : _frameInputs)
+	for (auto code : frameInputs)
 	{
 		delete(code.second);
 	}
-	_frameInputs.clear();
+	frameInputs.clear();
 }

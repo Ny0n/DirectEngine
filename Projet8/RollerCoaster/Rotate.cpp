@@ -22,7 +22,7 @@ Rotate::Rotate(float speed, bool reverse) : _speed(speed), _dir(InitDir(reverse)
 
 // **************************** //
 
-void Rotate::Update(float runTime, float deltaTime)
+void Rotate::Update()
 {
-    transform->RotateRoll(_speed * _dir * deltaTime);
+    transform->RotateRoll(_speed * _dir * Time::deltaTime);
 }

@@ -5,20 +5,19 @@
 class Application final
 {
 
-private:
-	static float _targetFPS;
-	static float _targetFrameRate;
-	static bool _quit;
-
 public:
 	Application() = delete;
 
 	static float GetTargetFPS();
 	static void SetTargetFPS(float fps);
 
-	static float GetTargetFrameRate();
-
 	static void Quit();
-	static bool GetQuit();
+
+private:
+	friend class Engine;
+
+	static float targetFPS;
+	static float targetFrameRate;
+	static bool quit;
 
 };

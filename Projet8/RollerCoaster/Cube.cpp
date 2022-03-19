@@ -4,7 +4,7 @@ void Cube::Start()
 {
 }
 
-void Cube::Update(float runTime, float deltaTime)
+void Cube::Update()
 {
     CubeRender();
     CubePlacement();

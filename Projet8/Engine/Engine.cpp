@@ -1,13 +1,13 @@
 #include "pch.h"
 
-// ************************ //
+// **************************** //
 
 LPDIRECT3D9 d3d; // the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev; // the pointer to the device class
 LPDIRECT3DVERTEXBUFFER9 _VBuffer = nullptr;
 LPDIRECT3DINDEXBUFFER9 _IBuffer = nullptr;
 
-// ************************ //
+// **************************** //
 
 Engine::Engine(HWND hWnd) : _window(hWnd), _profiler(new Profiler())
 {
@@ -115,7 +115,7 @@ void Engine::Play()
     {
         // _profiler->loopCount++;
 
-        if (Application::GetQuit())
+        if (Application::quit)
             break;
 
         // Check to see if any messages are waiting in the queue
@@ -138,7 +138,9 @@ void Engine::Play()
         _profiler->runTime = _profiler->GetSystemTime();
         _profiler->currentFrameRate = _profiler->runTime - _profiler->lastFrameTime;
 
-        if (_profiler->currentFrameRate >= Application::GetTargetFrameRate()) // new frame
+        Time::_runTime = _profiler->runTime;
+
+        if (_profiler->currentFrameRate >= Application::targetFrameRate) // new frame
             NewFrame();
     }
 	stop:;
@@ -167,14 +169,19 @@ void Engine::LoadScene(Scene* scene)
 
 void Engine::NewFrame()
 {
+    // first we update all of the data
+
     _profiler->lastFrameTime = _profiler->runTime;
 
     _profiler->frameCount++;
-    _profiler->currentFPS = _profiler->currentFrameRate == 0.0f ? 0.0f : 1.0f / _profiler->currentFrameRate; // TODO redo this
+    _profiler->currentFPS = _profiler->currentFrameRate == 0.0f ? 0.0f : 1.0f / _profiler->currentFrameRate;
 
-    // TODO update data in Time class
+    Time::_frameCount = _profiler->frameCount;
+    Time::_deltaTime = _profiler->currentFrameRate;
 
-    _profiler->TimedRunner(_profiler->frameTime, [=]() { RunFrame(); }); // we run the frame
+    // then we run the frame
+
+    _profiler->TimedRunner(_profiler->frameTime, RUNNER(RunFrame));
 
 #if PROFILER_DISPLAY_ENABLED
     _profiler->TryDisplayData();
@@ -190,13 +197,13 @@ void Engine::RunFrame()
 
     d3ddev->BeginScene();    // begins the 3D scene
 
-    _profiler->TimedRunner(_profiler->inputTime, [=]() { Input(); });
-    _profiler->TimedRunner(_profiler->startTime, [=]() { Start(); });
-    _profiler->TimedRunner(_profiler->updateTime, [=]() { Update(_profiler->runTime, _profiler->currentFrameRate); });
+    _profiler->TimedRunner(_profiler->inputTime, RUNNER(Input));
+    _profiler->TimedRunner(_profiler->startTime, RUNNER(Start));
+    _profiler->TimedRunner(_profiler->updateTime, RUNNER(Update));
 
     d3ddev->EndScene();    // ends the 3D scene
 
-    _profiler->TimedRunner(_profiler->presentTime, [=]() { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
+    _profiler->TimedRunner(_profiler->presentTime, [=] { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
 }
 
 // ************/ Execution Order /************ //
@@ -221,13 +228,13 @@ void Engine::Start() // TODO optimize this (init once a new list with all starts
     }
 }
 
-void Engine::Update(float runTime, float deltaTime)
+void Engine::Update()
 {
     for (GameObject* go : _scene->gameObjects)
     {
         for (Component* comp : go->components)
         {
-            comp->Update(runTime, deltaTime);
+            comp->Update();
         }
     }
 }

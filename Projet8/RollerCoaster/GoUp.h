@@ -12,7 +12,7 @@ public:
 	GoUp() = default;
 	explicit GoUp(float speed);
 
-	void Update(float runTime, float deltaTime) override;
+	void Update() override;
 
 private:
 	float _speed{ 1.0f };

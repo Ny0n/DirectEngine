@@ -8,7 +8,7 @@ class Engine final
 {
 
 public:
-	Engine(HWND hWnd);
+	explicit Engine(HWND hWnd);
 	~Engine();
 
 	void Play();
@@ -34,7 +34,7 @@ private:
 
 	void Input();
 	void Start();
-	void Update(float runTime, float deltaTime);
+	void Update();
 
 private:
 	list<Component*> _startedComponents;
