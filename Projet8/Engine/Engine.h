@@ -1,42 +1,49 @@
 ﻿#pragma once
 
 class Component;
-class Profiler;
 class Scene;
 
-class Engine
+class Engine final
 {
 
 public:
-	Engine(HWND hWnd);
-	~Engine();
-
-	void Play();
-	void Stop();
-	void Pause();
-	void Step();
+	static Engine* GetInstance() // Singleton
+	{
+		static auto instance = new Engine();
+		return instance;
+	}
+	Engine(Engine const&) = delete;
+	Engine(Engine const&&) = delete;
+	void operator=(Engine const&) = delete;
+	void operator=(Engine const&&) = delete;
 
 	void LoadScene(Scene* scene);
 
+	void Run(HWND window);
+
 private:
-	HWND _window = nullptr;
+	Engine(); // Only accessible from GetInstance()
+	~Engine();
 
-	Profiler* _profiler = nullptr;
-	Scene* _scene = nullptr;
+	bool _isPlaying;
 
-	bool _isPlaying = false;
+	HWND _window;
+	Profiler* _profiler;
 
 	void InitLight();
 	void InitD3D();
+	void UninitD3D();
 
 	void NewFrame();
 	void RunFrame();
-
 	void Input();
 	void Start();
-	void Update(float runTime, float deltaTime);
+	void Update();
 
-private:
+	void NewFixedUpdate();
+	void FixedUpdate();
+
+	Scene* _scene;
 	list<Component*> _startedComponents;
 
 };

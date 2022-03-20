@@ -9,6 +9,7 @@ public:
 	const char* GetType() override { return NAMEOF(InputTester); }
 	ComponentCategory GetCategory() override { return ComponentCategory::behaviour; }
 
-	void Update(float runTime, float deltaTime) override;
-
+	void Start() override;
+	void Update() override;
+	void FixedUpdate() override;
 };

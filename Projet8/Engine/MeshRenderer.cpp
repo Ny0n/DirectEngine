@@ -64,7 +64,7 @@ void MeshRenderer::Start()
     pMtrlBuffer->Release();
 }
 
-void MeshRenderer::Update(float runTime, float deltaTime)
+void MeshRenderer::Update()
 {
     if (_pmesh == nullptr)
         return;

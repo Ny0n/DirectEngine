@@ -150,6 +150,7 @@
     <ClInclude Include="DefaultScene.h" />
     <ClInclude Include="GoUp.h" />
     <ClInclude Include="InputTester.h" />
+    <ClInclude Include="Move.h" />
     <ClInclude Include="RainbowBackground.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Rotate.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="GoUp.cpp" />
     <ClCompile Include="InputTester.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Move.cpp" />
     <ClCompile Include="RainbowBackground.cpp" />
     <ClCompile Include="Rotate.cpp" />
   </ItemGroup>

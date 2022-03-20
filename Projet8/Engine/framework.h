@@ -13,6 +13,7 @@
 // C RunTime Header Files
 #include <cstdlib>
 #include <map>
+#include <functional>
 #include <typeinfo>
 #include <malloc.h>
 #include <memory.h>
@@ -43,7 +44,8 @@
 
 // declare global variables
 
-#define LAMBDA(x) [=]() { x(); }
+#define RUNNER(func) [=] { func(); }
+#define SUPPLIER(func) [=] { return func(); }
 
 #define CLASSNAMEOF(T) string(typeid(T).name()).substr(6) // gives the pure name of a class
 #define NAMEOF(T) typeid(T).name() // gives the type name of a var / class

@@ -10,7 +10,7 @@ public :
     ComponentCategory GetCategory() override { return ComponentCategory::behaviour; }
 
     void Start() override;
-    void Update(float runTime, float deltaTime) override;
+    void Update() override;
 
 private:
     void CubeRender();

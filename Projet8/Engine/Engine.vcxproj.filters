@@ -74,7 +74,13 @@
     <ClInclude Include="Input.h">
       <Filter>Source\Engine\Data</Filter>
     </ClInclude>
-    <ClInclude Include="KeyCode.h">
+    <ClInclude Include="KeyCodes.h">
+      <Filter>Source\Engine\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Source\Engine\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
       <Filter>Source\Engine\Data</Filter>
     </ClInclude>
   </ItemGroup>
@@ -113,6 +119,15 @@
       <Filter>Source\Engine\Data</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
+      <Filter>Source\Engine\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Source\Engine\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyCodes.cpp">
+      <Filter>Source\Engine\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
       <Filter>Source\Engine\Data</Filter>
     </ClCompile>
   </ItemGroup>

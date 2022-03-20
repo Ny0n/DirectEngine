@@ -11,7 +11,7 @@ public:
     ~MeshRenderer() override;
 
     void Start() override;
-    void Update(float runTime, float deltaTime) override;
+    void Update() override;
 
 private:
     ID3DXMesh* _pmesh;

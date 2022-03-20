@@ -1,20 +1,39 @@
 #include "pch.h"
 
-float Application::_targetFPS = APPLICATION_DEFAULT_FPS;
-float Application::_targetFrameRate = _targetFPS <= 0.0f ? 0.0f : 1.0f / _targetFPS;
+float GetFrameRate(float fps)
+{
+	return fps <= 0.0f ? 0.0f : 1.0f / fps; // fps <= 0 means no limit
+}
+
+float Application::targetFPS = APPLICATION_DEFAULT_FPS;
+float Application::targetFrameRate = GetFrameRate(targetFPS);
+float Application::fixedTimestep = APPLICATION_DEFAULT_FIXED_TIMESTEP;
+bool Application::quit = false;
+
+// **************************** //
 
 float Application::GetTargetFPS()
 {
-	return _targetFPS;
+	return targetFPS;
 }
 
 void Application::SetTargetFPS(float fps)
 {
-	_targetFPS = fps;
-	_targetFrameRate = fps <= 0.0f ? 0.0f : 1.0f / fps; // fps <= 0 means no limit
+	targetFPS = fps;
+	targetFrameRate = GetFrameRate(fps);
 }
 
-float Application::GetTargetFrameRate()
+float Application::GetFixedTimestep()
 {
-	return _targetFrameRate;
+	return fixedTimestep;
+}
+
+void Application::SetFixedTimestep(float timestep)
+{
+	fixedTimestep = timestep;
+}
+
+void Application::Quit()
+{
+	quit = true;
 }

@@ -1,23 +1,32 @@
 #include "pch.h"
 
-// ************************ //
+// **************************** //
 
 LPDIRECT3D9 d3d; // the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev; // the pointer to the device class
 LPDIRECT3DVERTEXBUFFER9 _VBuffer = nullptr;
 LPDIRECT3DINDEXBUFFER9 _IBuffer = nullptr;
 
-// ************************ //
+// **************************** //
 
-Engine::Engine(HWND hWnd) : _window(hWnd), _profiler(new Profiler())
+Engine::Engine() : _isPlaying(false), _window(nullptr), _profiler(new Profiler()), _scene(nullptr)
 {
+    Time::_profiler = _profiler;
 }
 
 Engine::~Engine()
 {
     delete(_profiler);
     delete(_scene);
+    _startedComponents.clear();
 }
+
+void Engine::LoadScene(Scene* scene)
+{
+    _scene = scene;
+}
+
+// **************************** //
 
 void Engine::InitLight()
 {
@@ -88,10 +97,31 @@ void Engine::InitD3D()
         NULL);
 }
 
-void Engine::Play()
+void Engine::UninitD3D()
+{
+    // close and release Direct3D
+    d3ddev->Release();
+    d3d->Release();
+
+    // close and release the vertex buffer
+    _VBuffer->Release();
+    _IBuffer->Release();
+}
+
+// **************************** //
+
+void Engine::Run(HWND window)
 {
     if (_isPlaying)
         return;
+
+    _window = window;
+
+	if (_window == nullptr)
+	{
+		Utils::Println("A window instance must be set!");
+		return;
+	}
 
 	if (_scene == nullptr)
 	{
@@ -101,19 +131,34 @@ void Engine::Play()
 
     _isPlaying = true;
 
+    // *** Part 1: Initialization *** //
+
     InitD3D();
-    
+
     MSG msg; // this struct holds Windows event messages
 
     // starting the profiler
     _profiler->InitSystemTime();
-    _profiler->runTime = _profiler->GetSystemTime(); // TODO redo this
+
+    // initializing variables
+    float frameElapsed;
+    float fixedElapsed;
+    float profilerElapsed;
+
+    // *** Part 2: Game Loop *** //
 
     NewFrame(); // starting frame
+
+#if PROFILER_DISPLAY_ENABLED
+    _profiler->DisplayData(); // displaying the data of the first frame
+#endif
 
     while (true)
     {
         // _profiler->loopCount++;
+
+        if (Application::quit)
+            break;
 
         // Check to see if any messages are waiting in the queue
         while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -129,53 +174,68 @@ void Engine::Play()
 
         // Run game code here
 
-        if (!_isPlaying)
-            continue;
+        _profiler->runTime = _profiler->GetSystemTime();
+        fixedElapsed = _profiler->runTime - _profiler->lastFixedTime;
+        if (fixedElapsed >= Application::fixedTimestep) // new fixed update
+            NewFixedUpdate(); // TODO maybe redo this and put in NewFrame with a while? (new Start() can be called after a fixedupdate..)
 
         _profiler->runTime = _profiler->GetSystemTime();
-        _profiler->currentFrameRate = _profiler->runTime - _profiler->lastFrameTime;
-
-        if (_profiler->currentFrameRate >= Application::GetTargetFrameRate()) // new frame
+        frameElapsed = _profiler->runTime - _profiler->lastFrameTime;
+        if (frameElapsed >= Application::targetFrameRate) // new frame
             NewFrame();
+
+#if PROFILER_DISPLAY_ENABLED
+        _profiler->runTime = _profiler->GetSystemTime();
+    	profilerElapsed = _profiler->runTime - _profiler->lastDisplayTime;
+        if (profilerElapsed >= _profiler->displayCooldown)
+            _profiler->DisplayData();
+#endif
     }
 	stop:;
-}
 
-void Engine::Stop()
-{
-    _isPlaying = false;
+    // *** Part 3: Uninitialization *** //
+
+    UninitD3D();
     Input::Delete();
-
-    d3ddev->Release();    // close and release the 3D device
-    d3d->Release();    // close and release Direct3D
-    _VBuffer->Release();    // close and release the vertex buffer
-    _IBuffer->Release();
-}
-
-void Engine::LoadScene(Scene* scene)
-{
-	if (_scene == nullptr)
-	{
-		_scene = scene;
-	}
+    delete(this);
 }
 
 // **************************** //
 
 void Engine::NewFrame()
 {
+    // first we update all of the data
+
+    _profiler->currentFrameRate = _profiler->runTime - _profiler->lastFrameTime; // => elapsed
     _profiler->lastFrameTime = _profiler->runTime;
+    
+    _profiler->currentFPS = _profiler->currentFrameRate == 0.0f ? 0.0f : 1.0f / _profiler->currentFrameRate;
 
-    _profiler->frameCount++;
-    _profiler->currentFPS = _profiler->currentFrameRate == 0.0f ? 0.0f : 1.0f / _profiler->currentFrameRate; // TODO redo this
+    Time::_frameCount++;
+    Time::_time = _profiler->runTime;
+    Time::_deltaTime = _profiler->currentFrameRate * Time::timeScale;
+    Time::_unscaledDeltaTime = _profiler->currentFrameRate;
 
-    // TODO update data in Time class
+    // then we run the frame
 
-    _profiler->TimedRunner(_profiler->frameTime, [=]() { RunFrame(); }); // we run the frame
+    _profiler->TimedRunner(_profiler->frameTime, RUNNER(RunFrame));
+}
 
-#if PROFILER_DISPLAY_ENABLED
-    _profiler->TryDisplayData();
-#endif
+void Engine::NewFixedUpdate()
+{
+    // first we update all of the data
+
+    _profiler->currentFixedRate = _profiler->runTime - _profiler->lastFixedTime; // => elapsed
+    _profiler->lastFixedTime = _profiler->runTime;
+
+    Time::_fixedUpdateCount++;
+    Time::_fixedTime = _profiler->runTime;
+    Time::_fixedDeltaTime = _profiler->currentFixedRate * Time::timeScale;
+    Time::_fixedUnscaledDeltaTime = _profiler->currentFixedRate;
+
+    // then we run the fixed update
+
+    Time::_inFixedUpdateStep = true; _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(FixedUpdate)); Time::_inFixedUpdateStep = false;
 }
 
 // ************/ Execution /************ //
@@ -187,13 +247,13 @@ void Engine::RunFrame()
 
     d3ddev->BeginScene();    // begins the 3D scene
 
-    _profiler->TimedRunner(_profiler->inputTime, [=]() { Input(); });
-    _profiler->TimedRunner(_profiler->startTime, [=]() { Start(); });
-    _profiler->TimedRunner(_profiler->updateTime, [=]() { Update(_profiler->runTime, _profiler->currentFrameRate); });
+    _profiler->TimedRunner(_profiler->inputTime, RUNNER(Input));
+    Time::_inStartStep = true; _profiler->TimedRunner(_profiler->startTime, RUNNER(Start)); Time::_inStartStep = false;
+    Time::_inUpdateStep = true; _profiler->TimedRunner(_profiler->updateTime, RUNNER(Update)); Time::_inUpdateStep = false;
 
     d3ddev->EndScene();    // ends the 3D scene
 
-    _profiler->TimedRunner(_profiler->presentTime, [=]() { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
+    _profiler->TimedRunner(_profiler->presentTime, [=] { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
 }
 
 // ************/ Execution Order /************ //
@@ -218,13 +278,24 @@ void Engine::Start() // TODO optimize this (init once a new list with all starts
     }
 }
 
-void Engine::Update(float runTime, float deltaTime)
+void Engine::Update()
 {
     for (GameObject* go : _scene->gameObjects)
     {
         for (Component* comp : go->components)
         {
-            comp->Update(runTime, deltaTime);
+            comp->Update();
+        }
+    }
+}
+
+void Engine::FixedUpdate()
+{
+    for (GameObject* go : _scene->gameObjects)
+    {
+        for (Component* comp : go->components)
+        {
+            comp->FixedUpdate();
         }
     }
 }

@@ -1,9 +1,11 @@
 #pragma once
 
-class Utils
+class Utils final
 {
 
 public:
+	Utils() = delete;
+
 	static void Println(string s);
 
 	template<typename T>
@@ -11,6 +13,7 @@ public:
 
 	template<typename T>
 	static void DeleteList(list<T*>* list);
+
 };
 
 template <typename T>

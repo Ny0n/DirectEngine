@@ -164,11 +164,13 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="KeyCode.h" />
+    <ClInclude Include="KeyCodes.h" />
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Profiler.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="TimeManager.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
@@ -179,6 +181,7 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="KeyCodes.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -188,6 +191,8 @@
     </ClCompile>
     <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
