@@ -139,11 +139,19 @@ void Engine::Run(HWND window)
 
     // starting the profiler
     _profiler->InitSystemTime();
-    _profiler->runTime = _profiler->GetSystemTime();
+
+    // initializing variables
+    float frameElapsed;
+    float fixedElapsed;
+    float profilerElapsed;
 
     // *** Part 2: Game Loop *** //
 
     NewFrame(); // starting frame
+
+#if PROFILER_DISPLAY_ENABLED
+    _profiler->DisplayData(); // displaying the data of the first frame
+#endif
 
     while (true)
     {
@@ -167,10 +175,21 @@ void Engine::Run(HWND window)
         // Run game code here
 
         _profiler->runTime = _profiler->GetSystemTime();
-        _profiler->currentFrameRate = _profiler->runTime - _profiler->lastFrameTime;
+        fixedElapsed = _profiler->runTime - _profiler->lastFixedTime;
+        if (fixedElapsed >= Application::fixedTimestep) // new fixed update
+            NewFixedUpdate(); // TODO maybe redo this and put in NewFrame with a while? (new Start() can be called after a fixedupdate..)
 
-        if (_profiler->currentFrameRate >= Application::targetFrameRate) // new frame
+        _profiler->runTime = _profiler->GetSystemTime();
+        frameElapsed = _profiler->runTime - _profiler->lastFrameTime;
+        if (frameElapsed >= Application::targetFrameRate) // new frame
             NewFrame();
+
+#if PROFILER_DISPLAY_ENABLED
+        _profiler->runTime = _profiler->GetSystemTime();
+    	profilerElapsed = _profiler->runTime - _profiler->lastDisplayTime;
+        if (profilerElapsed >= _profiler->displayCooldown)
+            _profiler->DisplayData();
+#endif
     }
 	stop:;
 
@@ -187,12 +206,12 @@ void Engine::NewFrame()
 {
     // first we update all of the data
 
+    _profiler->currentFrameRate = _profiler->runTime - _profiler->lastFrameTime; // => elapsed
     _profiler->lastFrameTime = _profiler->runTime;
-
-    _profiler->frameCount++;
+    
     _profiler->currentFPS = _profiler->currentFrameRate == 0.0f ? 0.0f : 1.0f / _profiler->currentFrameRate;
 
-    Time::_frameCount = _profiler->frameCount;
+    Time::_frameCount++;
     Time::_time = _profiler->runTime;
     Time::_deltaTime = _profiler->currentFrameRate * Time::timeScale;
     Time::_unscaledDeltaTime = _profiler->currentFrameRate;
@@ -200,10 +219,23 @@ void Engine::NewFrame()
     // then we run the frame
 
     _profiler->TimedRunner(_profiler->frameTime, RUNNER(RunFrame));
+}
 
-#if PROFILER_DISPLAY_ENABLED
-    _profiler->TryDisplayData();
-#endif
+void Engine::NewFixedUpdate()
+{
+    // first we update all of the data
+
+    _profiler->currentFixedRate = _profiler->runTime - _profiler->lastFixedTime; // => elapsed
+    _profiler->lastFixedTime = _profiler->runTime;
+
+    Time::_fixedUpdateCount++;
+    Time::_fixedTime = _profiler->runTime;
+    Time::_fixedDeltaTime = _profiler->currentFixedRate * Time::timeScale;
+    Time::_fixedUnscaledDeltaTime = _profiler->currentFixedRate;
+
+    // then we run the fixed update
+
+    Time::_inFixedUpdateStep = true; _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(FixedUpdate)); Time::_inFixedUpdateStep = false;
 }
 
 // ************/ Execution /************ //
@@ -253,6 +285,17 @@ void Engine::Update()
         for (Component* comp : go->components)
         {
             comp->Update();
+        }
+    }
+}
+
+void Engine::FixedUpdate()
+{
+    for (GameObject* go : _scene->gameObjects)
+    {
+        for (Component* comp : go->components)
+        {
+            comp->FixedUpdate();
         }
     }
 }

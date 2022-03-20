@@ -169,7 +169,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Profiler.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="ApplicationTime.h" />
+    <ClInclude Include="TimeManager.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Utils.h" />
@@ -191,7 +191,7 @@
     </ClCompile>
     <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="ApplicationTime.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Utils.cpp" />

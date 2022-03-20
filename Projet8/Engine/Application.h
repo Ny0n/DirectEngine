@@ -1,7 +1,7 @@
 #pragma once
 
-#define APPLICATION_DEFAULT_FPS 144
-#define APPLICATION_DEFAULT_FIXED_TIMESTEP 0.02f
+#define APPLICATION_DEFAULT_FPS 144					// FPS, so 60 means 60 frames per second
+#define APPLICATION_DEFAULT_FIXED_TIMESTEP 0.02f	// TIMESTEP, the time between each FixedUpdate, so 0.02f means 50 times per second
 
 class Application final
 {

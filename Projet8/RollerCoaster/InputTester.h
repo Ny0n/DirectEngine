@@ -11,5 +11,5 @@ public:
 
 	void Start() override;
 	void Update() override;
-
+	void FixedUpdate() override;
 };

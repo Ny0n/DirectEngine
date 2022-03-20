@@ -36,10 +36,12 @@ private:
 
 	void NewFrame();
 	void RunFrame();
-
 	void Input();
 	void Start();
 	void Update();
+
+	void NewFixedUpdate();
+	void FixedUpdate();
 
 	Scene* _scene;
 	list<Component*> _startedComponents;

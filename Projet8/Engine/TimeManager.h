@@ -8,10 +8,12 @@ public:
 
 	static float timeScale;		// The rate at which time passes (1 by default), this affects deltaTime and fixedDeltaTime (Read/Write)
 
-	static const int& frameCount;	// The current frame number
+	static const int& frameCount;		// The current frame number
+	static const int& fixedUpdateCount; // The current fixed update number
 
 	static const function<float()> runTime;	// The time in seconds since the start of the game
-	static const float& time;				// The time in seconds at the beginning of the frame
+	static const float& time;				// The time in seconds at the beginning of the new frame
+	static const float& fixedTime;			// The time in seconds at the beginning of the new fixed update
 
 	static const float& deltaTime;
 	static const float& unscaledDeltaTime;
@@ -31,8 +33,10 @@ private:
 	// all of those must be filled by the Engine
 
 	static int _frameCount;
+	static int _fixedUpdateCount;
 
 	static float _time;
+	static float _fixedTime;
 
 	static float _deltaTime;
 	static float _unscaledDeltaTime;

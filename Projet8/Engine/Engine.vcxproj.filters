@@ -77,7 +77,7 @@
     <ClInclude Include="KeyCodes.h">
       <Filter>Source\Engine\Data</Filter>
     </ClInclude>
-    <ClInclude Include="ApplicationTime.h">
+    <ClInclude Include="TimeManager.h">
       <Filter>Source\Engine\Data</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
@@ -121,7 +121,7 @@
     <ClCompile Include="Input.cpp">
       <Filter>Source\Engine\Data</Filter>
     </ClCompile>
-    <ClCompile Include="ApplicationTime.cpp">
+    <ClCompile Include="TimeManager.cpp">
       <Filter>Source\Engine\Data</Filter>
     </ClCompile>
     <ClCompile Include="KeyCodes.cpp">
