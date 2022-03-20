@@ -11,6 +11,7 @@ LPDIRECT3DINDEXBUFFER9 _IBuffer = nullptr;
 
 Engine::Engine() : _isPlaying(false), _window(nullptr), _profiler(new Profiler()), _scene(nullptr)
 {
+    Time::_profiler = _profiler;
 }
 
 Engine::~Engine()
@@ -168,8 +169,6 @@ void Engine::Run(HWND window)
         _profiler->runTime = _profiler->GetSystemTime();
         _profiler->currentFrameRate = _profiler->runTime - _profiler->lastFrameTime;
 
-        Time::_runTime = _profiler->runTime;
-
         if (_profiler->currentFrameRate >= Application::targetFrameRate) // new frame
             NewFrame();
     }
@@ -194,7 +193,9 @@ void Engine::NewFrame()
     _profiler->currentFPS = _profiler->currentFrameRate == 0.0f ? 0.0f : 1.0f / _profiler->currentFrameRate;
 
     Time::_frameCount = _profiler->frameCount;
-    Time::_deltaTime = _profiler->currentFrameRate;
+    Time::_time = _profiler->runTime;
+    Time::_deltaTime = _profiler->currentFrameRate * Time::timeScale;
+    Time::_unscaledDeltaTime = _profiler->currentFrameRate;
 
     // then we run the frame
 
@@ -215,8 +216,8 @@ void Engine::RunFrame()
     d3ddev->BeginScene();    // begins the 3D scene
 
     _profiler->TimedRunner(_profiler->inputTime, RUNNER(Input));
-    _profiler->TimedRunner(_profiler->startTime, RUNNER(Start));
-    _profiler->TimedRunner(_profiler->updateTime, RUNNER(Update));
+    Time::_inStartStep = true; _profiler->TimedRunner(_profiler->startTime, RUNNER(Start)); Time::_inStartStep = false;
+    Time::_inUpdateStep = true; _profiler->TimedRunner(_profiler->updateTime, RUNNER(Update)); Time::_inUpdateStep = false;
 
     d3ddev->EndScene();    // ends the 3D scene
 

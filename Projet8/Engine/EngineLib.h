@@ -2,6 +2,9 @@
 
 #include "framework.h"
 
+#include "Profiler.h"
+#include "Utils.h"
+
 #include "Engine.h"
 
 #include "Scene.h"
@@ -16,6 +19,4 @@
 #include "Input.h"
 #include "Application.h"
 #include "ApplicationTime.h"
-
-#include "Profiler.h"
-#include "Utils.h"
+#include "SceneManager.h"

@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 class Component;
-class Profiler;
 class Scene;
 
 class Engine final

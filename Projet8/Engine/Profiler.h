@@ -7,6 +7,7 @@
 class Profiler final {
 
     friend class Engine;
+    friend class Time;
 
     Profiler() = default;
 

@@ -80,6 +80,9 @@
     <ClInclude Include="ApplicationTime.h">
       <Filter>Source\Engine\Data</Filter>
     </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Source\Engine\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -122,6 +125,9 @@
       <Filter>Source\Engine\Data</Filter>
     </ClCompile>
     <ClCompile Include="KeyCodes.cpp">
+      <Filter>Source\Engine\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
       <Filter>Source\Engine\Data</Filter>
     </ClCompile>
   </ItemGroup>

@@ -10,6 +10,14 @@ public:
 	static bool GetKeyDown(KeyCode key);
 	static bool GetKeyUp(KeyCode key);
 
+	// GetAxis()
+	// GetAxisRaw()
+	// GetMouseButton()
+	// anyKey
+	// anyKeyDown
+	// anyKeyUp
+	// mousePosition
+
 private:
 	friend class Engine;
 

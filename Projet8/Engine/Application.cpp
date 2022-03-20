@@ -7,6 +7,7 @@ float GetFrameRate(float fps)
 
 float Application::targetFPS = APPLICATION_DEFAULT_FPS;
 float Application::targetFrameRate = GetFrameRate(targetFPS);
+float Application::fixedTimestep = APPLICATION_DEFAULT_FIXED_TIMESTEP;
 bool Application::quit = false;
 
 // **************************** //
@@ -20,6 +21,16 @@ void Application::SetTargetFPS(float fps)
 {
 	targetFPS = fps;
 	targetFrameRate = GetFrameRate(fps);
+}
+
+float Application::GetFixedTimestep()
+{
+	return fixedTimestep;
+}
+
+void Application::SetFixedTimestep(float timestep)
+{
+	fixedTimestep = timestep;
 }
 
 void Application::Quit()
