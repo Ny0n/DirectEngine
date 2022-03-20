@@ -140,25 +140,13 @@ void Engine::Run(HWND window)
     // starting the profiler
     _profiler->InitSystemTime();
 
-    // initializing variables
-    float frameElapsed;
-    float fixedElapsed;
-    float profilerElapsed;
-
     // *** Part 2: Game Loop *** //
 
     NewFrame(); // starting frame
 
-#if PROFILER_DISPLAY_ENABLED
-    _profiler->DisplayData(); // displaying the data of the first frame
-#endif
-
-    while (true)
+    while (!Application::quit)
     {
         // _profiler->loopCount++;
-
-        if (Application::quit)
-            break;
 
         // Check to see if any messages are waiting in the queue
         while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -169,29 +157,14 @@ void Engine::Run(HWND window)
         
             // If the message is WM_QUIT, exit the while loop
             if (msg.message == WM_QUIT)
-                goto stop;
+                goto quit;
         }
 
         // Run game code here
 
-        _profiler->runTime = _profiler->GetSystemTime();
-        fixedElapsed = _profiler->runTime - _profiler->lastFixedTime;
-        if (fixedElapsed >= Application::fixedTimestep) // new fixed update
-            NewFixedUpdate(); // TODO maybe redo this and put in NewFrame with a while? (new Start() can be called after a fixedupdate..)
-
-        _profiler->runTime = _profiler->GetSystemTime();
-        frameElapsed = _profiler->runTime - _profiler->lastFrameTime;
-        if (frameElapsed >= Application::targetFrameRate) // new frame
-            NewFrame();
-
-#if PROFILER_DISPLAY_ENABLED
-        _profiler->runTime = _profiler->GetSystemTime();
-    	profilerElapsed = _profiler->runTime - _profiler->lastDisplayTime;
-        if (profilerElapsed >= _profiler->displayCooldown)
-            _profiler->DisplayData();
-#endif
+        CheckForNewFrame();
     }
-	stop:;
+	quit:;
 
     // *** Part 3: Uninitialization *** //
 
@@ -202,40 +175,111 @@ void Engine::Run(HWND window)
 
 // **************************** //
 
+// This one is always called first
+void Engine::CheckForNewFrame()
+{
+    // we execute a new frame each Application::targetFrameRate
+
+    static float frameElapsed;
+
+    if (_profiler->lastFrameTime < 0.0f) // the first frame
+    {
+        _profiler->lastFrameTime = 0.0f;
+        NewFrame();
+        return;
+    }
+
+    frameElapsed = Time::runTime() - _profiler->lastFrameTime;
+    if (frameElapsed >= Application::targetFrameRate) // new frame
+        NewFrame();
+}
+
+void Engine::CheckForNewFixedUpdate()
+{
+    // we execute enough fixed updates to match Application::fixedTimestep
+
+    static float fixedElapsed;
+
+    if (_profiler->lastFixedTime < 0.0f) // the first frame
+    {
+        _profiler->lastFixedTime = 0.0f;
+        NewFixedUpdate();
+        return;
+    }
+
+    fixedElapsed = Time::runTime() - _profiler->lastFixedTime;
+    float maxTimestep = Application::maximumTimestep;
+    while (fixedElapsed >= Application::fixedTimestep && maxTimestep > 0.0f) // new fixed update
+    {
+        fixedElapsed -= Application::fixedTimestep;
+        maxTimestep -= Application::fixedTimestep;
+        NewFixedUpdate();
+    }
+}
+
+void Engine::CheckForProfilerDisplay()
+{
+    // we display the profiler info each _profiler->displayCooldown
+
+    static float profilerElapsed;
+
+    if (_profiler->lastDisplayTime < 0.0f) // the first frame
+    {
+        _profiler->lastDisplayTime = 0.0f;
+        _profiler->DisplayData();
+        return;
+    }
+
+    profilerElapsed = Time::runTime() - _profiler->lastDisplayTime;
+    if (profilerElapsed >= _profiler->displayCooldown) // new display
+        _profiler->DisplayData();
+}
+
+// **************************** //
+
 void Engine::NewFrame()
 {
     // first we update all of the data
 
-    _profiler->currentFrameRate = _profiler->runTime - _profiler->lastFrameTime; // => elapsed
-    _profiler->lastFrameTime = _profiler->runTime;
+    const float time = Time::runTime();
+
+    _profiler->currentFrameRate = time - _profiler->lastFrameTime; // => elapsed
+    _profiler->lastFrameTime = time;
     
     _profiler->currentFPS = _profiler->currentFrameRate == 0.0f ? 0.0f : 1.0f / _profiler->currentFrameRate;
 
     Time::_frameCount++;
-    Time::_time = _profiler->runTime;
+    Time::_time = time;
     Time::_deltaTime = _profiler->currentFrameRate * Time::timeScale;
     Time::_unscaledDeltaTime = _profiler->currentFrameRate;
 
     // then we run the frame
 
     _profiler->TimedRunner(_profiler->frameTime, RUNNER(RunFrame));
+
+#if PROFILER_DISPLAY_ENABLED
+    CheckForProfilerDisplay();
+#endif
 }
 
 void Engine::NewFixedUpdate()
 {
     // first we update all of the data
 
-    _profiler->currentFixedRate = _profiler->runTime - _profiler->lastFixedTime; // => elapsed
-    _profiler->lastFixedTime = _profiler->runTime;
+    const float time = Time::runTime();
+    const float timestep = Application::fixedTimestep;
+    
+    _profiler->lastFixedTime = time;
 
     Time::_fixedUpdateCount++;
-    Time::_fixedTime = _profiler->runTime;
-    Time::_fixedDeltaTime = _profiler->currentFixedRate * Time::timeScale;
-    Time::_fixedUnscaledDeltaTime = _profiler->currentFixedRate;
+    Time::_fixedTime = time;
+    Time::_fixedDeltaTime = timestep * Time::timeScale;
+    Time::_fixedUnscaledDeltaTime = timestep;
 
     // then we run the fixed update
 
-    Time::_inFixedUpdateStep = true; _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(FixedUpdate)); Time::_inFixedUpdateStep = false;
+    Time::_inFixedUpdateStep = true; _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(FixedUpdate)); Time::_inFixedUpdateStep = false; // FixedUpdate
+    // _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(PhysicsUpdate)); // Physics Engine update
 }
 
 // ************/ Execution /************ //
@@ -247,8 +291,11 @@ void Engine::RunFrame()
 
     d3ddev->BeginScene();    // begins the 3D scene
 
-    _profiler->TimedRunner(_profiler->inputTime, RUNNER(Input));
     Time::_inStartStep = true; _profiler->TimedRunner(_profiler->startTime, RUNNER(Start)); Time::_inStartStep = false;
+
+    CheckForNewFixedUpdate();
+
+    _profiler->TimedRunner(_profiler->inputTime, RUNNER(Input));
     Time::_inUpdateStep = true; _profiler->TimedRunner(_profiler->updateTime, RUNNER(Update)); Time::_inUpdateStep = false;
 
     d3ddev->EndScene();    // ends the 3D scene

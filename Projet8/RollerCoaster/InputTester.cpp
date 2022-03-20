@@ -5,8 +5,11 @@ void InputTester::Start()
 	// Utils::Println("Start");
 }
 
+static int test = 0;
+
 void InputTester::Update()
 {
+	test = 0;
 	// Utils::Println("Update");
 	// Utils::Println(to_string(Time::runTime()));
 	// Utils::Println(to_string(Time::deltaTime));
@@ -46,7 +49,8 @@ void InputTester::Update()
 
 void InputTester::FixedUpdate()
 {
-	// Utils::Println("FixedUpdate");
+	test++;
+	// Utils::Println("FixedUpdate " + to_string(test));
 	// Utils::Println(to_string(Time::runTime()));
 	// Utils::Println(to_string(Time::fixedTime));
 	// Utils::Println(to_string(Time::fixedDeltaTime));
