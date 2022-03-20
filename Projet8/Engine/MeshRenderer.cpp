@@ -50,9 +50,17 @@ void MeshRenderer::Start()
         if (d3dxMaterials[i].pTextureFilename != NULL &&
             lstrlenA(d3dxMaterials[i].pTextureFilename) > 0)
         {
+
+            const CHAR* strPrefix = "Mesh\\Monkey.bmp";
+            CHAR strTexture[MAX_PATH];
+            strcpy_s(strTexture, MAX_PATH, strPrefix);
+            //strcat_s(strTexture, MAX_PATH, d3dxMaterials[i].pTextureFilename);
+
+            Utils::Println(strTexture);
+
             // Create the texture
             if (FAILED(D3DXCreateTextureFromFileA(d3ddev,
-                d3dxMaterials[i].pTextureFilename,
+                strTexture,
                 &g_pMeshTextures[i])))
             {
                 MessageBox(0, L"Failed to load texture from disk", 0, 0);
@@ -83,5 +91,6 @@ void MeshRenderer::Update()
         // Draw the mesh subset
         _pmesh->DrawSubset(i);
     }
-    //_pmesh->DrawSubset(0);
+    
+	_pmesh->DrawSubset(0);
 }
