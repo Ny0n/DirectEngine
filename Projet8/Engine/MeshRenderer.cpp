@@ -51,10 +51,10 @@ void MeshRenderer::Start()
             lstrlenA(d3dxMaterials[i].pTextureFilename) > 0)
         {
 
-            const CHAR* strPrefix = "Mesh\\Monkey.bmp";
+            const CHAR* strPrefix = "Mesh\\";
             CHAR strTexture[MAX_PATH];
             strcpy_s(strTexture, MAX_PATH, strPrefix);
-            //strcat_s(strTexture, MAX_PATH, d3dxMaterials[i].pTextureFilename);
+            strcat_s(strTexture, MAX_PATH, d3dxMaterials[i].pTextureFilename);
 
             Utils::Println(strTexture);
 
