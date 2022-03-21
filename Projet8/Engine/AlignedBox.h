@@ -10,8 +10,8 @@ class AlignedBox :
     void Start() override;
     void Update(float runTime, float deltaTime) override;
 
-    list<GameObject*> colliders;
+    list<Collider*> colliders;
 public :
-    list<GameObject*> AreIn(list<GameObject*> go);
+    list<Collider*> AreIn(list<GameObject*> go);
 };
 

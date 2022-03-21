@@ -9,19 +9,20 @@ void AlignedBox::Update(float runTime, float deltaTime)
 {
 }
 
-list<GameObject*> AlignedBox::AreIn(const list<GameObject*> go)
+list<Collider*> AlignedBox::AreIn(const list<GameObject*> go)
 {
 	const D3DXVECTOR3 pos = transform->GetPosition();
 	const D3DXVECTOR3 scale = transform->GetScale();
 	for(GameObject* g : go)
 	{
 		D3DXVECTOR3 tmpPos = g->transform->GetPosition();
-		if (g->GetComponent(NAMEOF(Collider))
+		Collider* collider = (Collider*)g->GetComponent(NAMEOF(Collider));
+		if (collider != nullptr
 			&& pos.x - scale.x<= tmpPos.x && pos.x + scale.x>=tmpPos.x
 			&& pos.y - scale.y<= tmpPos.y && pos.y + scale.y>=tmpPos.y
 			&& pos.z - scale.z<= tmpPos.z && pos.z + scale.z>=tmpPos.z)
 		{
-			colliders.push_back(g);
+			colliders.push_back(collider);
 		}
 	}
 	return colliders;

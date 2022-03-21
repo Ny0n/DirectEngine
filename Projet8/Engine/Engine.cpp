@@ -228,38 +228,30 @@ void Engine::Collision()
     
     list<AlignedBox*> alignedBoxes ={};
     list<GameObject*> gameObjects = {};
+    list<Collider*> colliders = {};
 	for (GameObject* go : _scene->gameObjects)
     {
         AlignedBox* tmpAb =(AlignedBox*)go->GetComponent(NAMEOF(AlignedBox));
         if (tmpAb != nullptr)
         {
             alignedBoxes.push_back(tmpAb);
+            break;
         }
     }
     for(AlignedBox* box : alignedBoxes)
     {
-        gameObjects = box->AreIn(_scene->gameObjects);
+        colliders = box->AreIn(_scene->gameObjects);
     }
-        //for(int i = 0 ; i < gameObjects.size() ; i++)
-        //{
-        //    for (int j = i+1; j < gameObjects.size()-1; j++)
-        //    {
-        //        auto* colliderI = (Collider*)gameObjects[i]->GetComponent(NAMEOF(Collider));
-        //        auto* colliderJ = (Collider*)gameObjects[j]->GetComponent(NAMEOF(Collider));
-        //    }
-        //}
    
-    for(GameObject* gameObjectA : gameObjects)
+    for(Collider* colliderA : colliders)
     {
-        for (GameObject* gameObjectB : gameObjects)
+        for (Collider* colliderB : colliders)
         {
-            if(gameObjectB == gameObjectA)
+            if(colliderA == colliderB)
                 continue;
-            auto* colliderA = (Collider*)gameObjectA->GetComponent(NAMEOF(Collider));
-            auto* colliderB = (Collider*)gameObjectB->GetComponent(NAMEOF(Collider));
             if(colliderA->IsColliding(colliderB))
             {
-                Utils::Println("OUi");
+               // Utils::Println("OUi");
             }
         }
     }
