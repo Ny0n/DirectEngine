@@ -410,6 +410,8 @@ void Engine::Collision()
     list<AlignedBox*> alignedBoxes = {};
     list<GameObject*> gameObjects = {};
     list<Collider*> colliders = {};
+    if (_scene->gameObjects.size() == 0)
+        return;
     for (GameObject* go : _scene->gameObjects)
     {
         AlignedBox* tmpAb = (AlignedBox*)go->GetComponent(NAMEOF(AlignedBox));
@@ -419,6 +421,8 @@ void Engine::Collision()
             break;
         }
     }
+    if (alignedBoxes.size() == 0)
+        return;
     for (AlignedBox* box : alignedBoxes)
     {
         colliders = box->AreIn(_scene->gameObjects);
@@ -438,6 +442,8 @@ void Engine::Collision()
     //        }
     //    }
     //}
+    if (colliders.size() == 0)
+        return;
     Collider** arr = static_cast<Collider**>(malloc(sizeof(Collider*) * colliders.size()));
     //Collider* arr[size];
     int k = 0;
