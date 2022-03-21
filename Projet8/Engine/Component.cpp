@@ -7,7 +7,7 @@ bool Component::TypeEquals(Component* other)
 
 bool Component::TypeEquals(const char* other)
 {
-	return this->GetType() == other;
+	return strcmp(this->GetType(), other) == 0  ;
 }
 
 bool Component::CategoryEquals(Component* other)

@@ -63,3 +63,13 @@ void Utils::Println(long double value)
 {
 	Println(to_string(value));
 }
+
+float Utils::DistanceWithOutSquareRoot(D3DXVECTOR3 a, D3DXVECTOR3 b)
+{
+	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z);
+}
+
+float Utils::Distance(D3DXVECTOR3 a, D3DXVECTOR3 b)
+{
+	return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z));
+}

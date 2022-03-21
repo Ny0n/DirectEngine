@@ -25,6 +25,8 @@ public:
 	template<typename T>
 	static void DeleteList(list<T*>* list);
 
+	static float DistanceWithOutSquareRoot(D3DXVECTOR3 a, D3DXVECTOR3 b);
+	static float Distance(D3DXVECTOR3 a, D3DXVECTOR3 b) ;
 };
 
 template <typename T>

@@ -45,7 +45,7 @@ bool GameObject::AddComponent(Component* component)
 // Removes the first component of type ComponentType found on the gameobject
 bool GameObject::RemoveComponent(const char* type)
 {
-	if (Utils::Contains(&engineDefaultComponentTypes, type)) // unremoveable components
+	if (Utils::Contains(&unremovableEngineComponents, type)) // unremovable components
 		return false;
 
 	for (Component* element : components)

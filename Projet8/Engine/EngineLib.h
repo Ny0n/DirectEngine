@@ -16,6 +16,8 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "MeshRenderer.h"
+#include "AlignedBox.h"
+#include "Collider.h"
 
 #include "KeyCodes.h"
 #include "Input.h"

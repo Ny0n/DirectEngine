@@ -76,9 +76,9 @@ void Engine::InitD3D()
 
     InitLight();
     
-    // d3ddev->SetRenderState(D3DRS_LIGHTING, true);    // turn off the 3D lighting
-    // d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(255, 255, 255));    // ambient light
-    // d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
+    d3ddev->SetRenderState(D3DRS_LIGHTING, true);    // turn on the 3D lighting
+    d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(155, 155, 155));    // ambient light
+    d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
 
     // _VBuffer
     d3ddev->CreateVertexBuffer(24 * sizeof(CUSTOMVERTEX),
@@ -281,6 +281,7 @@ void Engine::NewFixedUpdate()
     // then we run the fixed update
 
     _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(FixedUpdate)); // FixedUpdate
+    _profiler->TimedRunner(_profiler->startTime, RUNNER(Collision)); // FixedUpdate
     // _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(PhysicsUpdate)); // Physics Engine update
 }
 
@@ -403,3 +404,60 @@ void Engine::EngineUpdate()
         }
     }
 }
+
+void Engine::Collision()
+{
+    list<AlignedBox*> alignedBoxes = {};
+    list<GameObject*> gameObjects = {};
+    list<Collider*> colliders = {};
+    for (GameObject* go : _scene->gameObjects)
+    {
+        AlignedBox* tmpAb = (AlignedBox*)go->GetComponent(NAMEOF(AlignedBox));
+        if (tmpAb != nullptr)
+        {
+            alignedBoxes.push_back(tmpAb);
+            break;
+        }
+    }
+    for (AlignedBox* box : alignedBoxes)
+    {
+        colliders = box->AreIn(_scene->gameObjects);
+    }
+    //Utils::Println(alignedBoxes.size()); Utils::Println(gameObjects.size()); Utils::Println(colliders.size());
+
+    //for (Collider* colliderA : colliders)
+    //{
+    //    for (Collider* colliderB : colliders)
+    //    {
+    //        if (colliderA == colliderB)
+    //            continue;
+    //        if (colliderA->IsColliding(colliderB))
+    //        {
+    //            //list<Collider*> colliders = {};/*
+    //            //Utils::Println("oui");*/
+    //        }
+    //    }
+    //}
+    Collider** arr = static_cast<Collider**>(malloc(sizeof(Collider*) * colliders.size()));
+    //Collider* arr[size];
+    int k = 0;
+    for (Collider* const collider : colliders) {
+        arr[k++] = collider;
+    }
+    
+    for(int i = 0 ; i < colliders.size()-1 ; i++)
+    {
+	    for(int j = i+1 ; j< colliders.size() ; j++)
+	    {
+            if ( arr[i]->IsColliding(arr[j]) )
+            {
+                            
+				Utils::Println("oui");
+            }
+	    }
+    }
+    free(arr);
+
+}
+
+    

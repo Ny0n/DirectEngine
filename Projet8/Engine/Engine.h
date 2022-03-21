@@ -46,6 +46,7 @@ private:
 
 	void NewFixedUpdate();
 	void FixedUpdate();
+	void Collision();
 
 	void Input();
 	void Update();

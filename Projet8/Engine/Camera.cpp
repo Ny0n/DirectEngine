@@ -14,8 +14,6 @@ void Camera::EngineUpdate()
 
     auto fov = D3DXToRadian(45); // the horizontal field of view
     auto ratio = (FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT; // aspect ratio
-    auto nvp = 1.0f; // the near view-plane
-    auto fvp = 100.0f; // the far view-plane
 
     // auto camDir = transform->GetRotation(); // the up direction
     // string s = "" + to_string(transform->GetRotation().x) + " " + to_string(transform->GetRotation().y) + " " + to_string(transform->GetRotation().z);
@@ -35,4 +33,14 @@ void Camera::EngineUpdate()
 
     // D3DXMATRIX matViewInversed;
     // D3DXMatrixInverse(&matViewInversed, NULL, &matView);
+}
+
+void Camera::ChangeFVP(float newFVP)
+{
+    fvp = newFVP;
+}
+
+void Camera::ChangeNVP(float newNVP)
+{
+    nvp = newNVP;
 }
