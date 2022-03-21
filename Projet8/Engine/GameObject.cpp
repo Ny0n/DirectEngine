@@ -27,7 +27,7 @@ Component* GameObject::GetComponent(const char* type)
 // A gameobject can only have one of each time of component, EXCEPT for mono_behaviour types
 bool GameObject::AddComponent(Component* component)
 {
-	if (component->CategoryEquals(ComponentCategory::unique))
+	if (component->CategoryEquals(ComponentCategory::single))
 	{
 		for (Component* element : components)
 		{

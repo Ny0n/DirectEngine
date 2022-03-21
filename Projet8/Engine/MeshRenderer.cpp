@@ -9,7 +9,7 @@ MeshRenderer::~MeshRenderer()
     _pmesh->Release();
 }
 
-void MeshRenderer::Start()
+void MeshRenderer::EngineStart()
 {
     // we load the mesh
     LPD3DXBUFFER pMtrlBuffer = nullptr;
@@ -19,7 +19,7 @@ void MeshRenderer::Start()
     }
 }
 
-void MeshRenderer::Update()
+void MeshRenderer::EngineUpdate()
 {
     if (_pmesh == nullptr)
         return;

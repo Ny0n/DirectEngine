@@ -3,6 +3,7 @@
 void InputTester::Start()
 {
 	// Utils::Println("Start");
+	// Component* comp = new EngineComponent();
 }
 
 // static int test = 0;
@@ -47,23 +48,28 @@ void InputTester::Update()
 		Application::Quit();
 }
 
-void InputTester::LateUpdate()
-{
-	// test = 0;
-	// Utils::Println("LateUpdate");
-}
+// void InputTester::LateUpdate()
+// {
+// 	// test = 0;
+// 	// Utils::Println("LateUpdate");
+// }
 
-void InputTester::FixedUpdate()
-{
-	// test++;
-	// Utils::Println("FixedUpdate " + to_string(test));
-	// Utils::Println("FixedUpdate");
-	// Utils::Println(to_string(Time::runTime()));
-	// Utils::Println(to_string(Time::fixedTime));
-	// Utils::Println(to_string(Time::fixedDeltaTime));
-	// Utils::Println(to_string(Time::fixedUnscaledDeltaTime));
-	// Utils::Println(to_string(Time::fixedUpdateCount));
-	// Utils::Println(to_string(Time::inStartStep));
-	// Utils::Println(to_string(Time::inUpdateStep));
-	// Utils::Println(to_string(Time::inFixedUpdateStep));
-}
+// void InputTester::FixedUpdate()
+// {
+// 	// test++;
+// 	// Utils::Println("FixedUpdate " + to_string(test));
+// 	// Utils::Println("FixedUpdate");
+// 	// Utils::Println(to_string(Time::runTime()));
+// 	// Utils::Println(to_string(Time::fixedTime));
+// 	// Utils::Println(to_string(Time::fixedDeltaTime));
+// 	// Utils::Println(to_string(Time::fixedUnscaledDeltaTime));
+// 	// Utils::Println(to_string(Time::fixedUpdateCount));
+// 	// Utils::Println(to_string(Time::inStartStep));
+// 	// Utils::Println(to_string(Time::inUpdateStep));
+// 	// Utils::Println(to_string(Time::inFixedUpdateStep));
+// }
+
+// void InputTester::EngineStart()
+// {
+//
+// }

@@ -1,17 +1,16 @@
 #pragma once
 
-class MeshRenderer : public Component
+class MeshRenderer final : public EngineComponent
 {
 
 public:
     const char* GetType() override { return NAMEOF(MeshRenderer); }
-    ComponentCategory GetCategory() override { return ComponentCategory::unique; }
 
     MeshRenderer(LPCWSTR path);
     ~MeshRenderer() override;
 
-    void Start() override;
-    void Update() override;
+    void EngineStart() override;
+    void EngineUpdate() override;
 
 private:
     ID3DXMesh* _pmesh;

@@ -1,15 +1,5 @@
 ﻿#include "pch.h"
 
-list<const char*> engineDefaultComponentTypes = { // components that we can't remove
-	NAMEOF(Transform),
-};
-
-list<const char*> engineComponentTypes = { // engine-created components
-	NAMEOF(Transform),
-	NAMEOF(Camera),
-	NAMEOF(MeshRenderer),
-};
-
 bool Component::TypeEquals(Component* other)
 {
 	return this->GetType() == other->GetType();

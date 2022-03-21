@@ -83,6 +83,12 @@
     <ClInclude Include="Scene.h">
       <Filter>Source\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="EngineComponent.h">
+      <Filter>Source\Objects\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MonoBehaviour.h">
+      <Filter>Source\Objects\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -129,6 +135,12 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineComponent.cpp">
+      <Filter>Source\Objects\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MonoBehaviour.cpp">
+      <Filter>Source\Objects\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

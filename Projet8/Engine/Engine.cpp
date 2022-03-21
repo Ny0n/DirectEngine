@@ -76,9 +76,9 @@ void Engine::InitD3D()
 
     InitLight();
     
-    //d3ddev->SetRenderState(D3DRS_LIGHTING, true);    // turn off the 3D lighting
-    //d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(255, 255, 255));    // ambient light
-    //d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
+    // d3ddev->SetRenderState(D3DRS_LIGHTING, true);    // turn off the 3D lighting
+    // d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(255, 255, 255));    // ambient light
+    // d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
 
     // _VBuffer
     d3ddev->CreateVertexBuffer(24 * sizeof(CUSTOMVERTEX),
@@ -293,22 +293,35 @@ void Engine::RunFrame()
 
     d3ddev->BeginScene();    // begins the 3D scene
 
+    _profiler->TimedRunner(_profiler->engineStartTime, RUNNER(EngineStart));
     _profiler->TimedRunner(_profiler->startTime, RUNNER(Start));
     CheckForNewFixedUpdate();
     _profiler->TimedRunner(_profiler->inputTime, RUNNER(Input));
     _profiler->TimedRunner(_profiler->updateTime, RUNNER(Update));
     _profiler->TimedRunner(_profiler->lateUpdateTime, RUNNER(LateUpdate));
+    _profiler->TimedRunner(_profiler->engineUpdateTime, RUNNER(EngineUpdate));
 
     d3ddev->EndScene();    // ends the 3D scene
 
     _profiler->TimedRunner(_profiler->presentTime, [=] { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
 }
 
+
 // ************/ Execution Order /************ //
 
-void Engine::Input()
+void Engine::EngineStart()
 {
-    Input::UpdateInputs();
+    for (GameObject* go : _scene->gameObjects)
+    {
+        for (Component* comp : go->components)
+        {
+            if (Utils::Contains(&_startedComponents, comp) == false)
+            {
+                _startedComponents.push_back(comp);
+                comp->EngineStart();
+            }
+        }
+    }
 }
 
 void Engine::Start() // TODO optimize this (init once a new list with all starts and then remove ?)
@@ -328,6 +341,26 @@ void Engine::Start() // TODO optimize this (init once a new list with all starts
     }
 
     Time::_inStartStep = false;
+}
+
+void Engine::FixedUpdate()
+{
+    Time::_inFixedUpdateStep = true;
+
+    for (GameObject* go : _scene->gameObjects)
+    {
+        for (Component* comp : go->components)
+        {
+            comp->FixedUpdate();
+        }
+    }
+
+    Time::_inFixedUpdateStep = false;
+}
+
+void Engine::Input()
+{
+    Input::UpdateInputs();
 }
 
 void Engine::Update()
@@ -360,17 +393,13 @@ void Engine::LateUpdate()
     Time::_inLateUpdateStep = false;
 }
 
-void Engine::FixedUpdate()
+void Engine::EngineUpdate()
 {
-    Time::_inFixedUpdateStep = true;
-
     for (GameObject* go : _scene->gameObjects)
     {
         for (Component* comp : go->components)
         {
-            comp->FixedUpdate();
+            comp->EngineUpdate();
         }
     }
-
-    Time::_inFixedUpdateStep = false;
 }

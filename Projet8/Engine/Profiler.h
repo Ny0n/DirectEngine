@@ -46,11 +46,15 @@ class Profiler final {
     float lastFixedTime{-1};
     float lastDisplayTime{-1};
 
+    float dummyTime{};
+
     float frameTime{};
     float inputTime{};
+    float engineStartTime{};
     float startTime{};
     float updateTime{};
     float lateUpdateTime{};
+    float engineUpdateTime{};
     float presentTime{};
     float fixedUpdateTime{};
 

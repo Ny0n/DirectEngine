@@ -1,13 +1,11 @@
 ﻿#pragma once
 
-class Transform : public Component
+class Transform final : public EngineComponent
 {
 
 public:
     const char* GetType() override { return NAMEOF(Transform); }
-    ComponentCategory GetCategory() override { return ComponentCategory::unique; }
-
-public:
+    
     Transform();
 
     void Identity();

@@ -2,15 +2,13 @@
 
 #include "EngineLib.h"
 
-class InputTester : public Component
+class InputTester : public MonoBehaviour
 {
 
 public:
 	const char* GetType() override { return NAMEOF(InputTester); }
-	ComponentCategory GetCategory() override { return ComponentCategory::behaviour; }
 
 	void Start() override;
 	void Update() override;
-	void LateUpdate() override;
-	void FixedUpdate() override;
+
 };

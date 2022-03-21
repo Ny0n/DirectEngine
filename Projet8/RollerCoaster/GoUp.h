@@ -2,12 +2,11 @@
 
 #include "EngineLib.h"
 
-class GoUp : public Component
+class GoUp : public MonoBehaviour
 {
 
 public:
 	const char* GetType() override { return NAMEOF(GoUp); }
-	ComponentCategory GetCategory() override { return ComponentCategory::behaviour; }
 
 	GoUp() = default;
 	explicit GoUp(float speed);

@@ -11,6 +11,8 @@
 #include "GameObject.h"
 
 #include "Component.h"
+#include "EngineComponent.h"
+#include "MonoBehaviour.h"
 #include "Transform.h"
 #include "Camera.h"
 #include "MeshRenderer.h"

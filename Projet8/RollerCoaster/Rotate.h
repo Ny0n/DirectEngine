@@ -2,12 +2,11 @@
 
 #include "EngineLib.h"
 
-class Rotate : public Component
+class Rotate : public MonoBehaviour
 {
 
 public:
 	const char* GetType() override { return NAMEOF(Rotate); }
-	ComponentCategory GetCategory() override { return ComponentCategory::behaviour; }
 
 	Rotate() = default;
 	explicit Rotate(float speed);

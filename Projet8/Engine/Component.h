@@ -1,34 +1,38 @@
 ﻿#pragma once
 
-extern list<const char*> engineDefaultComponentTypes;
-extern list<const char*> engineComponentTypes;
-
 enum class ComponentCategory
 {
-	unique,
-	behaviour,
+	single,
+	multiple,
 };
 
 class Component
 {
+	friend class EngineComponent;
+	friend class MonoBehaviour;
+
+	Component() = default;
 
 public:
+	virtual ~Component() = default;
 	virtual const char* GetType() = 0; // a pure function makes the class abstract
 	virtual ComponentCategory GetCategory() = 0;
-
-	virtual ~Component() = default;
-
-	virtual void Start(){}
-	virtual void Update(){}
-	virtual void LateUpdate(){}
-	virtual void FixedUpdate(){}
 
 	bool TypeEquals(Component* other);
 	bool TypeEquals(const char* other);
 	bool CategoryEquals(Component* other);
 	bool CategoryEquals(const ComponentCategory other);
 
-public:
+	virtual void Start() = 0;
+	virtual void Update() = 0;
+	virtual void LateUpdate() = 0;
+	virtual void FixedUpdate() = 0;
+
+	virtual void EngineStart() = 0;
+	virtual void EngineUpdate() = 0;
+
+	virtual void OnCollide(GameObject* other){}
+	
 	GameObject* gameObject;
 	Transform* transform;
 

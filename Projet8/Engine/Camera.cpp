@@ -1,10 +1,10 @@
 #include "pch.h"
 
-void Camera::Start()
+void Camera::EngineStart()
 {
 }
 
-void Camera::Update()
+void Camera::EngineUpdate()
 {
     // camera data
 
@@ -21,7 +21,7 @@ void Camera::Update()
     // string s = "" + to_string(transform->GetRotation().x) + " " + to_string(transform->GetRotation().y) + " " + to_string(transform->GetRotation().z);
     // Utils::Println(s);
 
-	// **************************** //
+    // **************************** //
 
     d3ddev->SetFVF(CUSTOMFVF); // for the lightning
 

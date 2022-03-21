@@ -2,12 +2,11 @@
 
 #include "EngineLib.h"
 
-class RainbowBackground : public Component
+class RainbowBackground : public MonoBehaviour
 {
 
 public:
 	const char* GetType() override { return NAMEOF(RainbowBackground); }
-	ComponentCategory GetCategory() override { return ComponentCategory::behaviour; }
 	
 	void Update() override;
 	

@@ -2,12 +2,11 @@
 
 #include "EngineLib.h"
 
-class Cube : public Component
+class Cube : public MonoBehaviour
 {
 
 public :
     const char* GetType() override { return NAMEOF(Cube); }
-    ComponentCategory GetCategory() override { return ComponentCategory::behaviour; }
 
     void Start() override;
     void Update() override;

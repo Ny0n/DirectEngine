@@ -40,13 +40,17 @@ private:
 
 	void NewFrame();
 	void RunFrame();
-	void Input();
+
+	void EngineStart();
 	void Start();
-	void Update();
-	void LateUpdate();
 
 	void NewFixedUpdate();
 	void FixedUpdate();
+
+	void Input();
+	void Update();
+	void LateUpdate();
+	void EngineUpdate();
 
 	Scene* _scene;
 	list<Component*> _startedComponents;
@@ -56,6 +60,7 @@ private:
 /*
  * Frame Order of Execution:
  *
+ *		EngineStart()	// The Start() for Engine components, executed BEFORE anything else
  *		Start()			// Start is only ever called once for a given script
  *
  *		FixedUpdate()	// This may be called 0, 1 or multiple times per frame depending on the frame rate, but will ALWAYS be called 1/timestep times per second
@@ -64,6 +69,7 @@ private:
  *		<Input events>	// Updates all inputs (inside the Input class)
  *		Update()
  *		LateUpdate()
+ *		EngineUpdate()	// The Update() for Engine components, executed AFTER everything else
  *
  *		<DrawFrame>		// The frame GPU drawing happens after everything
  *

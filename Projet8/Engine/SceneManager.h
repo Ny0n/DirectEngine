@@ -1,9 +1,11 @@
 #pragma once
 
-class SceneManager
+class SceneManager final
 {
 
 public:
+	SceneManager() = delete;
+
 	// sceneCount
 	// DontDestroyOnLoad(go)
 	// GetSceneByName(name)

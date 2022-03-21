@@ -2,12 +2,11 @@
 
 #include "EngineLib.h"
 
-class Move : public Component
+class Move : public MonoBehaviour
 {
 
 public:
 	const char* GetType() override { return NAMEOF(Move); }
-	ComponentCategory GetCategory() override { return ComponentCategory::behaviour; }
 
 	Move() = default;
 	explicit Move(float speed);
