@@ -281,6 +281,7 @@ void Engine::NewFixedUpdate()
     // then we run the fixed update
 
     _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(FixedUpdate)); // FixedUpdate
+    _profiler->TimedRunner(_profiler->startTime, RUNNER(Collision)); // FixedUpdate
     // _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(PhysicsUpdate)); // Physics Engine update
 }
 
@@ -374,3 +375,60 @@ void Engine::FixedUpdate()
 
     Time::_inFixedUpdateStep = false;
 }
+
+void Engine::Collision()
+{
+    list<AlignedBox*> alignedBoxes = {};
+    list<GameObject*> gameObjects = {};
+    list<Collider*> colliders = {};
+    for (GameObject* go : _scene->gameObjects)
+    {
+        AlignedBox* tmpAb = (AlignedBox*)go->GetComponent(NAMEOF(AlignedBox));
+        if (tmpAb != nullptr)
+        {
+            alignedBoxes.push_back(tmpAb);
+            break;
+        }
+    }
+    for (AlignedBox* box : alignedBoxes)
+    {
+        colliders = box->AreIn(_scene->gameObjects);
+    }
+    //Utils::Println(alignedBoxes.size()); Utils::Println(gameObjects.size()); Utils::Println(colliders.size());
+
+    //for (Collider* colliderA : colliders)
+    //{
+    //    for (Collider* colliderB : colliders)
+    //    {
+    //        if (colliderA == colliderB)
+    //            continue;
+    //        if (colliderA->IsColliding(colliderB))
+    //        {
+    //            //list<Collider*> colliders = {};/*
+    //            //Utils::Println("oui");*/
+    //        }
+    //    }
+    //}
+    Collider** arr = static_cast<Collider**>(malloc(sizeof(Collider*) * colliders.size()));
+    //Collider* arr[size];
+    int k = 0;
+    for (Collider* const collider : colliders) {
+        arr[k++] = collider;
+    }
+    
+    for(int i = 0 ; i < colliders.size()-1 ; i++)
+    {
+	    for(int j = i+1 ; j< colliders.size() ; j++)
+	    {
+            if ( arr[i]->IsColliding(arr[j]) )
+            {
+                            
+				Utils::Println("oui");
+            }
+	    }
+    }
+    free(arr);
+
+}
+
+    

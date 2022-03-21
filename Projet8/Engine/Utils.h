@@ -24,7 +24,8 @@ public:
 
 	template<typename T>
 	static void DeleteList(list<T*>* list);
-
+	static float DistanceWithOutSquareRoot(D3DXVECTOR3 a, D3DXVECTOR3 b);
+	static float Distance(D3DXVECTOR3 a, D3DXVECTOR3 b) ;
 };
 
 template <typename T>
@@ -42,4 +43,14 @@ void Utils::DeleteList(list<T*>* list)
 	}
 
 	list->clear();
+}
+
+inline float Utils::DistanceWithOutSquareRoot(D3DXVECTOR3 a, D3DXVECTOR3 b)
+{
+	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z);
+}
+
+inline float Utils::Distance(D3DXVECTOR3 a, D3DXVECTOR3 b) 
+{
+	return sqrt( (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z));
 }

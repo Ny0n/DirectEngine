@@ -48,6 +48,7 @@ private:
 	void NewFixedUpdate();
 	void FixedUpdate();
 
+	void Collision();
 	Scene* _scene;
 	list<Component*> _startedComponents;
 
