@@ -20,6 +20,7 @@ public:
 
 	virtual void Start(){}
 	virtual void Update(){}
+	virtual void LateUpdate(){}
 	virtual void FixedUpdate(){}
 
 	bool TypeEquals(Component* other);

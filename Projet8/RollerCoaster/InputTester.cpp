@@ -47,6 +47,12 @@ void InputTester::Update()
 		Application::Quit();
 }
 
+void InputTester::LateUpdate()
+{
+	// test = 0;
+	// Utils::Println("LateUpdate");
+}
+
 void InputTester::FixedUpdate()
 {
 	// test++;

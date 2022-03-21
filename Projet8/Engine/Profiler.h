@@ -50,6 +50,7 @@ class Profiler final {
     float inputTime{};
     float startTime{};
     float updateTime{};
+    float lateUpdateTime{};
     float presentTime{};
     float fixedUpdateTime{};
 

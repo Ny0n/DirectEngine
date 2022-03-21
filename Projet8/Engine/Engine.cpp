@@ -297,6 +297,7 @@ void Engine::RunFrame()
     CheckForNewFixedUpdate();
     _profiler->TimedRunner(_profiler->inputTime, RUNNER(Input));
     _profiler->TimedRunner(_profiler->updateTime, RUNNER(Update));
+    _profiler->TimedRunner(_profiler->lateUpdateTime, RUNNER(LateUpdate));
 
     d3ddev->EndScene();    // ends the 3D scene
 
@@ -342,6 +343,21 @@ void Engine::Update()
     }
 
     Time::_inUpdateStep = false;
+}
+
+void Engine::LateUpdate()
+{
+    Time::_inLateUpdateStep = true;
+
+    for (GameObject* go : _scene->gameObjects)
+    {
+        for (Component* comp : go->components)
+        {
+            comp->LateUpdate();
+        }
+    }
+
+    Time::_inLateUpdateStep = false;
 }
 
 void Engine::FixedUpdate()

@@ -43,6 +43,7 @@ private:
 	void Input();
 	void Start();
 	void Update();
+	void LateUpdate();
 
 	void NewFixedUpdate();
 	void FixedUpdate();

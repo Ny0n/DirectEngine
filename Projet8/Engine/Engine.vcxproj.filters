@@ -18,17 +18,17 @@
     <Filter Include="Lib">
       <UniqueIdentifier>{564fc13c-db87-4c0c-a4e6-8c2d3471cedd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Engine\Objects">
-      <UniqueIdentifier>{8c309721-f2ba-4ad3-beee-ff0905217aad}</UniqueIdentifier>
+    <Filter Include="Source\Data">
+      <UniqueIdentifier>{b2c85d0f-737d-453c-a955-3ca5b12e49d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Engine\Objects\Components">
-      <UniqueIdentifier>{0356116c-afe9-4788-beef-2b43df4194d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Engine\Helpers">
+    <Filter Include="Source\Helpers">
       <UniqueIdentifier>{e0a2296d-8aab-421d-8187-2996853d76a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Engine\Data">
-      <UniqueIdentifier>{b2c85d0f-737d-453c-a955-3ca5b12e49d8}</UniqueIdentifier>
+    <Filter Include="Source\Objects">
+      <UniqueIdentifier>{8c309721-f2ba-4ad3-beee-ff0905217aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Objects\Components">
+      <UniqueIdentifier>{0356116c-afe9-4788-beef-2b43df4194d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -39,49 +39,49 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Source\Engine\Objects\Components</Filter>
+      <Filter>Source\Objects\Components</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Source\Engine\Objects\Components</Filter>
+      <Filter>Source\Objects\Components</Filter>
     </ClInclude>
     <ClInclude Include="MeshRenderer.h">
-      <Filter>Source\Engine\Objects\Components</Filter>
+      <Filter>Source\Objects\Components</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
-      <Filter>Source\Engine\Objects\Components</Filter>
+      <Filter>Source\Objects\Components</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
-      <Filter>Source\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
       <Filter>Source\Engine</Filter>
     </ClInclude>
     <ClInclude Include="EngineLib.h">
       <Filter>Lib</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Source\Engine\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Profiler.h">
-      <Filter>Source\Engine\Helpers</Filter>
+      <Filter>Source\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
-      <Filter>Source\Engine\Helpers</Filter>
+      <Filter>Source\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="Application.h">
-      <Filter>Source\Engine\Data</Filter>
+      <Filter>Source\Data</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
-      <Filter>Source\Engine\Data</Filter>
+      <Filter>Source\Data</Filter>
     </ClInclude>
     <ClInclude Include="KeyCodes.h">
-      <Filter>Source\Engine\Data</Filter>
+      <Filter>Source\Data</Filter>
     </ClInclude>
     <ClInclude Include="TimeManager.h">
-      <Filter>Source\Engine\Data</Filter>
+      <Filter>Source\Data</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>Source\Engine\Data</Filter>
+      <Filter>Source\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Profiler.h">
+      <Filter>Source\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Source\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -89,46 +89,46 @@
       <Filter>Source\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Source\Engine\Objects\Components</Filter>
+      <Filter>Source\Objects\Components</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
-      <Filter>Source\Engine\Objects\Components</Filter>
+      <Filter>Source\Objects\Components</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Source\Engine\Objects\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source\Engine</Filter>
+      <Filter>Source\Objects\Components</Filter>
     </ClCompile>
     <ClCompile Include="MeshRenderer.cpp">
-      <Filter>Source\Engine\Objects\Components</Filter>
+      <Filter>Source\Objects\Components</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Source\Engine\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Profiler.cpp">
-      <Filter>Source\Engine\Helpers</Filter>
+      <Filter>Source\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Utils.cpp">
-      <Filter>Source\Engine\Helpers</Filter>
+      <Filter>Source\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Application.cpp">
-      <Filter>Source\Engine\Data</Filter>
+      <Filter>Source\Data</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
-      <Filter>Source\Engine\Data</Filter>
+      <Filter>Source\Data</Filter>
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
-      <Filter>Source\Engine\Data</Filter>
+      <Filter>Source\Data</Filter>
     </ClCompile>
     <ClCompile Include="KeyCodes.cpp">
-      <Filter>Source\Engine\Data</Filter>
+      <Filter>Source\Data</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>Source\Engine\Data</Filter>
+      <Filter>Source\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Profiler.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source\Objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

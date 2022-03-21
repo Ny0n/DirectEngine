@@ -16,6 +16,7 @@ float Time::_fixedUnscaledDeltaTime = 0.0f;
 
 bool Time::_inStartStep = false;
 bool Time::_inUpdateStep = false;
+bool Time::_inLateUpdateStep = false;
 bool Time::_inFixedUpdateStep = false;
 
 // **************************** //
@@ -37,4 +38,5 @@ const float& Time::fixedUnscaledDeltaTime = _fixedUnscaledDeltaTime;
 
 const bool& Time::inStartStep = _inStartStep;
 const bool& Time::inUpdateStep = _inUpdateStep;
+const bool& Time::inLateUpdateStep = _inLateUpdateStep;
 const bool& Time::inFixedUpdateStep = _inFixedUpdateStep;

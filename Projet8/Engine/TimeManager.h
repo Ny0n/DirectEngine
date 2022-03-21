@@ -23,6 +23,7 @@ public:
 
 	static const bool& inStartStep;			// Returns true if called inside a Start() callback
 	static const bool& inUpdateStep;		// Returns true if called inside an Update() callback
+	static const bool& inLateUpdateStep;		// Returns true if called inside a LateUpdate() callback
 	static const bool& inFixedUpdateStep;	// Returns true if called inside a FixedUpdate() callback
 
 private:
@@ -46,6 +47,7 @@ private:
 
 	static bool _inStartStep;
 	static bool _inUpdateStep;
+	static bool _inLateUpdateStep;
 	static bool _inFixedUpdateStep;
 
 };
