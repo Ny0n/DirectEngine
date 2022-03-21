@@ -8,6 +8,6 @@ public:
     ComponentCategory GetCategory() override { return ComponentCategory::unique; }
 
     void Start() override;
-    void Update(float runTime, float deltaTime) override;
-    
+    void Update() override;
+
 };

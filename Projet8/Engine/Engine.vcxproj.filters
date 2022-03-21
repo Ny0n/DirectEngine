@@ -71,8 +71,18 @@
     <ClInclude Include="Application.h">
       <Filter>Source\Engine\Data</Filter>
     </ClInclude>
-    <ClInclude Include="AlignedBox.h" />
-    <ClInclude Include="Collider.h" />
+    <ClInclude Include="Input.h">
+      <Filter>Source\Engine\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyCodes.h">
+      <Filter>Source\Engine\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Source\Engine\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Source\Engine\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -108,11 +118,17 @@
     <ClCompile Include="Application.cpp">
       <Filter>Source\Engine\Data</Filter>
     </ClCompile>
-    <ClCompile Include="AlignedBox.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source\Engine\Data</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Source\Engine\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyCodes.cpp">
+      <Filter>Source\Engine\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source\Engine\Data</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

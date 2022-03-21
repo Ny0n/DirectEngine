@@ -6,9 +6,9 @@ GoUp::GoUp(float speed) : _speed(speed)
 
 // **************************** //
 
-void GoUp::Update(float runTime, float deltaTime)
+void GoUp::Update()
 {
     D3DXVECTOR3 pos = transform->GetPosition();
-    pos.y += _speed * deltaTime;
+    pos.y += _speed * Time::deltaTime;
     transform->SetPosition(pos);
 }

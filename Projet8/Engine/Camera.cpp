@@ -4,7 +4,7 @@ void Camera::Start()
 {
 }
 
-void Camera::Update(float runTime, float deltaTime)
+void Camera::Update()
 {
     // camera data
 

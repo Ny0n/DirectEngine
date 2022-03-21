@@ -2,11 +2,19 @@
 
 #include "Cube.h"
 #include "GoUp.h"
+#include "InputTester.h"
+#include "Move.h"
 #include "RainbowBackground.h"
 #include "Rotate.h"
 
 DefaultScene::DefaultScene()
 {
+	// tests
+
+	GameObject* inputTester = CreateEmpty();
+	inputTester->AddComponent(new InputTester());
+	Instantiate(inputTester);
+
 	// rgb background
 
 	GameObject* rgb = CreateEmpty();
@@ -51,9 +59,11 @@ DefaultScene::DefaultScene()
 
 	LPCWSTR path = L"Mesh\\tiger.x";
 	tigre->AddComponent(new MeshRenderer(path));
-	tigre->AddComponent(new GoUp());
-	tigre->AddComponent(new Rotate());
+	tigre->AddComponent(new Move());
 	tigre->AddComponent(new Collider);
+	// tigre->AddComponent(new GoUp(8));
+	// tigre->AddComponent(new Rotate());
+
 	tigre->transform->SetPosition(D3DXVECTOR3(0.0f, -5.0f, 0.0f));
 	tigre->transform->RotatePitch(25);
 	tigre->transform->SetScale(tigre->transform->GetScale() * 2);

@@ -13,13 +13,14 @@ class Component
 {
 
 public:
-	virtual const char* GetType() = 0; // this makes the class abstract
+	virtual const char* GetType() = 0; // a pure function makes the class abstract
 	virtual ComponentCategory GetCategory() = 0;
 
 	virtual ~Component() = default;
 
 	virtual void Start(){}
-	virtual void Update(float runTime, float deltaTime){}
+	virtual void Update(){}
+	virtual void FixedUpdate(){}
 
 	bool TypeEquals(Component* other);
 	bool TypeEquals(const char* other);

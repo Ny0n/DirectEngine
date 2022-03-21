@@ -1,20 +1,55 @@
 #include "pch.h"
 
-float Application::_targetFPS = APPLICATION_DEFAULT_FPS;
-float Application::_targetFrameRate = _targetFPS <= 0.0f ? 0.0f : 1.0f / _targetFPS;
+float Application::GetFrameRate(float fps)
+{
+	return fps <= 0.0f ? 0.0f : 1.0f / fps; // fps <= 0 means no limit
+}
+
+float Application::GetMaxStep(float maxStep)
+{
+	return maxStep <= fixedTimestep ? fixedTimestep : maxStep;
+}
+
+float Application::targetFPS = APPLICATION_DEFAULT_FPS;
+float Application::targetFrameRate = GetFrameRate(targetFPS);
+float Application::fixedTimestep = APPLICATION_DEFAULT_FIXED_TIMESTEP;
+float Application::maximumTimestep = GetMaxStep(APPLICATION_DEFAULT_MAXIMUM_TIMESTEP);
+bool Application::quit = false;
+
+// **************************** //
 
 float Application::GetTargetFPS()
 {
-	return _targetFPS;
+	return targetFPS;
 }
 
 void Application::SetTargetFPS(float fps)
 {
-	_targetFPS = fps;
-	_targetFrameRate = fps <= 0.0f ? 0.0f : 1.0f / fps; // fps <= 0 means no limit
+	targetFPS = fps;
+	targetFrameRate = GetFrameRate(fps);
 }
 
-float Application::GetTargetFrameRate()
+float Application::GetFixedTimestep()
 {
-	return _targetFrameRate;
+	return fixedTimestep;
+}
+
+void Application::SetFixedTimestep(float timestep)
+{
+	fixedTimestep = timestep;
+}
+
+float Application::GetMaximumTimestep()
+{
+	return maximumTimestep;
+}
+
+void Application::SetMaximumTimestep(float maxTimestep)
+{
+	maximumTimestep = GetMaxStep(maxTimestep);
+}
+
+void Application::Quit()
+{
+	quit = true;
 }

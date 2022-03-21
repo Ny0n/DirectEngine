@@ -63,17 +63,12 @@ void App::Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, i
     ShowWindow(_window, nCmdShow);
 }
 
-void App::Loop()
+void App::Run()
 {
-    _engine = new Engine(_window);
-
-    _engine->LoadScene(new DefaultScene());
-
-    _engine->Play();
+    Engine::GetInstance()->LoadScene(new DefaultScene());
+    Engine::GetInstance()->Run(_window);
 }
 
 void App::Uninit() const
 {
-    _engine->Stop();
-    delete(_engine);
 }

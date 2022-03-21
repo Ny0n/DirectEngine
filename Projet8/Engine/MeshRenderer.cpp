@@ -19,7 +19,7 @@ void MeshRenderer::Start()
     }
 }
 
-void MeshRenderer::Update(float runTime, float deltaTime)
+void MeshRenderer::Update()
 {
     if (_pmesh == nullptr)
         return;

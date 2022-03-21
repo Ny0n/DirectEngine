@@ -14,7 +14,7 @@ public:
 	explicit Rotate(bool reverse);
 	Rotate(float speed, bool reverse);
 
-	void Update(float runTime, float deltaTime) override;
+	void Update() override;
 
 private:
 	float _speed{ 50.0f };
