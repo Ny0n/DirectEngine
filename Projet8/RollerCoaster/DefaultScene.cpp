@@ -57,16 +57,16 @@ DefaultScene::DefaultScene()
 
 	GameObject* tigre = CreateEmpty();
 
-	LPCWSTR path = L"Mesh\\tiger.x";
+	LPCWSTR path = L"Mesh\\monkey.x";
 	tigre->AddComponent(new MeshRenderer(path));
 	tigre->AddComponent(new Move());
 	tigre->AddComponent(new Collider);
 	// tigre->AddComponent(new GoUp(8));
-	// tigre->AddComponent(new Rotate());
+	tigre->AddComponent(new Rotate());
 
 	tigre->transform->SetPosition(D3DXVECTOR3(0.0f, -5.0f, 0.0f));
-	tigre->transform->RotatePitch(25);
-	tigre->transform->SetScale(tigre->transform->GetScale() * 2);
+	tigre->transform->RotateYaw(22);
+	tigre->transform->SetScale(tigre->transform->GetScale() * 0.05f);
 
 	Instantiate(tigre);
 }
