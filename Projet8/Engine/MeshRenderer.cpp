@@ -28,6 +28,7 @@ void MeshRenderer::Start()
     LPD3DXBUFFER pMtrlBuffer = nullptr;
     if (FAILED(D3DXLoadMeshFromX(_path, D3DXMESH_SYSTEMMEM, d3ddev, NULL, &pMtrlBuffer, NULL, &g_dwNumMaterials, &_pmesh))) {
         MessageBox(0, L"Failed to load mesh from disk", 0, 0);
+        return;
     }
 
     D3DXMATERIAL* d3dxMaterials = (D3DXMATERIAL*) pMtrlBuffer->GetBufferPointer();
