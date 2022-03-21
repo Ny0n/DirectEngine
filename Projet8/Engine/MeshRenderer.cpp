@@ -92,6 +92,6 @@ void MeshRenderer::Update()
         // Draw the mesh subset
         _pmesh->DrawSubset(i);
     }
-    
-	_pmesh->DrawSubset(0);
+    if(g_dwNumMaterials == 0)
+		_pmesh->DrawSubset(0);
 }
