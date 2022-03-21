@@ -6,7 +6,18 @@ class Utils final
 public:
 	Utils() = delete;
 
-	static void Println(string s);
+	static void Println(LPCWSTR value);
+	static void Println(wstring value);
+	static void Println(string value);
+	static void Println(int value);
+	static void Println(unsigned value);
+	static void Println(long value);
+	static void Println(unsigned long value);
+	static void Println(long long value);
+	static void Println(unsigned long long value);
+	static void Println(double value);
+	static void Println(float value);
+	static void Println(long double value);
 
 	template<typename T>
 	static bool Contains(list<T*>* list, T* value);

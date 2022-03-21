@@ -18,7 +18,7 @@ public:
 	static const float& deltaTime;				// unscaledDeltaTime * timeScale
 	static const float& unscaledDeltaTime;		// The time between the last frame and the current one
 
-	static const float& fixedDeltaTime;			// fixedUnscaledDeltaTime * timeScale
+	static const float& fixedDeltaTime;			// fixedUnscaledDeltaTime / timeScale
 	static const float& fixedUnscaledDeltaTime; // will ALWAYS return the set FixedTimestep
 
 	static const bool& inStartStep;			// Returns true if called inside a Start() callback

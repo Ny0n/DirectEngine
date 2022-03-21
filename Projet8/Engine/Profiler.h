@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #define PROFILER_DISPLAY_ENABLED true   // Is the display enabled?
-#define PROFILER_DISPLAY_COOLDOWN 1     // The time between each display in seconds, less or equal to 0 means every frame
+#define PROFILER_DISPLAY_COOLDOWN 1     // The time between each display in seconds, less or equal to the set FPS means every frame
 
 // Only the Engine has an access to this class, since everything is private
 class Profiler final {
@@ -41,11 +41,8 @@ class Profiler final {
     // void AddFPS(float fpsIn);
 
     int loopCount{};
-    float currentFPS{};
-
-    float currentFrameRate{};
+    
     float lastFrameTime{-1};
-    float currentFixedRate{};
     float lastFixedTime{-1};
     float lastDisplayTime{-1};
 
@@ -53,8 +50,8 @@ class Profiler final {
     float inputTime{};
     float startTime{};
     float updateTime{};
-    float fixedUpdateTime{};
     float presentTime{};
+    float fixedUpdateTime{};
 
     float time1{};
     float time2{};

@@ -137,12 +137,7 @@ void Engine::Run(HWND window)
 
     MSG msg; // this struct holds Windows event messages
 
-    // starting the profiler
-    _profiler->InitSystemTime();
-
     // *** Part 2: Game Loop *** //
-
-    NewFrame(); // starting frame
 
     while (!Application::quit)
     {
@@ -182,9 +177,10 @@ void Engine::CheckForNewFrame()
 
     static float frameElapsed;
 
-    if (_profiler->lastFrameTime < 0.0f) // the first frame
+    if (_profiler->lastFrameTime < 0.0f) // THE first frame
     {
         _profiler->lastFrameTime = 0.0f;
+        _profiler->InitSystemTime();
         NewFrame();
         return;
     }
@@ -200,20 +196,32 @@ void Engine::CheckForNewFixedUpdate()
 
     static float fixedElapsed;
 
+    const float timestep = Application::fixedTimestep; // => elapsed (constant)
+    Time::_fixedDeltaTime = timestep / abs(Time::timeScale);
+    Time::_fixedUnscaledDeltaTime = timestep;
+
     if (_profiler->lastFixedTime < 0.0f) // the first frame
     {
-        _profiler->lastFixedTime = 0.0f;
         NewFixedUpdate();
         return;
     }
 
-    fixedElapsed = Time::runTime() - _profiler->lastFixedTime;
-    float maxTimestep = Application::maximumTimestep;
-    while (fixedElapsed >= Application::fixedTimestep && maxTimestep > 0.0f) // new fixed update
+    fixedElapsed = Time::time - _profiler->lastFixedTime;
+    if (fixedElapsed >= Time::fixedDeltaTime)
     {
-        fixedElapsed -= Application::fixedTimestep;
-        maxTimestep -= Application::fixedTimestep;
-        NewFixedUpdate();
+	    static float maxTimestepRemainder = 0.0f;
+
+	    float maxTimestep = Application::maximumTimestep + maxTimestepRemainder;
+        maxTimestepRemainder = 0.0f;
+
+        while (fixedElapsed >= Time::fixedDeltaTime && maxTimestep >= Time::fixedDeltaTime) // new fixed update
+        {
+            fixedElapsed -= Time::fixedDeltaTime;
+            maxTimestep -= Time::fixedDeltaTime;
+            NewFixedUpdate();
+        }
+
+        maxTimestepRemainder += maxTimestep;
     }
 }
 
@@ -225,12 +233,11 @@ void Engine::CheckForProfilerDisplay()
 
     if (_profiler->lastDisplayTime < 0.0f) // the first frame
     {
-        _profiler->lastDisplayTime = 0.0f;
         _profiler->DisplayData();
         return;
     }
 
-    profilerElapsed = Time::runTime() - _profiler->lastDisplayTime;
+    profilerElapsed = Time::time - _profiler->lastDisplayTime;
     if (profilerElapsed >= _profiler->displayCooldown) // new display
         _profiler->DisplayData();
 }
@@ -243,15 +250,13 @@ void Engine::NewFrame()
 
     const float time = Time::runTime();
 
-    _profiler->currentFrameRate = time - _profiler->lastFrameTime; // => elapsed
+    const float frameRate = time - _profiler->lastFrameTime; // => elapsed
     _profiler->lastFrameTime = time;
-    
-    _profiler->currentFPS = _profiler->currentFrameRate == 0.0f ? 0.0f : 1.0f / _profiler->currentFrameRate;
 
     Time::_frameCount++;
     Time::_time = time;
-    Time::_deltaTime = _profiler->currentFrameRate * Time::timeScale;
-    Time::_unscaledDeltaTime = _profiler->currentFrameRate;
+    Time::_deltaTime = frameRate * Time::timeScale;
+    Time::_unscaledDeltaTime = frameRate;
 
     // then we run the frame
 
@@ -266,19 +271,16 @@ void Engine::NewFixedUpdate()
 {
     // first we update all of the data
 
-    const float time = Time::runTime();
-    const float timestep = Application::fixedTimestep;
-    
+    const float time = Time::time;
+
     _profiler->lastFixedTime = time;
 
     Time::_fixedUpdateCount++;
     Time::_fixedTime = time;
-    Time::_fixedDeltaTime = timestep * Time::timeScale;
-    Time::_fixedUnscaledDeltaTime = timestep;
 
     // then we run the fixed update
 
-    Time::_inFixedUpdateStep = true; _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(FixedUpdate)); Time::_inFixedUpdateStep = false; // FixedUpdate
+    _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(FixedUpdate)); // FixedUpdate
     // _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(PhysicsUpdate)); // Physics Engine update
 }
 
@@ -291,12 +293,10 @@ void Engine::RunFrame()
 
     d3ddev->BeginScene();    // begins the 3D scene
 
-    Time::_inStartStep = true; _profiler->TimedRunner(_profiler->startTime, RUNNER(Start)); Time::_inStartStep = false;
-
+    _profiler->TimedRunner(_profiler->startTime, RUNNER(Start));
     CheckForNewFixedUpdate();
-
     _profiler->TimedRunner(_profiler->inputTime, RUNNER(Input));
-    Time::_inUpdateStep = true; _profiler->TimedRunner(_profiler->updateTime, RUNNER(Update)); Time::_inUpdateStep = false;
+    _profiler->TimedRunner(_profiler->updateTime, RUNNER(Update));
 
     d3ddev->EndScene();    // ends the 3D scene
 
@@ -312,6 +312,8 @@ void Engine::Input()
 
 void Engine::Start() // TODO optimize this (init once a new list with all starts and then remove ?)
 {
+    Time::_inStartStep = true;
+
     for (GameObject* go : _scene->gameObjects)
     {
         for (Component* comp : go->components)
@@ -323,10 +325,14 @@ void Engine::Start() // TODO optimize this (init once a new list with all starts
             }
         }
     }
+
+    Time::_inStartStep = false;
 }
 
 void Engine::Update()
 {
+    Time::_inUpdateStep = true;
+
     for (GameObject* go : _scene->gameObjects)
     {
         for (Component* comp : go->components)
@@ -334,10 +340,14 @@ void Engine::Update()
             comp->Update();
         }
     }
+
+    Time::_inUpdateStep = false;
 }
 
 void Engine::FixedUpdate()
 {
+    Time::_inFixedUpdateStep = true;
+
     for (GameObject* go : _scene->gameObjects)
     {
         for (Component* comp : go->components)
@@ -345,4 +355,6 @@ void Engine::FixedUpdate()
             comp->FixedUpdate();
         }
     }
+
+    Time::_inFixedUpdateStep = false;
 }

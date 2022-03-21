@@ -5,11 +5,11 @@ void InputTester::Start()
 	// Utils::Println("Start");
 }
 
-static int test = 0;
+// static int test = 0;
 
 void InputTester::Update()
 {
-	test = 0;
+	// test = 0;
 	// Utils::Println("Update");
 	// Utils::Println(to_string(Time::runTime()));
 	// Utils::Println(to_string(Time::deltaTime));
@@ -20,7 +20,7 @@ void InputTester::Update()
 
 	if (Input::GetKeyDown(KeyCode::T))
 	{
-		Time::timeScale = 0.0f;
+		Time::timeScale = 0.5f;
 	}
 
 	if (Input::GetKeyUp(KeyCode::T))
@@ -49,8 +49,9 @@ void InputTester::Update()
 
 void InputTester::FixedUpdate()
 {
-	test++;
+	// test++;
 	// Utils::Println("FixedUpdate " + to_string(test));
+	// Utils::Println("FixedUpdate");
 	// Utils::Println(to_string(Time::runTime()));
 	// Utils::Println(to_string(Time::fixedTime));
 	// Utils::Println(to_string(Time::fixedDeltaTime));
