@@ -52,16 +52,14 @@ void MeshRenderer::EngineStart()
             lstrlenA(d3dxMaterials[i].pTextureFilename) > 0)
         {
 
-            const CHAR* strPrefix = "Mesh\\";
-            CHAR strTexture[MAX_PATH];
-            strcpy_s(strTexture, MAX_PATH, strPrefix);
-            strcat_s(strTexture, MAX_PATH, d3dxMaterials[i].pTextureFilename);
+            string pathTexture = "Mesh\\";
+            pathTexture += d3dxMaterials[i].pTextureFilename;
 
-            Utils::Println(strTexture);
+            Utils::Println(pathTexture);
 
             // Create the texture
             if (FAILED(D3DXCreateTextureFromFileA(d3ddev,
-                strTexture,
+                pathTexture.c_str(),
                 &g_pMeshTextures[i])))
             {
                 MessageBox(0, L"Failed to load texture from disk", 0, 0);

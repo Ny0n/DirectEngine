@@ -2,6 +2,7 @@
 
 #include "Cube.h"
 #include "GoUp.h"
+#include "InputRotate.h"
 #include "InputTester.h"
 #include "Move.h"
 #include "RainbowBackground.h"
@@ -28,6 +29,8 @@ DefaultScene::DefaultScene()
 
 	GameObject* mainCamera = CreateEmpty();
 	mainCamera->AddComponent(new Camera());
+	mainCamera->AddComponent(new Move());
+	mainCamera->AddComponent(new InputRotate());
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
 	Instantiate(mainCamera);
 
@@ -57,16 +60,16 @@ DefaultScene::DefaultScene()
 
 	GameObject* tigre = CreateEmpty();
 
-	LPCWSTR path = L"Mesh\\monkey.x";
+	LPCWSTR path = L"Mesh\\cube.x";
 	tigre->AddComponent(new MeshRenderer(path));
-	tigre->AddComponent(new Move());
+	//tigre->AddComponent(new Move());
 	tigre->AddComponent(new Collider);
 	// tigre->AddComponent(new GoUp(8));
 	tigre->AddComponent(new Rotate());
 
 	tigre->transform->SetPosition(D3DXVECTOR3(0.0f, -5.0f, 0.0f));
 	tigre->transform->RotateYaw(22);
-	tigre->transform->SetScale(tigre->transform->GetScale() * 0.05f);
+	tigre->transform->SetScale(tigre->transform->GetScale() * 0.01f);
 
 	Instantiate(tigre);
 }

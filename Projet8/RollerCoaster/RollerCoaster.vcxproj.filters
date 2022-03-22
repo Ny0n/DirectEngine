@@ -50,6 +50,9 @@
     <ClInclude Include="Move.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="InputRotate.h">
+      <Filter>Game\Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RainbowBackground.cpp">
@@ -77,6 +80,9 @@
       <Filter>Game\Scripts</Filter>
     </ClCompile>
     <ClCompile Include="Move.cpp">
+      <Filter>Game\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="InputRotate.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
