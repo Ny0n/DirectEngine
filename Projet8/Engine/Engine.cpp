@@ -9,7 +9,7 @@ LPDIRECT3DINDEXBUFFER9 _IBuffer = nullptr;
 
 // **************************** //
 
-Engine::Engine() : _isPlaying(false), _window(nullptr), _profiler(new Profiler()), _scene(nullptr)
+Engine::Engine() : _isPlaying(false), _window(nullptr), window(_window), _profiler(new Profiler()), _scene(nullptr)
 {
     Time::_profiler = _profiler;
 }
@@ -19,6 +19,7 @@ Engine::~Engine()
     delete(_profiler);
     delete(_scene);
     _startedComponents.clear();
+    _startedEngineComponents.clear();
 }
 
 void Engine::LoadScene(Scene* scene)
@@ -316,9 +317,9 @@ void Engine::EngineStart()
     {
         for (Component* comp : go->components)
         {
-            if (Utils::Contains(&_startedComponents, comp) == false)
+            if (!Utils::Contains(&_startedEngineComponents, comp))
             {
-                _startedComponents.push_back(comp);
+                _startedEngineComponents.push_back(comp);
                 comp->EngineStart();
             }
         }
@@ -329,11 +330,12 @@ void Engine::Start() // TODO optimize this (init once a new list with all starts
 {
     Time::_inStartStep = true;
 
+    // Utils::Println("Start");
     for (GameObject* go : _scene->gameObjects)
     {
         for (Component* comp : go->components)
         {
-            if (Utils::Contains(&_startedComponents, comp) == false)
+            if (!Utils::Contains(&_startedComponents, comp))
             {
                 _startedComponents.push_back(comp);
                 comp->Start();

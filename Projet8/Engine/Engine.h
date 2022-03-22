@@ -21,6 +21,8 @@ public:
 
 	void Run(HWND window);
 
+	const HWND& window;
+
 private:
 	Engine(); // Only accessible from GetInstance()
 	~Engine();
@@ -54,6 +56,7 @@ private:
 	void EngineUpdate();
 
 	Scene* _scene;
+	list<Component*> _startedEngineComponents;
 	list<Component*> _startedComponents;
 
 };

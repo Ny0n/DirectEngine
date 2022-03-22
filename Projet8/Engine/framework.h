@@ -42,6 +42,11 @@
 #pragma comment(lib, "Strmiids.lib")
 #pragma comment(lib, "Kernel32.lib")
 
+#pragma comment(lib, "dxerr.lib")
+#pragma comment(lib, "legacy_stdio_definitions.lib")
+
+#include <DxErr.h>
+
 // declare global variables
 
 #define RUNNER(func) [=] { func(); }
@@ -59,6 +64,15 @@ extern LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 extern LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
 extern LPDIRECT3DVERTEXBUFFER9 _VBuffer;    // the pointer to the vertex buffer
 extern LPDIRECT3DINDEXBUFFER9 _IBuffer;    // the pointer to the index buffer
+
+#define HR(x)										\
+{													\
+	HRESULT hr = x;									\
+	if (FAILED(hr))									\
+	{												\
+		DXTraceA(__FILE__, __LINE__, hr, #x, FALSE);\
+	}												\
+}
 
 //structure
 struct CUSTOMVERTEX { FLOAT X, Y, Z; D3DVECTOR NORMAL; };
