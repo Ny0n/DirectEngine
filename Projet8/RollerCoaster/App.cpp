@@ -65,7 +65,7 @@ void App::Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, i
 
 void App::Run()
 {
-    Engine::GetInstance()->LoadScene(new DefaultScene());
+    SceneManager::LoadScene(new DefaultScene());
     Engine::GetInstance()->Run(_window);
 }
 

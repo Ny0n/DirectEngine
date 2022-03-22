@@ -1,8 +1,5 @@
 ﻿#pragma once
 
-class Component;
-class Scene;
-
 class Engine final
 {
 
@@ -16,8 +13,6 @@ public:
 	Engine(Engine const&&) = delete;
 	void operator=(Engine const&) = delete;
 	void operator=(Engine const&&) = delete;
-
-	void LoadScene(Scene* scene);
 
 	void Run(HWND window);
 
@@ -41,23 +36,8 @@ private:
 	void CheckForProfilerDisplay();
 
 	void NewFrame();
-	void RunFrame();
-
-	void EngineStart();
-	void Start();
-
 	void NewFixedUpdate();
-	void FixedUpdate();
-	void Collision();
-
-	void Input();
-	void Update();
-	void LateUpdate();
-	void EngineUpdate();
-
-	Scene* _scene;
-	list<Component*> _startedEngineComponents;
-	list<Component*> _startedComponents;
+	void RunFrame();
 
 };
 

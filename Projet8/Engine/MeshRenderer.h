@@ -18,4 +18,5 @@ private:
     LPDIRECT3DTEXTURE9* g_pMeshTextures = NULL; // Textures for our mesh
     LPCWSTR _path;
     DWORD  g_dwNumMaterials = 0L;
+
 };

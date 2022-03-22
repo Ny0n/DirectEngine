@@ -38,9 +38,10 @@ bool Utils::Contains(list<T*>* list, T* value)
 template <typename T>
 void Utils::DeleteList(list<T*>* list)
 {
-	for (auto element : *list)
+	for (int i = 0; i < list->size(); i++)
 	{
-		delete(element);
+		delete(list->back());
+		list->pop_back();
 	}
 
 	list->clear();

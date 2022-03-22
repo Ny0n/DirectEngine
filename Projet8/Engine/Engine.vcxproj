@@ -164,6 +164,7 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EngineComponent.h" />
     <ClInclude Include="EngineLib.h" />
+    <ClInclude Include="Execution.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="MonoBehaviour.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PhysicsEngine.h" />
     <ClInclude Include="Profiler.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="TimeManager.h" />
@@ -186,6 +188,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EngineComponent.cpp" />
+    <ClCompile Include="Execution.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="KeyCodes.cpp" />
@@ -197,6 +200,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="PhysicsEngine.cpp" />
     <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="TimeManager.cpp" />

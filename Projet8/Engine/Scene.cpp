@@ -1,5 +1,10 @@
 ﻿#include "pch.h"
 
+Scene::~Scene()
+{
+	Utils::DeleteList(&gameObjects);
+}
+
 GameObject* Scene::CreateEmpty()
 {
 	return new GameObject();
@@ -12,14 +17,14 @@ bool Scene::Instantiate(GameObject* prefab)
 	return AddToScene(prefab);
 }
 
-bool Scene::Destroy(GameObject* go)
+GameObject* Scene::Remove(GameObject* go)
 {
-	if (RemoveFromScene(go))
-	{
-		delete(go);
-		return true;
-	}
-	return false;
+	return RemoveFromScene(go);
+}
+
+bool Scene::IsEmpty() const
+{
+	return gameObjects.empty();
 }
 
 // **************************** //
@@ -44,12 +49,11 @@ bool Scene::AddToScene(GameObject* go)
 	return false;
 }
 
-bool Scene::RemoveFromScene(GameObject* go)
+GameObject* Scene::RemoveFromScene(GameObject* go)
 {
 	if (!IsInScene(go))
-	{
-		return false;
-	}
+		return nullptr;
+
 	gameObjects.remove(go);
-	return true;
+	return go;
 }

@@ -28,6 +28,7 @@ public:
 
 private:
 	friend class Engine;
+	friend class Execution;
 
 	static Profiler* _profiler; // to have access to the GetSystemTime() function
 

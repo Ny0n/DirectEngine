@@ -6,9 +6,12 @@ GameObject::GameObject() : transform(new Transform())
 
 GameObject::~GameObject()
 {
-	Utils::DeleteList(&components);
+	for (Component* component : components)
+		component->OnDestroy();
+	
+	SceneManager::Remove(this);
 
-	delete(transform);
+	Utils::DeleteList(&components);
 }
 
 // Finds and returns the first fount component of type ComponentType
@@ -42,18 +45,18 @@ bool GameObject::AddComponent(Component* component)
 	return true;
 }
 
-// Removes the first component of type ComponentType found on the gameobject
+// Removes and deletes the first component of type ComponentType found on the gameobject
 bool GameObject::RemoveComponent(const char* type)
 {
 	if (Utils::Contains(&unremovableEngineComponents, type)) // unremovable components
 		return false;
 
-	for (Component* element : components)
+	for (Component* component : components)
 	{
-		if (element->TypeEquals(type))
+		if (component->TypeEquals(type))
 		{
-			components.remove(element);
-			delete(element);
+			components.remove(component);
+			delete(component);
 			return true;
 		}
 	}
@@ -63,4 +66,9 @@ bool GameObject::RemoveComponent(const char* type)
 bool GameObject::RemoveComponent(Component* component)
 {
 	return RemoveComponent(component->GetType());
+}
+
+void GameObject::Destroy()
+{
+	delete(this);
 }

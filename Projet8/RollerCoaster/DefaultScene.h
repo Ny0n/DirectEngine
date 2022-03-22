@@ -7,6 +7,5 @@ class DefaultScene : public Scene
 
 public:
 	DefaultScene();
-	~DefaultScene() override;
 	
 };

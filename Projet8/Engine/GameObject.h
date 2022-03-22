@@ -2,7 +2,7 @@
 
 class Transform;
 
-class GameObject
+class GameObject final
 {
 
 public:
@@ -13,6 +13,8 @@ public:
 	bool AddComponent(Component* component);
 	bool RemoveComponent(const char* type);
 	bool RemoveComponent(Component* component);
+	
+	void Destroy();
 
 	list<Component*> components;
 	Transform* transform; // default component

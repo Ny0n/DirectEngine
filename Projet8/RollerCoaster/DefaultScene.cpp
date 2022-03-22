@@ -35,6 +35,7 @@ DefaultScene::DefaultScene()
 
 	GameObject* cube1 = CreateEmpty();
 	cube1->AddComponent(new Cube());
+	cube1->AddComponent(new Move());
 	cube1->AddComponent(new Collider);
 	cube1->AddComponent(new Rotate(150.0f, true));
 	
@@ -59,7 +60,7 @@ DefaultScene::DefaultScene()
 
 	LPCWSTR path = L"Mesh\\monkey.x";
 	tigre->AddComponent(new MeshRenderer(path));
-	tigre->AddComponent(new Move());
+	// tigre->AddComponent(new Move());
 	tigre->AddComponent(new Collider);
 	// tigre->AddComponent(new GoUp(8));
 	tigre->AddComponent(new Rotate());
@@ -69,9 +70,4 @@ DefaultScene::DefaultScene()
 	tigre->transform->SetScale(tigre->transform->GetScale() * 0.05f);
 
 	Instantiate(tigre);
-}
-
-DefaultScene::~DefaultScene()
-{
-	Utils::DeleteList(&gameObjects);
 }

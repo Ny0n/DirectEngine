@@ -7,17 +7,20 @@ class Scene
 
 public:
 	Scene() = default;
-	virtual ~Scene() = default;
+	virtual ~Scene();
 
 	list<GameObject*> gameObjects;
 
 	static GameObject* CreateEmpty();
+
 	bool Instantiate(GameObject* prefab);
-	bool Destroy(GameObject* go);
+	GameObject* Remove(GameObject* go);
+
+	bool IsEmpty() const;
 	bool IsInScene(GameObject* go) const;
 
 private:
 	bool AddToScene(GameObject* go);
-	bool RemoveFromScene(GameObject* go);
+	GameObject* RemoveFromScene(GameObject* go);
 
 };

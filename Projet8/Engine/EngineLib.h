@@ -5,6 +5,8 @@
 #include "Profiler.h"
 #include "Utils.h"
 
+#include "Execution.h"
+#include "PhysicsEngine.h"
 #include "Engine.h"
 
 #include "Scene.h"
