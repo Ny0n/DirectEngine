@@ -50,6 +50,9 @@
     <ClInclude Include="Move.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="RailMaker.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RainbowBackground.cpp">
@@ -79,6 +82,7 @@
     <ClCompile Include="Move.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
+    <ClCompile Include="RailMaker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RollerCoaster.rc">

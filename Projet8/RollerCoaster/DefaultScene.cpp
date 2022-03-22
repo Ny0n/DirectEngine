@@ -2,6 +2,7 @@
 
 #include "Cube.h"
 #include "GoUp.h"
+#include "RailMaker.h"
 #include "InputTester.h"
 #include "Move.h"
 #include "RainbowBackground.h"
@@ -29,13 +30,16 @@ DefaultScene::DefaultScene()
 	GameObject* mainCamera = CreateEmpty();
 	mainCamera->AddComponent(new Camera());
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
+	mainCamera->AddComponent(new RailMaker(this));
+	mainCamera->AddComponent(new Move());
 	Instantiate(mainCamera);
 
 	// cube
 
 	GameObject* cube1 = CreateEmpty();
 	cube1->AddComponent(new Cube());
-	cube1->AddComponent(new Collider);
+	cube1->AddComponent(new Collider());
+	
 	cube1->AddComponent(new Rotate(150.0f, true));
 	
 	cube1->transform->SetPosition(D3DXVECTOR3(0.0f , 0.0f, 0.0f));
@@ -55,20 +59,20 @@ DefaultScene::DefaultScene()
 
 	// tigre
 
-	GameObject* tigre = CreateEmpty();
+	//GameObject* tigre = CreateEmpty();
 
-	LPCWSTR path = L"Mesh\\monkey.x";
-	tigre->AddComponent(new MeshRenderer(path));
-	tigre->AddComponent(new Move());
-	tigre->AddComponent(new Collider);
-	// tigre->AddComponent(new GoUp(8));
-	tigre->AddComponent(new Rotate());
+	//LPCWSTR path = L"Mesh\\monkey.x";
+	//tigre->AddComponent(new MeshRenderer(path));
+	//tigre->AddComponent(new Move());
+	//tigre->AddComponent(new Collider);
+	//// tigre->AddComponent(new GoUp(8));
+	//tigre->AddComponent(new Rotate());
 
-	tigre->transform->SetPosition(D3DXVECTOR3(0.0f, -5.0f, 0.0f));
-	tigre->transform->RotateYaw(22);
-	tigre->transform->SetScale(tigre->transform->GetScale() * 0.05f);
+	//tigre->transform->SetPosition(D3DXVECTOR3(0.0f, -5.0f, 0.0f));
+	//tigre->transform->RotateYaw(22);
+	//tigre->transform->SetScale(tigre->transform->GetScale() * 0.05f);
 
-	Instantiate(tigre);
+	//Instantiate(tigre);
 }
 
 DefaultScene::~DefaultScene()

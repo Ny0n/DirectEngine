@@ -37,6 +37,25 @@ void Transform::UpdateRotationFromVectors()
 
 void Transform::UpdateRotationFromQuaternion()
 {
+	D3DXMatrixRotationQuaternion(&rotation, &quaternion);
+
+	//change axis value
+	//x axis
+	right.x = rotation._11;
+	right.y = rotation._12;
+	right.z = rotation._13;
+
+	//y axis
+	up.x = rotation._21;
+	up.y = rotation._22;
+	up.z = rotation._23;
+
+	//z axis
+	forward.x = rotation._31;
+	forward.y = rotation._32;
+	forward.z = rotation._33;
+
+	UpdateMatrix();
 }
 
 void Transform::UpdateRotationFromMatrix()
@@ -145,7 +164,7 @@ void Transform::RotateWorldZ(float angle)
 void Transform::SetQuaternion(D3DXQUATERNION quat)
 {
 	quaternion = quat;
-	UpdateMatrix();
+	UpdateRotationFromQuaternion();
 }
 
 void Transform::SetPosition(D3DXVECTOR3 pos)
