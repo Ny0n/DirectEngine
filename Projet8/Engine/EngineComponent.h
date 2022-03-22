@@ -10,6 +10,7 @@ class EngineComponent : public Component
 	friend class MeshRenderer;
 	friend class AlignedBox;
 	friend class Collider;
+	friend class Canvas;
 	
 	EngineComponent() = default;
 

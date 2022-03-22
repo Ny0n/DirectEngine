@@ -19,6 +19,10 @@
 #include "AlignedBox.h"
 #include "Collider.h"
 
+//UI Components
+#include "Canvas.h"
+#include "Image.h"
+
 #include "KeyCodes.h"
 #include "Input.h"
 #include "Application.h"

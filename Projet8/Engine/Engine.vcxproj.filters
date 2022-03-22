@@ -33,6 +33,9 @@
     <Filter Include="Source\Objects\Components\Custom">
       <UniqueIdentifier>{99281bfb-d79e-4004-9097-c43978088b4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Objects\Components\Custom\UI">
+      <UniqueIdentifier>{3b0cee2e-3fdf-43d9-bfa3-106cc502c83d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -98,6 +101,12 @@
     <ClInclude Include="Transform.h">
       <Filter>Source\Objects\Components\Custom</Filter>
     </ClInclude>
+    <ClInclude Include="Canvas.h">
+      <Filter>Source\Objects\Components\Custom\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Source\Objects\Components\Custom\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -156,6 +165,12 @@
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Source\Objects\Components\Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas.cpp">
+      <Filter>Source\Objects\Components\Custom\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Source\Objects\Components\Custom\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

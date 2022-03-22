@@ -67,8 +67,20 @@ DefaultScene::DefaultScene()
 	tigre->transform->SetPosition(D3DXVECTOR3(0.0f, -5.0f, 0.0f));
 	tigre->transform->RotateYaw(22);
 	tigre->transform->SetScale(tigre->transform->GetScale() * 0.05f);
-
 	Instantiate(tigre);
+
+	GameObject* canvas = CreateEmpty();
+	canvas->AddComponent(new Canvas());
+
+	auto image = new Image();
+	image->height = 80;
+	image->width = 80;
+	image->filePath = L"C:/Users/kperez/Documents/direct8/direct8/Projet8/RollerCoaster/Image.png";
+
+	canvas->AddComponent(image);
+	Instantiate(canvas);
+
+
 }
 
 DefaultScene::~DefaultScene()

@@ -159,6 +159,7 @@
     <ClInclude Include="AlignedBox.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Canvas.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Engine.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="EngineLib.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="KeyCodes.h" />
     <ClInclude Include="MeshRenderer.h" />
@@ -182,11 +184,13 @@
     <ClCompile Include="AlignedBox.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EngineComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="KeyCodes.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
