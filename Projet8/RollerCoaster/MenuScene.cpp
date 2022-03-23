@@ -1,5 +1,6 @@
 #include "MenuScene.h"
 
+#include "CECIESTUNSCRIPT.h"
 #include "InputTester.h"
 
 string MenuScene::GetName()
@@ -22,17 +23,18 @@ void MenuScene::GenerateContent()
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
 	AddToScene(mainCamera);
 
-	// monkey
+	// canvas
 
-	GameObject* monkey = CreateEmpty();
+	GameObject* canvas = CreateEmpty();
 
-	LPCWSTR path = L"Mesh\\monkey.x";
-	monkey->AddComponent(new MeshRenderer(path));
-	monkey->AddComponent(new Collider);
+	const auto image = new Image();
+	image->width = 200;
+	image->height = 200;
+	image->filePath = L"C:\\Users\\kperez\\Documents\\direct8\\direct8\\Projet8\\RollerCoaster\\Image\\smiley.png";
+	canvas->AddComponent(image);
 
-	monkey->transform->SetPosition(D3DXVECTOR3(0.0f, -5.0f, 0.0f));
-	monkey->transform->RotateYaw(22);
-	monkey->transform->SetScale(monkey->transform->GetScale() * 0.05f);
+	auto script = new CECIESTUNSCRIPT(image);
+	canvas->AddComponent(script);
 
-	AddToScene(monkey);
+	AddToScene(canvas);
 }

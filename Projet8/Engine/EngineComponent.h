@@ -11,7 +11,8 @@ class EngineComponent : public Component
 	friend class AlignedBox;
 	friend class Collider;
 	friend class Canvas;
-	
+	friend class Image;
+
 	EngineComponent() = default;
 
 public:

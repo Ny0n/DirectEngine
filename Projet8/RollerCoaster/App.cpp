@@ -67,7 +67,6 @@ void App::Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, i
 void App::Run()
 {
     // first we prep the scenes that will be used in the app
-    SceneManager::AddToBuild(new DefaultScene());
     SceneManager::AddToBuild(new MenuScene());
 
     // and then we run the game

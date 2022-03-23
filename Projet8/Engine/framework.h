@@ -60,8 +60,8 @@
 
 // declare global variables
 
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 
 extern LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 extern LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class

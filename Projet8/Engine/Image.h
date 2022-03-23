@@ -1,15 +1,16 @@
 #pragma once
 
-class Image final : public Canvas
+class Image final : public EngineComponent
 {
 public:
 	const char* GetType() override { return NAMEOF(Image); }
+
 	~Image() override;
+	Image();
 
 	void EngineStart() override;
-	void Render() override;
+	void EngineUpdate() override;
 
-	IDirect3DSurface9* surface;
 	LPCWSTR filePath;
 	UINT height;
 	UINT width;
@@ -17,8 +18,15 @@ public:
 
 	D3DXVECTOR2 position;
 	D3DXVECTOR2 scale;
-	D3DXVECTOR2 rotation;
-	LPDIRECT3DTEXTURE9 ppTexture;
-	LPD3DXSPRITE ppSprite;
+	D3DXVECTOR2 rotationCenter;
+	FLOAT rotation;
+
+private:
+	void Render();
+
+	Canvas* _canvas;
+
+	LPDIRECT3DTEXTURE9 ppTexture = nullptr;
+	LPD3DXSPRITE ppSprite = nullptr;
 };
 
