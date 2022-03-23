@@ -13,12 +13,12 @@ public:
 
 	void Update() override;
 	void Start() override;
-	void Turn();
+	void Turn(float rotate);
+	void MoveForward();
 private :
 	list<Cube*> cubes = {};
 	const float _spaceBetween = 5.0f;
-	const float _maxDistance = 30.0f;
-	const float _rotate = 90;
+	 float _maxDistance = 100.0f;
 	const float _step = 10;
 	Scene* scene;
 };
