@@ -14,7 +14,7 @@ class Component
 	Component() = default;
 
 public:
-	virtual ~Component() = default;
+	virtual ~Component();
 	virtual const char* GetType() = 0; // a pure function makes the class abstract
 	virtual ComponentCategory GetCategory() = 0;
 

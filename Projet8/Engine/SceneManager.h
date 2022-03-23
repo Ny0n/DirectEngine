@@ -17,12 +17,15 @@ public:
 	static string GetActiveSceneName();
 	static int GetActiveSceneIndex();
 
+	static bool SetActiveScene(string sceneName);
+	static bool SetActiveScene(int buildIndex);
+
 	static void LoadScene(string sceneName);
 	static void LoadScene(int buildIndex);
 	static void UnloadScene(string sceneName);
 	static void UnloadScene(int buildIndex);
 	static void LoadSceneAdditive(string sceneName); // additive, there can be multiple scenes active at the same time
-	static void LoadSceneAdditive(int buildIndex); 
+	static void LoadSceneAdditive(int buildIndex);
 
 	static bool IsEmpty(); // returns true if every scene is empty
 	static void DontDestroyOnLoad(GameObject* go);
@@ -49,7 +52,12 @@ private:
 
 	static void ForEachScene(const function<void(Scene*)>& consumer);
 
+	// helpers
+	static void SaveProtectedObjects(Scene* scene, list<GameObject*>& list);
 	static void AddScene(Scene* scene);
+	static bool SetMainScene(string sceneName);
+	static IScene* FindScene(string sceneName);
+	static IScene* FindScene(int buildIndex);
 
 	static map<string, IScene*> _buildScenesS;
 	static map<int, IScene*> _buildScenesI;

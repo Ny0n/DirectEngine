@@ -123,44 +123,5 @@ void Execution::CheckForSceneUpdate()
 {
     // we update (load/unload/additive) the scene if we have to
     if (SceneManager::ChangeRequired())
-    {
         SceneManager::ApplyChanges();
-
-        // while we're at it, we check inside the started components if some of them are now nullptr,
-        // because they were destroyed by the scene change,
-        // in that case, we remove them from the lists
-
-        // list<Component*> sEComponents = {};
-        // list<Component*> sComponents = {};
-        //
-        // for (Component* comp : startedEngineComponents)
-        // {
-	       //  try
-	       //  {
-        //         comp->GetType();
-	       //  }
-	       //  catch (...)
-	       //  {
-	       //  }
-        //     Utils::Println(comp->GetType());
-        //     if (comp != nullptr)
-        //     {
-        //         sEComponents.push_back(comp);
-        //     }
-        // }
-        //
-        // for (auto comp : startedComponents)
-        // {
-        //     if (comp != nullptr)
-        //     {
-        //         sComponents.push_back(comp);
-        //     }
-        // }
-        //
-        // startedEngineComponents = sEComponents;
-        // startedComponents = sComponents;
-
-        startedEngineComponents.clear();
-        startedComponents.clear();
-    }
 }
