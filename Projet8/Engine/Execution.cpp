@@ -102,6 +102,7 @@ void Execution::LateUpdate()
 {
     Time::_inLateUpdateStep = true;
 
+    Cursor::CursorUpdate();
     SceneManager::ForEachComponent(LateUpdate_);
 
     Time::_inLateUpdateStep = false;

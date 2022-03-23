@@ -161,6 +161,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Cursor.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EngineComponent.h" />
     <ClInclude Include="EngineLib.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EngineComponent.cpp" />
     <ClCompile Include="Execution.cpp" />

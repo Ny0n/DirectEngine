@@ -21,6 +21,7 @@
 #include "MeshRenderer.h"
 #include "AlignedBox.h"
 #include "Collider.h"
+#include "Cursor.h"
 
 #include "KeyCodes.h"
 #include "Input.h"

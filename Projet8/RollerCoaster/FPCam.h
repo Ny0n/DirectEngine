@@ -9,7 +9,8 @@ public:
 
 	FPCam() = default;
 	explicit FPCam(float speed);
-	
+
+	void Start() override;
 	void Update() override;
 
 private:

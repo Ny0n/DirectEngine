@@ -6,6 +6,12 @@ FPCam::FPCam(float speed) : _speed(speed)
 }
 
 
+void FPCam::Start()
+{
+    Cursor::SetVisible(false);
+    Cursor::Lock();
+}
+
 
 void FPCam::Update()
 {
@@ -22,7 +28,4 @@ void FPCam::Update()
 
     transform->RotatePitch(upSpeed * sensibility * Time::deltaTime);
     transform->RotateYaw(rightSpeed * sensibility * Time::deltaTime, Space::World);
-    
-    SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-    ShowCursor(false);
 }
