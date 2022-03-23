@@ -50,6 +50,9 @@
     <ClInclude Include="Move.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="FPCam.h">
+      <Filter>Game\Scripts</Filter>
+    </ClInclude>
     <ClInclude Include="MenuScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
@@ -84,6 +87,9 @@
     </ClCompile>
     <ClCompile Include="MenuScene.cpp">
       <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="FPCam.cpp">
+      <Filter>Game\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

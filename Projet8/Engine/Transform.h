@@ -1,5 +1,12 @@
 ﻿#pragma once
 
+enum class Space
+{
+	World,
+    Self,
+};
+
+
 class Transform final : public EngineComponent
 {
 
@@ -14,10 +21,10 @@ public:
     void UpdateRotationFromQuaternion();
     void UpdateRotationFromMatrix();
     void UpdateMatrix();
-    void Rotate(float pitch, float yaw, float roll);
-    void RotatePitch(float angle);
-    void RotateYaw(float angle);
-    void RotateRoll(float angle);
+    void Rotate(float pitch, float yaw, float roll, Space relativeTo = Space::Self);
+    void RotatePitch(float angle, Space relativeTo = Space::Self);
+    void RotateYaw(float angle, Space relativeTo = Space::Self);
+    void RotateRoll(float angle, Space relativeTo = Space::Self);
     void RotateWorld(D3DXMATRIX* pMatrix);
     void RotateWorldX(float angle);
     void RotateWorldY(float angle);

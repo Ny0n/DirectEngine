@@ -53,8 +53,8 @@ void App::Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, i
         WS_OVERLAPPEDWINDOW,    // window style
         0,    // x-position of the window
         0,    // y-position of the window
-        720,    // width of the window
-        480,    // height of the window
+        SCREEN_WIDTH,    // width of the window
+        SCREEN_HEIGHT,    // height of the window
         NULL,    // we have no parent window, NULL
         NULL,    // we aren't using menus, NULL
         hInstance,    // application handle

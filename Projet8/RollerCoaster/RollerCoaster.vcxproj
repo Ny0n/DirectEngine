@@ -149,6 +149,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DefaultScene.h" />
     <ClInclude Include="GoUp.h" />
+    <ClInclude Include="FPCam.h" />
     <ClInclude Include="InputTester.h" />
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="Move.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="GoUp.cpp" />
+    <ClCompile Include="FPCam.cpp" />
     <ClCompile Include="InputTester.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MenuScene.cpp" />
