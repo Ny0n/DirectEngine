@@ -149,7 +149,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DefaultScene.h" />
     <ClInclude Include="GoUp.h" />
-    <ClInclude Include="InputRotate.h" />
+    <ClInclude Include="FPCam.h" />
     <ClInclude Include="InputTester.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="RainbowBackground.h" />
@@ -162,7 +162,7 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="GoUp.cpp" />
-    <ClCompile Include="InputRotate.cpp" />
+    <ClCompile Include="FPCam.cpp" />
     <ClCompile Include="InputTester.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Move.cpp" />

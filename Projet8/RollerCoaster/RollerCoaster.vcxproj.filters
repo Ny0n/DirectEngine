@@ -50,7 +50,7 @@
     <ClInclude Include="Move.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="InputRotate.h">
+    <ClInclude Include="FPCam.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
@@ -82,7 +82,7 @@
     <ClCompile Include="Move.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="InputRotate.cpp">
+    <ClCompile Include="FPCam.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
   </ItemGroup>

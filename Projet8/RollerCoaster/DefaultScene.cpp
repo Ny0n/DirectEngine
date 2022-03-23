@@ -2,7 +2,7 @@
 
 #include "Cube.h"
 #include "GoUp.h"
-#include "InputRotate.h"
+#include "FPCam.h"
 #include "InputTester.h"
 #include "Move.h"
 #include "RainbowBackground.h"
@@ -30,7 +30,7 @@ DefaultScene::DefaultScene()
 	GameObject* mainCamera = CreateEmpty();
 	mainCamera->AddComponent(new Camera());
 	mainCamera->AddComponent(new Move());
-	mainCamera->AddComponent(new InputRotate());
+	mainCamera->AddComponent(new FPCam());
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
 	Instantiate(mainCamera);
 
