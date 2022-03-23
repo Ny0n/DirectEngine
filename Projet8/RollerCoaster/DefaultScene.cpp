@@ -5,6 +5,7 @@
 #include "FPCam.h"
 #include "InputTester.h"
 #include "Move.h"
+#include "MoveAlongRails.h"
 #include "RailMaker.h"
 #include "RainbowBackground.h"
 #include "Rotate.h"
@@ -39,6 +40,7 @@ void DefaultScene::GenerateContent()
 	mainCamera->AddComponent(new FPCam());
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
 	mainCamera->AddComponent(new RailMaker());
+	mainCamera->AddComponent(new MoveAlongRails());
 	AddToScene(mainCamera);
 
 	// cube

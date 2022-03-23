@@ -8,8 +8,8 @@ void RailMaker::Update()
 	/* generate secret number between 1 and 10: */
 	
 	float farestCubedist = 0;
-	if (!cubes.empty())
-		farestCubedist = Utils::DistanceWithOutSquareRoot(transform->GetPosition(), cubes.back()->transform->GetPosition());
+	if (!_cubes.empty())
+		farestCubedist = Utils::DistanceWithOutSquareRoot(transform->GetPosition(), _cubes.back()->transform->GetPosition());
 	if (farestCubedist < (_maxDistance - _spaceBetween) * (_maxDistance - _spaceBetween))
 	{
 		float random = rand()%100;
@@ -25,7 +25,6 @@ void RailMaker::Update()
 		{
 			MoveForward();
 		}
-		Utils::Println(random);
 	}
 }
 
@@ -45,14 +44,14 @@ void RailMaker::Turn(float rotate)
 		box = new GameObject();
 		box->AddComponent(new Cube());
 		(Cube*)box->GetComponent(NAMEOF(Cube));
-		if (!cubes.empty())
+		if (!_cubes.empty())
 		{
 			
-			box->transform->SetQuaternion(cubes.back()->transform->GetQuaternion());
+			box->transform->SetQuaternion(_cubes.back()->transform->GetQuaternion());
 		}
 		D3DXVECTOR3  vector;
-		if (!cubes.empty())
-			vector = cubes.back()->transform->GetPosition() + cubes.back()->transform->GetForward() * _spaceBetween ;
+		if (!_cubes.empty())
+			vector = _cubes.back()->transform->GetPosition() + _cubes.back()->transform->GetForward() * _spaceBetween ;
 		else
 			vector = transform->GetPosition() + transform->GetForward() * _spaceBetween;
 		vector.y = -4;
@@ -62,7 +61,7 @@ void RailMaker::Turn(float rotate)
 		//box->transform->RotatePitch((rotate / _step));
 		
 		SceneManager::Instantiate(box);
-		cubes.push_back((Cube*)box->GetComponent(NAMEOF(Cube)));
+		_cubes.push_back((Cube*)box->GetComponent(NAMEOF(Cube)));
 	}
 
 	
@@ -75,26 +74,24 @@ void RailMaker::MoveForward()
 	Cube* farestCube = nullptr;
 	GameObject* box = nullptr;
 	Cube* MovingRail = nullptr;
-	if (!cubes.empty())
-		farestCubedist = Utils::DistanceWithOutSquareRoot(position, cubes.back()->transform->GetPosition());
+	if (!_cubes.empty())
+		farestCubedist = Utils::DistanceWithOutSquareRoot(position, _cubes.back()->transform->GetPosition());
 	else
 	{
 		farestCubedist = 0;
 	}
 	if (farestCubedist < (_maxDistance - _spaceBetween) * (_maxDistance - _spaceBetween))
 	{
-		if (box == nullptr)
-		{
-			box = new GameObject();
-			box->AddComponent(new Cube());
-			(Cube*)box->GetComponent(NAMEOF(Cube));
-		}
+		box = new GameObject();
+		box->AddComponent(new Cube());
+		(Cube*)box->GetComponent(NAMEOF(Cube));
 
 		D3DXVECTOR3  vector;
-		if (!cubes.empty())
+		if (!_cubes.empty())
 		{
-			box->transform->SetQuaternion(cubes.back()->transform->GetQuaternion());
-			vector = cubes.back()->transform->GetPosition() + cubes.back()->transform->GetForward() * _spaceBetween;
+
+			box->transform->SetQuaternion(_cubes.back()->transform->GetQuaternion());
+			vector = _cubes.back()->transform->GetPosition() + _cubes.back()->transform->GetForward() * _spaceBetween;
 		}
 		else
 		{
@@ -104,14 +101,16 @@ void RailMaker::MoveForward()
 
 		box->transform->SetPosition(vector);
 		SceneManager::Instantiate(box);
-		cubes.push_back((Cube*)box->GetComponent(NAMEOF(Cube)));
+		_cubes.push_back((Cube*)box->GetComponent(NAMEOF(Cube)));
 
 	}
 
-	Cube* firstCreated = cubes.front();
-	if (cubes.front()->transform->GetPosition().z < transform->GetPosition().z)
-	{
+	
+}
 
-		cubes.pop_front();
-	}
+Cube* RailMaker::PopFrontCube()
+{
+	Cube* cube = _cubes.front();
+	_cubes.pop_front();
+	return cube;
 }

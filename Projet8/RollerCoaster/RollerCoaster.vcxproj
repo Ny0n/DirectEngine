@@ -153,6 +153,7 @@
     <ClInclude Include="InputTester.h" />
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="Move.h" />
+    <ClInclude Include="MoveAlongRails.h" />
     <ClInclude Include="RailMaker.h" />
     <ClInclude Include="RainbowBackground.h" />
     <ClInclude Include="Resource.h" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="Move.cpp" />
+    <ClCompile Include="MoveAlongRails.cpp" />
     <ClCompile Include="RailMaker.cpp" />
     <ClCompile Include="RainbowBackground.cpp" />
     <ClCompile Include="Rotate.cpp" />
