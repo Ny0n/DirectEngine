@@ -6,6 +6,7 @@ class Scene;
 class Execution final
 {
 	friend class Engine;
+	friend class Component; // so that components can remove themselves from the started lists when destroyed
 
 	static void Clean();
 

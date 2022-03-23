@@ -21,6 +21,7 @@
 #include "MeshRenderer.h"
 #include "AlignedBox.h"
 #include "Collider.h"
+#include "Cursor.h"
 
 //UI Components
 #include "Canvas.h"

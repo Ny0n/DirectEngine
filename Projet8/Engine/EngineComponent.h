@@ -1,7 +1,5 @@
 #pragma once
 
-extern list<const char*> unremovableEngineComponents; // defined in cpp
-
 class EngineComponent : public Component
 {
 	// add newly created engine components here
@@ -10,10 +8,12 @@ class EngineComponent : public Component
 	friend class MeshRenderer;
 	friend class AlignedBox;
 	friend class Collider;
-	friend class Canvas;
-	friend class Image;
+
+	friend class GameObject;
+	static list<const char*> unremovableEngineComponents;
 
 	EngineComponent() = default;
+	~EngineComponent() override { unremovableEngineComponents.clear(); } // TODO redo this (only once, clean)
 
 public:
 	ComponentCategory GetCategory() override { return ComponentCategory::single; }

@@ -104,6 +104,9 @@
     <ClInclude Include="IScene.h">
       <Filter>Source\App Data</Filter>
     </ClInclude>
+    <ClInclude Include="Cursor.h">
+      <Filter>Source\App Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -170,6 +173,9 @@
       <Filter>Source\App Data</Filter>
     </ClCompile>
     <ClCompile Include="IScene.cpp">
+      <Filter>Source\App Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Cursor.cpp">
       <Filter>Source\App Data</Filter>
     </ClCompile>
   </ItemGroup>

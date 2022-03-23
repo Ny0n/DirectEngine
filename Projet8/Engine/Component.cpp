@@ -1,5 +1,11 @@
 ﻿#include "pch.h"
 
+Component::~Component()
+{
+	Execution::startedEngineComponents.remove(this);
+	Execution::startedComponents.remove(this);
+}
+
 bool Component::TypeEquals(Component* other)
 {
 	return this->GetType() == other->GetType();

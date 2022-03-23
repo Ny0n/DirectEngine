@@ -1,5 +1,5 @@
 #include "pch.h"
 
-list<const char*> unremovableEngineComponents = { // components that we can't remove
+list<const char*> EngineComponent::unremovableEngineComponents = { // components that we can't remove
 	NAMEOF(Transform),
 };

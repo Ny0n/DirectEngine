@@ -1,10 +1,12 @@
 #include "DefaultScene.h"
 
 #include "Cube.h"
+#include "DontDestroyOnLoad.h"
 #include "GoUp.h"
 #include "FPCam.h"
 #include "InputTester.h"
 #include "Move.h"
+#include "MoveAlongRails.h"
 #include "RailMaker.h"
 #include "RainbowBackground.h"
 #include "Rotate.h"
@@ -39,6 +41,7 @@ void DefaultScene::GenerateContent()
 	mainCamera->AddComponent(new FPCam());
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
 	mainCamera->AddComponent(new RailMaker());
+	mainCamera->AddComponent(new MoveAlongRails());
 	AddToScene(mainCamera);
 
 	// cube
@@ -46,6 +49,7 @@ void DefaultScene::GenerateContent()
 	GameObject* cube1 = CreateEmpty();
 	cube1->AddComponent(new Cube());
 	cube1->AddComponent(new Move());
+	cube1->AddComponent(new DontDestroyOnLoad());
 	cube1->AddComponent(new Collider);
 	cube1->AddComponent(new Rotate(150.0f, true));
 

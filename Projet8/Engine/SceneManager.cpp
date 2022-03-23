@@ -44,8 +44,8 @@ int SceneManager::BuildScenesCount()
 
 void SceneManager::Clean()
 {
-	Utils::DeleteList(_scenes); // this also deletes _mainScene
-	Utils::DeleteList(_protectedGameObjects);
+	Utils::DeleteList(_scenes); // this also deletes _mainScene, and recursively, everything inside _protectedGameObjects
+	_protectedGameObjects.clear();
 
 	for (const auto scenes : _buildScenesS)
 		delete(scenes.second);
@@ -84,6 +84,26 @@ GameObject* SceneManager::Remove(GameObject* go)
 	return nullptr;
 }
 
+list<string> SceneManager::GetActiveSceneNames()
+{
+	list<string> names = {};
+
+	for (Scene* scene : _scenes)
+		names.push_back(scene->name);
+
+	return names;
+}
+
+list<int> SceneManager::GetActiveSceneIndexes()
+{
+	list<int> indexes = {};
+
+	for (Scene* scene : _scenes)
+		indexes.push_back(FindSceneIndex(scene->name));
+
+	return indexes;
+}
+
 // **************************** //
 
 string SceneManager::GetActiveSceneName()
@@ -99,61 +119,87 @@ int SceneManager::GetActiveSceneIndex()
 	if (!HasScene())
 		return 0;
 
-	for (const auto element : _buildScenesI)
-	{
-		if (element.second->GetName() == _mainScene->name)
-			return element.first;
-	}
+	return FindSceneIndex(_mainScene->name);
+}
+
+bool SceneManager::SetActiveScene(string sceneName)
+{
+	IScene* iscene = FindScene(sceneName);
+	if (iscene != nullptr)
+		return SetMainScene(iscene->GetName());
+	return false;
+}
+
+bool SceneManager::SetActiveScene(int buildIndex)
+{
+	IScene* iscene = FindScene(buildIndex);
+	if (iscene != nullptr)
+		return SetMainScene(iscene->GetName());
+	return false;
 }
 
 // **************************** //
 
 void SceneManager::LoadScene(string sceneName)
 {
-	IScene* iscene = _buildScenesS[sceneName];
-	if (iscene == nullptr)
-	{
-		Utils::Println("Scene \"" + sceneName + "\" doesn't exist!");
-		return;
-	}
-
-	_sceneLoadChanges.push_back(sceneName);
+	IScene* iscene = FindScene(sceneName);
+	if (iscene != nullptr)
+		_sceneLoadChanges.push_back(iscene->GetName());
 }
 
 void SceneManager::LoadScene(int buildIndex)
 {
-	IScene* iscene = _buildScenesI[buildIndex];
-	if (iscene == nullptr)
-	{
-		Utils::Println("Scene with build number \"" + to_string(buildIndex) + "\" doesn't exist!");
-		return;
-	}
+	IScene* iscene = FindScene(buildIndex);
+	if (iscene != nullptr)
+		_sceneLoadChanges.push_back(iscene->GetName());
+}
 
-	_sceneLoadChanges.push_back(iscene->GetName());
+void SceneManager::UnloadScene(string sceneName)
+{
+	IScene* iscene = FindScene(sceneName);
+	if (iscene != nullptr)
+		_sceneUnoadChanges.push_back(iscene->GetName());
+}
+
+void SceneManager::UnloadScene(int buildIndex)
+{
+	IScene* iscene = FindScene(buildIndex);
+	if (iscene != nullptr)
+		_sceneUnoadChanges.push_back(iscene->GetName());
 }
 
 void SceneManager::LoadSceneAdditive(string sceneName)
 {
-	IScene* iscene = _buildScenesS[sceneName];
-	if (iscene == nullptr)
+	IScene* iscene = FindScene(sceneName);
+	if (iscene != nullptr)
 	{
-		Utils::Println("Scene \"" + sceneName + "\" doesn't exist!");
-		return;
+		for (const Scene* scene : _scenes)
+		{
+			if (scene->name == iscene->GetName())
+			{
+				Utils::Println("ERROR: (LoadSceneAdditive) Scene \"" + iscene->GetName() + "\" is already loaded!");
+				return;
+			}
+		}
+		_sceneAdditiveChanges.push_back(iscene->GetName());
 	}
-
-	_sceneAdditiveChanges.push_back(iscene->GetName());
 }
 
 void SceneManager::LoadSceneAdditive(int buildIndex)
 {
-	IScene* iscene = _buildScenesI[buildIndex];
-	if (iscene == nullptr)
+	IScene* iscene = FindScene(buildIndex);
+	if (iscene != nullptr)
 	{
-		Utils::Println("Scene with build number \"" + to_string(buildIndex) + "\" doesn't exist!");
-		return;
+		for (const Scene* scene : _scenes)
+		{
+			if (scene->name == iscene->GetName())
+			{
+				Utils::Println("ERROR: (LoadSceneAdditive) Scene \"" + iscene->GetName() + "\" is already loaded!");
+				return;
+			}
+		}
+		_sceneAdditiveChanges.push_back(iscene->GetName());
 	}
-
-	_sceneAdditiveChanges.push_back(iscene->GetName());
 }
 
 // **************************** //
@@ -196,6 +242,55 @@ void SceneManager::AddScene(Scene* scene)
 		_mainScene = scene;
 	_scenes.push_back(scene);
 }
+
+bool SceneManager::SetMainScene(string sceneName)
+{
+	for (Scene* scene : _scenes)
+	{
+		if (scene->name == sceneName)
+		{
+			_mainScene = scene;
+			return true;
+		}
+	}
+
+	Utils::Println("ERROR: (SetActiveScene) Scene \"" + sceneName + "\" not found in currently loaded scenes.");
+	return false;
+}
+
+int SceneManager::FindSceneIndex(string sceneName)
+{
+	for (const auto element : _buildScenesI)
+	{
+		if (element.second->GetName() == sceneName)
+			return element.first;
+	}
+	return 0;
+}
+
+IScene* SceneManager::FindScene(string sceneName)
+{
+	IScene* iscene = _buildScenesS[sceneName];
+	if (iscene == nullptr)
+	{
+		Utils::Println("ERROR: (FindScene) Scene \"" + sceneName + "\" doesn't exist!");
+		return nullptr;
+	}
+	return iscene;
+}
+
+IScene* SceneManager::FindScene(int buildIndex)
+{
+	IScene* iscene = _buildScenesI[buildIndex];
+	if (iscene == nullptr)
+	{
+		Utils::Println("ERROR: (FindScene) Scene with build number \"" + to_string(buildIndex) + "\" doesn't exist!");
+		return nullptr;
+	}
+	return iscene;
+}
+
+// **************************** //
 
 void SceneManager::ForEachScene(const function<void(Scene*)>& consumer)
 {
@@ -267,40 +362,98 @@ void SceneManager::ApplyChanges()
 	_sceneAdditiveChanges.clear();
 }
 
-void SceneManager::ApplyLoadScene(string sceneName)
+// adds every protected object found in the scene to the given list
+void SceneManager::SaveProtectedObjects(Scene* sceneIn, list<GameObject*>& listIn)
 {
-	Scene* sceneInstance = new Scene(_buildScenesS[sceneName]); // there we create a new fresh instance of the scene from the template
+	list<GameObject*> toRemove = {};
 
-	if (HasScene()) // if we have scenes loaded, we need to unload them to load the new one
+	for (GameObject* go : sceneIn->gameObjects)
 	{
-		list<GameObject*> protectedGameObjects = {};
-
-		for (Scene* scene : _scenes) // so for all of them, we save the _protectedGameObjects before deleting them, to add them to the new scene
+		if (Utils::Contains(&_protectedGameObjects, go))
 		{
-			if (!_protectedGameObjects.empty())
-			{
-				for (GameObject* go : scene->gameObjects)
-				{
-					if (Utils::Contains(&_protectedGameObjects, go))
-					{
-						protectedGameObjects.push_back(go);
-						scene->RemoveFromScene(go);
-					}
-				}
-			}
-			delete(scene);
+			listIn.push_back(go);
+			toRemove.push_back(go);
 		}
-		_scenes.clear();
-
-		for (GameObject* go : protectedGameObjects)
-			sceneInstance->AddToScene(go);
 	}
 
-	AddScene(sceneInstance);
+	for (GameObject* go : toRemove)
+		sceneIn->RemoveFromScene(go);
+}
+
+void SceneManager::ApplyLoadScene(string sceneName)
+{
+	Scene* loadScene = new Scene(_buildScenesS[sceneName]); // there we create a new fresh instance of the scene from the template
+
+	if (HasScene()) // if we have scenes loaded, we need to unload them to load the new one (so pretty much every time but the first load)
+	{
+		// we save all the protected game objects found in the active scenes
+		list<GameObject*> protectedGameObjects = {};
+
+		for (Scene* scene : _scenes)
+		{
+			if (!_protectedGameObjects.empty())
+				SaveProtectedObjects(scene, protectedGameObjects);
+		}
+
+		for (GameObject* go : protectedGameObjects)
+			loadScene->AddToScene(go);
+
+		// and then we can unload all of the active scenes
+		for (Scene* scene : _scenes)
+			delete(scene);
+		_scenes.clear();
+	}
+
+	AddScene(loadScene);
 }
 
 void SceneManager::ApplyUnloadScene(string sceneName)
 {
+	if (_scenes.size() <= 1)
+	{
+		Utils::Println("ERROR: (UnloadScene) Cannot unload a scene if it is the only one active.");
+		return;
+	}
+	
+	for (Scene* scene : _scenes)
+	{
+		if (scene->name == sceneName) // we found the scene to unload (remove)
+		{
+			if (GetActiveSceneName() == sceneName) // if the current main scene is the one we're about to remove, we need to find a new scene to make the main scene
+			{
+				const Scene* switchScene = nullptr;
+
+				for (Scene* scene : _scenes)
+				{
+					if (scene->name != sceneName) // we found a scene to switch to
+					{
+						switchScene = scene;
+						break;
+					}
+				}
+
+				// we switch the main scene
+				SetMainScene(switchScene->name); // switchScene should never be null
+			}
+
+			// we save the protected game objects in the scene we're about to unload
+			list<GameObject*> protectedGameObjects = {};
+
+			if (!_protectedGameObjects.empty())
+				SaveProtectedObjects(scene, protectedGameObjects);
+
+			for (GameObject* go : protectedGameObjects)
+				_mainScene->AddToScene(go);
+
+			// we unload the scene
+			_scenes.remove(scene);
+			delete(scene);
+
+			return;
+		}
+	}
+
+	Utils::Println("ERROR: (UnloadScene) The scene wasn't loaded.");
 }
 
 void SceneManager::ApplyAdditiveScene(string sceneName)

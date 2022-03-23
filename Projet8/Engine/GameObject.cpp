@@ -1,7 +1,10 @@
 ﻿#include "pch.h"
 
-GameObject::GameObject() : transform(new Transform())
+GameObject::GameObject()
 {
+	const auto defaultTransform = new Transform();
+	AddComponent(defaultTransform);
+	transform = defaultTransform; // easy access
 }
 
 GameObject::~GameObject()
@@ -51,7 +54,7 @@ bool GameObject::AddComponent(Component* component)
 // Removes and deletes the first component of type ComponentType found on the gameobject
 bool GameObject::RemoveComponent(const char* type)
 {
-	if (Utils::Contains(&unremovableEngineComponents, type)) // unremovable components
+	if (Utils::Contains(&EngineComponent::unremovableEngineComponents, type)) // unremovable components
 		return false;
 
 	for (Component* component : components)
