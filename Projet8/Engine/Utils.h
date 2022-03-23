@@ -23,7 +23,7 @@ public:
 	static bool Contains(list<T*>* list, T* value);
 
 	template<typename T>
-	static void DeleteList(list<T*>* list);
+	static void DeleteList(list<T*> list);
 
 	static float DistanceWithOutSquareRoot(D3DXVECTOR3 a, D3DXVECTOR3 b);
 	static float Distance(D3DXVECTOR3 a, D3DXVECTOR3 b) ;
@@ -36,14 +36,13 @@ bool Utils::Contains(list<T*>* list, T* value)
 }
 
 template <typename T>
-void Utils::DeleteList(list<T*>* list)
+void Utils::DeleteList(list<T*> list)
 {
-	for (auto element : *list)
+	for (auto element : list)
 	{
 		delete(element);
 	}
-
-	list->clear();
+	list.clear();
 }
 //
 //// Returns true if sphere s intersects triangle ABC, false otherwise.

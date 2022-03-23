@@ -20,6 +20,8 @@ public:
 
 	static void Quit();
 
+	static bool IsPlaying();
+
 private:
 	friend class Engine;
 
@@ -32,5 +34,6 @@ private:
 	static float fixedTimestep;
 	static float maximumTimestep;
 	static bool quit;
+	static bool playing;
 
 };

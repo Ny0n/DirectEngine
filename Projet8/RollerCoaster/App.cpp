@@ -1,6 +1,7 @@
 #include "App.h"
 
 #include "DefaultScene.h"
+#include "MenuScene.h"
 
 // this is the main message handler for the program
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -52,8 +53,8 @@ void App::Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, i
         WS_OVERLAPPEDWINDOW,    // window style
         0,    // x-position of the window
         0,    // y-position of the window
-        720,    // width of the window
-        480,    // height of the window
+        SCREEN_WIDTH,    // width of the window
+        SCREEN_HEIGHT,    // height of the window
         NULL,    // we have no parent window, NULL
         NULL,    // we aren't using menus, NULL
         hInstance,    // application handle
@@ -65,7 +66,11 @@ void App::Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, i
 
 void App::Run()
 {
-    Engine::GetInstance()->LoadScene(new DefaultScene());
+    // first we prep the scenes that will be used in the app
+    SceneManager::AddToBuild(new DefaultScene());
+    SceneManager::AddToBuild(new MenuScene());
+
+    // and then we run the game
     Engine::GetInstance()->Run(_window);
 }
 

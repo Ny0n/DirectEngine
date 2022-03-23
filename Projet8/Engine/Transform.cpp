@@ -73,23 +73,40 @@ void Transform::UpdateMatrix()
 	matrix *= matTranslate;
 }
 
-void Transform::Rotate(float pitch, float yaw, float roll)
+void Transform::Rotate(float pitch, float yaw, float roll, Space relativeTo)
 {
 	D3DXQUATERNION quatRot;
 	D3DXQuaternionIdentity(&quatRot);
 
+	D3DXVECTOR3 xAxis;
+	D3DXVECTOR3 yAxis;
+	D3DXVECTOR3 zAxis;
+
+	if(relativeTo == Space::Self)
+	{
+		xAxis = right;
+		yAxis = up;
+		zAxis = forward;
+	}
+	else
+	{
+		xAxis = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+		yAxis = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+		zAxis = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+	}
+
 	D3DXQUATERNION quat;
 
 	//rotate x axis
-	D3DXQuaternionRotationAxis(&quat, &right,D3DXToRadian(pitch));
+	D3DXQuaternionRotationAxis(&quat, &xAxis,D3DXToRadian(pitch));
 	quatRot *= quat;
 
 	//rotate y axis
-	D3DXQuaternionRotationAxis(&quat, &up, D3DXToRadian(yaw));
+	D3DXQuaternionRotationAxis(&quat, &yAxis, D3DXToRadian(yaw));
 	quatRot *= quat;
 
 	//rotate z axis
-	D3DXQuaternionRotationAxis(&quat, &forward, D3DXToRadian(roll));
+	D3DXQuaternionRotationAxis(&quat, &zAxis, D3DXToRadian(roll));
 	quatRot *= quat;
 
 	//add the new rotation to the actual one
@@ -122,27 +139,27 @@ void Transform::Rotate(float pitch, float yaw, float roll)
  * \brief rotate on the x axis
  * \param angle in degree
  */
-void Transform::RotatePitch(float angle)
+void Transform::RotatePitch(float angle, Space relativeTo)
 {
-	Rotate(angle, 0, 0);
+	Rotate(angle, 0, 0, relativeTo);
 }
 
 /**
  * \brief rotate on the y axis
  * \param angle in degree
  */
-void Transform::RotateYaw(float angle)
+void Transform::RotateYaw(float angle, Space relativeTo)
 {
-	Rotate(0, angle, 0);
+	Rotate(0, angle, 0, relativeTo);
 }
 
 /**
  * \brief rotate on the z axis
  * \param angle in degree
  */
-void Transform::RotateRoll(float angle)
+void Transform::RotateRoll(float angle, Space relativeTo)
 {
-	Rotate(0, 0, angle);
+	Rotate(0, 0, angle, relativeTo);
 }
 
 void Transform::RotateWorld(D3DXMATRIX* pMatrix)

@@ -1,23 +1,23 @@
 ﻿#pragma once
 
-class GameObject;
+class IScene;
 
-class Scene
+class Scene final
 {
+	friend class SceneManager;
+	
+	Scene(IScene* scene);
 
-public:
-	Scene() = default;
-	virtual ~Scene() = default;
+	bool IsEmpty() const;
+	bool IsInScene(GameObject* go) const;
+	
+	bool AddToScene(GameObject* go);
+	GameObject* RemoveFromScene(GameObject* go);
 
+	const string name;
 	list<GameObject*> gameObjects;
 
-	static GameObject* CreateEmpty();
-	bool Instantiate(GameObject* prefab);
-	bool Destroy(GameObject* go);
-	bool IsInScene(GameObject* go) const;
-
-private:
-	bool AddToScene(GameObject* go);
-	bool RemoveFromScene(GameObject* go);
+public:
+	~Scene();
 
 };

@@ -1,25 +1,19 @@
 ﻿#include "pch.h"
 
-GameObject* Scene::CreateEmpty()
+Scene::Scene(IScene* scene) : name(scene->GetName()), gameObjects(scene->GetContent())
 {
-	return new GameObject();
+}
+
+Scene::~Scene()
+{
+	Utils::DeleteList(gameObjects);
 }
 
 // **************************** //
 
-bool Scene::Instantiate(GameObject* prefab)
+bool Scene::IsEmpty() const
 {
-	return AddToScene(prefab);
-}
-
-bool Scene::Destroy(GameObject* go)
-{
-	if (RemoveFromScene(go))
-	{
-		delete(go);
-		return true;
-	}
-	return false;
+	return gameObjects.empty();
 }
 
 // **************************** //
@@ -28,7 +22,7 @@ bool Scene::IsInScene(GameObject* go) const
 {
 	for (GameObject* sceneGo : gameObjects)
 	{
-		if (sceneGo == go) // TODO add ID to gameobjects
+		if (sceneGo == go) // TODO add ID to gameobjects?
 			return true;
 	}
 	return false;
@@ -44,12 +38,11 @@ bool Scene::AddToScene(GameObject* go)
 	return false;
 }
 
-bool Scene::RemoveFromScene(GameObject* go)
+GameObject* Scene::RemoveFromScene(GameObject* go)
 {
 	if (!IsInScene(go))
-	{
-		return false;
-	}
+		return nullptr;
+
 	gameObjects.remove(go);
-	return true;
+	return go;
 }

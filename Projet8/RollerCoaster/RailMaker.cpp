@@ -42,7 +42,7 @@ void RailMaker::Turn(float rotate)
 	GameObject* box = nullptr;
 	for(int i = 0 ; i < _step; i++)
 	{
-		box = scene->CreateEmpty();
+		box = new GameObject();
 		box->AddComponent(new Cube());
 		(Cube*)box->GetComponent(NAMEOF(Cube));
 		if (!cubes.empty())
@@ -61,7 +61,7 @@ void RailMaker::Turn(float rotate)
 		box->transform->RotateYaw((rotate / _step));
 		//box->transform->RotatePitch((rotate / _step));
 		
-		scene->Instantiate(box);
+		SceneManager::Instantiate(box);
 		cubes.push_back((Cube*)box->GetComponent(NAMEOF(Cube)));
 	}
 
@@ -85,7 +85,7 @@ void RailMaker::MoveForward()
 	{
 		if (box == nullptr)
 		{
-			box = scene->CreateEmpty();
+			box = new GameObject();
 			box->AddComponent(new Cube());
 			(Cube*)box->GetComponent(NAMEOF(Cube));
 		}
@@ -103,7 +103,7 @@ void RailMaker::MoveForward()
 		vector.y = -4;
 
 		box->transform->SetPosition(vector);
-		scene->Instantiate(box);
+		SceneManager::Instantiate(box);
 		cubes.push_back((Cube*)box->GetComponent(NAMEOF(Cube)));
 
 	}
