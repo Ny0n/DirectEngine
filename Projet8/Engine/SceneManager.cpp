@@ -84,7 +84,7 @@ GameObject* SceneManager::Remove(GameObject* go)
 	return nullptr;
 }
 
-list<string> SceneManager::GetActiveScenes()
+list<string> SceneManager::GetActiveSceneNames()
 {
 	list<string> names = {};
 
@@ -92,6 +92,16 @@ list<string> SceneManager::GetActiveScenes()
 		names.push_back(scene->name);
 
 	return names;
+}
+
+list<int> SceneManager::GetActiveSceneIndexes()
+{
+	list<int> indexes = {};
+
+	for (Scene* scene : _scenes)
+		indexes.push_back(FindSceneIndex(scene->name));
+
+	return indexes;
 }
 
 // **************************** //
@@ -109,13 +119,7 @@ int SceneManager::GetActiveSceneIndex()
 	if (!HasScene())
 		return 0;
 
-	for (const auto element : _buildScenesI)
-	{
-		if (element.second->GetName() == _mainScene->name)
-			return element.first;
-	}
-
-	return -1; // we should never arrive here
+	return FindSceneIndex(_mainScene->name);
 }
 
 bool SceneManager::SetActiveScene(string sceneName)
@@ -252,6 +256,16 @@ bool SceneManager::SetMainScene(string sceneName)
 
 	Utils::Println("ERROR: (SetActiveScene) Scene \"" + sceneName + "\" not found in currently loaded scenes.");
 	return false;
+}
+
+int SceneManager::FindSceneIndex(string sceneName)
+{
+	for (const auto element : _buildScenesI)
+	{
+		if (element.second->GetName() == sceneName)
+			return element.first;
+	}
+	return 0;
 }
 
 IScene* SceneManager::FindScene(string sceneName)

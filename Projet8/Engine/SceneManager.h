@@ -14,7 +14,8 @@ public:
 	static bool Instantiate(GameObject* go);
 	static GameObject* Remove(GameObject* go);
 
-	static list<string> GetActiveScenes();
+	static list<string> GetActiveSceneNames();
+	static list<int> GetActiveSceneIndexes();
 	static string GetActiveSceneName();
 	static int GetActiveSceneIndex();
 
@@ -57,6 +58,7 @@ private:
 	static void SaveProtectedObjects(Scene* scene, list<GameObject*>& list);
 	static void AddScene(Scene* scene);
 	static bool SetMainScene(string sceneName);
+	static int FindSceneIndex(string sceneName);
 	static IScene* FindScene(string sceneName);
 	static IScene* FindScene(int buildIndex);
 
