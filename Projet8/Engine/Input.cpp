@@ -32,15 +32,17 @@ void Input::UpdateInputs()
 			state = frameInputs[code.first];
 		}
 
-		const bool isDown = (GetAsyncKeyState(code.second) & 0x8000);
-
+		bool isDown = false;
+		if (Engine::GetInstance()->window == GetForegroundWindow()) // if our window has the focus
+			isDown = (GetKeyState(code.second) & 0x8000);
+		
 		state->keyDown = !state->key && isDown;
 		state->keyUp = state->key && !isDown;
 		state->key = isDown;
 	}
 }
 
-void Input::Delete()
+void Input::Clean()
 {
 	for (auto code : frameInputs)
 	{

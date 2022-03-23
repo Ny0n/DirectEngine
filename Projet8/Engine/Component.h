@@ -31,8 +31,12 @@ public:
 	virtual void EngineStart() = 0;
 	virtual void EngineUpdate() = 0;
 
-	virtual void OnCollide(GameObject* other){}
-	
+	virtual void Awake() {}
+	virtual void OnDestroy(){}
+	virtual void OnEnable(){}
+	virtual void OnDisable(){}
+	virtual void OnCollide(GameObject* other) {}
+
 	GameObject* gameObject;
 	Transform* transform;
 

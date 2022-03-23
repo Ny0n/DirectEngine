@@ -1,6 +1,7 @@
 #include "App.h"
 
 #include "DefaultScene.h"
+#include "MenuScene.h"
 
 // this is the main message handler for the program
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -65,7 +66,11 @@ void App::Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, i
 
 void App::Run()
 {
-    Engine::GetInstance()->LoadScene(new DefaultScene());
+    // first we prep the scenes that will be used in the app
+    SceneManager::AddToBuild(new DefaultScene());
+    SceneManager::AddToBuild(new MenuScene());
+
+    // and then we run the game
     Engine::GetInstance()->Run(_window);
 }
 

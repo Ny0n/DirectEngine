@@ -1,8 +1,5 @@
 ﻿#pragma once
 
-class Component;
-class Scene;
-
 class Engine final
 {
 
@@ -17,15 +14,13 @@ public:
 	void operator=(Engine const&) = delete;
 	void operator=(Engine const&&) = delete;
 
-	void LoadScene(Scene* scene);
-
 	void Run(HWND window);
+
+	const HWND& window;
 
 private:
 	Engine(); // Only accessible from GetInstance()
 	~Engine();
-
-	bool _isPlaying;
 
 	HWND _window;
 	Profiler* _profiler;
@@ -39,22 +34,8 @@ private:
 	void CheckForProfilerDisplay();
 
 	void NewFrame();
-	void RunFrame();
-
-	void EngineStart();
-	void Start();
-
 	void NewFixedUpdate();
-	void FixedUpdate();
-	void Collision();
-
-	void Input();
-	void Update();
-	void LateUpdate();
-	void EngineUpdate();
-
-	Scene* _scene;
-	list<Component*> _startedComponents;
+	void RunFrame();
 
 };
 
@@ -73,6 +54,7 @@ private:
  *		EngineUpdate()	// The Update() for Engine components, executed AFTER everything else
  *
  *		<DrawFrame>		// The frame GPU drawing happens after everything
+ *		<Scene>			// If it was requested, we load the new scene here
  *
  *		<Profiler>		// Displays the profiler info for the frame
  *

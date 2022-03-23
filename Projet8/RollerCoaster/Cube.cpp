@@ -2,10 +2,12 @@
 
 void Cube::Start()
 {
+    // Utils::Println("Start Cube");
 }
 
 void Cube::Update()
 {
+    // Utils::Println("Update");
     CubeRender();
     CubePlacement();
 }
@@ -81,14 +83,22 @@ void Cube::CubeRender()
 
 void Cube::CubePlacement()
 {
+    // Utils::Println("Test0");
     D3DXMATRIX finalMat = transform->GetMatrix();
     d3ddev->SetTransform(D3DTS_WORLD, &(finalMat));
     d3ddev->SetStreamSource(0, _VBuffer, 0, sizeof(CUSTOMVERTEX));
     d3ddev->SetIndices(_IBuffer);
 
     // draw the cube
-    d3ddev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 0, 12);
+    HR(d3ddev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 0, 12))
+    // HRESULT hr = ;
+    // if (FAILED(hr))
+    // {
+    //     Utils::Println("Failed");
+    //     Utils::Println(std::to_string(hr));
+    // }
 
+    // Utils::Println("Test");
     // copy the vertex buffer to the back buffer
-    //d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
+    // d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
 }

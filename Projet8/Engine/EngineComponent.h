@@ -16,10 +16,10 @@ class EngineComponent : public Component
 public:
 	ComponentCategory GetCategory() override { return ComponentCategory::single; }
 
-	void Start() override {}
-	void Update() override {}
-	void LateUpdate() override {}
-	void FixedUpdate() override {}
+	void Start() final {}
+	void Update() final {}
+	void LateUpdate() final {}
+	void FixedUpdate() final {}
 
 	void EngineStart() override {}
 	void EngineUpdate() override {}
