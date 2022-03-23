@@ -1,5 +1,7 @@
 #include "MenuScene.h"
 
+#include "InputTester.h"
+
 string MenuScene::GetName()
 {
 	return "MenuScene";
@@ -7,6 +9,19 @@ string MenuScene::GetName()
 
 void MenuScene::GenerateContent()
 {
+	// tests
+
+	GameObject* inputTester = CreateEmpty();
+	inputTester->AddComponent(new InputTester());
+	AddToScene(inputTester);
+
+	// camera
+
+	GameObject* mainCamera = CreateEmpty();
+	mainCamera->AddComponent(new Camera());
+	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
+	AddToScene(mainCamera);
+
 	// monkey
 
 	GameObject* monkey = CreateEmpty();

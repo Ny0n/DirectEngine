@@ -13,7 +13,7 @@ void PhysicsEngine::Update()
 
 void PhysicsEngine::CheckCollisions()
 {
-    Utils::Println("Checking");
+    // Utils::Println("Checking");
 
     if (!SceneManager::IsEmpty())
         return;

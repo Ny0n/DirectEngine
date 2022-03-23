@@ -7,7 +7,7 @@ class GameObject final
 
 public:
 	GameObject();
-	virtual ~GameObject();
+	~GameObject();
 
 	Component* GetComponent(const char* type);
 	bool AddComponent(Component* component);

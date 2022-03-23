@@ -34,7 +34,7 @@ public:
 	static void Clean();
 
 private:
-	friend class Engine;
+	friend class Execution;
 
 	// the engine accesses these two functions and does the scene change at the end of the frame
 	static bool ChangeRequired();

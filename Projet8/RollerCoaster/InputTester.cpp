@@ -21,7 +21,16 @@ void InputTester::Update()
 
 	if (Input::GetKeyDown(KeyCode::F))
 	{
-		SceneManager::LoadScene("MenuScene");
+		string name = SceneManager::GetActiveSceneName();
+		if (name == "MenuScene")
+			SceneManager::LoadScene("DefaultScene");
+		if (name == "DefaultScene")
+			SceneManager::LoadScene("MenuScene");
+	}
+
+	if (Input::GetKeyDown(KeyCode::R))
+	{
+		SceneManager::LoadScene(SceneManager::GetActiveSceneName());
 	}
 
 	if (Input::GetKeyDown(KeyCode::T))
@@ -51,6 +60,11 @@ void InputTester::Update()
 
 	if (Input::GetKeyDown(KeyCode::Escape))
 		Application::Quit();
+}
+
+void InputTester::OnDestroy()
+{
+	// Utils::Println("OnDestroy");
 }
 
 // void InputTester::LateUpdate()

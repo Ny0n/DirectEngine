@@ -6,7 +6,7 @@ Scene::Scene(IScene* scene) : name(scene->GetName()), gameObjects(scene->GetCont
 
 Scene::~Scene()
 {
-	Utils::DeleteList(&gameObjects);
+	Utils::DeleteList(gameObjects);
 }
 
 // **************************** //

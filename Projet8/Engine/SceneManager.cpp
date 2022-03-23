@@ -44,8 +44,8 @@ int SceneManager::BuildScenesCount()
 
 void SceneManager::Clean()
 {
-	Utils::DeleteList(&_scenes); // this also deletes _mainScene
-	Utils::DeleteList(&_protectedGameObjects);
+	Utils::DeleteList(_scenes); // this also deletes _mainScene
+	Utils::DeleteList(_protectedGameObjects);
 
 	for (const auto scenes : _buildScenesS)
 		delete(scenes.second);

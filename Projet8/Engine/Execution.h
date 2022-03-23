@@ -21,6 +21,8 @@ class Execution final
 	static void Update();
 	static void LateUpdate();
 	static void EngineUpdate();
+
+	static void CheckForSceneUpdate();
 	
 	static list<Component*> startedEngineComponents;
 	static list<Component*> startedComponents;
