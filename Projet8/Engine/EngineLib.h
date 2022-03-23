@@ -9,8 +9,9 @@
 #include "PhysicsEngine.h"
 #include "Engine.h"
 
-#include "Scene.h"
 #include "GameObject.h"
+#include "Scene.h"
+#include "IScene.h"
 
 #include "Component.h"
 #include "EngineComponent.h"

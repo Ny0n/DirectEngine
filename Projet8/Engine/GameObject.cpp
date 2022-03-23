@@ -14,6 +14,8 @@ GameObject::~GameObject()
 	Utils::DeleteList(&components);
 }
 
+// **************************** //
+
 // Finds and returns the first fount component of type ComponentType
 // Returns nullptr if not found
 Component* GameObject::GetComponent(const char* type)

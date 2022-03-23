@@ -26,6 +26,7 @@
 #include <sstream>
 #include <chrono>
 #include <thread>
+#include <utility>
 
 #include <d3d9.h>
 #include <d3dx9.h>

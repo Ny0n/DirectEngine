@@ -9,7 +9,7 @@ LPDIRECT3DINDEXBUFFER9 _IBuffer = nullptr;
 
 // **************************** //
 
-Engine::Engine() : _isPlaying(false), _window(nullptr), window(_window), _profiler(new Profiler())
+Engine::Engine() : window(_window), _profiler(new Profiler())
 {
     Time::_profiler = _profiler;
 }
@@ -105,7 +105,7 @@ void Engine::UninitD3D()
 
 void Engine::Run(HWND window)
 {
-    if (_isPlaying)
+    if (Application::IsPlaying())
         return;
 
     _window = window;
@@ -116,15 +116,17 @@ void Engine::Run(HWND window)
 		return;
 	}
 
-	if (!SceneManager::HasScene())
+	if (!SceneManager::HasScenesInBuild())
 	{
-		Utils::Println("A default scene must be loaded!");
+		Utils::Println("There must be at least one scene in the build!");
 		return;
 	}
 
-    _isPlaying = true;
+    Application::playing = true;
 
     // *** Part 1: Initialization *** //
+
+    SceneManager::LoadScene(1);
 
     InitD3D();
 
@@ -247,6 +249,9 @@ void Engine::RunFrame()
     d3ddev->EndScene();    // ends the 3D scene
 
     _profiler->TimedRunner(_profiler->presentTime, [=] { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
+
+    if (SceneManager::ChangeRequired()) // we change scene if we have to
+        SceneManager::ApplyChanges();
 }
 
 void Engine::CheckForNewFixedUpdate()

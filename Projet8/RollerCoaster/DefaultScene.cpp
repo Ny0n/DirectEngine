@@ -7,29 +7,34 @@
 #include "RainbowBackground.h"
 #include "Rotate.h"
 
-DefaultScene::DefaultScene()
+string DefaultScene::GetName()
+{
+	return "DefaultScene";
+}
+
+void DefaultScene::GenerateContent()
 {
 	// tests
 
 	GameObject* inputTester = CreateEmpty();
 	inputTester->AddComponent(new InputTester());
-	Instantiate(inputTester);
+	AddToScene(inputTester);
 
 	// rgb background
 
 	GameObject* rgb = CreateEmpty();
 	rgb->AddComponent(new RainbowBackground());
-	Instantiate(rgb);
+	AddToScene(rgb);
 
 	GameObject* aligneBox = CreateEmpty();
 	aligneBox->AddComponent(new AlignedBox());
-	Instantiate(aligneBox);
+	AddToScene(aligneBox);
 	// camera
 
 	GameObject* mainCamera = CreateEmpty();
 	mainCamera->AddComponent(new Camera());
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
-	Instantiate(mainCamera);
+	AddToScene(mainCamera);
 
 	// cube
 
@@ -38,21 +43,21 @@ DefaultScene::DefaultScene()
 	cube1->AddComponent(new Move());
 	cube1->AddComponent(new Collider);
 	cube1->AddComponent(new Rotate(150.0f, true));
-	
-	cube1->transform->SetPosition(D3DXVECTOR3(0.0f , 0.0f, 0.0f));
+
+	cube1->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	cube1->transform->Rotate(40, -40, 0);
-	
-	Instantiate(cube1);
+
+	AddToScene(cube1);
 
 	GameObject* cube2 = CreateEmpty();
 	cube2->AddComponent(new Cube());
 	cube2->AddComponent(new Collider);
 	cube2->AddComponent(new Rotate(150.0f));
-	
+
 	cube2->transform->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 0.0f));
 	cube2->transform->Rotate(40, 40, 0);
-	
-	Instantiate(cube2);
+
+	AddToScene(cube2);
 
 	// tigre
 
@@ -69,5 +74,5 @@ DefaultScene::DefaultScene()
 	tigre->transform->RotateYaw(22);
 	tigre->transform->SetScale(tigre->transform->GetScale() * 0.05f);
 
-	Instantiate(tigre);
+	AddToScene(tigre);
 }

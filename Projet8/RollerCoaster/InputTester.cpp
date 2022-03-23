@@ -19,6 +19,11 @@ void InputTester::Update()
 	// Utils::Println(to_string(Time::inStartStep));
 	// Utils::Println(to_string(Time::inUpdateStep));
 
+	if (Input::GetKeyDown(KeyCode::F))
+	{
+		SceneManager::LoadScene("MenuScene");
+	}
+
 	if (Input::GetKeyDown(KeyCode::T))
 	{
 		Time::timeScale = 0.5f;

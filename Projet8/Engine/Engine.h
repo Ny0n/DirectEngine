@@ -22,8 +22,6 @@ private:
 	Engine(); // Only accessible from GetInstance()
 	~Engine();
 
-	bool _isPlaying;
-
 	HWND _window;
 	Profiler* _profiler;
 
@@ -56,6 +54,7 @@ private:
  *		EngineUpdate()	// The Update() for Engine components, executed AFTER everything else
  *
  *		<DrawFrame>		// The frame GPU drawing happens after everything
+ *		<Scene>			// If it was requested, we load the new scene here
  *
  *		<Profiler>		// Displays the profiler info for the frame
  *
