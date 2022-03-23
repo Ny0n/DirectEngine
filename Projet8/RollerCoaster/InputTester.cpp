@@ -33,6 +33,17 @@ void InputTester::Update()
 		SceneManager::LoadScene(SceneManager::GetActiveSceneName());
 	}
 
+	if (Input::GetKeyDown(KeyCode::Y))
+	{
+		SceneManager::LoadSceneAdditive("MenuScene");
+	}
+	if (Input::GetKeyDown(KeyCode::U))
+	{
+		SceneManager::UnloadScene("MenuScene");
+	}
+
+	// ********** //
+
 	if (Input::GetKeyDown(KeyCode::T))
 	{
 		Time::timeScale = 0.5f;

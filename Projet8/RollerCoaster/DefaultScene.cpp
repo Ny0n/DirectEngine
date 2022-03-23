@@ -1,6 +1,7 @@
 #include "DefaultScene.h"
 
 #include "Cube.h"
+#include "DontDestroyOnLoad.h"
 #include "GoUp.h"
 #include "FPCam.h"
 #include "InputTester.h"
@@ -48,6 +49,7 @@ void DefaultScene::GenerateContent()
 	GameObject* cube1 = CreateEmpty();
 	cube1->AddComponent(new Cube());
 	cube1->AddComponent(new Move());
+	cube1->AddComponent(new DontDestroyOnLoad());
 	cube1->AddComponent(new Collider);
 	cube1->AddComponent(new Rotate(150.0f, true));
 
