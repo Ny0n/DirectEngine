@@ -19,6 +19,20 @@ void InputTester::Update()
 	// Utils::Println(to_string(Time::inStartStep));
 	// Utils::Println(to_string(Time::inUpdateStep));
 
+	if (Input::GetKeyDown(KeyCode::F))
+	{
+		string name = SceneManager::GetActiveSceneName();
+		if (name == "MenuScene")
+			SceneManager::LoadScene("DefaultScene");
+		if (name == "DefaultScene")
+			SceneManager::LoadScene("MenuScene");
+	}
+
+	if (Input::GetKeyDown(KeyCode::R))
+	{
+		SceneManager::LoadScene(SceneManager::GetActiveSceneName());
+	}
+
 	if (Input::GetKeyDown(KeyCode::T))
 	{
 		Time::timeScale = 0.5f;
@@ -46,6 +60,11 @@ void InputTester::Update()
 
 	if (Input::GetKeyDown(KeyCode::Escape))
 		Application::Quit();
+}
+
+void InputTester::OnDestroy()
+{
+	// Utils::Println("OnDestroy");
 }
 
 // void InputTester::LateUpdate()

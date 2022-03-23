@@ -18,12 +18,6 @@
     <Filter Include="Lib">
       <UniqueIdentifier>{564fc13c-db87-4c0c-a4e6-8c2d3471cedd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Data">
-      <UniqueIdentifier>{b2c85d0f-737d-453c-a955-3ca5b12e49d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Helpers">
-      <UniqueIdentifier>{e0a2296d-8aab-421d-8187-2996853d76a6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Objects">
       <UniqueIdentifier>{8c309721-f2ba-4ad3-beee-ff0905217aad}</UniqueIdentifier>
     </Filter>
@@ -33,8 +27,8 @@
     <Filter Include="Source\Objects\Components\Custom">
       <UniqueIdentifier>{99281bfb-d79e-4004-9097-c43978088b4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Objects\Components\Custom\UI">
-      <UniqueIdentifier>{3b0cee2e-3fdf-43d9-bfa3-106cc502c83d}</UniqueIdentifier>
+    <Filter Include="Source\App Data">
+      <UniqueIdentifier>{b2c85d0f-737d-453c-a955-3ca5b12e49d8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,23 +50,20 @@
     <ClInclude Include="GameObject.h">
       <Filter>Source\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Source\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="Application.h">
-      <Filter>Source\Data</Filter>
+      <Filter>Source\App Data</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
-      <Filter>Source\Data</Filter>
+      <Filter>Source\App Data</Filter>
     </ClInclude>
     <ClInclude Include="KeyCodes.h">
-      <Filter>Source\Data</Filter>
+      <Filter>Source\App Data</Filter>
     </ClInclude>
     <ClInclude Include="TimeManager.h">
-      <Filter>Source\Data</Filter>
+      <Filter>Source\App Data</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>Source\Data</Filter>
+      <Filter>Source\App Data</Filter>
     </ClInclude>
     <ClInclude Include="Profiler.h">
       <Filter>Source\Engine</Filter>
@@ -101,11 +92,17 @@
     <ClInclude Include="Transform.h">
       <Filter>Source\Objects\Components\Custom</Filter>
     </ClInclude>
-    <ClInclude Include="Canvas.h">
-      <Filter>Source\Objects\Components\Custom\UI</Filter>
+    <ClInclude Include="Execution.h">
+      <Filter>Source\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>Source\Objects\Components\Custom\UI</Filter>
+    <ClInclude Include="PhysicsEngine.h">
+      <Filter>Source\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Source\App Data</Filter>
+    </ClInclude>
+    <ClInclude Include="IScene.h">
+      <Filter>Source\App Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -121,23 +118,20 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>Source\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="Application.cpp">
-      <Filter>Source\Data</Filter>
+      <Filter>Source\App Data</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
-      <Filter>Source\Data</Filter>
+      <Filter>Source\App Data</Filter>
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
-      <Filter>Source\Data</Filter>
+      <Filter>Source\App Data</Filter>
     </ClCompile>
     <ClCompile Include="KeyCodes.cpp">
-      <Filter>Source\Data</Filter>
+      <Filter>Source\App Data</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>Source\Data</Filter>
+      <Filter>Source\App Data</Filter>
     </ClCompile>
     <ClCompile Include="Profiler.cpp">
       <Filter>Source\Engine</Filter>
@@ -166,11 +160,17 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Source\Objects\Components\Custom</Filter>
     </ClCompile>
-    <ClCompile Include="Canvas.cpp">
-      <Filter>Source\Objects\Components\Custom\UI</Filter>
+    <ClCompile Include="Execution.cpp">
+      <Filter>Source\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Image.cpp">
-      <Filter>Source\Objects\Components\Custom\UI</Filter>
+    <ClCompile Include="PhysicsEngine.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source\App Data</Filter>
+    </ClCompile>
+    <ClCompile Include="IScene.cpp">
+      <Filter>Source\App Data</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

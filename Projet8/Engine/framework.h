@@ -26,6 +26,7 @@
 #include <sstream>
 #include <chrono>
 #include <thread>
+#include <utility>
 
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -51,14 +52,16 @@
 
 #define RUNNER(func) [=] { func(); }
 #define SUPPLIER(func) [=] { return func(); }
+#define CONSUMER(arg, func) [=](arg* param) { func(param); }
+// #define FUNCTION(Param, func) [=]((Param)* param) { return func(param); }
 
 #define CLASSNAMEOF(T) string(typeid(T).name()).substr(6) // gives the pure name of a class
 #define NAMEOF(T) typeid(T).name() // gives the type name of a var / class
 
 // declare global variables
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
 
 extern LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 extern LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class

@@ -42,7 +42,7 @@ void Input::UpdateInputs()
 	}
 }
 
-void Input::Delete()
+void Input::Clean()
 {
 	for (auto code : frameInputs)
 	{

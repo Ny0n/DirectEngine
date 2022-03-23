@@ -2,7 +2,7 @@
 
 #include "EngineLib.h"
 
-class DefaultScene : public IScene
+class MenuScene : public IScene
 {
 
 public:

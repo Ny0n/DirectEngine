@@ -20,6 +20,7 @@ public:
 
 private:
 	friend class Engine;
+	friend class Execution;
 
 	struct InputState
 	{
@@ -31,6 +32,7 @@ private:
 	static map<KeyCode, InputState*> frameInputs;
 
 	static void UpdateInputs();
-	static void Delete();
+
+	static void Clean();
 
 };

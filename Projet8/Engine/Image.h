@@ -18,5 +18,7 @@ public:
 	D3DXVECTOR2 position;
 	D3DXVECTOR2 scale;
 	D3DXVECTOR2 rotation;
+	LPDIRECT3DTEXTURE9 ppTexture;
+	LPD3DXSPRITE ppSprite;
 };
 

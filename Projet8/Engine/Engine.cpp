@@ -9,7 +9,7 @@ LPDIRECT3DINDEXBUFFER9 _IBuffer = nullptr;
 
 // **************************** //
 
-Engine::Engine() : _isPlaying(false), _window(nullptr), window(_window), _profiler(new Profiler()), _scene(nullptr)
+Engine::Engine() : window(_window), _profiler(new Profiler())
 {
     Time::_profiler = _profiler;
 }
@@ -17,14 +17,6 @@ Engine::Engine() : _isPlaying(false), _window(nullptr), window(_window), _profil
 Engine::~Engine()
 {
     delete(_profiler);
-    delete(_scene);
-    _startedComponents.clear();
-    _startedEngineComponents.clear();
-}
-
-void Engine::LoadScene(Scene* scene)
-{
-    _scene = scene;
 }
 
 // **************************** //
@@ -113,7 +105,7 @@ void Engine::UninitD3D()
 
 void Engine::Run(HWND window)
 {
-    if (_isPlaying)
+    if (Application::IsPlaying())
         return;
 
     _window = window;
@@ -124,15 +116,18 @@ void Engine::Run(HWND window)
 		return;
 	}
 
-	if (_scene == nullptr)
+	if (!SceneManager::HasScenesInBuild())
 	{
-		Utils::Println("A default scene must be set!");
+		Utils::Println("There must be at least one scene in the build!");
 		return;
 	}
 
-    _isPlaying = true;
+    Application::playing = true;
 
     // *** Part 1: Initialization *** //
+
+    SceneManager::LoadScene(1);
+    Execution::CheckForSceneUpdate(); // since it's the default (first) scene to be loaded, we can load it instantly
 
     InitD3D();
 
@@ -165,7 +160,10 @@ void Engine::Run(HWND window)
     // *** Part 3: Uninitialization *** //
 
     UninitD3D();
-    Input::Delete();
+    SceneManager::Clean();
+    Execution::Clean();
+    PhysicsEngine::Clean();
+    Input::Clean();
     delete(this);
 }
 
@@ -191,60 +189,6 @@ void Engine::CheckForNewFrame()
         NewFrame();
 }
 
-void Engine::CheckForNewFixedUpdate()
-{
-    // we execute enough fixed updates to match Application::fixedTimestep
-
-    static float fixedElapsed;
-
-    const float timestep = Application::fixedTimestep; // => elapsed (constant)
-    Time::_fixedDeltaTime = timestep / abs(Time::timeScale);
-    Time::_fixedUnscaledDeltaTime = timestep;
-
-    if (_profiler->lastFixedTime < 0.0f) // the first frame
-    {
-        NewFixedUpdate();
-        return;
-    }
-
-    fixedElapsed = Time::time - _profiler->lastFixedTime;
-    if (fixedElapsed >= Time::fixedDeltaTime)
-    {
-	    static float maxTimestepRemainder = 0.0f;
-
-	    float maxTimestep = Application::maximumTimestep + maxTimestepRemainder;
-        maxTimestepRemainder = 0.0f;
-
-        while (fixedElapsed >= Time::fixedDeltaTime && maxTimestep >= Time::fixedDeltaTime) // new fixed update
-        {
-            fixedElapsed -= Time::fixedDeltaTime;
-            maxTimestep -= Time::fixedDeltaTime;
-            NewFixedUpdate();
-        }
-
-        maxTimestepRemainder += maxTimestep;
-    }
-}
-
-void Engine::CheckForProfilerDisplay()
-{
-    // we display the profiler info each _profiler->displayCooldown
-
-    static float profilerElapsed;
-
-    if (_profiler->lastDisplayTime < 0.0f) // the first frame
-    {
-        _profiler->DisplayData();
-        return;
-    }
-
-    profilerElapsed = Time::time - _profiler->lastDisplayTime;
-    if (profilerElapsed >= _profiler->displayCooldown) // new display
-        _profiler->DisplayData();
-}
-
-// **************************** //
-
 void Engine::NewFrame()
 {
     // first we update all of the data
@@ -268,6 +212,83 @@ void Engine::NewFrame()
 #endif
 }
 
+// **************************** //
+
+void Engine::CheckForProfilerDisplay()
+{
+    // we display the profiler info each _profiler->displayCooldown
+
+    static float profilerElapsed;
+
+    if (_profiler->lastDisplayTime < 0.0f) // the first frame
+    {
+        _profiler->DisplayData();
+        return;
+    }
+
+    profilerElapsed = Time::time - _profiler->lastDisplayTime;
+    if (profilerElapsed >= _profiler->displayCooldown) // new display
+        _profiler->DisplayData();
+}
+
+// ************/ Execution /************ //
+
+void Engine::RunFrame()
+{
+    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+
+    d3ddev->BeginScene();    // begins the 3D scene
+
+    _profiler->TimedRunner(_profiler->engineStartTime, Execution::EngineStart);
+    _profiler->TimedRunner(_profiler->startTime, Execution::Start);
+    CheckForNewFixedUpdate();
+    _profiler->TimedRunner(_profiler->inputTime, Execution::Input);
+    _profiler->TimedRunner(_profiler->updateTime, Execution::Update);
+    _profiler->TimedRunner(_profiler->lateUpdateTime, Execution::LateUpdate);
+    _profiler->TimedRunner(_profiler->engineUpdateTime, Execution::EngineUpdate);
+
+    d3ddev->EndScene();    // ends the 3D scene
+
+    _profiler->TimedRunner(_profiler->presentTime, [=] { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
+
+    Execution::CheckForSceneUpdate();
+}
+
+void Engine::CheckForNewFixedUpdate()
+{
+    // we execute enough fixed updates to match Application::fixedTimestep
+
+    static float fixedElapsed;
+
+    const float timestep = Application::fixedTimestep; // => elapsed (constant)
+    Time::_fixedDeltaTime = timestep / abs(Time::timeScale);
+    Time::_fixedUnscaledDeltaTime = timestep;
+
+    if (_profiler->lastFixedTime < 0.0f) // the first frame
+    {
+        NewFixedUpdate();
+        return;
+    }
+
+    fixedElapsed = Time::time - _profiler->lastFixedTime;
+    if (fixedElapsed >= Time::fixedDeltaTime)
+    {
+        static float maxTimestepRemainder = 0.0f;
+
+        float maxTimestep = Application::maximumTimestep + maxTimestepRemainder;
+        maxTimestepRemainder = 0.0f;
+
+        while (fixedElapsed >= Time::fixedDeltaTime && maxTimestep >= Time::fixedDeltaTime) // new fixed update
+        {
+            fixedElapsed -= Time::fixedDeltaTime;
+            maxTimestep -= Time::fixedDeltaTime;
+            NewFixedUpdate();
+        }
+
+        maxTimestepRemainder += maxTimestep;
+    }
+}
+
 void Engine::NewFixedUpdate()
 {
     // first we update all of the data
@@ -281,191 +302,6 @@ void Engine::NewFixedUpdate()
 
     // then we run the fixed update
 
-    _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(FixedUpdate)); // FixedUpdate
-    _profiler->TimedRunner(_profiler->startTime, RUNNER(Collision)); // FixedUpdate
-    // _profiler->TimedRunner(_profiler->fixedUpdateTime, RUNNER(PhysicsUpdate)); // Physics Engine update
+    _profiler->TimedRunner(_profiler->fixedUpdateTime, Execution::FixedUpdate); // FixedUpdate
+    _profiler->TimedRunner(_profiler->physicsTime, Execution::PhysicsUpdate); // Physics Engine update
 }
-
-// ************/ Execution /************ //
-
-void Engine::RunFrame()
-{
-    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-    d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-
-    d3ddev->BeginScene();    // begins the 3D scene
-
-    _profiler->TimedRunner(_profiler->engineStartTime, RUNNER(EngineStart));
-    _profiler->TimedRunner(_profiler->startTime, RUNNER(Start));
-    CheckForNewFixedUpdate();
-    _profiler->TimedRunner(_profiler->inputTime, RUNNER(Input));
-    _profiler->TimedRunner(_profiler->updateTime, RUNNER(Update));
-    _profiler->TimedRunner(_profiler->lateUpdateTime, RUNNER(LateUpdate));
-    _profiler->TimedRunner(_profiler->engineUpdateTime, RUNNER(EngineUpdate));
-
-    d3ddev->EndScene();    // ends the 3D scene
-
-    _profiler->TimedRunner(_profiler->presentTime, [=] { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
-}
-
-
-// ************/ Execution Order /************ //
-
-void Engine::EngineStart()
-{
-    for (GameObject* go : _scene->gameObjects)
-    {
-        for (Component* comp : go->components)
-        {
-            if (!Utils::Contains(&_startedEngineComponents, comp))
-            {
-                _startedEngineComponents.push_back(comp);
-                comp->EngineStart();
-            }
-        }
-    }
-}
-
-void Engine::Start() // TODO optimize this (init once a new list with all starts and then remove ?)
-{
-    Time::_inStartStep = true;
-
-    // Utils::Println("Start");
-    for (GameObject* go : _scene->gameObjects)
-    {
-        for (Component* comp : go->components)
-        {
-            if (!Utils::Contains(&_startedComponents, comp))
-            {
-                _startedComponents.push_back(comp);
-                comp->Start();
-            }
-        }
-    }
-
-    Time::_inStartStep = false;
-}
-
-void Engine::FixedUpdate()
-{
-    Time::_inFixedUpdateStep = true;
-
-    for (GameObject* go : _scene->gameObjects)
-    {
-        for (Component* comp : go->components)
-        {
-            comp->FixedUpdate();
-        }
-    }
-
-    Time::_inFixedUpdateStep = false;
-}
-
-void Engine::Input()
-{
-    Input::UpdateInputs();
-}
-
-void Engine::Update()
-{
-    Time::_inUpdateStep = true;
-
-    for (GameObject* go : _scene->gameObjects)
-    {
-        for (Component* comp : go->components)
-        {
-            comp->Update();
-        }
-    }
-
-    Time::_inUpdateStep = false;
-}
-
-void Engine::LateUpdate()
-{
-    Time::_inLateUpdateStep = true;
-
-    for (GameObject* go : _scene->gameObjects)
-    {
-        for (Component* comp : go->components)
-        {
-            comp->LateUpdate();
-        }
-    }
-
-    Time::_inLateUpdateStep = false;
-}
-
-void Engine::EngineUpdate()
-{
-    for (GameObject* go : _scene->gameObjects)
-    {
-        for (Component* comp : go->components)
-        {
-            comp->EngineUpdate();
-        }
-    }
-}
-
-void Engine::Collision()
-{
-    list<AlignedBox*> alignedBoxes = {};
-    list<GameObject*> gameObjects = {};
-    list<Collider*> colliders = {};
-    if (_scene->gameObjects.size() == 0)
-        return;
-    for (GameObject* go : _scene->gameObjects)
-    {
-        AlignedBox* tmpAb = (AlignedBox*)go->GetComponent(NAMEOF(AlignedBox));
-        if (tmpAb != nullptr)
-        {
-            alignedBoxes.push_back(tmpAb);
-            break;
-        }
-    }
-    if (alignedBoxes.size() == 0)
-        return;
-    for (AlignedBox* box : alignedBoxes)
-    {
-        colliders = box->AreIn(_scene->gameObjects);
-    }
-    //Utils::Println(alignedBoxes.size()); Utils::Println(gameObjects.size()); Utils::Println(colliders.size());
-
-    //for (Collider* colliderA : colliders)
-    //{
-    //    for (Collider* colliderB : colliders)
-    //    {
-    //        if (colliderA == colliderB)
-    //            continue;
-    //        if (colliderA->IsColliding(colliderB))
-    //        {
-    //            //list<Collider*> colliders = {};/*
-    //            //Utils::Println("oui");*/
-    //        }
-    //    }
-    //}
-    if (colliders.size() == 0)
-        return;
-    Collider** arr = static_cast<Collider**>(malloc(sizeof(Collider*) * colliders.size()));
-    //Collider* arr[size];
-    int k = 0;
-    for (Collider* const collider : colliders) {
-        arr[k++] = collider;
-    }
-    
-    for(int i = 0 ; i < colliders.size()-1 ; i++)
-    {
-	    for(int j = i+1 ; j< colliders.size() ; j++)
-	    {
-            if ( arr[i]->IsColliding(arr[j]) )
-            {
-                            
-				Utils::Println("oui");
-            }
-	    }
-    }
-    free(arr);
-
-}
-
-    
