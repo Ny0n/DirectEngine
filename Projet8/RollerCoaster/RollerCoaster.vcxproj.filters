@@ -53,6 +53,9 @@
     <ClInclude Include="MenuScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="DontDestroyOnLoad.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RainbowBackground.cpp">
@@ -85,6 +88,7 @@
     <ClCompile Include="MenuScene.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="DontDestroyOnLoad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RollerCoaster.rc">

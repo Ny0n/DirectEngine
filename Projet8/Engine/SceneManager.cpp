@@ -44,8 +44,8 @@ int SceneManager::BuildScenesCount()
 
 void SceneManager::Clean()
 {
-	Utils::DeleteList(_scenes); // this also deletes _mainScene
-	Utils::DeleteList(_protectedGameObjects);
+	Utils::DeleteList(_scenes); // this also deletes _mainScene, and recursively, everything inside _protectedGameObjects
+	_protectedGameObjects.clear();
 
 	for (const auto scenes : _buildScenesS)
 		delete(scenes.second);
@@ -82,6 +82,16 @@ GameObject* SceneManager::Remove(GameObject* go)
 			return go;
 	}
 	return nullptr;
+}
+
+list<string> SceneManager::GetActiveScenes()
+{
+	list<string> names = {};
+
+	for (Scene* scene : _scenes)
+		names.push_back(scene->name);
+
+	return names;
 }
 
 // **************************** //
@@ -158,14 +168,34 @@ void SceneManager::LoadSceneAdditive(string sceneName)
 {
 	IScene* iscene = FindScene(sceneName);
 	if (iscene != nullptr)
+	{
+		for (const Scene* scene : _scenes)
+		{
+			if (scene->name == iscene->GetName())
+			{
+				Utils::Println("ERROR: (LoadSceneAdditive) Scene \"" + iscene->GetName() + "\" is already loaded!");
+				return;
+			}
+		}
 		_sceneAdditiveChanges.push_back(iscene->GetName());
+	}
 }
 
 void SceneManager::LoadSceneAdditive(int buildIndex)
 {
 	IScene* iscene = FindScene(buildIndex);
 	if (iscene != nullptr)
+	{
+		for (const Scene* scene : _scenes)
+		{
+			if (scene->name == iscene->GetName())
+			{
+				Utils::Println("ERROR: (LoadSceneAdditive) Scene \"" + iscene->GetName() + "\" is already loaded!");
+				return;
+			}
+		}
 		_sceneAdditiveChanges.push_back(iscene->GetName());
+	}
 }
 
 // **************************** //
@@ -319,16 +349,21 @@ void SceneManager::ApplyChanges()
 }
 
 // adds every protected object found in the scene to the given list
-void SceneManager::SaveProtectedObjects(Scene* scene, list<GameObject*>& list)
+void SceneManager::SaveProtectedObjects(Scene* sceneIn, list<GameObject*>& listIn)
 {
-	for (GameObject* go : scene->gameObjects)
+	list<GameObject*> toRemove = {};
+
+	for (GameObject* go : sceneIn->gameObjects)
 	{
 		if (Utils::Contains(&_protectedGameObjects, go))
 		{
-			list.push_back(go);
-			scene->RemoveFromScene(go);
+			listIn.push_back(go);
+			toRemove.push_back(go);
 		}
 	}
+
+	for (GameObject* go : toRemove)
+		sceneIn->RemoveFromScene(go);
 }
 
 void SceneManager::ApplyLoadScene(string sceneName)

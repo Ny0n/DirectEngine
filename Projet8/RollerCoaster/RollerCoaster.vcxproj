@@ -148,6 +148,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DefaultScene.h" />
+    <ClInclude Include="DontDestroyOnLoad.h" />
     <ClInclude Include="GoUp.h" />
     <ClInclude Include="InputTester.h" />
     <ClInclude Include="MenuScene.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
+    <ClCompile Include="DontDestroyOnLoad.cpp" />
     <ClCompile Include="GoUp.cpp" />
     <ClCompile Include="InputTester.cpp" />
     <ClCompile Include="Main.cpp" />

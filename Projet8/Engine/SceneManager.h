@@ -14,6 +14,7 @@ public:
 	static bool Instantiate(GameObject* go);
 	static GameObject* Remove(GameObject* go);
 
+	static list<string> GetActiveScenes();
 	static string GetActiveSceneName();
 	static int GetActiveSceneIndex();
 
@@ -24,7 +25,7 @@ public:
 	static void LoadScene(int buildIndex);
 	static void UnloadScene(string sceneName);
 	static void UnloadScene(int buildIndex);
-	static void LoadSceneAdditive(string sceneName); // additive, there can be multiple scenes active at the same time
+	static void LoadSceneAdditive(string sceneName); // additive, there can be multiple scenes active at the same time (but no duplicate scenes)
 	static void LoadSceneAdditive(int buildIndex);
 
 	static bool IsEmpty(); // returns true if every scene is empty
