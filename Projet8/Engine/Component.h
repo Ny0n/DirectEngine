@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+class Transform;
+
 enum class ComponentCategory
 {
 	single,
@@ -15,13 +17,15 @@ class Component
 
 public:
 	virtual ~Component();
-	virtual const char* GetType() = 0; // a pure function makes the class abstract
+	virtual string GetType() = 0;
 	virtual ComponentCategory GetCategory() = 0;
 
 	bool TypeEquals(Component* other);
-	bool TypeEquals(const char* other);
+	bool TypeEquals(const string& other);
 	bool CategoryEquals(Component* other);
 	bool CategoryEquals(const ComponentCategory other);
+
+	void Destroy() const;
 
 	virtual void Start() = 0;
 	virtual void Update() = 0;

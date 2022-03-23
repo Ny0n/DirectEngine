@@ -4,6 +4,9 @@ Component::~Component()
 {
 	Execution::startedEngineComponents.remove(this);
 	Execution::startedComponents.remove(this);
+
+	if (gameObject != nullptr)
+		gameObject->components.remove(this); // TODO oula
 }
 
 bool Component::TypeEquals(Component* other)
@@ -11,7 +14,7 @@ bool Component::TypeEquals(Component* other)
 	return this->GetType() == other->GetType();
 }
 
-bool Component::TypeEquals(const char* other)
+bool Component::TypeEquals(const string& other)
 {
 	return this->GetType() == other;
 }
@@ -24,4 +27,9 @@ bool Component::CategoryEquals(Component* other)
 bool Component::CategoryEquals(const ComponentCategory other)
 {
 	return this->GetCategory() == other;
+}
+
+void Component::Destroy() const
+{
+	delete(this);
 }

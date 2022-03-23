@@ -21,6 +21,8 @@ public:
 
 	template<typename T>
 	static bool Contains(list<T*>* list, T* value);
+	template<typename T>
+	static bool Contains(list<T>* list, T value);
 
 	template<typename T>
 	static void DeleteList(list<T*> list);
@@ -31,6 +33,12 @@ public:
 
 template <typename T>
 bool Utils::Contains(list<T*>* list, T* value)
+{
+	return (find(list->begin(), list->end(), value) != list->end());
+}
+
+template <typename T>
+bool Utils::Contains(list<T>* list, T value)
 {
 	return (find(list->begin(), list->end(), value) != list->end());
 }

@@ -10,7 +10,7 @@ class EngineComponent : public Component
 	friend class Collider;
 
 	friend class GameObject;
-	static list<const char*> unremovableEngineComponents;
+	static list<string> unremovableEngineComponents;
 
 	EngineComponent() = default;
 	~EngineComponent() override { unremovableEngineComponents.clear(); } // TODO redo this (only once, clean)

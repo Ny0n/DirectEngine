@@ -5,7 +5,7 @@ class AlignedBox final : public EngineComponent
     list<Collider*> colliders;
 
 public :
-    const char* GetType() override { return NAMEOF(AlignedBox); }
+    string GetType() override { return NAMEOF(AlignedBox); }
 
     void EngineStart() override;
 

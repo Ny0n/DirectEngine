@@ -6,7 +6,7 @@ class InputTester : public MonoBehaviour
 {
 
 public:
-	const char* GetType() override { return NAMEOF(InputTester); }
+	string GetType() override { return NAMEOF(InputTester); }
 
 	void Start() override;
 	void Update() override;

@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+class GameObject;
 class IScene;
 
 class Scene final

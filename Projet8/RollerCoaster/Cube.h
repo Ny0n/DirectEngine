@@ -6,7 +6,7 @@ class Cube : public MonoBehaviour
 {
 
 public :
-    const char* GetType() override { return NAMEOF(Cube); }
+	string GetType() override { return NAMEOF(Cube); }
 
     void Start() override;
     void Update() override;

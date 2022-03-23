@@ -11,7 +11,7 @@ class Transform final : public EngineComponent
 {
 
 public:
-    const char* GetType() override { return NAMEOF(Transform); }
+	string GetType() override { return NAMEOF(Transform); }
     
     Transform();
 

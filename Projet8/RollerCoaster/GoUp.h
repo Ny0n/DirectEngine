@@ -6,7 +6,7 @@ class GoUp : public MonoBehaviour
 {
 
 public:
-	const char* GetType() override { return NAMEOF(GoUp); }
+	string GetType() override { return NAMEOF(GoUp); }
 
 	GoUp() = default;
 	explicit GoUp(float speed);

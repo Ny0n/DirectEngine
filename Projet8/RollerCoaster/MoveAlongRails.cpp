@@ -8,7 +8,7 @@ void MoveAlongRails::Update()
 
 void MoveAlongRails::Start()
 {
-	_rm = static_cast<RailMaker*>(gameObject->GetComponent(NAMEOF(RailMaker)));
+	_rm = gameObject->GetComponent<RailMaker>();
 }
 
 void MoveAlongRails::Move()

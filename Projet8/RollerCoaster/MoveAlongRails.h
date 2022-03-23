@@ -7,7 +7,7 @@ class MoveAlongRails :
     public MonoBehaviour
 {
 public :
-    const char* GetType() override { return NAMEOF(MoveAlongRails); }
+	string GetType() override { return NAMEOF(MoveAlongRails); }
     void Update() override;
     void Start() override;
     void Move();

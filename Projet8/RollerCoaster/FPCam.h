@@ -5,7 +5,7 @@
 class FPCam : public MonoBehaviour
 {
 public:
-	const char* GetType() override { return NAMEOF(FPCam); }
+	string GetType() override { return NAMEOF(FPCam); }
 
 	FPCam() = default;
 	explicit FPCam(float speed);

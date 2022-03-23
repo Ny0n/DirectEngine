@@ -19,20 +19,6 @@ GameObject::~GameObject()
 
 // **************************** //
 
-// Finds and returns the first fount component of type ComponentType
-// Returns nullptr if not found
-Component* GameObject::GetComponent(const char* type)
-{
-	for (Component* component : components)
-	{
-		if (component->TypeEquals(type))
-			return component;
-	}
-	return nullptr;
-}
-
-// Adds the given component to the gameobject
-// A gameobject can only have one of each time of component, EXCEPT for mono_behaviour types
 bool GameObject::AddComponent(Component* component)
 {
 	if (component->CategoryEquals(ComponentCategory::single))
@@ -50,15 +36,14 @@ bool GameObject::AddComponent(Component* component)
 	return true;
 }
 
-// Removes and deletes the first component of type ComponentType found on the gameobject
-bool GameObject::RemoveComponent(const char* type)
+bool GameObject::RemoveComponent(Component* componentIn)
 {
-	if (Utils::Contains(&EngineComponent::unremovableEngineComponents, type)) // unremovable components
+	if (Utils::Contains(&EngineComponent::unremovableEngineComponents, componentIn->GetType())) // unremovable components
 		return false;
 
 	for (Component* component : components)
 	{
-		if (component->TypeEquals(type))
+		if (component == componentIn)
 		{
 			components.remove(component);
 			delete(component);
@@ -68,12 +53,7 @@ bool GameObject::RemoveComponent(const char* type)
 	return false;
 }
 
-bool GameObject::RemoveComponent(Component* component)
-{
-	return RemoveComponent(component->GetType());
-}
-
-void GameObject::Destroy()
+void GameObject::Destroy() const
 {
 	delete(this);
 }

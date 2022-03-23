@@ -212,6 +212,11 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameObject.tpp">
+      <FileType>Document</FileType>
+    </ClInclude>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

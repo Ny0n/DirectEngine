@@ -1,5 +1,8 @@
 #include "InputTester.h"
 
+#include "GoUp.h"
+#include "Move.h"
+
 void InputTester::Start()
 {
 	// Utils::Println("Start");
@@ -19,13 +22,20 @@ void InputTester::Update()
 	// Utils::Println(to_string(Time::inStartStep));
 	// Utils::Println(to_string(Time::inUpdateStep));
 
+	static int i = SceneManager::GetActiveSceneIndex();
 	if (Input::GetKeyDown(KeyCode::F))
 	{
-		string name = SceneManager::GetActiveSceneName();
-		if (name == "MenuScene")
-			SceneManager::LoadScene("DefaultScene");
-		if (name == "DefaultScene")
-			SceneManager::LoadScene("MenuScene");
+		i++;
+		if (i > SceneManager::BuildScenesCount())
+			i = 1;
+
+		SceneManager::LoadScene(i);
+
+		// string name = SceneManager::GetActiveSceneName();
+		// if (name == "MenuScene")
+		// 	SceneManager::LoadScene("DefaultScene");
+		// if (name == "DefaultScene")
+		// 	SceneManager::LoadScene("MenuScene");
 	}
 
 	if (Input::GetKeyDown(KeyCode::R))
@@ -33,41 +43,51 @@ void InputTester::Update()
 		SceneManager::LoadScene(SceneManager::GetActiveSceneName());
 	}
 
-	if (Input::GetKeyDown(KeyCode::Y))
+	if (Input::GetKeyDown(KeyCode::A))
 	{
-		SceneManager::LoadSceneAdditive("MenuScene");
+		auto comp = gameObject->GetComponent<Move>();
+		if (comp != nullptr)
+		{
+			comp->speed *= 2;
+			Utils::Println("Found");
+		}
 	}
-	if (Input::GetKeyDown(KeyCode::U))
-	{
-		SceneManager::UnloadScene("MenuScene");
-	}
+
+	// if (Input::GetKeyDown(KeyCode::Y))
+	// {
+	// 	SceneManager::LoadSceneAdditive("MenuScene");
+	// }
+	// if (Input::GetKeyDown(KeyCode::U))
+	// {
+	// 	SceneManager::UnloadScene("MenuScene");
+	// }
 
 	// ********** //
 
-	if (Input::GetKeyDown(KeyCode::T))
-	{
-		Time::timeScale = 0.5f;
-	}
-
-	if (Input::GetKeyUp(KeyCode::T))
-	{
-		Time::timeScale = 1.0f;
-	}
-
-	if (Input::GetKeyDown(KeyCode::A))
-	{
-		Utils::Println("Key Down");
-	}
-
-	if (Input::GetKey(KeyCode::A))
-	{
-		Utils::Println("Key");
-	}
-
-	if (Input::GetKeyUp(KeyCode::A))
-	{
-		Utils::Println("Key Up");
-	}
+	// if (Input::GetKeyDown(KeyCode::T))
+	// {
+	// 	Time::timeScale = 0.5f;
+	// }
+	//
+	// if (Input::GetKeyUp(KeyCode::T))
+	// {
+	// 	Time::timeScale = 1.0f;
+	// }
+	//
+	// if (Input::GetKeyDown(KeyCode::A))
+	// {
+	// 	Utils::Println("Key Down");
+	// }
+	//
+	// if (Input::GetKey(KeyCode::A))
+	// {
+	// 	Utils::Println("Key");
+	// }
+	//
+	// if (Input::GetKeyUp(KeyCode::A))
+	// {
+	// 	Utils::Println("Key Up");
+	// }
 
 	if (Input::GetKeyDown(KeyCode::Escape))
 		Application::Quit();

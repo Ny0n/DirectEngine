@@ -56,12 +56,12 @@
 // #define FUNCTION(Param, func) [=]((Param)* param) { return func(param); }
 
 #define CLASSNAMEOF(T) string(typeid(T).name()).substr(6) // gives the pure name of a class
-#define NAMEOF(T) typeid(T).name() // gives the type name of a var / class
+#define NAMEOF(T) string(typeid(T).name()) // gives the type name of a var / class
 
 // declare global variables
 
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+#define SCREEN_WIDTH 700
+#define SCREEN_HEIGHT 600
 
 extern LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 extern LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class

@@ -6,7 +6,7 @@ class RainbowBackground : public MonoBehaviour
 {
 
 public:
-	const char* GetType() override { return NAMEOF(RainbowBackground); }
+	string GetType() override { return NAMEOF(RainbowBackground); }
 	
 	void Update() override;
 	

@@ -14,7 +14,7 @@ list<Collider*> AlignedBox::AreIn(const list<GameObject*> go)
 	for(GameObject* g : go)
 	{
 		D3DXVECTOR3 tmpPos = g->transform->GetPosition();
-		Collider* collider = dynamic_cast<Collider*>(g->GetComponent(NAMEOF(Collider)));
+		auto collider = g->GetComponent<Collider>();
 		if (collider != nullptr
 			&& pos.x - scale.x<= tmpPos.x && pos.x + scale.x>=tmpPos.x
 			&& pos.y - scale.y<= tmpPos.y && pos.y + scale.y>=tmpPos.y
