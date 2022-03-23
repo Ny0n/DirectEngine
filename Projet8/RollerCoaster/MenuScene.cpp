@@ -27,14 +27,17 @@ void MenuScene::GenerateContent()
 
 	GameObject* canvas = CreateEmpty();
 
-	const auto image = new Image();
+	/*const auto image = new Image();
 	image->width = 200;
 	image->height = 200;
-	image->filePath = L"C:\\Users\\kperez\\Documents\\direct8\\direct8\\Projet8\\RollerCoaster\\Image\\smiley.png";
+	image->filePath = L"Image\\smiley.png";
 	canvas->AddComponent(image);
 
-	auto script = new CECIESTUNSCRIPT(image);
-	canvas->AddComponent(script);
+	const auto script = new CECIESTUNSCRIPT(image);
+	canvas->AddComponent(script);*/
+
+	const auto tb = new Textbox(L"Pipiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+	canvas->AddComponent(tb);
 
 	AddToScene(canvas);
 }

@@ -26,6 +26,7 @@
 //UI Components
 #include "Canvas.h"
 #include "Image.h"
+#include "Textbox.h"
 
 #include "KeyCodes.h"
 #include "Input.h"

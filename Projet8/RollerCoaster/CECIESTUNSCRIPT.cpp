@@ -3,7 +3,6 @@
 void CECIESTUNSCRIPT::Update()
 {
 	_image->rotation += Time::deltaTime * speed;
-	speed -= speed / 2.0f;
 	
 }
 

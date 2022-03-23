@@ -30,6 +30,9 @@
     <Filter Include="Source\App Data">
       <UniqueIdentifier>{b2c85d0f-737d-453c-a955-3ca5b12e49d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Objects\Components\UI">
+      <UniqueIdentifier>{08ac924a-d99f-4e7e-b6ea-4f27c55201ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -107,6 +110,15 @@
     <ClInclude Include="Cursor.h">
       <Filter>Source\App Data</Filter>
     </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas.h">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Textbox.h">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -177,6 +189,15 @@
     </ClCompile>
     <ClCompile Include="Cursor.cpp">
       <Filter>Source\App Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Textbox.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

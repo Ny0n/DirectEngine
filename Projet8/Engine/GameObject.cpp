@@ -9,7 +9,6 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
-	delete transform;
 	for (Component* component : components)
 		component->OnDestroy();
 	
