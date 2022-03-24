@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+class GameObject;
 class Transform;
 
 enum class ComponentCategory

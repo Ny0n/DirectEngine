@@ -2,6 +2,7 @@
 
 class Image final : public EngineComponent
 {
+
 public:
 	string GetType() override { return NAMEOF(Image); }
 
@@ -28,5 +29,5 @@ private:
 
 	LPDIRECT3DTEXTURE9 ppTexture = nullptr;
 	LPD3DXSPRITE ppSprite = nullptr;
-};
 
+};

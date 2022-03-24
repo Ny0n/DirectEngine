@@ -21,37 +21,39 @@ void DefaultScene::GenerateContent()
 	// tests
 
 	GameObject* inputTester = CreateEmpty();
-	inputTester->AddComponent(new InputTester());
+	inputTester->AddComponent<InputTester>();
 	AddToScene(inputTester);
 
 	// rgb background
 
 	GameObject* rgb = CreateEmpty();
-	rgb->AddComponent(new RainbowBackground());
+	rgb->AddComponent<RainbowBackground>();
 	AddToScene(rgb);
 
 	GameObject* aligneBox = CreateEmpty();
-	aligneBox->AddComponent(new AlignedBox());
+	aligneBox->AddComponent<AlignedBox>();
 	AddToScene(aligneBox);
+
 	// camera
 
 	GameObject* mainCamera = CreateEmpty();
-	mainCamera->AddComponent(new Camera());
-	mainCamera->AddComponent(new Move());
-	mainCamera->AddComponent(new FPCam());
+	mainCamera->AddComponent<Camera>();
+	mainCamera->AddComponent<Move>();
+	mainCamera->AddComponent<FPCam>();
+
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
-	mainCamera->AddComponent(new RailMaker());
-	mainCamera->AddComponent(new MoveAlongRails());
+	mainCamera->AddComponent<RailMaker>();
+	mainCamera->AddComponent<MoveAlongRails>();
 	AddToScene(mainCamera);
 
 	// cube
 
 	GameObject* cube1 = CreateEmpty();
-	cube1->AddComponent(new Cube());
-	cube1->AddComponent(new Move());
-	cube1->AddComponent(new DontDestroyOnLoad());
-	cube1->AddComponent(new Collider);
-	cube1->AddComponent(new Rotate(150.0f, true));
+	cube1->AddComponent<Cube>();
+	cube1->AddComponent<Move>();
+	cube1->AddComponent<Collider>();
+	cube1->AddComponent<Rotate>(150.0f, true);
+	// cube1->AddComponent<DontDestroyOnLoad>();
 
 	cube1->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	cube1->transform->Rotate(40, -40, 0);
@@ -59,9 +61,9 @@ void DefaultScene::GenerateContent()
 	AddToScene(cube1);
 
 	GameObject* cube2 = CreateEmpty();
-	cube2->AddComponent(new Cube());
-	cube2->AddComponent(new Collider);
-	cube2->AddComponent(new Rotate(150.0f));
+	cube2->AddComponent<Cube>();
+	cube2->AddComponent<Collider>();
+	cube2->AddComponent<Rotate>(150.0f);
 
 	cube2->transform->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 0.0f));
 	cube2->transform->Rotate(40, 40, 0);
@@ -73,11 +75,11 @@ void DefaultScene::GenerateContent()
 	GameObject* tigre = CreateEmpty();
 
 	LPCWSTR path = L"Mesh\\cube.x";
-	tigre->AddComponent(new MeshRenderer(path));
-	//tigre->AddComponent(new Move());
-	tigre->AddComponent(new Collider);
-	// tigre->AddComponent(new GoUp(8));
-	tigre->AddComponent(new Rotate());
+	tigre->AddComponent<MeshRenderer>(path);
+	//tigre->AddComponent<Move>();
+	tigre->AddComponent<Collider>();
+	// tigre->AddComponent<GoUp>(8);
+	tigre->AddComponent<Rotate>();
 
 	tigre->transform->SetPosition(D3DXVECTOR3(0.0f, -5.0f, 0.0f));
 	tigre->transform->RotateYaw(22);

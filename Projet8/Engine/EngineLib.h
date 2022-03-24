@@ -1,35 +1,45 @@
 ﻿#pragma once
 
+// ** Framework ** //
+
 #include "framework.h"
 
-#include "Profiler.h"
-#include "Utils.h"
+#include "Utils.h" // useful for everyone, so we declare it first
 
+// ** Engine ** //
+
+#include "Profiler.h"
+#include "Engine.h"
 #include "Execution.h"
 #include "PhysicsEngine.h"
-#include "Engine.h"
 
-#include "Scene.h"
-#include "IScene.h"
+// ** Objects ** //
 
 #include "Component.h"
 #include "EngineComponent.h"
 #include "MonoBehaviour.h"
+
 #include "GameObject.h"
+#include "IScene.h"
+#include "Scene.h"
+
+// Custom Components
 #include "Transform.h"
 #include "Camera.h"
 #include "MeshRenderer.h"
-#include "AlignedBox.h"
 #include "Collider.h"
-#include "Cursor.h"
+#include "AlignedBox.h"
 
-//UI Components
+// UI Components
 #include "Canvas.h"
 #include "Image.h"
 #include "Textbox.h"
+
+// ** App Data ** //
 
 #include "KeyCodes.h"
 #include "Input.h"
 #include "Application.h"
 #include "TimeManager.h"
 #include "SceneManager.h"
+#include "Cursor.h"

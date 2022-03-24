@@ -13,13 +13,13 @@ void MenuScene::GenerateContent()
 	// tests
 
 	GameObject* inputTester = CreateEmpty();
-	inputTester->AddComponent(new InputTester());
+	inputTester->AddComponent<InputTester>();
 	AddToScene(inputTester);
 
 	// camera
 
 	GameObject* mainCamera = CreateEmpty();
-	mainCamera->AddComponent(new Camera());
+	mainCamera->AddComponent<Camera>();
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
 	AddToScene(mainCamera);
 
@@ -27,17 +27,14 @@ void MenuScene::GenerateContent()
 
 	GameObject* canvas = CreateEmpty();
 
-	/*const auto image = new Image();
-	image->width = 200;
-	image->height = 200;
-	image->filePath = L"Image\\smiley.png";
-	canvas->AddComponent(image);
+	// const auto image = canvas->AddComponent<Image>();
+	// image->width = 200;
+	// image->height = 200;
+	// image->filePath = L"Image\\smiley.png";
+	//
+	// canvas->AddComponent<CECIESTUNSCRIPT>(image);
 
-	const auto script = new CECIESTUNSCRIPT(image);
-	canvas->AddComponent(script);*/
-
-	const auto tb = new Textbox(L"Pipiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-	canvas->AddComponent(tb);
+	canvas->AddComponent<Textbox>(L"Test");
 
 	AddToScene(canvas);
 }

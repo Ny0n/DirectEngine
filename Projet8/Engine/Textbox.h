@@ -2,8 +2,9 @@
 
 class Textbox final : public EngineComponent
 {
+
 public:
-	string GetType() override { return "Textbox"; }
+	string GetType() override { return NAMEOF(Textbox); }
 
 	explicit Textbox(LPCWSTR text);
 	~Textbox() override;
@@ -15,7 +16,7 @@ public:
 	UINT fontWidth = 0;
 	UINT fontWeight = FW_NORMAL;
 	BOOL fontItalic = false;
-	LPCWSTR string = L"Default string!";
+	LPCWSTR text = L"Default string!";
 	DWORD textFormat = DT_LEFT;
 	RECT textRect;
 	D3DCOLOR textColor = D3DCOLOR_ARGB(255, 255, 255, 0);
@@ -24,5 +25,6 @@ private:
 	void Render();
 
 	ID3DXFont* font = nullptr;
+
 };
 

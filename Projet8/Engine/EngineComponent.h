@@ -2,21 +2,11 @@
 
 class EngineComponent : public Component
 {
-	// add newly created engine components here
-	friend class Transform;
-	friend class Camera;
-	friend class MeshRenderer;
-	friend class AlignedBox;
-	friend class Collider;
-	friend class Image;
-	friend class Textbox;
-
 	friend class GameObject;
 	static const list<string> unremovableEngineComponents;
 
-	EngineComponent() = default;
-
 public:
+	EngineComponent() = default; // TEMPORARY, while we're actively coding
 	ComponentCategory GetCategory() override { return ComponentCategory::single; }
 
 	void Start() final {}

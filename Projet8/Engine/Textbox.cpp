@@ -1,7 +1,6 @@
 #include "pch.h"
-#include "Textbox.h"
 
-Textbox::Textbox(LPCWSTR text) : string(text)
+Textbox::Textbox(LPCWSTR text) : text(text)
 {
 }
 
@@ -35,5 +34,5 @@ void Textbox::EngineUpdate()
 
 void Textbox::Render()
 {
-	font->DrawText(NULL, string, wcslen(string), &textRect, textFormat, textColor);
+	font->DrawText(NULL, text, wcslen(text), &textRect, textFormat, textColor);
 }

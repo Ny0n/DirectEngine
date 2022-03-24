@@ -6,13 +6,10 @@ enum class LockMode
 	Locked,
 };
 
-
 class Cursor final
 {
 
-
 public:
-
 	Cursor() = delete;
 
 	static void Lock();
@@ -24,5 +21,5 @@ public:
 
 private:
 	static LockMode cursorLockMode;
-};
 
+};
