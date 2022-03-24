@@ -1,5 +1,6 @@
 #include "InputTester.h"
 
+#include "FlavienDevScene.h"
 #include "GoUp.h"
 #include "Move.h"
 
@@ -45,12 +46,18 @@ void InputTester::Update()
 
 	if (Input::GetKeyDown(KeyCode::A))
 	{
-		auto comp = gameObject->GetComponent<Move>();
-		if (comp != nullptr)
-		{
-			comp->speed *= 2;
-			Utils::Println("Found");
-		}
+		// auto comp = gameObject->GetComponent<Move>();
+		// if (comp != nullptr)
+		// {
+		// 	comp->speed *= 2;
+		// 	Utils::Println("Found");
+		// }
+		gameObject->RemoveComponent<Move>();
+	}
+
+	if (Input::GetKeyDown(KeyCode::E))
+	{
+		gameObject->AddComponent<Move>();
 	}
 
 	// if (Input::GetKeyDown(KeyCode::Y))

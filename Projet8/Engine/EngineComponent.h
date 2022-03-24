@@ -10,10 +10,10 @@ class EngineComponent : public Component
 	friend class Collider;
 
 	friend class GameObject;
+	friend class Execution;
 	static list<string> unremovableEngineComponents;
 
 	EngineComponent() = default;
-	~EngineComponent() override { unremovableEngineComponents.clear(); } // TODO redo this (only once, clean)
 
 public:
 	ComponentCategory GetCategory() override { return ComponentCategory::single; }

@@ -6,7 +6,7 @@ Component::~Component()
 	Execution::startedComponents.remove(this);
 
 	if (gameObject != nullptr)
-		gameObject->components.remove(this); // TODO oula
+		gameObject->components.remove(this);
 }
 
 bool Component::TypeEquals(Component* other)

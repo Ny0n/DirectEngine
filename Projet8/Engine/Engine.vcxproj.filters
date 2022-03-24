@@ -110,6 +110,9 @@
     <ClInclude Include="GameObject.tpp">
       <Filter>Source\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Utils.tpp">
+      <Filter>Source\App Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">

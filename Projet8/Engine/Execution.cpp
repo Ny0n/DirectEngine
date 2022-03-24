@@ -7,6 +7,7 @@ void Execution::Clean()
 {
     startedComponents.clear();
     startedEngineComponents.clear();
+    EngineComponent::unremovableEngineComponents.clear();
 }
 
 // ************/ Execution Order /************ //

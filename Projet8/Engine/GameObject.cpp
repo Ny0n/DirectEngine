@@ -19,25 +19,31 @@ GameObject::~GameObject()
 
 // **************************** //
 
-bool GameObject::AddComponent(Component* component)
+bool GameObject::AddComponent(Component* componentIn)
 {
-	if (component->CategoryEquals(ComponentCategory::single))
+	if (componentIn == nullptr)
+		return false;
+
+	if (componentIn->CategoryEquals(ComponentCategory::single))
 	{
-		for (Component* element : components)
+		for (Component* component : components)
 		{
-			if (element->TypeEquals(component)) // no duplicate components
+			if (component->TypeEquals(componentIn)) // no duplicate components
 				return false;
 		}
 	}
 
-	component->gameObject = this;
-	component->transform = transform;
-	components.push_back(component);
+	componentIn->gameObject = this;
+	componentIn->transform = transform;
+	components.push_back(componentIn);
 	return true;
 }
 
 bool GameObject::RemoveComponent(Component* componentIn)
 {
+	if (componentIn == nullptr)
+		return false;
+
 	if (Utils::Contains(&EngineComponent::unremovableEngineComponents, componentIn->GetType())) // unremovable components
 		return false;
 

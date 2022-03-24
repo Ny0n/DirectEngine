@@ -14,13 +14,16 @@ T* GameObject::GetComponent()
 	return nullptr;
 }
 
-template <typename T>
-T* GameObject::AddComponent()
+template <typename T, typename... A>
+T* GameObject::AddComponent(const A&... args)
 {
-	Component* component = new T();
+	// ERROR? two possibilities:
+	//		=> The type you are trying to add as as component is not a component, ex: AddComponent<Move>() is good, but AddComponent<DefaultScene>() won't build.
+	//		=> The arguments you sent to this function do not match any constructor available for the specified class.
+	Component* component = new T(args...);
 
 	if (AddComponent(component))
-		return component;
+		return static_cast<T*>(component);
 
 	return nullptr;
 }

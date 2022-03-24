@@ -113,12 +113,14 @@ void Engine::Run(HWND window)
 	if (_window == nullptr)
 	{
 		Utils::Println("A window instance must be set!");
+        delete(this);
 		return;
 	}
 
 	if (!SceneManager::HasScenesInBuild())
 	{
 		Utils::Println("There must be at least one scene in the build!");
+        delete(this);
 		return;
 	}
 
