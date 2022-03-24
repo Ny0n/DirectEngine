@@ -8,6 +8,8 @@ class EngineComponent : public Component
 	friend class MeshRenderer;
 	friend class AlignedBox;
 	friend class Collider;
+	friend class Image;
+	friend class Textbox;
 
 	friend class GameObject;
 	static const list<string> unremovableEngineComponents;

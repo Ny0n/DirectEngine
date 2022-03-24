@@ -1,7 +1,7 @@
 #pragma once
 
-#define APPLICATION_DEFAULT_FPS 60					// FPS, so 60 means 60 frames per second
-#define APPLICATION_DEFAULT_FIXED_TIMESTEP 1	// TIMESTEP, the time between each FixedUpdate, so 0.02f means 50 times per second
+#define APPLICATION_DEFAULT_FPS 144					// FPS, so 60 means 60 frames per second
+#define APPLICATION_DEFAULT_FIXED_TIMESTEP .02	// TIMESTEP, the time between each FixedUpdate, so 0.02f means 50 times per second
 #define APPLICATION_DEFAULT_MAXIMUM_TIMESTEP 0.33f	// MAXIMUM TIMESTEP, it's complicated, but basically it's the maximum delay the fixed update is allowed to catch up in case of frame drops, CANNOT be less than the timestep
 
 class Application final
