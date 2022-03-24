@@ -10,8 +10,7 @@ class EngineComponent : public Component
 	friend class Collider;
 
 	friend class GameObject;
-	friend class Execution;
-	static list<string> unremovableEngineComponents;
+	static const list<string> unremovableEngineComponents;
 
 	EngineComponent() = default;
 

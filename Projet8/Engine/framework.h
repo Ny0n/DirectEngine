@@ -48,25 +48,21 @@
 
 #include <DxErr.h>
 
-// declare global variables
+// **************************** //
+
+using namespace std;
+
+// #DEFINE
 
 #define RUNNER(func) [=] { func(); }
 #define SUPPLIER(func) [=] { return func(); }
 #define CONSUMER(arg, func) [=](arg* param) { func(param); }
 // #define FUNCTION(Param, func) [=]((Param)* param) { return func(param); }
 
-#define CLASSNAMEOF(T) string(typeid(T).name()).substr(6) // gives the pure name of a class
-#define NAMEOF(T) string(typeid(T).name()) // gives the type name of a var / class
-
-// declare global variables
-
-#define SCREEN_WIDTH 700
-#define SCREEN_HEIGHT 600
-
-extern LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
-extern LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
-extern LPDIRECT3DVERTEXBUFFER9 _VBuffer;    // the pointer to the vertex buffer
-extern LPDIRECT3DINDEXBUFFER9 _IBuffer;    // the pointer to the index buffer
+// gives the pure name of a class
+#define CLASSNAMEOF(T) string(typeid(T).name()).substr(6)
+// gives the type name of a var / class
+#define NAMEOF(T) string(typeid(T).name())
 
 #define HR(x)										\
 {													\
@@ -77,8 +73,18 @@ extern LPDIRECT3DINDEXBUFFER9 _IBuffer;    // the pointer to the index buffer
 	}												\
 }
 
+// application
+#define SCREEN_WIDTH 700
+#define SCREEN_HEIGHT 600
+
+// GLOBAL VARIABLES
+
+//directx
+extern LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
+extern LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
+extern LPDIRECT3DVERTEXBUFFER9 _VBuffer;    // the pointer to the vertex buffer
+extern LPDIRECT3DINDEXBUFFER9 _IBuffer;    // the pointer to the index buffer
+
 //structure
 struct CUSTOMVERTEX { FLOAT X, Y, Z; D3DVECTOR NORMAL; };
 #define CUSTOMFVF (D3DFVF_XYZ | D3DFVF_NORMAL)
-
-using namespace std;

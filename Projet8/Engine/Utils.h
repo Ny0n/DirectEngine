@@ -20,9 +20,9 @@ public:
 	static void Println(long double value);
 
 	template<typename T>
-	static bool Contains(list<T*>* list, T* value);
+	static bool Contains(const list<T*>* list, const T* value);
 	template<typename T>
-	static bool Contains(list<T>* list, T value);
+	static bool Contains(const list<T>* list, const T value);
 
 	template<typename T>
 	static void DeleteList(list<T*> listIn);

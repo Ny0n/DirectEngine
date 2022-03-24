@@ -9,6 +9,8 @@ LPDIRECT3DINDEXBUFFER9 _IBuffer = nullptr;
 
 // **************************** //
 
+Engine* Engine::instance = nullptr;
+
 Engine::Engine() : window(_window), _profiler(new Profiler())
 {
     Time::_profiler = _profiler;
@@ -17,6 +19,7 @@ Engine::Engine() : window(_window), _profiler(new Profiler())
 Engine::~Engine()
 {
     delete(_profiler);
+    instance = nullptr;
 }
 
 // **************************** //

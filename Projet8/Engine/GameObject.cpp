@@ -15,6 +15,7 @@ GameObject::~GameObject()
 	SceneManager::Remove(this);
 
 	Utils::DeleteList(components);
+	components.clear();
 }
 
 // **************************** //

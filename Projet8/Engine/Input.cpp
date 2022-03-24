@@ -45,4 +45,5 @@ void Input::UpdateInputs()
 void Input::Clean()
 {
 	Utils::DeleteMapSecond(frameInputs);
+	frameInputs.clear();
 }

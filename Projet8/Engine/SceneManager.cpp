@@ -45,9 +45,11 @@ int SceneManager::BuildScenesCount()
 void SceneManager::Clean()
 {
 	Utils::DeleteList(_scenes); // this also deletes _mainScene, and recursively, everything inside _protectedGameObjects
+	_scenes.clear();
 	_protectedGameObjects.clear();
 
 	Utils::DeleteMapSecond(_buildScenesS); // since the IScene* are the same in both maps, we only need to delete them one one map to delete them in both
+	_buildScenesS.clear();
 	_buildScenesI.clear();
 }
 

@@ -6,7 +6,9 @@ class Engine final
 public:
 	static Engine* GetInstance() // Singleton
 	{
-		static auto instance = new Engine();
+		if (instance == nullptr)
+			instance = new Engine();
+
 		return instance;
 	}
 	Engine(Engine const&) = delete;
@@ -19,7 +21,8 @@ public:
 	const HWND& window;
 
 private:
-	Engine(); // Only accessible from GetInstance()
+	static Engine* instance; // Only accessible from GetInstance()
+	Engine();
 	~Engine();
 
 	HWND _window;
