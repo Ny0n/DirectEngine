@@ -125,6 +125,9 @@
     <ClInclude Include="IScene.h">
       <Filter>Source\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="InputField.h">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -204,6 +207,9 @@
     </ClCompile>
     <ClCompile Include="IScene.cpp">
       <Filter>Source\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="InputField.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

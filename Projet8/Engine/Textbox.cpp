@@ -29,7 +29,7 @@ void Textbox::EngineStart()
 		&font))
 
 	const auto result = SetRect(&textRect, rectTopLeft.x, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
-	if (result != 0)
+	if (result <= 0)
 		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
 
 	D3DXIMAGE_INFO info;
