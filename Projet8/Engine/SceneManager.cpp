@@ -226,7 +226,7 @@ list<GameObject*> SceneManager::GetAllGameObjects()
 {
 	list<GameObject*> gos = {};
 
-	ForEachGameObject([=](GameObject* go) mutable
+	ForEachGameObject([&](GameObject* go) mutable
 	{
 		gos.push_back(go);
 	});

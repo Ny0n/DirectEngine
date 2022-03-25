@@ -13,16 +13,15 @@ void PhysicsEngine::Update()
 
 void PhysicsEngine::CheckCollisions()
 {
-    // Utils::Println("Checking");
 
-    if (!SceneManager::IsEmpty())
-        return;
+    /*if (!SceneManager::IsEmpty())
+        return;*/
 
     list<AlignedBox*> alignedBoxes = {};
     list<GameObject*> gameObjects = {};
     list<Collider*> colliders = {};
 
-    auto forAllGo = [=](GameObject* go) mutable
+    auto forAllGo = [&](GameObject* go) mutable
     {
         auto tmpAb = go->GetComponent<AlignedBox>();
         if (tmpAb != nullptr)
