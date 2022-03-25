@@ -12,11 +12,19 @@ public :
     void Start() override;
     void Move();
     MoveAlongRails(){}
+    ~MoveAlongRails() override;
+    Transform GetTransfromWhithoutCursor() const { return *transformWhithoutCursor;}
 private:
     list<Cube*> _cubes;
     RailMaker* _rm;
     D3DXVECTOR3 _previousDir;
-    float _speed = 70.0f;
-    float _almostOnSpot = 2.0f;
+    float _speed = 30.0f;
+    float _almostOnSpot = 0.5f;
+    Transform* transformWhithoutCursor;
+
+    //Lerp
+    D3DXQUATERNION quat;
+    D3DXQUATERNION cubeQuat;
+    int NbreStep = 0;
 };
 

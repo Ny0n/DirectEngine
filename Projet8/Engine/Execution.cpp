@@ -41,7 +41,7 @@ void Execution::Start()
     Time::_inStartStep = true;
 
     SceneManager::ForEachComponent(Start_);
-
+    Cursor::CursorUpdate();
     Time::_inStartStep = false;
 }
 
@@ -102,9 +102,9 @@ void Execution::LateUpdate()
 {
     Time::_inLateUpdateStep = true;
 
-    Cursor::CursorUpdate();
+   
     SceneManager::ForEachComponent(LateUpdate_);
-
+    Cursor::CursorUpdate();
     Time::_inLateUpdateStep = false;
 }
 
