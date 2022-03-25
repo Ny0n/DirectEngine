@@ -12,4 +12,7 @@ public:
 	void Update() override;
 	void OnDestroy() override;
 
+private:
+	GameObject* tester = nullptr;
+
 };

@@ -11,9 +11,6 @@ public:
 	static bool HasScene();
 	static int ActiveSceneCount();
 
-	static bool Instantiate(GameObject* go);
-	static GameObject* Remove(GameObject* go);
-
 	static list<string> GetActiveSceneNames();
 	static list<int> GetActiveSceneIndexes();
 	static string GetActiveSceneName();
@@ -32,7 +29,7 @@ public:
 	static bool IsEmpty(); // returns true if every scene is empty
 	static void DontDestroyOnLoad(GameObject* go);
 	static list<GameObject*> GetAllGameObjects();
-
+	
 	static void ForEachGameObject(const function<void(GameObject*)>& consumer);
 	static void ForEachComponent(const function<void(Component*)>& consumer);
 
@@ -40,6 +37,10 @@ public:
 
 private:
 	friend class Execution;
+	
+	friend class GameObject;
+	static bool Instantiate(GameObject* go);
+	static GameObject* Remove(GameObject* go);
 
 	// the engine accesses these two functions and does the scene change at the end of the frame
 	static bool ChangeRequired();

@@ -60,7 +60,7 @@ void RailMaker::Turn(float rotate)
 		box->transform->RotateYaw((rotate / _step));
 		//box->transform->RotatePitch((rotate / _step));
 		
-		SceneManager::Instantiate(box);
+		Instantiate(box);
 		_cubes.push_back(box->GetComponent<Cube>());
 	}
 
@@ -100,7 +100,7 @@ void RailMaker::MoveForward()
 		vector.y = -4;
 
 		box->transform->SetPosition(vector);
-		SceneManager::Instantiate(box);
+		Instantiate(box);
 		_cubes.push_back(box->GetComponent<Cube>());
 
 	}

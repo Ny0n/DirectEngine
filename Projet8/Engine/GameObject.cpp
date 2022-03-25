@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 
-GameObject::GameObject()
+GameObject::GameObject() : name("Default Name")
 {
 	const auto defaultTransform = new Transform();
 	AddComponent(defaultTransform);
@@ -9,19 +9,28 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
-	for (Component* component : components)
-		component->OnDestroy();
-	
-	SceneManager::Remove(this);
+	list<Component*> componentsCopy(components); // safeguard
 
-	Utils::DeleteList(components);
+	for (auto element : componentsCopy)
+	{
+		element->OnDestroy();
+		delete(element);
+	}
+
+	componentsCopy.clear();
+
 	components.clear();
+
+	SceneManager::Remove(this);
 }
 
 // **************************** //
 
 bool GameObject::AddComponent(Component* componentIn)
 {
+	if (componentIn->IsDestructionPending())
+		return false;
+
 	if (componentIn == nullptr)
 		return false;
 
@@ -29,6 +38,9 @@ bool GameObject::AddComponent(Component* componentIn)
 	{
 		for (Component* component : components)
 		{
+			if (component->IsDestructionPending())
+				continue;
+
 			if (component->TypeEquals(componentIn)) // no duplicate components
 				return false;
 		}
@@ -42,6 +54,9 @@ bool GameObject::AddComponent(Component* componentIn)
 
 bool GameObject::RemoveComponent(Component* componentIn)
 {
+	if (componentIn->IsDestructionPending())
+		return false;
+
 	if (componentIn == nullptr)
 		return false;
 
@@ -50,17 +65,56 @@ bool GameObject::RemoveComponent(Component* componentIn)
 
 	for (Component* component : components)
 	{
+		if (component->IsDestructionPending())
+			continue;
+
 		if (component == componentIn)
 		{
-			components.remove(component);
-			delete(component);
+			component->Destroy();
 			return true;
 		}
 	}
 	return false;
 }
 
-void GameObject::Destroy() const
+// **************************** //
+
+bool GameObject::Destroy()
 {
-	delete(this);
+	if (!Object::Destroy())
+		return false;
+
+	Execution::goMarkedForDestruction.push_back(this);
+	_markedForDestruction = true;
+
+	return true;
+}
+
+bool GameObject::SetEnabled(bool enabled)
+{
+	if (!Object::SetEnabled(enabled))
+		return false;
+	
+	list<Component*> copy(this->components); // safeguard
+	if (IsEnabled()) // enabling
+	{
+		for (auto element : copy)
+			element->OnEnable();
+	}
+	else // disabling
+	{
+		for (auto element : copy)
+		{
+			if (element->IsEnabledSelf()) // we fire the OnDisable only if the component wasn't already disabled
+				element->OnDisable();
+		}
+	}
+	copy.clear();
+
+	return true;
+}
+
+bool GameObject::IsEnabled()
+{
+	return Object::IsEnabled(); // TODO LATER change if we ever have a parent game object
 }

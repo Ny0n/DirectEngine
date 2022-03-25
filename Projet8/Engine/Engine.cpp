@@ -132,7 +132,6 @@ void Engine::Run(HWND window)
     // *** Part 1: Initialization *** //
 
     SceneManager::LoadScene(1);
-    Execution::CheckForSceneUpdate(); // since it's the default (first) scene to be loaded, we can load it instantly
 
     InitD3D();
 
@@ -244,6 +243,7 @@ void Engine::RunFrame()
 
     d3ddev->BeginScene();    // begins the 3D scene
 
+    Execution::CheckForSceneUpdate();
     _profiler->TimedRunner(_profiler->engineStartTime, Execution::EngineStart);
     _profiler->TimedRunner(_profiler->startTime, Execution::Start);
     CheckForNewFixedUpdate();
@@ -255,8 +255,6 @@ void Engine::RunFrame()
     d3ddev->EndScene();    // ends the 3D scene
 
     _profiler->TimedRunner(_profiler->presentTime, [=] { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
-
-    Execution::CheckForSceneUpdate();
 }
 
 void Engine::CheckForNewFixedUpdate()

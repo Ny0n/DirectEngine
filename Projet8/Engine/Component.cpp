@@ -2,12 +2,11 @@
 
 Component::~Component()
 {
-	Execution::startedEngineComponents.remove(this);
-	Execution::startedComponents.remove(this);
-
 	if (gameObject != nullptr)
 		gameObject->components.remove(this);
 }
+
+// **************************** //
 
 bool Component::TypeEquals(Component* other)
 {
@@ -29,7 +28,36 @@ bool Component::CategoryEquals(const ComponentCategory other)
 	return this->GetCategory() == other;
 }
 
-void Component::Destroy() const
+// **************************** //
+
+bool Component::Destroy()
 {
-	delete(this);
+	if (!Object::Destroy())
+		return false;
+	
+	Execution::compMarkedForDestruction.push_back(this);
+	_markedForDestruction = true;
+
+	return true;
+}
+
+bool Component::SetEnabled(bool enabled)
+{
+	if (!Object::SetEnabled(enabled))
+		return false;
+	
+	if (IsEnabled())
+		this->OnEnable();
+	else
+		this->OnDisable();
+
+	return true;
+}
+
+bool Component::IsEnabled()
+{
+	if (gameObject != nullptr)
+		return gameObject->IsEnabled() && _enabledSelf;
+
+	return _enabledSelf;
 }

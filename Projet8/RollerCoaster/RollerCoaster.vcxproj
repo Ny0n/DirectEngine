@@ -162,6 +162,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Rotate.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Tester.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="RailMaker.cpp" />
     <ClCompile Include="RainbowBackground.cpp" />
     <ClCompile Include="Rotate.cpp" />
+    <ClCompile Include="Tester.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RollerCoaster.rc" />

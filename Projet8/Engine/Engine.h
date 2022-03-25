@@ -43,7 +43,9 @@ private:
 };
 
 /*
- * Frame Order of Execution:
+ * Order of Execution (for each frame):
+ *
+ *		<Scene Changes>	// If it was requested during the laft frame, we load the new scene, or we Instantiate/Destroy GameObjects
  *
  *		EngineStart()	// The Start() for Engine components, executed BEFORE anything else
  *		Start()			// Start is only ever called once for a given script
@@ -57,7 +59,6 @@ private:
  *		EngineUpdate()	// The Update() for Engine components, executed AFTER everything else
  *
  *		<DrawFrame>		// The frame GPU drawing happens after everything
- *		<Scene>			// If it was requested, we load the new scene here
  *
  *		<Profiler>		// Displays the profiler info for the frame
  *

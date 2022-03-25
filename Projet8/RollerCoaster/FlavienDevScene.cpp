@@ -12,6 +12,9 @@ string FlavienDevScene::GetName()
 
 void FlavienDevScene::GenerateContent()
 {
+	Cursor::Unlock();
+	Cursor::SetVisible(true);
+
 	// camera
 	
 	GameObject* mainCamera = CreateEmpty();

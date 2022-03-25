@@ -6,7 +6,11 @@ Scene::Scene(IScene* scene) : name(scene->GetName()), gameObjects(scene->GetCont
 
 Scene::~Scene()
 {
-	Utils::DeleteList(gameObjects);
+	list<GameObject*> goCopy(gameObjects);
+	for (auto element : goCopy)
+		delete(element);
+
+	goCopy.clear();
 	gameObjects.clear();
 }
 

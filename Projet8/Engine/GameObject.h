@@ -1,11 +1,10 @@
 ﻿#pragma once
 
-class GameObject final
+class GameObject final : public Object
 {
 
 public:
 	GameObject();
-	~GameObject();
 	
 	template <typename T>
 	T* GetComponent();								// Gets the first found component of the specified type on the GameObject
@@ -18,12 +17,21 @@ public:
 
 	bool AddComponent(Component* componentIn);		// Adds the given component to the GameObject
 	bool RemoveComponent(Component* componentIn);	// Destroys the given component on the GameObject (if found)
-	
-	void Destroy() const;
 
+	bool Destroy() final;
+	bool SetEnabled(bool enabled) final;
+	bool IsEnabled() final;
+
+	string name;
 	list<Component*> components;
 	Transform* transform; // default component
-	
+
+private:
+	friend class Execution;
+	friend class Scene;
+
+	~GameObject() override;
+
 };
 
 #include "GameObject.tpp"
