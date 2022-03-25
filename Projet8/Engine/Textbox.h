@@ -1,10 +1,9 @@
 #pragma once
-#include "EngineComponent.h"
 
 class Textbox final : public EngineComponent
 {
 public:
-	const char* GetType() override { return NAMEOF(Textbox); }
+	string GetType() override { return NAMEOF(Textbox); }
 
 	explicit Textbox();
 	~Textbox() override;
