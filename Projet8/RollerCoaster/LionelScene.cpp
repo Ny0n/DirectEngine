@@ -12,6 +12,12 @@ string LionelScene::GetName()
 
 void LionelScene::GenerateContent()
 {
+	//collider
+	GameObject* aligneBox = CreateEmpty();
+	aligneBox->AddComponent<AlignedBox>();
+	AddToScene(aligneBox);
+
+
 	// Camera
 	GameObject* Camera = CreateEmpty();
 
@@ -33,6 +39,7 @@ void LionelScene::GenerateContent()
 
 	LPCWSTR path = L"Mesh\\sphere.x";
 	Sphere->AddComponent<MeshRenderer>(path);
+	Sphere->AddComponent<Collider>();
 
 	AddToScene(Sphere);
 

@@ -26,6 +26,7 @@ void Shoot::Update()
 
 		LPCWSTR path = L"Mesh\\sphere.x";
 		bullet->AddComponent<MeshRenderer>(path);
+		bullet->AddComponent<Collider>();
 
 		auto bulletMove = bullet->AddComponent<BulletMove>();
 
