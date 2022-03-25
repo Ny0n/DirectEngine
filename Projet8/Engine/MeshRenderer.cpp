@@ -6,7 +6,8 @@ MeshRenderer::MeshRenderer(LPCWSTR path) : _pmesh(nullptr), _path(path)
 
 MeshRenderer::~MeshRenderer()
 {
-    _pmesh->Release();
+    if(_pmesh != nullptr)
+		_pmesh->Release();
 
     if (g_pMeshMaterials != nullptr)
         delete[] g_pMeshMaterials;
