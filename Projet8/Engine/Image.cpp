@@ -22,7 +22,7 @@ void Image::EngineStart()
 	rotation = 0;
 
 	D3DXIMAGE_INFO info;
-	D3DXGetImageInfoFromFile(filePath, &info);
+	HR(D3DXGetImageInfoFromFile(filePath, &info))
 
 	if (originalSize)
 	{
@@ -31,7 +31,7 @@ void Image::EngineStart()
 	}
 	
 	//D3DXCreateTextureFromFile(d3ddev, filePath, &ppTexture);
-	D3DXCreateTextureFromFileEx(d3ddev,
+	HR(D3DXCreateTextureFromFileEx(d3ddev,
 		filePath,
 		width,
 		height,
@@ -41,13 +41,13 @@ void Image::EngineStart()
 		D3DPOOL_DEFAULT,
 		D3DX_DEFAULT,
 		D3DX_DEFAULT,
-		0xFFFFFFFF,
+		0xFF000000,
 		&info,
 		NULL,
-		&ppTexture);
+		&ppTexture))
 
 	
-	D3DXCreateSprite(d3ddev, &ppSprite);	
+	HR(D3DXCreateSprite(d3ddev, &ppSprite))
 }
 
 void Image::EngineUpdate()
@@ -60,9 +60,9 @@ void Image::Render()
 	D3DXMATRIX Mat;
 	D3DXMatrixTransformation2D(&Mat, NULL, NULL, &scale, &rotationCenter, rotation, &position);
 	//Render mon image
-	ppSprite->Begin(0);
-	ppSprite->SetTransform(&Mat);
-	ppSprite->Draw(ppTexture, NULL, NULL, NULL, 0xFFFFFFFF);
+	HR(ppSprite->Begin(0))
+	HR(ppSprite->SetTransform(&Mat))
+	HR(ppSprite->Draw(ppTexture, NULL, NULL, NULL, 0xFFFFFFFF))
 
-	ppSprite->End();
+	HR(ppSprite->End())
 }

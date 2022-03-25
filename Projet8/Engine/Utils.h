@@ -6,6 +6,7 @@ class Utils final
 public:
 	Utils() = delete;
 
+	static void PrintError(string file, int line, LPCWSTR value);
 	static void Println(LPCWSTR value);
 	static void Println(wstring value);
 	static void Println(string value);

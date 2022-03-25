@@ -1,5 +1,20 @@
 ﻿#include "pch.h"
 
+void Utils::PrintError(string file, int line, LPCWSTR value)
+{
+	string strLine = to_string(line);
+
+	const wstring tempFile(file.begin(), file.end());
+	const wstring tempLine(strLine.begin(), strLine.end());
+
+	OutputDebugStringW(tempFile.c_str());
+	OutputDebugStringW(L":");
+	OutputDebugStringW(tempLine.c_str());
+	OutputDebugStringW(L" ");
+	OutputDebugStringW(value);
+	OutputDebugStringW(L"\n");
+}
+
 void Utils::Println(LPCWSTR value)
 {
 	OutputDebugStringW(value);
