@@ -166,16 +166,27 @@ void Transform::RotateWorld(D3DXMATRIX* pMatrix)
 {
 }
 
-void Transform::RotateWorldX(float angle)
+void Transform::AddRotationMatrix(D3DXMATRIX p)
 {
-}
+	rotation *= p;
+	D3DXQUATERNION quat;
+	D3DXQuaternionRotationMatrix(&quat, &rotation);
+	quaternion *= quat;
+	right.x = rotation._11;
+	right.y = rotation._12;
+	right.z = rotation._13;
 
-void Transform::RotateWorldY(float angle)
-{
-}
+	//y axis
+	up.x = rotation._21;
+	up.y = rotation._22;
+	up.z = rotation._23;
 
-void Transform::RotateWorldZ(float angle)
-{
+	//z axis
+	forward.x = rotation._31;
+	forward.y = rotation._32;
+	forward.z = rotation._33;
+
+	UpdateMatrix();
 }
 
 void Transform::SetQuaternion(D3DXQUATERNION quat)
@@ -196,25 +207,4 @@ void Transform::SetScale(D3DXVECTOR3 s)
 	UpdateMatrix();
 }
 
-//bool Transform::Equals(Transform* other)
-//{ 
-//	if (position.x != other->position.x &&
-//		position.y != other->position.y &&
-//		position.z != other->position.z &&
-//		quaternion.x != other->quaternion.x &&
-//		quaternion.y != other->quaternion.y &&
-//		quaternion.z != other->quaternion.z &&
-//		quaternion.w != other->quaternion.w)
-//		return false;
-//	for (int i = 0; i < sizeof(rotation) / sizeof(rotation[0]); i++)
-//		if (rotation[i] != other->rotation[i]) 
-//		{
-//			return false;
-//		}
-//	for(int i = 0 ; i < sizeof(matrix)/sizeof(matrix[0]); i++)
-//		if(matrix[i] != other->matrix[i])
-//		{
-//			return false;
-//		}
-//	return true;
-//}
+
