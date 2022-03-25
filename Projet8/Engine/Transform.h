@@ -11,7 +11,7 @@ class Transform final : public EngineComponent
 {
 
 public:
-    const char* GetType() override { return NAMEOF(Transform); }
+	string GetType() override { return NAMEOF(Transform); }
     
     Transform();
 
@@ -26,9 +26,7 @@ public:
     void RotateYaw(float angle, Space relativeTo = Space::Self);
     void RotateRoll(float angle, Space relativeTo = Space::Self);
     void RotateWorld(D3DXMATRIX* pMatrix);
-    void RotateWorldX(float angle);
-    void RotateWorldY(float angle);
-    void RotateWorldZ(float angle);
+    void AddRotationMatrix(D3DXMATRIX p);
 
     D3DXMATRIX GetMatrix() const { return matrix; }
     //bool Equals(Transform* other);

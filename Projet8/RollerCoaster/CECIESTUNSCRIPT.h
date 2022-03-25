@@ -5,7 +5,7 @@ class CECIESTUNSCRIPT : public MonoBehaviour
 {
 
 public:
-	const char* GetType() override { return NAMEOF(CECIESTUNSCRIPT); };
+	string GetType() override { return NAMEOF(CECIESTUNSCRIPT); };
 	void Update() override;
 
 	explicit CECIESTUNSCRIPT(Image* image, Textbox* textbox);

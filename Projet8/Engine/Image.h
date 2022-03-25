@@ -2,8 +2,9 @@
 
 class Image final : public EngineComponent
 {
+
 public:
-	const char* GetType() override { return NAMEOF(Image); }
+	string GetType() override { return NAMEOF(Image); }
 
 	~Image() override;
 	Image();
@@ -28,5 +29,5 @@ private:
 
 	LPDIRECT3DTEXTURE9 ppTexture = nullptr;
 	LPD3DXSPRITE ppSprite = nullptr;
-};
 
+};

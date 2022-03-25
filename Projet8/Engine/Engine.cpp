@@ -9,6 +9,8 @@ LPDIRECT3DINDEXBUFFER9 _IBuffer = nullptr;
 
 // **************************** //
 
+Engine* Engine::instance = nullptr;
+
 Engine::Engine() : window(_window), _profiler(new Profiler())
 {
     Time::_profiler = _profiler;
@@ -17,6 +19,7 @@ Engine::Engine() : window(_window), _profiler(new Profiler())
 Engine::~Engine()
 {
     delete(_profiler);
+    instance = nullptr;
 }
 
 // **************************** //
@@ -113,12 +116,14 @@ void Engine::Run(HWND window)
 	if (_window == nullptr)
 	{
 		Utils::Println("A window instance must be set!");
+        delete(this);
 		return;
 	}
 
 	if (!SceneManager::HasScenesInBuild())
 	{
 		Utils::Println("There must be at least one scene in the build!");
+        delete(this);
 		return;
 	}
 

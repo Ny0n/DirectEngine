@@ -4,7 +4,7 @@ class Canvas // : public EngineComponent
 {
 
 public:
-	//const char* GetType() override { return NAMEOF(Canvas); }
+	//string GetType() override { return NAMEOF(Canvas); }
 
 	//void EngineStart() override;
 	//void EngineUpdate() override;

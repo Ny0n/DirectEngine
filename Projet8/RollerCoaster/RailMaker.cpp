@@ -43,7 +43,7 @@ void RailMaker::Turn(float rotate)
 	{
 		box = new GameObject();
 		box->AddComponent(new Cube());
-		(Cube*)box->GetComponent(NAMEOF(Cube));
+		box->GetComponent<Cube>();
 		if (!_cubes.empty())
 		{
 			
@@ -61,7 +61,7 @@ void RailMaker::Turn(float rotate)
 		//box->transform->RotatePitch((rotate / _step));
 		
 		SceneManager::Instantiate(box);
-		_cubes.push_back((Cube*)box->GetComponent(NAMEOF(Cube)));
+		_cubes.push_back(box->GetComponent<Cube>());
 	}
 
 	
@@ -84,7 +84,7 @@ void RailMaker::MoveForward()
 	{
 		box = new GameObject();
 		box->AddComponent(new Cube());
-		(Cube*)box->GetComponent(NAMEOF(Cube));
+		box->GetComponent<Cube>();
 
 		D3DXVECTOR3  vector;
 		if (!_cubes.empty())
@@ -101,7 +101,7 @@ void RailMaker::MoveForward()
 
 		box->transform->SetPosition(vector);
 		SceneManager::Instantiate(box);
-		_cubes.push_back((Cube*)box->GetComponent(NAMEOF(Cube)));
+		_cubes.push_back(box->GetComponent<Cube>());
 
 	}
 

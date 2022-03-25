@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-class IScene;
-
 class Scene final
 {
 	friend class SceneManager;

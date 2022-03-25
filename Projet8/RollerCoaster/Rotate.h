@@ -6,7 +6,7 @@ class Rotate : public MonoBehaviour
 {
 
 public:
-	const char* GetType() override { return NAMEOF(Rotate); }
+	string GetType() override { return NAMEOF(Rotate); }
 
 	Rotate() = default;
 	explicit Rotate(float speed);

@@ -1,7 +1,6 @@
 #pragma once
 
 class Component;
-class Scene;
 
 class Execution final
 {

@@ -2,8 +2,6 @@
 
 #include "App.h"
 
-App* app = nullptr;
-
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
@@ -14,7 +12,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     _CrtMemCheckpoint(&memStateInit);
 #endif
 
-    app = new App();
+    const auto app = new App();
     app->Init(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
     app->Run();
     app->Uninit();

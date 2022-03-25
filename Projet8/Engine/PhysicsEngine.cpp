@@ -24,7 +24,7 @@ void PhysicsEngine::CheckCollisions()
 
     auto forAllGo = [=](GameObject* go) mutable
     {
-        auto tmpAb = dynamic_cast<AlignedBox*>(go->GetComponent(NAMEOF(AlignedBox)));
+        auto tmpAb = go->GetComponent<AlignedBox>();
         if (tmpAb != nullptr)
         {
             alignedBoxes.push_back(tmpAb);

@@ -4,7 +4,7 @@ class MeshRenderer final : public EngineComponent
 {
 
 public:
-    const char* GetType() override { return NAMEOF(MeshRenderer); }
+	string GetType() override { return NAMEOF(MeshRenderer); }
 
     MeshRenderer(LPCWSTR path);
     ~MeshRenderer() override;

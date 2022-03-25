@@ -150,6 +150,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DefaultScene.h" />
     <ClInclude Include="DontDestroyOnLoad.h" />
+    <ClInclude Include="FlavienDevScene.h" />
     <ClInclude Include="GoUp.h" />
     <ClInclude Include="FPCam.h" />
     <ClInclude Include="InputTester.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="DontDestroyOnLoad.cpp" />
+    <ClCompile Include="FlavienDevScene.cpp" />
     <ClCompile Include="GoUp.cpp" />
     <ClCompile Include="FPCam.cpp" />
     <ClCompile Include="InputTester.cpp" />

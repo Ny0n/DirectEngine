@@ -6,7 +6,7 @@ class RailMaker :
 	public MonoBehaviour
 {
 public:
-	const char* GetType() override { return NAMEOF(RailMaker); }
+	string GetType() override { return NAMEOF(RailMaker); }
 	//ComponentCategory GetCategory() override { return ComponentCategory::behaviour; }
 
 	explicit RailMaker() {}

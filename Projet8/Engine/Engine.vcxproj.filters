@@ -104,11 +104,11 @@
     <ClInclude Include="Utils.h">
       <Filter>Source\App Data</Filter>
     </ClInclude>
-    <ClInclude Include="IScene.h">
-      <Filter>Source\App Data</Filter>
-    </ClInclude>
     <ClInclude Include="Cursor.h">
       <Filter>Source\App Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Textbox.h">
+      <Filter>Source\Objects\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Image.h">
       <Filter>Source\Objects\Components\UI</Filter>
@@ -116,8 +116,14 @@
     <ClInclude Include="Canvas.h">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Textbox.h">
-      <Filter>Source\Objects\Components\UI</Filter>
+    <ClInclude Include="GameObject.tpp">
+      <Filter>Source\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.tpp">
+      <Filter>Source\App Data</Filter>
+    </ClInclude>
+    <ClInclude Include="IScene.h">
+      <Filter>Source\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -184,11 +190,11 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source\App Data</Filter>
     </ClCompile>
-    <ClCompile Include="IScene.cpp">
-      <Filter>Source\App Data</Filter>
-    </ClCompile>
     <ClCompile Include="Cursor.cpp">
       <Filter>Source\App Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Textbox.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp">
       <Filter>Source\Objects\Components\UI</Filter>
@@ -196,8 +202,8 @@
     <ClCompile Include="Canvas.cpp">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Textbox.cpp">
-      <Filter>Source\Objects\Components\UI</Filter>
+    <ClCompile Include="IScene.cpp">
+      <Filter>Source\Objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
