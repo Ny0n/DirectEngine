@@ -20,7 +20,11 @@ public:
 private :
 	list<Cube*> _cubes = {};
 	const float _spaceBetween = 5.0f;
-	 float _maxDistance = 100.0f;
+	float _maxDistance = 200.0f;
 	const float _step = 10;
+
+	float _angleUp = 90;
+	float _currentStep;
+
 };
 

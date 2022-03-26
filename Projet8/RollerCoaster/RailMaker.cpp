@@ -25,13 +25,29 @@ void RailMaker::Update()
 		{
 			MoveForward();
 		}
+		random = rand() % 100;
+		if (random <= 2.5f && _currentStep == 0)
+		{
+			_angleUp = 90;
+			_currentStep = _step;
+		}
+		else if (random <= 5 && _currentStep == 0)
+		{
+			_angleUp = -90;
+			_currentStep = _step;
+		}
 	}
 }
 
 void RailMaker::Start()
 {
 	//MoveForward();
+
 	srand(time(0));
+	Turn(-90);
+	for(int i = 0 ;i<60 ;i++)
+		MoveForward();
+	Turn(-90);
 }
 
 void RailMaker::Turn(float rotate)
@@ -44,21 +60,24 @@ void RailMaker::Turn(float rotate)
 		box = new GameObject();
 		box->AddComponent(new Cube());
 		box->GetComponent<Cube>();
-		if (!_cubes.empty())
-		{
-			
-			box->transform->SetQuaternion(_cubes.back()->transform->GetQuaternion());
-		}
 		D3DXVECTOR3  vector;
 		if (!_cubes.empty())
-			vector = _cubes.back()->transform->GetPosition() + _cubes.back()->transform->GetForward() * _spaceBetween ;
+		{
+			vector = _cubes.back()->transform->GetPosition() + _cubes.back()->transform->GetForward() * _spaceBetween;
+			box->transform->SetQuaternion(_cubes.back()->transform->GetQuaternion());
+		}
+			
 		else
 			vector = transform->GetPosition() + transform->GetForward() * _spaceBetween;
-		vector.y = -4;
+		
 		//vector.y += _spaceBetween * i;
 		box->transform->SetPosition(vector);
-		box->transform->RotateYaw((rotate / _step));
-		//box->transform->RotatePitch((rotate / _step));
+		box->transform->RotateYaw((rotate / _step),Space::Self);
+		if(_currentStep>0)
+		{
+			box->transform->RotatePitch((_angleUp / _step), Space::Self);
+			_currentStep--;
+		}
 		
 		SceneManager::Instantiate(box);
 		_cubes.push_back(box->GetComponent<Cube>());
@@ -89,16 +108,18 @@ void RailMaker::MoveForward()
 		D3DXVECTOR3  vector;
 		if (!_cubes.empty())
 		{
-
-			box->transform->SetQuaternion(_cubes.back()->transform->GetQuaternion());
 			vector = _cubes.back()->transform->GetPosition() + _cubes.back()->transform->GetForward() * _spaceBetween;
+			box->transform->SetQuaternion(_cubes.back()->transform->GetQuaternion());
 		}
 		else
 		{
 			vector = transform->GetPosition() + transform->GetForward() * _spaceBetween;
 		}
-		vector.y = -4;
-
+		if (_currentStep > 0)
+		{
+			box->transform->RotatePitch((_angleUp / _step), Space::Self);
+			_currentStep--;
+		}
 		box->transform->SetPosition(vector);
 		SceneManager::Instantiate(box);
 		_cubes.push_back(box->GetComponent<Cube>());

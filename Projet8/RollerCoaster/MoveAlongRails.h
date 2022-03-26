@@ -18,8 +18,8 @@ private:
     list<Cube*> _cubes;
     RailMaker* _rm;
     D3DXVECTOR3 _previousDir;
-    float _speed = 30.0f;
-    float _almostOnSpot = 0.5f;
+    float _speed =70.0f;
+    float _almostOnSpot = 1.0f;
     Transform* transformWhithoutCursor;
 
     //Lerp
