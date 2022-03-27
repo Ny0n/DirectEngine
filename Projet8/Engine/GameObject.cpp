@@ -28,13 +28,13 @@ void GameObject::ApplyDestruction()
 
 void GameObject::NotifyInstantiation()
 {
-	if (this->_hasBeenInstantiated) // safeguard
+	if (this->_markedForInstantiation) // safeguard
 	{
 		Utils::PrintErr("GameObject::NotifyInstantiation #1");
 		return;
 	}
 
-	this->_hasBeenInstantiated = true;
+	this->_markedForInstantiation = true;
 
 	ForEachSelfComponent([](Component* component)
 	{
@@ -51,6 +51,7 @@ void GameObject::ApplyInstantiation()
 {
 	// TODO soit il s'ajoute au parent si il en a un, soit il s'ajoute a la scene
 	SceneManager::Instantiate(this);
+	_instantiated = true;
 }
 
 // **************************** //
@@ -63,7 +64,7 @@ bool GameObject::AddComponent(Component* componentIn) // TODO PROTECT THIS (only
 		return false;
 	}
 
-	if (componentIn->_hasBeenInstantiated)
+	if (componentIn->_markedForInstantiation)
 	{
 		Utils::PrintErr("GameObject::AddComponent #2");
 		return false;
@@ -87,7 +88,7 @@ bool GameObject::AddComponent(Component* componentIn) // TODO PROTECT THIS (only
 	componentIn->gameObject = this;
 	componentIn->transform = transform;
 
-	if (!this->_hasBeenInstantiated)
+	if (!this->_instantiated)
 		_components.push_back(componentIn); // since we are creating a scene by code, and not a beautiful controlled UI, we have to do manual checking
 	else
 	{

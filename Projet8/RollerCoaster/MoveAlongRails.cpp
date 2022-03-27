@@ -27,7 +27,7 @@ void MoveAlongRails::Move()
 	if (std::abs(pos.x - target.x) <= _almostOnSpot && std::abs(pos.z - target.z) <= _almostOnSpot)
 	{
 		Cube* cube = _rm->PopFrontCube();
-		// Destroy(cube->gameObject);
+		Destroy(cube->gameObject);
 	}
 	/*if(vecteurDir.x != _previousDir.x && vecteurDir.z!= _previousDir.z)
 	 transform->RotateYaw(asin(D3DXVec3Dot(&vecteurDir, &_previousDir)));*/

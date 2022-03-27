@@ -15,13 +15,13 @@ void Component::ApplyDestruction()
 
 void Component::NotifyInstantiation()
 {
-	if (this->_hasBeenInstantiated) // safeguard
+	if (this->_markedForInstantiation) // safeguard
 	{
 		Utils::PrintErr("Component::NotifyInstantiation #1");
 		return;
 	}
 
-	this->_hasBeenInstantiated = true;
+	this->_markedForInstantiation = true;
 	
 	Awake();
 	if (IsEnabled())
@@ -30,7 +30,8 @@ void Component::NotifyInstantiation()
 
 void Component::ApplyInstantiation()
 {
-	gameObject->_components.push_back(this);
+	gameObject->_components.push_back(this); // TODO do 2 lists.........
+	_instantiated = true;
 }
 
 // **************************** //
