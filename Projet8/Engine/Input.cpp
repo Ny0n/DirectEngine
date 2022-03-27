@@ -3,6 +3,7 @@
 map<KeyCode, Input::InputState*> Input::frameInputs = {};
 
 // **************************** //
+USHORT Input::lastKeyDown = 0;
 
 bool Input::GetKey(KeyCode key)
 {
@@ -17,6 +18,16 @@ bool Input::GetKeyDown(KeyCode key)
 bool Input::GetKeyUp(KeyCode key)
 {
 	return frameInputs[key]->keyUp;
+}
+
+USHORT Input::GetLastKeyDown()
+{
+	return lastKeyDown;
+}
+
+void Input::ResetLastKeyDown()
+{
+	lastKeyDown = 0;
 }
 
 // **************************** //
@@ -35,7 +46,10 @@ void Input::UpdateInputs()
 		bool isDown = false;
 		if (Engine::GetInstance()->window == GetForegroundWindow()) // if our window has the focus
 			isDown = (GetKeyState(code.second) & 0x8000);
-		
+
+		if (isDown)
+			lastKeyDown = code.second;
+
 		state->keyDown = !state->key && isDown;
 		state->keyUp = state->key && !isDown;
 		state->key = isDown;
