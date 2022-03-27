@@ -3,7 +3,34 @@
 Component::~Component()
 {
 	if (gameObject != nullptr)
-		gameObject->components.remove(this);
+		gameObject->_components.remove(this);
+}
+
+void Component::ApplyDestruction()
+{
+	if (!_markedForDestruction)
+		OnDestroy();
+	delete(this);
+}
+
+void Component::NotifyInstantiation()
+{
+	if (this->_hasBeenInstantiated) // safeguard
+	{
+		Utils::PrintErr("Component::NotifyInstantiation #1");
+		return;
+	}
+
+	this->_hasBeenInstantiated = true;
+	
+	Awake();
+	if (IsEnabled())
+		OnEnable();
+}
+
+void Component::ApplyInstantiation()
+{
+	gameObject->_components.push_back(this);
 }
 
 // **************************** //
@@ -30,13 +57,18 @@ bool Component::CategoryEquals(const ComponentCategory other)
 
 // **************************** //
 
-bool Component::Destroy()
+bool Component::PrivateDestroy()
 {
-	if (!Object::Destroy())
+	if (!Object::PrivateDestroy())
+	{
+		Utils::PrintErr("Component::PrivateDestroy #1");
 		return false;
+	}
 	
 	Execution::compMarkedForDestruction.push_back(this);
 	_markedForDestruction = true;
+
+	OnDestroy();
 
 	return true;
 }
@@ -44,12 +76,18 @@ bool Component::Destroy()
 bool Component::SetEnabled(bool enabled)
 {
 	if (!Object::SetEnabled(enabled))
+	{
+		Utils::PrintErr("Component::SetEnabled #1");
 		return false;
-	
-	if (IsEnabled())
-		this->OnEnable();
-	else
-		this->OnDisable();
+	}
+
+	if (gameObject != nullptr && gameObject->IsEnabled())
+	{
+		if (_enabledSelf)
+			this->OnEnable();
+		else
+			this->OnDisable();
+	}
 
 	return true;
 }

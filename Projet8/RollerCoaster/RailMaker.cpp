@@ -83,8 +83,7 @@ void RailMaker::MoveForward()
 	if (farestCubedist < (_maxDistance - _spaceBetween) * (_maxDistance - _spaceBetween))
 	{
 		box = new GameObject();
-		box->AddComponent(new Cube());
-		box->GetComponent<Cube>();
+		box->AddComponent<Cube>();
 
 		D3DXVECTOR3  vector;
 		if (!_cubes.empty())

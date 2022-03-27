@@ -7,6 +7,10 @@
 #include "Rotate.h"
 #include "Tester.h"
 
+#define DESTROY(obj)	\
+Object::Destroy(obj);	\
+(obj) = nullptr
+
 void InputTester::Start()
 {
 	// Utils::Println("Start");
@@ -63,31 +67,36 @@ void InputTester::Update()
 		gameObject->AddComponent<Move>();
 	}
 
-	if (Input::GetKeyDown(KeyCode::X))
+	if (Input::GetKey(KeyCode::Alpha4))
 	{
-		if (tester == nullptr)
-		{
-			tester = new GameObject();
-
-			tester->AddComponent<Cube>();
-			// tester->AddComponent<GoUp>(4.0f);
-			tester->AddComponent<Rotate>(150.0f, true);
-			tester->AddComponent<Tester>();
-
-			tester->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-			tester->transform->Rotate(40, -40, 0);
-
-			Instantiate(tester);
-		}
+		Utils::Println("1");
 	}
 
+	if (Input::GetKeyDown(KeyCode::X))
+	{
+		// if (tester == nullptr)
+		// {
+		// 	tester = new GameObject();
+		//
+		// 	tester->AddComponent<Cube>();
+		// 	// tester->AddComponent<GoUp>(4.0f);
+		// 	tester->AddComponent<Rotate>(150.0f, true);
+		// 	tester->AddComponent<Tester>();
+		//
+		// 	tester->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+		// 	tester->transform->Rotate(40, -40, 0);
+		//
+		// 	Instantiate(tester);
+		// }
+	}
+	tester = gameObject;
 	if (Input::GetKeyDown(KeyCode::C))
 	{
-		if (tester == nullptr)
-		{
-			Utils::Println("nullptr");
-			return;
-		}
+		// if (tester == nullptr)
+		// {
+		// 	Utils::Println("nullptr");
+		// 	return;
+		// }
 
 		auto comp = tester->GetComponent<Rotate>();
 		auto comp2 = tester->GetComponent<Tester>();
@@ -96,8 +105,11 @@ void InputTester::Update()
 		{
 			if (Input::GetKey(KeyCode::Shift))
 			{
-				comp->Destroy();
-				comp2->Destroy();
+				Destroy(comp);
+				Destroy(comp2);
+
+				// DESTROY(comp);
+				// DESTROY(comp2);
 			}
 			else
 			{
@@ -113,8 +125,7 @@ void InputTester::Update()
 		{
 			if (Input::GetKey(KeyCode::Shift))
 			{
-				tester->Destroy();
-				tester = nullptr;
+				DESTROY(tester);
 			}
 			else
 			{
@@ -165,7 +176,7 @@ void InputTester::Update()
 
 void InputTester::OnDestroy()
 {
-	// Utils::Println("OnDestroy");
+	Utils::Println("OnDestroy InputTester");
 }
 
 // void InputTester::LateUpdate()

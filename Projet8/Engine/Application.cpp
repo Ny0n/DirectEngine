@@ -16,6 +16,7 @@ float Application::fixedTimestep = APPLICATION_DEFAULT_FIXED_TIMESTEP;
 float Application::maximumTimestep = GetMaxStep(APPLICATION_DEFAULT_MAXIMUM_TIMESTEP);
 bool Application::quit = false;
 bool Application::playing = false;
+bool Application::generatingScene = false;
 
 // **************************** //
 
@@ -58,4 +59,9 @@ void Application::Quit()
 bool Application::IsPlaying()
 {
 	return playing;
+}
+
+bool Application::IsGeneratingScene()
+{
+	return generatingScene;
 }

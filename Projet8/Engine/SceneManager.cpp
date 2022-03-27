@@ -247,6 +247,9 @@ void SceneManager::AddScene(Scene* scene)
 	if (_scenes.empty())
 		_mainScene = scene;
 	_scenes.push_back(scene);
+
+	for (auto go : scene->gameObjects) // we notify the instantiation for everything in the new scene
+		go->NotifyInstantiation();
 }
 
 bool SceneManager::SetMainScene(string sceneName)
@@ -306,32 +309,35 @@ void SceneManager::ForEachScene(const function<void(Scene*)>& consumer)
 	}
 }
 
-void SceneManager::ForEachGameObject(const function<void(GameObject*)>& consumer)
+void SceneManager::ForEachGameObject(const function<void(GameObject*)>& consumer, bool onlyAlive)
 {
-	auto sceneConsumer = [=](const Scene* scene)
+	auto sceneConsumer = [&](const Scene* scene)
 	{
-		for (GameObject* go : scene->gameObjects)
+		for (GameObject* baseGo : scene->gameObjects)
 		{
-			if (go->IsAlive())
-				consumer(go);
+			baseGo->ForEachGameObject([&](GameObject* go) // self included
+			{
+				if (!onlyAlive || go->IsAlive())
+					consumer(go);
+			}, onlyAlive);
 		}
 	};
 
 	ForEachScene(sceneConsumer);
 }
 
-void SceneManager::ForEachComponent(const function<void(Component*)>& consumer)
+void SceneManager::ForEachComponent(const function<void(Component*)>& consumer, bool onlyAlive)
 {
-	auto goConsumer = [=](const GameObject* go)
+	auto goConsumer = [&](GameObject* go)
 	{
-		for (Component* component : go->components)
+		go->ForEachSelfComponent([&](Component* component)
 		{
-			if (component->IsAlive())
+			if (!onlyAlive || component->IsAlive())
 				consumer(component);
-		}
+		}, onlyAlive);
 	};
 
-	ForEachGameObject(goConsumer);
+	ForEachGameObject(goConsumer, onlyAlive);
 }
 
 // **************************** //

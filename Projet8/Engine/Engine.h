@@ -45,9 +45,11 @@ private:
 /*
  * Order of Execution (for each frame):
  *
- *		<Scene Changes>	// If it was requested during the laft frame, we load the new scene, or we Instantiate/Destroy GameObjects
+ *		<Instantiate>	// If it was requested during the laft frame, we add the new object to the scene now
+ *		OnDestroy()		// If it was requested during the laft frame, we destroy the object now
+ *		<Scene Changes>	// If it was requested during the laft frame, we load the new scene
  *
- *		EngineStart()	// The Start() for Engine components, executed BEFORE anything else
+ *		EngineStart()	// The Start() for Engine components
  *		Start()			// Start is only ever called once for a given script
  *
  *		FixedUpdate()	// This may be called 0, 1 or multiple times per frame depending on the frame rate, but will ALWAYS be called 1/timestep times per second
@@ -56,12 +58,18 @@ private:
  *		<Input events>	// Updates all inputs (inside the Input class)
  *		Update()
  *		LateUpdate()
- *		EngineUpdate()	// The Update() for Engine components, executed AFTER everything else
+ *		EngineUpdate()	// The Update() for Engine components
  *
  *		<DrawFrame>		// The frame GPU drawing happens after everything
  *
  *		<Profiler>		// Displays the profiler info for the frame
  *
  *		<Quit>			// If Application::Quit() is called inside the frame, we exit the game now
+ *
+ *	Specific calls:
+ *	
+ *		Awake()			// Awake() is called only once, either at Instantiate() (instantly) or when the scene is loaded (CALLED EVEN IF THE GO IS DISABLED ON INSTANTIATION)
+ *		OnEnable()		// Called At instantiation if the go is enabled, and each time its enabled state passes from disabled to enabled
+ *		OnDisable()		// Called each time its enabled state passes from enabled to disabled
  *
  */

@@ -9,6 +9,7 @@ public:
 	static void Println(LPCWSTR value);
 	static void Println(wstring value);
 	static void Println(string value);
+	static void PrintErr(string value);
 	static void Println(int value);
 	static void Println(unsigned value);
 	static void Println(long value);

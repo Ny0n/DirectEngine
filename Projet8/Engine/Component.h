@@ -41,7 +41,6 @@ public:
 	virtual void OnCollide(GameObject* other) {}
 	virtual void OnCollideExit(GameObject* other) {}
 
-	bool Destroy() final;
 	bool SetEnabled(bool enabled) final;
 	bool IsEnabled() final;
 
@@ -50,10 +49,17 @@ public:
 
 private:
 	friend class Execution;
+	friend class SceneManager;
+	friend class Object;
 	friend class GameObject;
 
+	bool PrivateDestroy() final;
+	void ApplyDestruction(); // to manage the OnDestroy()
 	~Component() override;
 
+	void NotifyInstantiation();
+	void ApplyInstantiation();
+	
 	bool _engineStarted = false;
 	bool _started = false;
 

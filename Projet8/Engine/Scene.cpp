@@ -1,17 +1,28 @@
 ﻿#include "pch.h"
 
-Scene::Scene(IScene* scene) : name(scene->GetName()), gameObjects(scene->GetContent())
+Scene::Scene(IScene* scene) : name(scene->GetName())
 {
+	Application::generatingScene = true;
+	gameObjects = scene->GetContent();
+	Application::generatingScene = false;
 }
 
 Scene::~Scene()
 {
-	list<GameObject*> goCopy(gameObjects);
-	for (auto element : goCopy)
-		delete(element);
+	list<GameObject*> goCopy(gameObjects); // safeguard
+
+	for (auto go : goCopy)
+		go->ApplyDestruction(); // we instantly destroy EVERYTHING
 
 	goCopy.clear();
+
 	gameObjects.clear();
+
+	// when deleting a scene, any demand for instantiation or destruction is irrelevant
+	Execution::goMarkedForInstantiation.clear();
+	Execution::goMarkedForDestruction.clear();
+	Execution::compMarkedForInstantiation.clear();
+	Execution::compMarkedForDestruction.clear();
 }
 
 // **************************** //

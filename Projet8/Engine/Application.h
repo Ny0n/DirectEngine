@@ -21,6 +21,7 @@ public:
 	static void Quit();
 
 	static bool IsPlaying();
+	static bool IsGeneratingScene();
 
 private:
 	friend class Engine;
@@ -35,5 +36,8 @@ private:
 	static float maximumTimestep;
 	static bool quit;
 	static bool playing;
+
+	friend class Scene;
+	static bool generatingScene;
 
 };

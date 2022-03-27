@@ -8,7 +8,7 @@ T* GameObject::GetComponent()
 
 	const string type = NAMEOF(T);
 
-	for (Component* component : components)
+	for (Component* component : _components)
 	{
 		if (component->IsDestructionPending())
 			continue;
@@ -48,14 +48,14 @@ bool GameObject::RemoveComponent()
 	if (Utils::Contains(&EngineComponent::unremovableEngineComponents, type)) // unremovable components
 		return false;
 
-	for (Component* component : components)
+	for (Component* component : _components)
 	{
 		if (component->IsDestructionPending())
 			continue;
 
 		if (component->TypeEquals(type))
 		{
-			component->Destroy();
+			component->PrivateDestroy();
 			return true;
 		}
 	}

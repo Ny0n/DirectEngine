@@ -1,6 +1,8 @@
 #pragma once
 
 class Object;
+class GameObject;
+class Component;
 
 class Execution final
 {
@@ -21,11 +23,13 @@ class Execution final
 
 	static void CheckForSceneUpdate();
 
+	friend class Scene;
 	friend class Object;
 	friend class GameObject;
 	static list<GameObject*> goMarkedForInstantiation;
 	static list<GameObject*> goMarkedForDestruction;
 	friend class Component;
+	static list<Component*> compMarkedForInstantiation;
 	static list<Component*> compMarkedForDestruction;
 
 public:

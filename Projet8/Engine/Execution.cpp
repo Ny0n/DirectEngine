@@ -2,6 +2,7 @@
 
 list<GameObject*> Execution::goMarkedForInstantiation = {};
 list<GameObject*> Execution::goMarkedForDestruction = {};
+list<Component*> Execution::compMarkedForInstantiation = {};
 list<Component*> Execution::compMarkedForDestruction = {};
 
 void Execution::Clean()
@@ -12,7 +13,7 @@ void Execution::Clean()
 
 void Execution::EngineStart()
 {
-    SceneManager::ForEachComponent([=](Component* component)
+    SceneManager::ForEachComponent([](Component* component)
     {
         if (!component->_engineStarted)
         {
@@ -28,7 +29,7 @@ void Execution::Start()
 {
     Time::_inStartStep = true;
 
-    SceneManager::ForEachComponent([=](Component* component)
+    SceneManager::ForEachComponent([](Component* component)
     {
         if (!component->_started)
         {
@@ -46,7 +47,7 @@ void Execution::FixedUpdate()
 {
     Time::_inFixedUpdateStep = true;
 
-    SceneManager::ForEachComponent([=](Component* component)
+    SceneManager::ForEachComponent([](Component* component)
     {
         component->FixedUpdate();
     });
@@ -73,8 +74,8 @@ void Execution::Input()
 void Execution::Update()
 {
     Time::_inUpdateStep = true;
-
-    SceneManager::ForEachComponent([=](Component* component)
+    
+    SceneManager::ForEachComponent([](Component* component)
     {
         component->Update();
     });
@@ -88,7 +89,7 @@ void Execution::LateUpdate()
 {
     Time::_inLateUpdateStep = true;
 
-    SceneManager::ForEachComponent([=](Component* component)
+    SceneManager::ForEachComponent([](Component* component)
     {
         component->LateUpdate();
     });
@@ -102,7 +103,7 @@ void Execution::LateUpdate()
 
 void Execution::EngineUpdate()
 {
-    SceneManager::ForEachComponent([=](Component* component)
+    SceneManager::ForEachComponent([](Component* component)
     {
         component->EngineUpdate();
     });
@@ -113,16 +114,21 @@ void Execution::CheckForSceneUpdate()
     // we Instantiate/Destroy what needs to be
 
     // Instantiation
-    if (!goMarkedForInstantiation.empty())
+    if (!goMarkedForInstantiation.empty() || !compMarkedForInstantiation.empty())
     {
-        list<GameObject*> copy(goMarkedForInstantiation); // safeguard
+        list<GameObject*> goCopy(goMarkedForInstantiation); // safeguard
+        list<Component*> compCopy(compMarkedForInstantiation); // safeguard
+        
+        for (auto component : compCopy)
+			component->ApplyInstantiation();
+        for (auto go : goCopy)
+            go->ApplyInstantiation();
 
-        for (auto go : copy)
-            SceneManager::Instantiate(go);
-
-        copy.clear();
+        goCopy.clear();
+        compCopy.clear();
 
         goMarkedForInstantiation.clear();
+        compMarkedForInstantiation.clear();
     }
 
     // Destruction
@@ -131,13 +137,10 @@ void Execution::CheckForSceneUpdate()
         list<GameObject*> goCopy(goMarkedForDestruction); // safeguard
         list<Component*> compCopy(compMarkedForDestruction); // safeguard
 
-        for (auto comp : compCopy)
-        {
-            comp->OnDestroy();
-            delete(comp);
-        }
+        for (auto component : compCopy)
+            component->ApplyDestruction();
         for (auto go : goCopy)
-            delete(go);
+            go->ApplyDestruction();
 
         goCopy.clear();
         compCopy.clear();
