@@ -1,9 +1,7 @@
 #include "pch.h"
 
-list<GameObject*> Execution::goMarkedForInstantiation = {};
-list<GameObject*> Execution::goMarkedForDestruction = {};
-list<Component*> Execution::compMarkedForInstantiation = {};
-list<Component*> Execution::compMarkedForDestruction = {};
+list<Object*> Execution::markedForInstantiation = {};
+list<Object*> Execution::markedForDestruction = {};
 
 void Execution::Clean()
 {
@@ -114,39 +112,25 @@ void Execution::CheckForSceneUpdate()
     // we Instantiate/Destroy what needs to be
 
     // Instantiation
-    if (!goMarkedForInstantiation.empty() || !compMarkedForInstantiation.empty())
+    if (!markedForInstantiation.empty())
     {
-        list<GameObject*> goCopy(goMarkedForInstantiation); // safeguard
-        list<Component*> compCopy(compMarkedForInstantiation); // safeguard
-        
-        for (auto component : compCopy)
-			component->ApplyInstantiation();
-        for (auto go : goCopy)
-            go->ApplyInstantiation();
+	    for (auto obj : markedForInstantiation)
+            obj->_markedForInstantiation = false; // the obj is now alive!
 
-        goCopy.clear();
-        compCopy.clear();
-
-        goMarkedForInstantiation.clear();
-        compMarkedForInstantiation.clear();
+        markedForInstantiation.clear();
     }
 
     // Destruction
-    if (!goMarkedForDestruction.empty() || !compMarkedForDestruction.empty())
+    if (!markedForDestruction.empty())
     {
-        list<GameObject*> goCopy(goMarkedForDestruction); // safeguard
-        list<Component*> compCopy(compMarkedForDestruction); // safeguard
+        list<Object*> copy(markedForDestruction); // safeguard
 
-        for (auto component : compCopy)
-            component->ApplyDestruction();
-        for (auto go : goCopy)
-            go->ApplyDestruction();
+        for (auto obj : copy)
+            Object::TryToDelete(obj);
 
-        goCopy.clear();
-        compCopy.clear();
+        copy.clear();
 
-        goMarkedForDestruction.clear();
-        compMarkedForDestruction.clear();
+        markedForDestruction.clear();
     }
 
     // we update (load/unload/additive) the scene if we have to

@@ -23,14 +23,13 @@ class Execution final
 
 	static void CheckForSceneUpdate();
 
+	// this is only for optimization
 	friend class Scene;
 	friend class Object;
 	friend class GameObject;
-	static list<GameObject*> goMarkedForInstantiation;
-	static list<GameObject*> goMarkedForDestruction;
 	friend class Component;
-	static list<Component*> compMarkedForInstantiation;
-	static list<Component*> compMarkedForDestruction;
+	static list<Object*> markedForInstantiation;
+	static list<Object*> markedForDestruction;
 
 public:
 	Execution() = delete;

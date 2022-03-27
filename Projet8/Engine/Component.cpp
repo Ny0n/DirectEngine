@@ -15,23 +15,19 @@ void Component::ApplyDestruction()
 
 void Component::NotifyInstantiation()
 {
-	if (this->_markedForInstantiation) // safeguard
+	if (this->_instantiatied) // safeguard
 	{
 		Utils::PrintErr("Component::NotifyInstantiation #1");
 		return;
 	}
 
+	this->_instantiatied = true;
 	this->_markedForInstantiation = true;
+	Execution::markedForInstantiation.push_back(this);
 	
 	Awake();
 	if (IsEnabled())
 		OnEnable();
-}
-
-void Component::ApplyInstantiation()
-{
-	gameObject->_components.push_back(this); // TODO do 2 lists.........
-	_instantiated = true;
 }
 
 // **************************** //
@@ -66,8 +62,8 @@ bool Component::PrivateDestroy()
 		return false;
 	}
 	
-	Execution::compMarkedForDestruction.push_back(this);
 	_markedForDestruction = true;
+	Execution::markedForDestruction.push_back(this);
 
 	OnDestroy();
 

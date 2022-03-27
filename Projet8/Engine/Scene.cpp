@@ -11,18 +11,16 @@ Scene::~Scene()
 {
 	list<GameObject*> goCopy(gameObjects); // safeguard
 
-	for (auto go : goCopy)
-		go->ApplyDestruction(); // we instantly destroy EVERYTHING
+	for (auto go : goCopy) // we instantly destroy EVERYTHING
+		Object::TryToDelete(go);
 
 	goCopy.clear();
 
 	gameObjects.clear();
 
 	// when deleting a scene, any demand for instantiation or destruction is irrelevant
-	Execution::goMarkedForInstantiation.clear();
-	Execution::goMarkedForDestruction.clear();
-	Execution::compMarkedForInstantiation.clear();
-	Execution::compMarkedForDestruction.clear();
+	Execution::markedForInstantiation.clear();
+	Execution::markedForDestruction.clear();
 }
 
 // **************************** //

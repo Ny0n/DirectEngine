@@ -8,7 +8,7 @@ bool Object::PrivateDestroy() // helper for sub-classes (overriden)
 		return false;
 	}
 	
-	if (_markedForDestruction || !_markedForInstantiation)
+	if (_markedForDestruction || !_instantiatied)
 	{
 		Utils::PrintErr("Object::PrivateDestroy #2");
 		return false;
@@ -59,14 +59,25 @@ bool Object::IsEnabledSelf()
 	return _enabledSelf;
 }
 
-bool Object::IsAlive() // temp
+bool Object::IsAlive()
 {
-	return !IsDestructionPending() && IsEnabled();
+	return !_markedForDestruction && !_markedForInstantiation && IsEnabled();
+}
+
+void Object::TryToDelete(Object* obj) // I'M NOT VERY PROUD OF THIS, but since i don't have the time to pententially pass everything to unique_ptr, this will do
+{
+	try
+	{
+		obj->ApplyDestruction();
+	}
+	catch (...)
+	{
+	}
 }
 
 // **************************** //
 
-bool Object::Instantiate(GameObject* go) // instantiation method for GO, see AddComponent for component instantiation TODO instantiate as child / other pos?
+bool Object::Instantiate(GameObject* go) // TODO instantiate as child / other pos?
 {
 	if (!Application::IsPlaying() || Application::IsGeneratingScene() || go == nullptr)
 	{
@@ -74,22 +85,17 @@ bool Object::Instantiate(GameObject* go) // instantiation method for GO, see Add
 		return false;
 	}
 
-	if (go->_markedForInstantiation)
+	if (go->_instantiatied)
 	{
 		Utils::PrintErr("Object::Instantiate #2"); // we can't instantiate an object that's already here
 		return false;
 	}
 
-	if (!Utils::Contains(&Execution::goMarkedForInstantiation, go))
-	{
-		Execution::goMarkedForInstantiation.push_back(go);
-		go->NotifyInstantiation();
+	// TODO soit il s'ajoute au parent si il en a un, soit il s'ajoute a la scene
+	SceneManager::Instantiate(go);
+	go->NotifyInstantiation();
 
-		return true;
-	}
-
-	Utils::PrintErr("Object::Instantiate #3"); // should never happen
-	return false;
+	return true;
 }
 
 bool Object::Destroy(Object* obj)

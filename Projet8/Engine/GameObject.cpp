@@ -10,14 +10,14 @@ GameObject::GameObject() : name("Default Name")
 GameObject::~GameObject() // TODO redo when children
 {
 	list<Component*> componentsCopy(_components); // safeguard
-
+	
 	for (auto component : componentsCopy)
-		component->ApplyDestruction();
-
+		Object::TryToDelete(component);
+	
 	componentsCopy.clear();
-
+	
 	_components.clear();
-
+	
 	SceneManager::Remove(this); // TODO remove from parent if parent, scene if no parent
 }
 
@@ -28,13 +28,15 @@ void GameObject::ApplyDestruction()
 
 void GameObject::NotifyInstantiation()
 {
-	if (this->_markedForInstantiation) // safeguard
+	if (this->_instantiatied) // safeguard
 	{
 		Utils::PrintErr("GameObject::NotifyInstantiation #1");
 		return;
 	}
 
+	this->_instantiatied = true;
 	this->_markedForInstantiation = true;
+	Execution::markedForInstantiation.push_back(this);
 
 	ForEachSelfComponent([](Component* component)
 	{
@@ -47,16 +49,9 @@ void GameObject::NotifyInstantiation()
 	});
 }
 
-void GameObject::ApplyInstantiation()
-{
-	// TODO soit il s'ajoute au parent si il en a un, soit il s'ajoute a la scene
-	SceneManager::Instantiate(this);
-	_instantiated = true;
-}
-
 // **************************** //
 
-bool GameObject::AddComponent(Component* componentIn) // TODO PROTECT THIS (only use templated versions?)
+bool GameObject::AddComponent(Component* componentIn) // TODO PROTECT THIS (only use templated versions?) // TODO verify if component is not already in the _components (same for GO)
 {
 	if (componentIn == nullptr)
 	{
@@ -87,14 +82,10 @@ bool GameObject::AddComponent(Component* componentIn) // TODO PROTECT THIS (only
 
 	componentIn->gameObject = this;
 	componentIn->transform = transform;
-
-	if (!this->_instantiated)
-		_components.push_back(componentIn); // since we are creating a scene by code, and not a beautiful controlled UI, we have to do manual checking
-	else
-	{
-		Execution::compMarkedForInstantiation.push_back(componentIn);
+	
+	_components.push_back(componentIn);
+	if (!Application::IsGeneratingScene() && _instantiatied) // TODO recheck this
 		componentIn->NotifyInstantiation();
-	}
 
 	return true;
 }
@@ -150,8 +141,8 @@ bool GameObject::PrivateDestroy()
 		return false;
 	}
 
-	Execution::goMarkedForDestruction.push_back(this);
 	_markedForDestruction = true;
+	Execution::markedForDestruction.push_back(this);
 	
 	ForEachSelfComponent([](Component* component)
 	{

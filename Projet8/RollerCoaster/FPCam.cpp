@@ -8,8 +8,8 @@ FPCam::FPCam(float speed) : _speed(speed)
 
 void FPCam::Start()
 {
-    Cursor::SetVisible(false);
     Cursor::Lock();
+    Cursor::SetVisible(false);
 }
 
 

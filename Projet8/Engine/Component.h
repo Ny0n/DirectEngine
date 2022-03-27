@@ -54,11 +54,10 @@ private:
 	friend class GameObject;
 
 	bool PrivateDestroy() final;
-	void ApplyDestruction(); // to manage the OnDestroy()
+	void ApplyDestruction() final;
 	~Component() override;
 
 	void NotifyInstantiation();
-	void ApplyInstantiation();
 	
 	bool _engineStarted = false;
 	bool _started = false;

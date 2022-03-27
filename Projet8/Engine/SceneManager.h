@@ -38,6 +38,7 @@ public:
 private:
 	friend class Execution;
 	
+	friend class Object;
 	friend class GameObject;
 	static bool Instantiate(GameObject* go);
 	static GameObject* Remove(GameObject* go);

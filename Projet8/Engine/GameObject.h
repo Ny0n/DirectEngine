@@ -39,13 +39,13 @@ private:
 	friend class Component;
 
 	bool PrivateDestroy() final;
-	void ApplyDestruction();
+	void ApplyDestruction() final;
 	~GameObject() override;
 
 	void NotifyInstantiation();
-	void ApplyInstantiation();
 
 	list<Component*> _components;
+	// list<GameObject*> _children;
 
 };
 

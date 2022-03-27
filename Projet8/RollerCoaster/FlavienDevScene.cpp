@@ -32,7 +32,7 @@ void FlavienDevScene::GenerateContent()
 	tester->AddComponent<Cube>();
 	tester->AddComponent<Rotate>(150.0f, true);
 	auto x = tester->AddComponent<Tester>();
-	// x->SetEnabled(false);
+	x->SetEnabled(false);
 	// Utils::Println("hey");
 	tester->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	tester->transform->Rotate(40, -40, 0);

@@ -1,5 +1,7 @@
 #pragma once
 
+class Object;
+
 class Utils final
 {
 

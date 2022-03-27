@@ -74,29 +74,29 @@ void InputTester::Update()
 
 	if (Input::GetKeyDown(KeyCode::X))
 	{
-		// if (tester == nullptr)
-		// {
-		// 	tester = new GameObject();
-		//
-		// 	tester->AddComponent<Cube>();
-		// 	// tester->AddComponent<GoUp>(4.0f);
-		// 	tester->AddComponent<Rotate>(150.0f, true);
-		// 	tester->AddComponent<Tester>();
-		//
-		// 	tester->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-		// 	tester->transform->Rotate(40, -40, 0);
-		//
-		// 	Instantiate(tester);
-		// }
+		if (tester == nullptr)
+		{
+			tester = new GameObject();
+		
+			tester->AddComponent<Cube>();
+			// tester->AddComponent<GoUp>(4.0f);
+			tester->AddComponent<Rotate>(150.0f, true);
+			tester->AddComponent<Tester>();
+		
+			tester->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+			tester->transform->Rotate(40, -40, 0);
+		
+			Instantiate(tester);
+		}
 	}
 	tester = gameObject;
 	if (Input::GetKeyDown(KeyCode::C))
 	{
-		// if (tester == nullptr)
-		// {
-		// 	Utils::Println("nullptr");
-		// 	return;
-		// }
+		if (tester == nullptr)
+		{
+			Utils::Println("nullptr");
+			return;
+		}
 
 		auto comp = tester->GetComponent<Rotate>();
 		auto comp2 = tester->GetComponent<Tester>();
