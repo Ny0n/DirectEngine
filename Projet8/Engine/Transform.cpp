@@ -134,7 +134,6 @@ void Transform::Rotate(float pitch, float yaw, float roll, Space relativeTo)
 	UpdateMatrix();
 }
 
-
 /**
  * \brief rotate on the x axis
  * \param angle in degree

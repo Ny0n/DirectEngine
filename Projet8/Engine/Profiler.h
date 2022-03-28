@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#define PROFILER_DISPLAY_ENABLED true   // Is the display enabled?
+#define PROFILER_DISPLAY_ENABLED false   // Is the display enabled?
 #define PROFILER_DISPLAY_COOLDOWN 1     // The time between each display in seconds, less or equal to the set FPS means every frame
 
 // Only the Engine has an access to this class, since everything is private

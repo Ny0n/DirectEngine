@@ -1,8 +1,9 @@
 #include "MoveAlongRails.h"
+
 MoveAlongRails::~MoveAlongRails()
 {
 	if (transformWhithoutCursor != nullptr)
-		transformWhithoutCursor->Destroy();
+		transformWhithoutCursor->Delete();
 }
 
 void MoveAlongRails::Update()
@@ -12,7 +13,7 @@ void MoveAlongRails::Update()
 	if(NbreStep > 0)
 	{
 		D3DXQUATERNION currentQuat = transformWhithoutCursor->GetQuaternion();
-		currentQuat = Utils::SLERP(&currentQuat, &cubeQuat, 5*Time::deltaTime);
+		currentQuat = Utils::SLERP(&currentQuat, &cubeQuat, 10*Time::deltaTime);
 		transformWhithoutCursor->SetQuaternion(currentQuat);
 		NbreStep--;
 	}
@@ -30,27 +31,32 @@ void MoveAlongRails::Move()
 	if(_cubes.empty())
 		return;
 
-	D3DXVECTOR3 target =_cubes.front()->transform->GetPosition();
-	target.y = 0;
+	/*D3DXVECTOR3 target =_cubes.front()->transform->GetPosition();*/
+	D3DXVECTOR3 target = _cubes.front()->transform->GetPosition()+ _cubes.front()->transform->GetUp()*4;
+	//Utils::Println("----------------------------");
+	//Utils::Println(_cubes.front()->transform->GetUp().x);
+	//Utils::Println(_cubes.front()->transform->GetUp().y);
+	//Utils::Println(_cubes.front()->transform->GetUp().z);
+	//Utils::Println(transform->GetUp().x);
+	//Utils::Println(transform->GetUp().y);
+	//Utils::Println(transform->GetUp().z);
 	D3DXVECTOR3 pos = transform->GetPosition();
 	D3DXVECTOR3 vecteurDir = (target - pos);
 	D3DXVec3Normalize(&vecteurDir, &vecteurDir);
 	
 	pos += vecteurDir * _speed * Time::deltaTime;
 	
-	if (std::abs(pos.x - target.x) <= _almostOnSpot && std::abs(pos.z - target.z) <= _almostOnSpot)
+	if (std::abs(pos.x - target.x) <= _almostOnSpot && std::abs(pos.z - target.z) <= _almostOnSpot && std::abs(pos.y - target.y) <= _almostOnSpot)
 	{
 		_previousDir = _cubes.front()->transform->GetForward();
-		Cube* cube = _rm->PopFrontCube();
+		MeshRenderer* cube = _rm->PopFrontCube();
 
-		cube->gameObject->Destroy();
+		Destroy(cube->gameObject);
 		_cubes = _rm->GetCube();
-		
+
 		cubeQuat = _cubes.front()->transform->GetQuaternion();
-		NbreStep = 100;
+		transformWhithoutCursor->SetQuaternion(cubeQuat);
+		NbreStep = 20;
 	}
-	
 	transformWhithoutCursor->SetPosition(pos);
 }
-
-

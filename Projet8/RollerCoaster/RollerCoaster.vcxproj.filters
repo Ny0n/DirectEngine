@@ -18,6 +18,15 @@
     <Filter Include="Game\Scripts">
       <UniqueIdentifier>{2a34c824-fc6f-4dd3-a4fb-0fb4be78c117}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Scripts\Rail">
+      <UniqueIdentifier>{ccb7a44c-9773-4958-8357-474eec4fabee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scripts\Movement">
+      <UniqueIdentifier>{e180500a-cfc0-4f17-9e62-4673c2773114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scripts\Bullet">
+      <UniqueIdentifier>{91edca26-f7b7-46a3-89f2-f9721c0e2f24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -47,26 +56,44 @@
     <ClInclude Include="InputTester.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="Move.h">
-      <Filter>Game\Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="MenuScene.h">
       <Filter>Game\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="FPCam.h">
-      <Filter>Game\Scripts</Filter>
     </ClInclude>
     <ClInclude Include="DontDestroyOnLoad.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="RailMaker.h">
-      <Filter>Game\Scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveAlongRails.h">
-      <Filter>Game\Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="FlavienDevScene.h">
       <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="CECIESTUNSCRIPT.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="LionelScene.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="RailMaker.h">
+      <Filter>Game\Scripts\Rail</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveAlongRails.h">
+      <Filter>Game\Scripts\Rail</Filter>
+    </ClInclude>
+    <ClInclude Include="FPCam.h">
+      <Filter>Game\Scripts\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="Move.h">
+      <Filter>Game\Scripts\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="Shoot.h">
+      <Filter>Game\Scripts\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletMove.h">
+      <Filter>Game\Scripts\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Tester.h">
+      <Filter>Game\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="CECIESTUNSCRIPT.h">
+      <Filter>Game\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -94,26 +121,42 @@
     <ClCompile Include="InputTester.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="Move.cpp">
-      <Filter>Game\Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="MenuScene.cpp">
       <Filter>Game\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="FPCam.cpp">
-      <Filter>Game\Scripts</Filter>
     </ClCompile>
     <ClCompile Include="DontDestroyOnLoad.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="RailMaker.cpp">
-      <Filter>Game\Scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveAlongRails.cpp">
-      <Filter>Game\Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="FlavienDevScene.cpp">
       <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="CECIESTUNSCRIPT.cpp" />
+    <ClCompile Include="LionelScene.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="RailMaker.cpp">
+      <Filter>Game\Scripts\Rail</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveAlongRails.cpp">
+      <Filter>Game\Scripts\Rail</Filter>
+    </ClCompile>
+    <ClCompile Include="FPCam.cpp">
+      <Filter>Game\Scripts\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="Move.cpp">
+      <Filter>Game\Scripts\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="Shoot.cpp">
+      <Filter>Game\Scripts\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletMove.cpp">
+      <Filter>Game\Scripts\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Tester.cpp">
+      <Filter>Game\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="CECIESTUNSCRIPT.cpp">
+      <Filter>Game\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

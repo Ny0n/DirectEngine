@@ -11,16 +11,13 @@ public:
 	static bool HasScene();
 	static int ActiveSceneCount();
 
-	static bool Instantiate(GameObject* go);
-	static GameObject* Remove(GameObject* go);
-
 	static list<string> GetActiveSceneNames();
 	static list<int> GetActiveSceneIndexes();
 	static string GetActiveSceneName();
 	static int GetActiveSceneIndex();
 
-	static bool SetActiveScene(string sceneName);
-	static bool SetActiveScene(int buildIndex);
+	static bool SetActiveScene(string sceneName);	// if we have multiple scenes active at the same time
+	static bool SetActiveScene(int buildIndex);		// ^
 
 	static void LoadScene(string sceneName);
 	static void LoadScene(int buildIndex);
@@ -30,16 +27,21 @@ public:
 	static void LoadSceneAdditive(int buildIndex);
 
 	static bool IsEmpty(); // returns true if every scene is empty
-	static void DontDestroyOnLoad(GameObject* go);
+	static void DontDestroyOnLoad(GameObject* go); // marks the gameobject to be protected on scene change // TODO what happens for children go?
 	static list<GameObject*> GetAllGameObjects();
-
-	static void ForEachGameObject(const function<void(GameObject*)>& consumer);
-	static void ForEachComponent(const function<void(Component*)>& consumer);
+	
+	static void ForEachGameObject(const function<void(GameObject*)>& consumer, bool onlyAlive = true); // LITTERALY EVERY GAME OBJECTS IN ALL SCENES (EVEN CHILDRENS)
+	static void ForEachComponent(const function<void(Component*)>& consumer, bool onlyAlive = true); // LITTERALY EVERY COMPONENTS IN ALL SCENES
 
 	static void Clean();
 
 private:
 	friend class Execution;
+	
+	friend class Object;
+	friend class GameObject;
+	static bool Instantiate(GameObject* go);
+	static GameObject* Remove(GameObject* go);
 
 	// the engine accesses these two functions and does the scene change at the end of the frame
 	static bool ChangeRequired();

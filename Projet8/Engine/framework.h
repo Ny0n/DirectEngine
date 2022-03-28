@@ -56,7 +56,7 @@ using namespace std;
 
 #define RUNNER(func) [=] { func(); }
 #define SUPPLIER(func) [=] { return func(); }
-#define CONSUMER(arg, func) [=](arg* param) { func(param); }
+#define CONSUMER(param, func) [=](param) func
 // #define FUNCTION(Param, func) [=]((Param)* param) { return func(param); }
 
 // gives the pure name of a class

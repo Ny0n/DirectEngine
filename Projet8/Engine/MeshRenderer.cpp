@@ -6,7 +6,8 @@ MeshRenderer::MeshRenderer(LPCWSTR path) : _pmesh(nullptr), _path(path)
 
 MeshRenderer::~MeshRenderer()
 {
-    _pmesh->Release();
+    if(_pmesh != nullptr)
+		_pmesh->Release();
 
     if (g_pMeshMaterials != nullptr)
         delete[] g_pMeshMaterials;
@@ -54,8 +55,6 @@ void MeshRenderer::EngineStart()
 
             string pathTexture = "Mesh\\";
             pathTexture += d3dxMaterials[i].pTextureFilename;
-
-            Utils::Println(pathTexture);
 
             // Create the texture
             if (FAILED(D3DXCreateTextureFromFileA(d3ddev,

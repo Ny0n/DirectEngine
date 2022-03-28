@@ -2,12 +2,11 @@
 
 class Canvas // : public EngineComponent
 {
+	//void EngineStart() override;
+	//void EngineUpdate() override;
 
 public:
 	//string GetType() override { return NAMEOF(Canvas); }
-
-	//void EngineStart() override;
-	//void EngineUpdate() override;
 
 protected:
 	/*virtual void Render();

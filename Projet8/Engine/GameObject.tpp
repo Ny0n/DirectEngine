@@ -3,10 +3,19 @@
 template <typename T>
 T* GameObject::GetComponent()
 {
+	if (this->IsDestructionPending())
+	{
+		Utils::PrintErr("GameObject::GetComponent #1");
+		return nullptr;
+	}
+
 	const string type = NAMEOF(T);
 
-	for (Component* component : components)
+	for (Component* component : _components)
 	{
+		if (component->IsDestructionPending())
+			continue;
+
 		if (component->TypeEquals(type))
 			return static_cast<T*>(component);
 	}
@@ -33,17 +42,11 @@ bool GameObject::RemoveComponent()
 {
 	const string type = NAMEOF(T);
 
-	if (Utils::Contains(&EngineComponent::unremovableEngineComponents, type)) // unremovable components
-		return false;
-
-	for (Component* component : components)
+	for (Component* component : _components)
 	{
 		if (component->TypeEquals(type))
-		{
-			components.remove(component);
-			delete(component);
-			return true;
-		}
+			return RemoveComponent(component);
 	}
+
 	return false;
 }

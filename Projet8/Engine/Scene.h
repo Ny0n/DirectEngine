@@ -7,7 +7,7 @@ class Scene final
 	Scene(IScene* scene);
 
 	bool IsEmpty() const;
-	bool IsInScene(GameObject* go) const;
+	bool IsInScene(GameObject* go);
 	
 	bool AddToScene(GameObject* go);
 	GameObject* RemoveFromScene(GameObject* go);

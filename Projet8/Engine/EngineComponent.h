@@ -2,11 +2,6 @@
 
 class EngineComponent : public Component
 {
-	friend class GameObject;
-	static const list<string> unremovableEngineComponents;
-
-public:
-	EngineComponent() = default; // TEMPORARY, while we're actively coding
 	ComponentCategory GetCategory() override { return ComponentCategory::single; }
 
 	void Start() final {}
@@ -16,5 +11,12 @@ public:
 
 	void EngineStart() override {}
 	void EngineUpdate() override {}
+
+public:
+	EngineComponent() = default; // TEMPORARY, while we're actively coding
+
+private:
+	friend class GameObject;
+	static const list<string> unremovableEngineComponents;
 
 };

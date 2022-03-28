@@ -71,10 +71,21 @@ void Engine::InitD3D()
         &d3ddev);
 
     InitLight();
-    
     d3ddev->SetRenderState(D3DRS_LIGHTING, true);    // turn on the 3D lighting
     d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(155, 155, 155));    // ambient light
     d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
+    float Start = 80.0f,    // Linear fog distances
+        End = 150.0f;
+
+    // Enable fog blending.
+    d3ddev->SetRenderState(D3DRS_FOGENABLE, TRUE);
+
+    // Set the fog color.
+    d3ddev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_XRGB(80, 140, 220));
+
+    d3ddev->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_LINEAR);
+    d3ddev->SetRenderState(D3DRS_FOGSTART, *(DWORD*)(&Start));
+        d3ddev->SetRenderState(D3DRS_FOGEND, *(DWORD*)(&End));
 
     // _VBuffer
     d3ddev->CreateVertexBuffer(24 * sizeof(CUSTOMVERTEX),
@@ -132,7 +143,6 @@ void Engine::Run(HWND window)
     // *** Part 1: Initialization *** //
 
     SceneManager::LoadScene(1);
-    Execution::CheckForSceneUpdate(); // since it's the default (first) scene to be loaded, we can load it instantly
 
     InitD3D();
 
@@ -244,6 +254,7 @@ void Engine::RunFrame()
 
     d3ddev->BeginScene();    // begins the 3D scene
 
+    Execution::CheckForSceneUpdate();
     _profiler->TimedRunner(_profiler->engineStartTime, Execution::EngineStart);
     _profiler->TimedRunner(_profiler->startTime, Execution::Start);
     CheckForNewFixedUpdate();
@@ -255,8 +266,6 @@ void Engine::RunFrame()
     d3ddev->EndScene();    // ends the 3D scene
 
     _profiler->TimedRunner(_profiler->presentTime, [=] { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
-
-    Execution::CheckForSceneUpdate();
 }
 
 void Engine::CheckForNewFixedUpdate()
