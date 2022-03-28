@@ -25,9 +25,17 @@ public:
 	D3DXVECTOR2 rectTopLeft = { 100,50 };
 	D3DXVECTOR2 rectBottomRight = { 400, 100 };
 
-	D3DCOLOR borderColor = D3DCOLOR_ARGB(255, 255, 166, 0);
-	D3DCOLOR boxColor = D3DCOLOR_ARGB(255, 0, 255, 255);
-	D3DCOLOR textColor = D3DCOLOR_ARGB(255, 255, 0, 255);
+	D3DCOLOR notFocusBorderColor = D3DCOLOR_ARGB(255, 255, 166, 0);
+	D3DCOLOR focusBorderColor = D3DCOLOR_ARGB(255, 0, 0, 255);
+
+	D3DCOLOR notFocusedBoxColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+	D3DCOLOR focusedBoxColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+
+	D3DCOLOR normalTextColor = D3DCOLOR_ARGB(255, 0, 0, 0);
+	D3DCOLOR placeHolderTextColor = D3DCOLOR_ARGB(255, 128, 128, 128);
+
+
+
 
 	FLOAT borderThickness = 5;
 
@@ -48,7 +56,10 @@ private:
 	bool maj;
 
 	POINT mousePos;
-	
+
+	D3DCOLOR textColor;
+	D3DCOLOR boxColor;
+	D3DCOLOR borderColor;
 
 	UINT width;
 	UINT height;

@@ -68,6 +68,12 @@ void InputField::EngineUpdate()
 		EnterFocus();
 	else
 		ExitFocus();
+
+	if (Input::GetKeyDown(KeyCode::Return) || Input::GetKeyDown(KeyCode::Escape))
+	{
+		ExitFocus();
+		hasFocus = false;
+	}
 }
 
 void InputField::Render()
@@ -192,9 +198,13 @@ void InputField::EnterFocus()
 		{
 			text.clear();
 			isPlaceholder = false;
-			textColor = D3DCOLOR_ARGB(255, 0, 0, 0);
+
+			textColor = normalTextColor;
 		}
 	}
+
+	boxColor = focusedBoxColor;
+	borderColor = focusBorderColor;
 }
 
 void InputField::ExitFocus()
@@ -207,7 +217,11 @@ void InputField::ExitFocus()
 		{
 			text = placeholderText;
 			isPlaceholder = true;
-			textColor = D3DCOLOR_ARGB(255, 128, 128, 128);
+
+			textColor = placeHolderTextColor;
 		}
+		
 	}
+	boxColor = notFocusedBoxColor;
+	borderColor = notFocusBorderColor;
 }
