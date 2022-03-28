@@ -49,6 +49,9 @@ void Image::EngineUpdate()
 
 void Image::Render()
 {
+	if (ppTexture == NULL)
+		return;
+
 	D3DXMATRIX Mat;
 	D3DXMatrixTransformation2D(&Mat, NULL, NULL, &scale, &rotationCenter, rotation, &position);
 	//Render mon image

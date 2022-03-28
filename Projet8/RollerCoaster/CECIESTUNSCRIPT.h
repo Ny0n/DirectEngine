@@ -10,14 +10,18 @@ class CECIESTUNSCRIPT : public MonoBehaviour
 	void Update() override;
 
 public:
-	CECIESTUNSCRIPT();
-	explicit CECIESTUNSCRIPT(Button* button);
+	explicit CECIESTUNSCRIPT(Button* listBtn[3]);
 	~CECIESTUNSCRIPT() override;
 
 private:
 	void MyFunc();
-	Button* _button;
-	float speed = 1.0f;
 
+	void OnPlay();
+	void OnCredits();
+	void OnQuit();
+
+	Button* _listBtn[3];
+	float speed = 1.0f;
+	bool noir = true;
 };
 

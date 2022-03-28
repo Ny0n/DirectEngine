@@ -14,8 +14,8 @@ public:
 	LPCWSTR textFont = L"Arial";
 	wstring text = L"CECI EST UN BUTTON";
 
-	D3DXVECTOR2 rectTopLeft = { 100,150 };
-	D3DXVECTOR2 rectBottomRight = { 400, 200 };
+	D3DXVECTOR2 position = D3DXVECTOR2(0,0);
+	D3DXVECTOR2 size = D3DXVECTOR2(350,75);
 
 	DWORD textFormat = DT_CENTER | DT_VCENTER;
 
@@ -58,6 +58,9 @@ private:
 
 	UINT width;
 	UINT height;
+
+	D3DXVECTOR2 rectTopLeft;
+	D3DXVECTOR2 rectBottomRight;
 
 	D3DCOLOR textColor;
 	D3DCOLOR boxColor;

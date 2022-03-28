@@ -12,36 +12,35 @@ string MenuScene::GetName()
 
 void MenuScene::GenerateContent()
 {
-	// canvas
-	//auto camera = CreateEmpty();
-	//camera->AddComponent<Camera>();
-	//camera->transform->SetPosition(D3DXVECTOR3(0,-100,0));
-	//AddToScene(camera);
+	Button* btnList[3] = {nullptr};
 
 	GameObject* canvas = CreateEmpty();
 
-	/*const auto image = new Image();
-	image->width = 200;
-	image->height = 200;
-	image->filePath = L"Image\\blanc.png";
-	canvas->AddComponent(image);
-	
-	const auto tb = new Textbox();
-	tb->drawBox = true;
-	tb->drawBorder = true;
-	canvas->AddComponent(tb);
-	
+	auto BackgroundImg = canvas->AddComponent<Image>();
+	BackgroundImg->filePath = L"Image\\test.jpg";
+	BackgroundImg->width = 1920;
+	BackgroundImg->height = 1080;
 
-	const auto script = new CECIESTUNSCRIPT(image, tb);
-	canvas->AddComponent(script);*/
+	auto PlayBtn = canvas->AddComponent<Button>();
+	PlayBtn->position = D3DXVECTOR2(1300, 500);
+	PlayBtn->text = L"PLAY";
+	btnList[0] = PlayBtn;
 
-	auto ip = canvas->AddComponent<InputField>();
-	ip->drawBorder = true;
-	ip->drawBox = true;
+	auto CreditsBtn = canvas->AddComponent<Button>();
+	CreditsBtn->position = D3DXVECTOR2(1300, 650);
+	CreditsBtn->text = L"CREDITS";
+	btnList[1] = CreditsBtn;
 
-	auto button = canvas->AddComponent<Button>();
+	auto QuitBtn = canvas->AddComponent<Button>();
+	QuitBtn->position = D3DXVECTOR2(1300, 800);
+	QuitBtn->text = L"QUIT";
+	btnList[2] = QuitBtn;
 
-	const auto script = new CECIESTUNSCRIPT(button);
+	auto tb = canvas->AddComponent<Textbox>();
+
+	auto input = canvas->AddComponent<InputField>();
+
+	const auto script = new CECIESTUNSCRIPT(btnList);
 	canvas->AddComponent(script);
 
 	AddToScene(canvas);

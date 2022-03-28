@@ -26,23 +26,18 @@ void Button::EngineStart()
 		textFont,
 		&font))
 
-	
-
 	D3DXIMAGE_INFO info;
 	HR(D3DXGetImageInfoFromFile(boxFilepath, &info))
-
-	width = abs(rectBottomRight.x - rectTopLeft.x);
-	height = abs(rectBottomRight.y - rectTopLeft.y);
-
-	if (width <= 0 || height <= 0)
+		
+	if (size.x <= 0 || size.y <= 0)
 	{
 		drawBox = false;
 	}
 
 	HR(D3DXCreateTextureFromFileEx(d3ddev,
 		boxFilepath,
-		width,
-		height,
+		size.x,
+		size.y,
 		info.MipLevels,
 		0,
 		info.Format,
@@ -84,6 +79,9 @@ void Button::EngineUpdate()
 
 void Button::Render()
 {
+	rectTopLeft = position;
+	rectBottomRight = position + size;
+
 	const auto result = SetRect(&textRect, rectTopLeft.x, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
 	if (result <= 0)
 		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
