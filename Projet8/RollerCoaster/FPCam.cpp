@@ -13,8 +13,6 @@ FPCam::FPCam(float speed) : _speed(speed)
 
 void FPCam::Start()
 {
-    Cursor::SetVisible(TRUE);
-    //Cursor::Lock();
     yaw = 0.0f;
 }
 
@@ -34,20 +32,29 @@ void FPCam::Update()
     if (Input::GetKey(KeyCode::D) && rightSpeed < 90)
         rightSpeed+= 1;
 
-  //  yaw += (mouseP.x - SCREEN_WIDTH / 2)/100.0f * sensibility * Time::deltaTime;
+    rightSpeed += (mouseP.x - SCREEN_WIDTH / 2) / 100.0f * sensibility;
+    upSpeed += (mouseP.y - SCREEN_HEIGHT / 2) / 100.0f * sensibility;
+    if (rightSpeed > 90)
+        rightSpeed = 90;
+    if (rightSpeed < -90)
+        rightSpeed = -90;
+    if (upSpeed > 90)
+        upSpeed = 90;
+    if (upSpeed < -90)
+        upSpeed = -90;
 //
 }
 
 void FPCam::LateUpdate()
 {
-
-    Transform tmp = static_cast<Transform>(gameObject->GetComponent<MoveAlongRails>()->GetTransfromWhithoutCursor());
-    transform->SetPosition(tmp.GetPosition());
-    transform->SetQuaternion(tmp.GetQuaternion());
+	auto* mar = gameObject->GetComponent<MoveAlongRails>();
+    if( mar != nullptr )
+    {
+	    const Transform* tmp = mar->GetTransfromWhithoutCursor();
+        transform->SetPosition(tmp->GetPosition());
+        transform->SetQuaternion(tmp->GetQuaternion());
+    }
     transform->RotatePitch(upSpeed, Space::Self);
     transform->RotateYaw(rightSpeed, Space::Self);
-//    transform->RotateYaw(yaw, Space::Self);
-   // transform->RotateYaw(3.5f, Space::Self);
-    //transform->RotateYaw(-45.0f, Space::Self);
 
 }

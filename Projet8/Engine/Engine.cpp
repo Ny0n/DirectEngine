@@ -74,14 +74,14 @@ void Engine::InitD3D()
     d3ddev->SetRenderState(D3DRS_LIGHTING, true);    // turn on the 3D lighting
     d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(155, 155, 155));    // ambient light
     d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
-    float Start = 80.0f,    // Linear fog distances
-        End = 150.0f;
+    float Start = 30.0f,    // Linear fog distances
+        End = 80.0f;
 
     // Enable fog blending.
     d3ddev->SetRenderState(D3DRS_FOGENABLE, TRUE);
 
     // Set the fog color.
-    d3ddev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_XRGB(80, 140, 220));
+    d3ddev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_XRGB(0, 0, 0));
 
     d3ddev->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_LINEAR);
     d3ddev->SetRenderState(D3DRS_FOGSTART, *(DWORD*)(&Start));

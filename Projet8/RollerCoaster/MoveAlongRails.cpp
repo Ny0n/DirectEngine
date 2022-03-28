@@ -4,11 +4,17 @@ MoveAlongRails::~MoveAlongRails()
 {
 	if (transformWhithoutCursor != nullptr)
 		transformWhithoutCursor->Delete();
+	transformWhithoutCursor->SetQuaternion(D3DXQUATERNION(1.0f,0.0f,0.0f,0.0f));
 }
 
 void MoveAlongRails::Update()
 {
+	/*if(_cubes.empty() && initialiased == false)
+	{
+		Init();
+	}*/
 	_cubes = _rm->GetCube();
+
 	Move();
 	if(NbreStep > 0)
 	{
@@ -33,13 +39,7 @@ void MoveAlongRails::Move()
 
 	/*D3DXVECTOR3 target =_cubes.front()->transform->GetPosition();*/
 	D3DXVECTOR3 target = _cubes.front()->transform->GetPosition()+ _cubes.front()->transform->GetUp()*4;
-	//Utils::Println("----------------------------");
-	//Utils::Println(_cubes.front()->transform->GetUp().x);
-	//Utils::Println(_cubes.front()->transform->GetUp().y);
-	//Utils::Println(_cubes.front()->transform->GetUp().z);
-	//Utils::Println(transform->GetUp().x);
-	//Utils::Println(transform->GetUp().y);
-	//Utils::Println(transform->GetUp().z);
+
 	D3DXVECTOR3 pos = transform->GetPosition();
 	D3DXVECTOR3 vecteurDir = (target - pos);
 	D3DXVec3Normalize(&vecteurDir, &vecteurDir);
@@ -55,8 +55,25 @@ void MoveAlongRails::Move()
 		_cubes = _rm->GetCube();
 
 		cubeQuat = _cubes.front()->transform->GetQuaternion();
-		transformWhithoutCursor->SetQuaternion(cubeQuat);
-		NbreStep = 20;
+		auto currentquat = transformWhithoutCursor->GetQuaternion();
+		if(cubeQuat.x != currentquat.x || cubeQuat.y != currentquat.y || cubeQuat.z != currentquat.z || cubeQuat.w != currentquat.w)
+			NbreStep = 20;
 	}
 	transformWhithoutCursor->SetPosition(pos);
 }
+
+void MoveAlongRails::Init()
+{
+	_cubes = _rm->GetCube();
+	if(!_cubes.empty())
+	{
+		D3DXVECTOR3 pos = _cubes.front()->transform->GetPosition() + _cubes.front()->transform->GetUp() * 4;
+		transformWhithoutCursor->SetPosition(pos);
+		transformWhithoutCursor->SetQuaternion(_cubes.front()->transform->GetQuaternion());
+		MeshRenderer* cube = _rm->PopFrontCube();
+		Utils::Println("start");
+		initialiased = true;
+	}
+}
+
+
