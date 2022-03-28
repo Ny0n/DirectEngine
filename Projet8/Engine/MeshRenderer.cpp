@@ -56,8 +56,6 @@ void MeshRenderer::EngineStart()
             string pathTexture = "Mesh\\";
             pathTexture += d3dxMaterials[i].pTextureFilename;
 
-            Utils::Println(pathTexture);
-
             // Create the texture
             if (FAILED(D3DXCreateTextureFromFileA(d3ddev,
                 pathTexture.c_str(),

@@ -14,13 +14,13 @@ public:
 	void Update() override;
 	void Start() override;
 	void Turn(float rotate);
-	list<Cube*> GetCube() { return  _cubes; }
+	list<MeshRenderer*> GetCube() { return  _cubes; }
 	void MoveForward();
-	Cube* PopFrontCube();
+	MeshRenderer* PopFrontCube();
 private :
-	list<Cube*> _cubes = {};
-	const float _spaceBetween = 5.0f;
-	float _maxDistance = 200.0f;
+	list<MeshRenderer*> _cubes = {};
+	const float _spaceBetween = 3.0f;
+	float _maxDistance = 10.0f;
 	const float _step = 10;
 
 	float _angleUp = 90;
