@@ -79,13 +79,13 @@ void PhysicsEngine::ExecuteTrigger(Collider* collider, Collider* collideWith)
         collider->AddCollideWith(collideWith);
         for (auto component : collider->gameObject->components)
         {
-            component->OnTriggerEnter(collideWith);
+            component->OnTriggerEnter(collideWith->gameObject);
         }
     }
 
     for (auto component : collider->gameObject->components)
     {
-        component->OnTriggerStay(collideWith);
+        component->OnTriggerStay(collideWith->gameObject);
     }
 }
 
@@ -98,7 +98,7 @@ void PhysicsEngine::EndTrigger(Collider* collider, Collider* collideWith)
 
     for (auto component : collider->gameObject->components)
     {
-        component->OnTriggerExit(collideWith);
+        component->OnTriggerExit(collideWith->gameObject);
     }
     collider->RemoveCollideWith(collideWith);
 }
