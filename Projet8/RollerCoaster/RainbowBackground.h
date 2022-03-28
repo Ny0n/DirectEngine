@@ -4,10 +4,9 @@
 
 class RainbowBackground : public MonoBehaviour
 {
-
-public:
 	string GetType() override { return NAMEOF(RainbowBackground); }
-	
+
+	void Start() override;
 	void Update() override;
 	
 };

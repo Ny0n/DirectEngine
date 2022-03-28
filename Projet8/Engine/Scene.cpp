@@ -1,13 +1,25 @@
 ﻿#include "pch.h"
 
-Scene::Scene(IScene* scene) : name(scene->GetName()), gameObjects(scene->GetContent())
+Scene::Scene(IScene* scene) : name(scene->GetName())
 {
+	Application::generatingScene = true;
+	gameObjects = scene->GetContent();
+	Application::generatingScene = false;
 }
 
 Scene::~Scene()
 {
-	Utils::DeleteList(gameObjects);
+	list<GameObject*> goCopy(gameObjects); // safeguard
+
+	for (auto go : goCopy) // we instantly destroy EVERYTHING
+		Object::TryToDelete(go);
+
+	goCopy.clear();
+
 	gameObjects.clear();
+
+	// when deleting a scene, any new demand for destruction is irrelevant
+	Execution::markedForDestruction.clear();
 }
 
 // **************************** //
@@ -19,14 +31,20 @@ bool Scene::IsEmpty() const
 
 // **************************** //
 
-bool Scene::IsInScene(GameObject* go) const
+bool Scene::IsInScene(GameObject* go)
 {
-	for (GameObject* sceneGo : gameObjects)
+	return any_of(gameObjects.begin(), gameObjects.end(), [&](GameObject* sceneGo)
 	{
-		if (sceneGo == go) // TODO add ID to gameobjects?
-			return true;
-	}
-	return false;
+		return sceneGo == go;
+	});
+
+	// other way of doing the same thing: (but rider says that using any_of is better)
+	// for (GameObject* sceneGo : gameObjects)
+	// {
+	// 	if (sceneGo == go)
+	// 		return true;
+	// }
+	// return false;
 }
 
 bool Scene::AddToScene(GameObject* go)

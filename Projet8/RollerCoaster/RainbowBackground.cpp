@@ -18,6 +18,10 @@ D3DXVECTOR3 palette(float t, D3DXVECTOR3 a, D3DXVECTOR3 b, D3DXVECTOR3 c, D3DXVE
 float speed = 0.2f;
 float progress = 0.0f;
 
+void RainbowBackground::Start()
+{
+}
+
 void RainbowBackground::Update()
 {
     d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(80, 140, 220), 1.0f, 0); // light-blue background

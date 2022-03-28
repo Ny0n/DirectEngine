@@ -22,6 +22,10 @@ Rotate::Rotate(float speed, bool reverse) : _speed(speed), _dir(InitDir(reverse)
 
 // **************************** //
 
+void Rotate::Start()
+{
+}
+
 void Rotate::Update()
 {
     transform->RotateRoll(_speed * _dir * Time::deltaTime);

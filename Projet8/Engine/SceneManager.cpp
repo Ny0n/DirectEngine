@@ -65,24 +65,30 @@ int SceneManager::ActiveSceneCount()
 
 // **************************** //
 
-// Adds the given gameobject to the loaded scene
+// shortcut
 bool SceneManager::Instantiate(GameObject* go)
 {
 	if (HasScene())
 		return _mainScene->AddToScene(go);
+
 	return false;
 }
 
-// Returns the removed gameobject if it has been found in the loaded scened
+// when we destroy a gameobject
 GameObject* SceneManager::Remove(GameObject* go)
 {
 	for (Scene* scene : _scenes)
 	{
 		if (scene->RemoveFromScene(go) != nullptr)
+		{
+			_protectedGameObjects.remove(go);
 			return go;
+		}
 	}
 	return nullptr;
 }
+
+// **************************** //
 
 list<string> SceneManager::GetActiveSceneNames()
 {
@@ -226,7 +232,7 @@ list<GameObject*> SceneManager::GetAllGameObjects()
 {
 	list<GameObject*> gos = {};
 
-	ForEachGameObject([=](GameObject* go) mutable
+	ForEachGameObject([&](GameObject* go) mutable
 	{
 		gos.push_back(go);
 	});
@@ -241,6 +247,9 @@ void SceneManager::AddScene(Scene* scene)
 	if (_scenes.empty())
 		_mainScene = scene;
 	_scenes.push_back(scene);
+
+	for (auto go : scene->gameObjects) // we notify the instantiation for everything in the newly loaded scene
+		go->NotifyInstantiation();
 }
 
 bool SceneManager::SetMainScene(string sceneName)
@@ -300,30 +309,35 @@ void SceneManager::ForEachScene(const function<void(Scene*)>& consumer)
 	}
 }
 
-void SceneManager::ForEachGameObject(const function<void(GameObject*)>& consumer)
+void SceneManager::ForEachGameObject(const function<void(GameObject*)>& consumer, bool onlyAlive)
 {
-	auto forAllScenes = [=](const Scene* scene)
+	auto sceneConsumer = [&](const Scene* scene)
 	{
-		for (GameObject* go : scene->gameObjects)
+		for (GameObject* baseGo : scene->gameObjects)
 		{
-			consumer(go);
+			baseGo->ForEachGameObject([&](GameObject* go) // self included
+			{
+				if (!onlyAlive || go->IsAlive())
+					consumer(go);
+			}, onlyAlive);
 		}
 	};
 
-	ForEachScene(forAllScenes);
+	ForEachScene(sceneConsumer);
 }
 
-void SceneManager::ForEachComponent(const function<void(Component*)>& consumer)
+void SceneManager::ForEachComponent(const function<void(Component*)>& consumer, bool onlyAlive)
 {
-	auto forAllGameObjects = [=](const GameObject* go)
+	auto goConsumer = [&](GameObject* go)
 	{
-		for (Component* component : go->components)
+		go->ForEachSelfComponent([&](Component* component)
 		{
-			consumer(component);
-		}
+			if (!onlyAlive || component->IsAlive())
+				consumer(component);
+		}, onlyAlive);
 	};
 
-	ForEachGameObject(forAllGameObjects);
+	ForEachGameObject(goConsumer, onlyAlive);
 }
 
 // **************************** //

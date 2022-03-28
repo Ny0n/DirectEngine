@@ -1,8 +1,9 @@
 #include "MoveAlongRails.h"
+
 MoveAlongRails::~MoveAlongRails()
 {
 	if (transformWhithoutCursor != nullptr)
-		transformWhithoutCursor->Destroy();
+		transformWhithoutCursor->Delete();
 }
 
 void MoveAlongRails::Update()
@@ -50,7 +51,7 @@ void MoveAlongRails::Move()
 		_previousDir = _cubes.front()->transform->GetForward();
 		Cube* cube = _rm->PopFrontCube();
 
-		cube->gameObject->Destroy();
+		Destroy(cube->gameObject);
 		_cubes = _rm->GetCube();
 
 		cubeQuat = _cubes.front()->transform->GetQuaternion();
@@ -59,5 +60,3 @@ void MoveAlongRails::Move()
 	}
 	transformWhithoutCursor->SetPosition(pos);
 }
-
-

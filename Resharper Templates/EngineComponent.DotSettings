@@ -1,0 +1,67 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Description/@EntryValue">EngineComponent</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Text/@EntryValue">$HEADER$#pragma once&#xD;
+&#xD;
+class $NAME$ : public EngineComponent&#xD;
+{&#xD;
+	string GetType() override { return NAMEOF($NAME$);}&#xD;
+	&#xD;
+    void EngineStart() override;&#xD;
+    void EngineUpdate() override;&#xD;
+&#xD;
+public:&#xD;
+	$NAME$();&#xD;
+	~$NAME$() override;&#xD;
+$END$&#xD;
+};</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/CustomProperties/=FileName/@EntryIndexedValue">NewEngineComponent</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/CustomProperties/=Extension/@EntryIndexedValue">h</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/CustomProperties/=ValidateFileName/@EntryIndexedValue">False</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Scope/=CD5B1AEA8099834C8F10F84286AA88CA/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Scope/=CD5B1AEA8099834C8F10F84286AA88CA/Type/@EntryValue">InCppProjectFile</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=PCH/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=PCH/Expression/@EntryValue">cppPchIncludeDirective()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=PCH/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=PCH/Order/@EntryValue">0</s:Int64>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=PCH/InitialSection/@EntryValue">1413F6CD7DCC4E41A03FFF0EE6ECAB68</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=NAME/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=NAME/Expression/@EntryValue">getFileNameWithoutExtension()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=NAME/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=NAME/Order/@EntryValue">1</s:Int64>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=NAME/InitialSection/@EntryValue">1413F6CD7DCC4E41A03FFF0EE6ECAB68</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=HEADER/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=HEADER/Expression/@EntryValue">cppFileheader()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=HEADER/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Field/=HEADER/Order/@EntryValue">2</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Section/=1413F6CD7DCC4E41A03FFF0EE6ECAB68/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Section/=1413F6CD7DCC4E41A03FFF0EE6ECAB68/LocationSelectorName/@EntryValue">manual</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Section/=1413F6CD7DCC4E41A03FFF0EE6ECAB68/LocationSelectorConfig/@EntryValue">&lt;RelativeConfig File="$NAME$.cpp" /&gt;</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Section/=1413F6CD7DCC4E41A03FFF0EE6ECAB68/Order/@EntryValue">0</s:Int64>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7EE87D3485B0B341A58F4027FC9A3ACC/Section/=1413F6CD7DCC4E41A03FFF0EE6ECAB68/SectionPlain/Text/@EntryValue">$PCH$#include "$NAME$.h" // MOVE THIS LINE IN EngineLib.h&#xD;
+&#xD;
+$NAME$::$NAME$()&#xD;
+{&#xD;
+}&#xD;
+&#xD;
+$NAME$::~$NAME$()&#xD;
+{&#xD;
+}&#xD;
+&#xD;
+// **************************** //&#xD;
+&#xD;
+// EngineStart is called once, before the MonoBehaviour Start&#xD;
+void $NAME$::EngineStart()&#xD;
+{&#xD;
+	&#xD;
+}&#xD;
+&#xD;
+// EngineUpdate is called once per frame, after the MonoBehaviour Update &amp; LateUpdate&#xD;
+void $NAME$::EngineUpdate()&#xD;
+{&#xD;
+	&#xD;
+}&#xD;
+</s:String></wpf:ResourceDictionary>

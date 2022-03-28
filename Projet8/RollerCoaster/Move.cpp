@@ -6,6 +6,10 @@ Move::Move(float speed) : speed(speed)
 
 // **************************** //
 
+void Move::Start()
+{
+}
+
 void Move::Update()
 {
     // we get the movement vector

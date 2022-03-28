@@ -1,19 +1,25 @@
 #pragma once
+
 #include "EngineLib.h"
+
 #include "RailMaker.h"
+
 class Cube;
 
-class MoveAlongRails :
-    public MonoBehaviour
+class MoveAlongRails : public MonoBehaviour
 {
-public :
-	string GetType() override { return NAMEOF(MoveAlongRails); }
-    void Update() override;
+    string GetType() override { return NAMEOF(MoveAlongRails); }
+
     void Start() override;
-    void Move();
+    void Update() override;
+
+public:
     MoveAlongRails(){}
     ~MoveAlongRails() override;
+
     Transform GetTransfromWhithoutCursor() const { return *transformWhithoutCursor;}
+    void Move();
+
 private:
     list<Cube*> _cubes;
     RailMaker* _rm;
@@ -26,5 +32,6 @@ private:
     D3DXQUATERNION quat;
     D3DXQUATERNION cubeQuat;
     int NbreStep = 0;
+
 };
 

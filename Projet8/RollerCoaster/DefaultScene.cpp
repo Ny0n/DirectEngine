@@ -18,6 +18,9 @@ string DefaultScene::GetName()
 
 void DefaultScene::GenerateContent()
 {
+	Cursor::Lock();
+	Cursor::SetVisible(false);
+
 	// tests
 
 	GameObject* inputTester = CreateEmpty();

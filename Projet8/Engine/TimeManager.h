@@ -21,10 +21,11 @@ public:
 	static const float& fixedDeltaTime;			// fixedUnscaledDeltaTime / timeScale
 	static const float& fixedUnscaledDeltaTime; // will ALWAYS return the set FixedTimestep
 
-	static const bool& inStartStep;			// Returns true if called inside a Start() callback
-	static const bool& inUpdateStep;		// Returns true if called inside an Update() callback
-	static const bool& inLateUpdateStep;		// Returns true if called inside a LateUpdate() callback
-	static const bool& inFixedUpdateStep;	// Returns true if called inside a FixedUpdate() callback
+	static const bool& inSceneStep;			// Returns true if we are inside the <Scene Changes> step
+	static const bool& inStartStep;			// Returns true if we are inside the Start() step
+	static const bool& inUpdateStep;		// Returns true if we are inside the Update() step
+	static const bool& inLateUpdateStep;	// Returns true if we are inside the LateUpdate() step
+	static const bool& inFixedUpdateStep;	// Returns true if we are inside the FixedUpdate() step
 
 private:
 	friend class Engine;
@@ -46,6 +47,7 @@ private:
 	static float _fixedDeltaTime;
 	static float _fixedUnscaledDeltaTime;
 
+	static bool _inSceneStep;
 	static bool _inStartStep;
 	static bool _inUpdateStep;
 	static bool _inLateUpdateStep;

@@ -6,13 +6,11 @@ enum class Space
     Self,
 };
 
-
 class Transform final : public EngineComponent
 {
+    string GetType() override { return NAMEOF(Transform); }
 
 public:
-	string GetType() override { return NAMEOF(Transform); }
-    
     Transform();
 
     void Identity();

@@ -34,6 +34,11 @@ void Utils::Println(string value)
 	OutputDebugStringW(temp.c_str());
 }
 
+void Utils::PrintErr(string value)
+{
+	Println("WARNING: " + value);
+}
+
 void Utils::Println(int value)
 {
 	Println(to_string(value));

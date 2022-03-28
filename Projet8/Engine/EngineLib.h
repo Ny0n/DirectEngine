@@ -15,6 +15,8 @@
 
 // ** Objects ** //
 
+#include "Object.h"
+
 #include "Component.h"
 #include "EngineComponent.h"
 #include "MonoBehaviour.h"

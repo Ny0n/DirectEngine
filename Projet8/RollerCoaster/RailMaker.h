@@ -1,22 +1,24 @@
 #pragma once
+
 #include "EngineLib.h"
+
 #include "Cube.h"
 
-class RailMaker :
-	public MonoBehaviour
+class RailMaker : public MonoBehaviour
 {
-public:
 	string GetType() override { return NAMEOF(RailMaker); }
-	//ComponentCategory GetCategory() override { return ComponentCategory::behaviour; }
 
+	void Start() override;
+	void Update() override;
+
+public:
 	explicit RailMaker() {}
 
-	void Update() override;
-	void Start() override;
 	void Turn(float rotate);
 	list<Cube*> GetCube() { return  _cubes; }
 	void MoveForward();
 	Cube* PopFrontCube();
+
 private :
 	list<Cube*> _cubes = {};
 	const float _spaceBetween = 5.0f;

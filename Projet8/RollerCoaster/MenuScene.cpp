@@ -26,8 +26,8 @@ void MenuScene::GenerateContent()
 	canvas->AddComponent(tb);
 	
 
-	const auto script = new CECIESTUNSCRIPT(image, tb);
-	canvas->AddComponent(script);
+	// const auto script = new CECIESTUNSCRIPT(image, tb);
+	// canvas->AddComponent(script);
 
 	AddToScene(canvas);
 }

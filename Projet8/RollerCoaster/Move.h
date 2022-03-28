@@ -4,14 +4,14 @@
 
 class Move : public MonoBehaviour
 {
-
-public:
 	string GetType() override { return NAMEOF(Move); }
 
+	void Start() override;
+	void Update() override;
+
+public:
 	Move() = default;
 	explicit Move(float speed);
-
-	void Update() override;
 	
 	float speed{ 10.0f };
 

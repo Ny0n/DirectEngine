@@ -1,17 +1,16 @@
 #pragma once
 
+class Object;
+class GameObject;
 class Component;
 
 class Execution final
 {
 	friend class Engine;
-	friend class Component; // so that components can remove themselves from the started lists when destroyed
 
 	static void Clean();
-
-	friend void EngineStart_(Component* component);
+	
 	static void EngineStart();
-	friend void Start_(Component* component);
 	static void Start();
 
 	static void FixedUpdate();
@@ -23,9 +22,13 @@ class Execution final
 	static void EngineUpdate();
 
 	static void CheckForSceneUpdate();
-	
-	static list<Component*> startedEngineComponents;
-	static list<Component*> startedComponents;
+
+	// this is only for optimization
+	friend class Scene;
+	friend class Object;
+	friend class GameObject;
+	friend class Component;
+	static list<Object*> markedForDestruction;
 
 public:
 	Execution() = delete;

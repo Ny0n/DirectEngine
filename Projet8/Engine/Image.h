@@ -2,15 +2,14 @@
 
 class Image final : public EngineComponent
 {
+	void EngineStart() override;
+	void EngineUpdate() override;
 
 public:
 	string GetType() override { return NAMEOF(Image); }
 
 	~Image() override;
 	Image();
-
-	void EngineStart() override;
-	void EngineUpdate() override;
 
 	LPCWSTR filePath;
 	UINT height;
