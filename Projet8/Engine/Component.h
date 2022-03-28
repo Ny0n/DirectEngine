@@ -42,9 +42,9 @@ public:
 	virtual void OnDisable(){}
 	virtual void OnCollide(GameObject* other) {}
 
-	virtual void OnTriggerEnter(Collider* collide) {}
-	virtual void OnTriggerStay(Collider* collide) {}
-	virtual void OnTriggerExit(Collider* collide) {}
+	virtual void OnTriggerEnter(GameObject* collide) {}
+	virtual void OnTriggerStay(GameObject* collide) {}
+	virtual void OnTriggerExit(GameObject* collide) {}
 
 	GameObject* gameObject;
 	Transform* transform;
