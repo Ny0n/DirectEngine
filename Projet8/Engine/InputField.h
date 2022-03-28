@@ -4,6 +4,7 @@ class InputField : public EngineComponent
 {
 public:
 	string GetType() override { return NAMEOF(InputField); }
+	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
 
 	void EngineStart() override;
 	void EngineUpdate() override;
@@ -14,13 +15,15 @@ public:
 	BOOL fontItalic = false;
 	LPCWSTR textFont = L"Arial";
 
-	wstring text = L"Placeholder text!";
+	wstring text;
+	wstring placeholderText = L"Placeholder text...";
+
 	DWORD textFormat = DT_LEFT | DT_VCENTER;
 
 	LPCWSTR boxFilepath = L"Image\\blanc.png";
 
-	D3DXVECTOR2 rectTopLeft = { 0,0 };
-	D3DXVECTOR2 rectBottomRight = { 600, 50 };
+	D3DXVECTOR2 rectTopLeft = { 100,50 };
+	D3DXVECTOR2 rectBottomRight = { 400, 100 };
 
 	D3DCOLOR borderColor = D3DCOLOR_ARGB(255, 255, 166, 0);
 	D3DCOLOR boxColor = D3DCOLOR_ARGB(255, 0, 255, 255);
@@ -30,14 +33,22 @@ public:
 
 	bool drawBox = false;
 	bool drawBorder = false;
+	bool togglePlaceholder = true;
 
 private:
 	void Render();
 	bool isAbove();
 	void Focus();
 	void HandleKeyInput();
+	void EnterFocus();
+	void ExitFocus();
+
+	bool hasFocus = false;
+	bool isPlaceholder = true;
+	bool maj;
 
 	POINT mousePos;
+	
 
 	UINT width;
 	UINT height;
@@ -46,9 +57,7 @@ private:
 	LPDIRECT3DTEXTURE9 texture;
 	LPD3DXSPRITE ppSprite = nullptr;
 	RECT textRect;
+	RECT txtRect;
 	ID3DXFont* font = nullptr;
-
-	float counter = 0;
-	float counterMaxTime = 0.1f;
 };
 

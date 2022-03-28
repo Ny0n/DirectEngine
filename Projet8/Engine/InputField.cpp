@@ -3,7 +3,7 @@
 
 void InputField::EngineStart()
 {
-	counter = counterMaxTime;
+	text.clear();
 
 	HR(D3DXCreateFont(d3ddev,
 		fontHeight,
@@ -20,6 +20,10 @@ void InputField::EngineStart()
 
 	const auto result = SetRect(&textRect, rectTopLeft.x, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
 	if (result <= 0)
+		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
+
+	const auto res = SetRect(&txtRect, rectTopLeft.x + borderThickness * .5f, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
+	if (res <= 0)
 		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
 
 	D3DXIMAGE_INFO info;
@@ -58,28 +62,12 @@ void InputField::EngineStart()
 void InputField::EngineUpdate()
 {
 	Render();
-	if (GetCursorPos(&mousePos))
-	{
-		if(ScreenToClient(Engine::GetInstance()->window, &mousePos))
-		{
-			//Utils::Println("x: " + to_string(mousePos.x) + " y: " + to_string(mousePos.y));
-			if (isAbove())
-			{
-				Utils::Println("DING DING DING!!");
+	Focus();
 
-				if (Input::GetKeyDown(KeyCode::Mouse0))
-					Focus();
-			}
-		}
-	}
-
-	if (counter <= 0)
-	{
-		HandleKeyInput();
-		counter = counterMaxTime;
-	}
-
-	counter -= Time::deltaTime;
+	if (hasFocus)
+		EnterFocus();
+	else
+		ExitFocus();
 }
 
 void InputField::Render()
@@ -91,7 +79,7 @@ void InputField::Render()
 			const auto spritePostion = D3DXVECTOR3(rectTopLeft.x, rectTopLeft.y, 0);
 		HR(ppSprite->Draw(texture, NULL, NULL, &spritePostion, boxColor))
 
-			HR(ppSprite->End())
+		HR(ppSprite->End())
 	}
 
 	if (drawBorder)
@@ -99,18 +87,21 @@ void InputField::Render()
 		HR(line->Begin())
 
 			D3DXVECTOR2 linesList[] = {
-					D3DXVECTOR2(rectTopLeft.x,rectTopLeft.y),
+					D3DXVECTOR2(rectTopLeft.x - borderThickness * 0.5f,rectTopLeft.y),
+					D3DXVECTOR2(rectBottomRight.x + borderThickness * 0.5f,rectTopLeft.y),
 					D3DXVECTOR2(rectBottomRight.x,rectTopLeft.y),
 					D3DXVECTOR2(rectBottomRight.x,rectBottomRight.y),
-					D3DXVECTOR2(rectTopLeft.x,rectBottomRight.y),
+					D3DXVECTOR2(rectBottomRight.x + borderThickness * 0.5f,rectBottomRight.y),
+					D3DXVECTOR2(rectTopLeft.x - borderThickness * 0.5f,rectBottomRight.y ),
+					D3DXVECTOR2(rectTopLeft.x,rectBottomRight.y ),
 					D3DXVECTOR2(rectTopLeft.x,rectTopLeft.y),
 		};
 
-		HR(line->Draw(linesList, 5, borderColor))
+		HR(line->Draw(linesList, 8, borderColor))
 
 		HR(line->End())
 
-		const int result = font->DrawText(NULL, text.c_str(), text.length(), &textRect, textFormat, textColor);
+		const int result = font->DrawText(NULL, text.c_str(), text.length(), &txtRect, textFormat, textColor);
 		if (result <= 0)
 			Utils::PrintError(__FILE__, __LINE__, L"DrawText() failed.");
 	}
@@ -130,28 +121,93 @@ bool InputField::isAbove()
 
 void InputField::Focus()
 {
-	boxColor = D3DCOLOR_ARGB(255, 0, 0, 255);
+	if (GetCursorPos(&mousePos))
+	{
+		if (ScreenToClient(Engine::GetInstance()->window, &mousePos))
+		{
+			if (Input::GetKeyDown(KeyCode::Mouse0))
+			{
+				if (isAbove())
+					hasFocus = true;
+				else
+					hasFocus = false;
+			}
+		}
+	}
 }
 
 void InputField::HandleKeyInput()
 {
-	const auto lastKey = Input::GetLastKeyDown();
+	bool isLetter = false;
+	auto lastKey = Input::GetLastKeyDown();
+
+	if (GetKeyState(VK_CAPITAL) == 1 || Input::GetKey(KeyCode::Shift))
+		maj = true;
+	else
+		maj = false;
+
+	if (lastKey != VK_BACK && lastKey != VK_SPACE && lastKey != VK_DELETE)
+	{
+		if (lastKey >= 65 && lastKey <= 90) // between A and Z
+		{
+			isLetter = true;
+		}
+		else if (lastKey >= 48 && lastKey <= 57) { // between 0 and 9
+			isLetter = false;
+		}
+		else
+			return;
+	}
 
 	switch (lastKey)
 	{
 		case static_cast<int>(KeyCode::Backspace):
-			counterMaxTime = 0.1f;
 			if (text.length() > 0)
 				text.pop_back();
 			break;
-		case 0:
+		case static_cast<int>(KeyCode::Delete):
+			text.clear();
 			break;
 		default:
-			counterMaxTime = 0.2f;
+			if (!maj && isLetter)
+			{
+				lastKey += 32;
+			}
 			const char key = static_cast<char>(lastKey);
 			text += key;
 			break;
 	}
 	
 	Input::ResetLastKeyDown();
+}
+
+void InputField::EnterFocus()
+{
+	borderColor = D3DCOLOR_ARGB(255, 0, 0, 255);
+	HandleKeyInput();
+
+	if (togglePlaceholder)
+	{
+		if (isPlaceholder)
+		{
+			text.clear();
+			isPlaceholder = false;
+			textColor = D3DCOLOR_ARGB(255, 0, 0, 0);
+		}
+	}
+}
+
+void InputField::ExitFocus()
+{
+	borderColor = D3DCOLOR_ARGB(255, 0, 255, 0);
+
+	if (togglePlaceholder)
+	{
+		if (text.empty())
+		{
+			text = placeholderText;
+			isPlaceholder = true;
+			textColor = D3DCOLOR_ARGB(255, 128, 128, 128);
+		}
+	}
 }
