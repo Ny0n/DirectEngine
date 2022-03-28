@@ -1,5 +1,20 @@
 ﻿#include "pch.h"
 
+void Utils::PrintError(string file, int line, LPCWSTR value)
+{
+	string strLine = to_string(line);
+
+	const wstring tempFile(file.begin(), file.end());
+	const wstring tempLine(strLine.begin(), strLine.end());
+
+	OutputDebugStringW(tempFile.c_str());
+	OutputDebugStringW(L":");
+	OutputDebugStringW(tempLine.c_str());
+	OutputDebugStringW(L" ");
+	OutputDebugStringW(value);
+	OutputDebugStringW(L"\n");
+}
+
 void Utils::Println(LPCWSTR value)
 {
 	OutputDebugStringW(value);
@@ -74,6 +89,42 @@ float Utils::DistanceWithOutSquareRoot(D3DXVECTOR3 a, D3DXVECTOR3 b)
 float Utils::Distance(D3DXVECTOR3 a, D3DXVECTOR3 b)
 {
 	return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z));
+}
+
+D3DXVECTOR4 Utils::GetVec4FromQuat(D3DXQUATERNION* q)
+{
+	D3DXVECTOR4 vector4;
+	vector4.x = q->x;
+	vector4.z = q->z;
+	vector4.y = q->y;
+	vector4.w = q->w;
+	return  vector4;
+}
+
+D3DXQUATERNION Utils::GetQuatFromVec4(D3DXVECTOR4* q)
+{
+	D3DXQUATERNION quat;
+	quat.x = q->x;
+	quat.z = q->z;
+	quat.y = q->y;
+	quat.w = q->w;
+	return  quat;
+}
+D3DXQUATERNION Utils::SLERP(const D3DXQUATERNION* a, const D3DXQUATERNION* b, const float t)
+{
+	D3DXQUATERNION r;
+	float t_ = 1 - t;
+	float Wa, Wb;
+	float theta = acos(a->x * b->x + a->y * b->y + a->z * b->z + a->w * b->w);
+	float sn = sin(theta);
+	Wa = sinf(t_ * theta) / sn;
+	Wb = sinf(t * theta) / sn;
+	r.x = Wa * a->x + Wb * b->x;
+	r.y = Wa * a->y + Wb * b->y;
+	r.z = Wa * a->z + Wb * b->z;
+	r.w = Wa * a->w + Wb * b->w;
+	D3DXQuaternionNormalize(&r,&r);
+	return r;
 }
 
 //

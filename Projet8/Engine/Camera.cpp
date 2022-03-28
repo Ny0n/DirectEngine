@@ -10,7 +10,7 @@ void Camera::EngineUpdate()
 
     auto pos = transform->GetPosition(); // the current position
     auto lookAt = pos + transform->GetForward(); // the look-at position (we look in front of us)
-    auto camDir = D3DXVECTOR3(0.0f, 1.0f, 0.0f); // the up direction
+    auto camDir = transform->GetUp(); // the up direction
 
     auto fov = D3DXToRadian(45); // the horizontal field of view
     auto ratio = (FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT; // aspect ratio

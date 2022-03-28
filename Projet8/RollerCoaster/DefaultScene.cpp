@@ -37,10 +37,8 @@ void DefaultScene::GenerateContent()
 	// camera
 
 	GameObject* mainCamera = CreateEmpty();
-	mainCamera->AddComponent<Camera>();
-	mainCamera->AddComponent<Move>();
-	mainCamera->AddComponent<FPCam>();
-
+	mainCamera->AddComponent(new Camera());
+	mainCamera->AddComponent(new FPCam());
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
 	mainCamera->AddComponent<RailMaker>();
 	mainCamera->AddComponent<MoveAlongRails>();
