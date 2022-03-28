@@ -18,7 +18,7 @@ public:
 	bool IsEnabledSelf();
 
 	static bool Instantiate(GameObject* go); // instantiation method for GO, see GameObject::AddComponent for component instantiation
-	static bool Destroy(GameObject* obj);
+	static bool Destroy(GameObject* go);
 
 	bool IsAlive();
 	
@@ -31,6 +31,7 @@ private:
 	virtual bool PrivateDestroy();
 	virtual void ApplyDestruction() = 0;
 	virtual ~Object() = default;
+	virtual bool NotifyInstantiation();
 
 	bool _enabledSelf = true;
 

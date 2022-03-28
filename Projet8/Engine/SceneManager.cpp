@@ -248,7 +248,7 @@ void SceneManager::AddScene(Scene* scene)
 		_mainScene = scene;
 	_scenes.push_back(scene);
 
-	for (auto go : scene->gameObjects) // we notify the instantiation for everything in the new scene
+	for (auto go : scene->gameObjects) // we notify the instantiation for everything in the newly loaded scene
 		go->NotifyInstantiation();
 }
 

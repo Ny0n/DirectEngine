@@ -41,8 +41,7 @@ private:
 	bool PrivateDestroy() final;
 	void ApplyDestruction() final;
 	~GameObject() override;
-
-	void NotifyInstantiation();
+	bool NotifyInstantiation() final;
 
 	list<Component*> _components;
 	// list<GameObject*> _children;

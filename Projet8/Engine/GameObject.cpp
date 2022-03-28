@@ -10,13 +10,12 @@ GameObject::GameObject() : name("Default Name")
 GameObject::~GameObject() // TODO redo when children
 {
 	list<Component*> componentsCopy(_components); // safeguard
+	_components.clear();
 	
 	for (auto component : componentsCopy)
 		Object::TryToDelete(component);
 	
 	componentsCopy.clear();
-	
-	_components.clear();
 	
 	SceneManager::Remove(this); // TODO remove from parent if parent, scene if no parent
 }
@@ -26,12 +25,12 @@ void GameObject::ApplyDestruction()
 	delete(this);
 }
 
-void GameObject::NotifyInstantiation()
+bool GameObject::NotifyInstantiation()
 {
-	if (this->_instantiatied) // safeguard
+	if (!Object::NotifyInstantiation())
 	{
 		Utils::PrintErr("GameObject::NotifyInstantiation #1");
-		return;
+		return false;
 	}
 
 	this->_instantiatied = true;
@@ -39,27 +38,41 @@ void GameObject::NotifyInstantiation()
 	ForEachSelfComponent([](Component* component)
 	{
 		component->NotifyInstantiation();
-	}, false); // TODO recheck onlyAlive de partout
+	}, false);
 
 	ForEachChildrenGameObject([](GameObject* go)
 	{
 		go->NotifyInstantiation();
 	});
+
+	return true;
 }
 
 // **************************** //
 
-bool GameObject::AddComponent(Component* componentIn) // TODO PROTECT THIS (only use templated versions?) // TODO verify if component is not already in the _components (same for GO)
+bool GameObject::AddComponent(Component* componentIn)
 {
-	if (componentIn == nullptr)
+	if (componentIn == nullptr || this->IsDestructionPending())
 	{
 		Utils::PrintErr("GameObject::AddComponent #1");
 		return false;
 	}
 
-	if (componentIn->_instantiatied)
+	if (Utils::Contains(&_components, componentIn))
 	{
 		Utils::PrintErr("GameObject::AddComponent #2");
+		return false;
+	}
+
+	if (componentIn->_instantiatied || componentIn->IsDestructionPending())
+	{
+		Utils::PrintErr("GameObject::AddComponent #3");
+		return false;
+	}
+
+	if (componentIn->gameObject != nullptr)
+	{
+		Utils::PrintErr("GameObject::AddComponent #4");
 		return false;
 	}
 
@@ -67,12 +80,12 @@ bool GameObject::AddComponent(Component* componentIn) // TODO PROTECT THIS (only
 	{
 		for (Component* component : _components)
 		{
-			if (component->IsDestructionPending()) // we consider that a to-be-destroyed component doesn't count
+			if (component->IsDestructionPending()) // we consider that a to-be-destroyed component doesn't count (we also can't GetComponent a to-be-destroyed one either)
 				continue;
 
-			if (component->TypeEquals(componentIn)) // no duplicate components
+			if (component->TypeEquals(componentIn))
 			{
-				Utils::PrintErr("GameObject::AddComponent #3");
+				Utils::PrintErr("GameObject::AddComponent #5"); // no duplicate 'single' category components
 				return false;
 			}
 		}
@@ -82,7 +95,7 @@ bool GameObject::AddComponent(Component* componentIn) // TODO PROTECT THIS (only
 	componentIn->transform = transform;
 	
 	_components.push_back(componentIn);
-	if (!Application::IsGeneratingScene() && _instantiatied) // TODO recheck this
+	if (!Application::IsGeneratingScene() && _instantiatied) // at runtime, when we need to call Awake (and maybe Start) instantly (pas ultra sûr de cette condition)
 		componentIn->NotifyInstantiation();
 
 	return true;
@@ -90,38 +103,32 @@ bool GameObject::AddComponent(Component* componentIn) // TODO PROTECT THIS (only
 
 bool GameObject::RemoveComponent(Component* componentIn)
 {
-	if (componentIn == nullptr)
+	if (componentIn == nullptr || this->IsDestructionPending())
 	{
 		Utils::PrintErr("GameObject::RemoveComponent #1");
 		return false;
 	}
 
-	if (componentIn->IsDestructionPending())
+	if (!Utils::Contains(&_components, componentIn))
 	{
 		Utils::PrintErr("GameObject::RemoveComponent #2");
 		return false;
 	}
 
-	if (Utils::Contains(&EngineComponent::unremovableEngineComponents, componentIn->GetType())) // unremovable components
+	if (Application::IsGeneratingScene() || componentIn->IsDestructionPending())
 	{
 		Utils::PrintErr("GameObject::RemoveComponent #3");
 		return false;
 	}
 
-	for (Component* component : _components)
+	if (Utils::Contains(&EngineComponent::unremovableEngineComponents, componentIn->GetType())) // unremovable components
 	{
-		if (component->IsDestructionPending())
-			continue;
-
-		if (component == componentIn)
-		{
-			component->PrivateDestroy();
-			return true;
-		}
+		Utils::PrintErr("GameObject::RemoveComponent #4");
+		return false;
 	}
-
-	Utils::PrintErr("GameObject::PrivateDestroy #4"); // component not found
-	return false;
+	
+	componentIn->PrivateDestroy();
+	return true;
 }
 
 list<Component*> GameObject::GetComponents()
@@ -165,12 +172,15 @@ bool GameObject::SetEnabled(bool enabled)
 	
 	ForEachComponent([&](Component* component)
 	{
-		if (component->IsEnabledSelf())
+		if (!component->_markedForDestruction && component->_instantiatied) // safeguard
 		{
-			if (IsEnabled()) // enabling
-				component->NotifyEnabled(); // we fire the OnEnable only if the component is enabled too
-			else // disabling
-				component->NotifyDisabled(); // we fire the OnDisable only if the component wasn't already disabled
+			if (component->IsEnabledSelf())
+			{
+				if (IsEnabled()) // enabling
+					component->NotifyEnabled(); // we fire the OnEnable only if the component is enabled too
+				else // disabling
+					component->NotifyDisabled(); // we fire the OnDisable only if the component wasn't already disabled
+			}
 		}
 	}, false);
 

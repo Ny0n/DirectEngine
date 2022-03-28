@@ -2,15 +2,32 @@
 
 bool Object::PrivateDestroy() // helper for sub-classes (overriden)
 {
-	if (!Application::IsPlaying() || Application::IsGeneratingScene()) // TODO recheck si ces trucs sont utiles mnt
+	if (_markedForDestruction)
 	{
 		Utils::PrintErr("Object::PrivateDestroy #1");
 		return false;
 	}
-	
-	if (_markedForDestruction || !_instantiatied)
+
+	if (!_instantiatied)
 	{
 		Utils::PrintErr("Object::PrivateDestroy #2");
+		return false;
+	}
+
+	return true;
+}
+
+bool Object::NotifyInstantiation() // helper for sub-classes (overriden)
+{
+	if (_markedForDestruction)
+	{
+		Utils::PrintErr("Object::NotifyInstantiation #1");
+		return false;
+	}
+
+	if (_instantiatied) // safeguard
+	{
+		Utils::PrintErr("Object::NotifyInstantiation #2");
 		return false;
 	}
 
@@ -28,7 +45,7 @@ bool Object::SetEnabled(bool enabled) // helper for sub-classes (overriden)
 {
 	if (_markedForDestruction)
 	{
-		Utils::PrintErr("Object::SetEnabled #1"); // we can only change its enabled state if it's not marked for destruction
+		Utils::PrintErr("Object::SetEnabled #1");
 		return false;
 	}
 
@@ -40,7 +57,7 @@ bool Object::SetEnabled(bool enabled) // helper for sub-classes (overriden)
 
 	_enabledSelf = enabled;
 
-	if (!Application::IsPlaying() || !_instantiatied)
+	if (!_instantiatied)
 	{
 		Utils::PrintErr("Object::SetEnabled #3");
 		return false;
@@ -77,17 +94,29 @@ void Object::TryToDelete(Object* obj) // I'M NOT VERY PROUD OF THIS, but since i
 
 // **************************** //
 
-bool Object::Instantiate(GameObject* go) // TODO instantiate as child / other pos?
+bool Object::Instantiate(GameObject* go) // TODO instantiate with specific position / specific rotation / as child of other go
 {
-	if (!Application::IsPlaying() || Application::IsGeneratingScene() || go == nullptr)
+	if (go == nullptr)
 	{
 		Utils::PrintErr("Object::Instantiate #1");
 		return false;
 	}
 
+	if (!Application::IsPlaying())
+	{
+		Utils::PrintErr("Object::Instantiate #2");
+		return false;
+	}
+
+	if (Application::IsGeneratingScene())
+	{
+		Utils::PrintErr("Object::Instantiate #3");
+		return false;
+	}
+
 	if (go->_instantiatied)
 	{
-		Utils::PrintErr("Object::Instantiate #2"); // we can't instantiate an object that's already here
+		Utils::PrintErr("Object::Instantiate #4"); // we can't instantiate an object that's already here
 		return false;
 	}
 
@@ -100,9 +129,21 @@ bool Object::Instantiate(GameObject* go) // TODO instantiate as child / other po
 
 bool Object::Destroy(GameObject* go)
 {
-	if (!Application::IsPlaying() || Application::IsGeneratingScene() || go == nullptr)
+	if (go == nullptr)
 	{
 		Utils::PrintErr("Object::Destroy #1");
+		return false;
+	}
+
+	if (!Application::IsPlaying())
+	{
+		Utils::PrintErr("Object::Destroy #2");
+		return false;
+	}
+
+	if (Application::IsGeneratingScene())
+	{
+		Utils::PrintErr("Object::Destroy #3");
 		return false;
 	}
 	

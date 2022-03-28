@@ -89,7 +89,7 @@ void InputTester::Update()
 			Instantiate(tester);
 		}
 	}
-	tester = gameObject;
+	// tester = gameObject;
 	if (Input::GetKeyDown(KeyCode::C))
 	{
 		if (tester == nullptr)

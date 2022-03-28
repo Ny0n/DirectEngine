@@ -4,6 +4,7 @@ list<Object*> Execution::markedForDestruction = {};
 
 void Execution::Clean()
 {
+    markedForDestruction.clear();
 }
 
 // ************/ Execution Order /************ //
@@ -106,13 +107,12 @@ void Execution::CheckForSceneUpdate()
     if (!markedForDestruction.empty())
     {
         list<Object*> copy(markedForDestruction); // safeguard
+        markedForDestruction.clear();
 
         for (auto obj : copy)
             Object::TryToDelete(obj);
 
         copy.clear();
-
-        markedForDestruction.clear();
     }
 
     // we update (load/unload/additive) the scene if we have to

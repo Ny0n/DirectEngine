@@ -13,12 +13,12 @@ void Component::ApplyDestruction()
 	delete(this);
 }
 
-void Component::NotifyInstantiation()
+bool Component::NotifyInstantiation()
 {
-	if (this->_instantiatied) // safeguard
+	if (!Object::NotifyInstantiation())
 	{
 		Utils::PrintErr("Component::NotifyInstantiation #1");
-		return;
+		return false;
 	}
 
 	this->_instantiatied = true;
@@ -29,6 +29,8 @@ void Component::NotifyInstantiation()
 		this->CheckIfEngineStarted();
 		this->CheckIfStarted();
 	}
+
+	return true;
 }
 
 // **************************** //
@@ -79,16 +81,18 @@ bool Component::SetEnabled(bool enabled)
 		return false;
 	}
 
-	if (gameObject != nullptr && gameObject->IsEnabled()) // there IS a gameObject if we're here, because we can only get here if we're instantiated
+	if (gameObject == nullptr) // just in case, but there SHOULD be a gameObject if we're here, because we can only get here if we're instantiated
+	{
+		Utils::PrintErr("Component::SetEnabled #2");
+		return false;
+	}
+
+	if (gameObject->IsEnabled())
 	{
 		if (_enabledSelf)
-		{
 			this->NotifyEnabled();
-		}
 		else
-		{
 			this->NotifyDisabled();
-		}
 	}
 
 	return true;

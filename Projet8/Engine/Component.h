@@ -25,17 +25,17 @@ public:
 	bool CategoryEquals(Component* other);
 	bool CategoryEquals(const ComponentCategory other);
 
-	virtual void Awake() {}
-	virtual void OnEnable() {}
+	virtual void EngineStart() = 0;
 	virtual void Start() = 0;
 	virtual void FixedUpdate() = 0;
 	virtual void Update() = 0;
 	virtual void LateUpdate() = 0;
+	virtual void EngineUpdate() = 0;
+
+	virtual void Awake() {}
+	virtual void OnEnable() {}
 	virtual void OnDisable() {}
 	virtual void OnDestroy() {}
-
-	virtual void EngineStart() = 0;
-	virtual void EngineUpdate() = 0;
 
 	virtual void OnCollideEnter(GameObject* other) {}
 	virtual void OnCollide(GameObject* other) {}
@@ -56,8 +56,7 @@ private:
 	bool PrivateDestroy() final;
 	void ApplyDestruction() final;
 	~Component() override;
-
-	void NotifyInstantiation();
+	bool NotifyInstantiation() final;
 
 	void NotifyEnabled();
 	void NotifyDisabled();
