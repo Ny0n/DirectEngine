@@ -161,6 +161,7 @@
     <ClInclude Include="MoveAlongRails.h" />
     <ClInclude Include="RailMaker.h" />
     <ClInclude Include="RainbowBackground.h" />
+    <ClInclude Include="RealFPCam.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Rotate.h" />
     <ClInclude Include="Shoot.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="MoveAlongRails.cpp" />
     <ClCompile Include="RailMaker.cpp" />
     <ClCompile Include="RainbowBackground.cpp" />
+    <ClCompile Include="RealFPCam.cpp" />
     <ClCompile Include="Rotate.cpp" />
     <ClCompile Include="Shoot.cpp" />
     <ClCompile Include="Tester.cpp" />

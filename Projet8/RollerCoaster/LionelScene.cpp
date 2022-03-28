@@ -1,8 +1,9 @@
 #include "LionelScene.h"
 
-#include "FPCam.h"
+#include "GoUp.h"
 #include "InputTester.h"
 #include "Move.h"
+#include "RealFPCam.h"
 #include "Shoot.h"
 
 string LionelScene::GetName()
@@ -26,7 +27,7 @@ void LionelScene::GenerateContent()
 
 	// Camera Component
 	Camera->AddComponent<class Camera>();
-	Camera->AddComponent<FPCam>();
+	Camera->AddComponent<RealFPCam>();
 	Camera->AddComponent<InputTester>();
 	Camera->AddComponent<Move>();
 	Camera->AddComponent<Shoot>();
@@ -35,23 +36,14 @@ void LionelScene::GenerateContent()
 
 	// Sphere
 
-	GameObject* enorme = CreateEmpty();
-
-	LPCWSTR path2 = L"Mesh\\rail.x";
-	enorme->AddComponent<MeshRenderer>(path2);
-	enorme->AddComponent<Collider>();
-
-	enorme->transform->SetPosition(D3DXVECTOR3(30.0f, 0.0f, 0.0f));
-
-	AddToScene(enorme);
-
-	// Sphere
-
 	GameObject* Sphere = CreateEmpty();
 
 	LPCWSTR path = L"Mesh\\minecart.x";
 	Sphere->AddComponent<MeshRenderer>(path);
 	Sphere->AddComponent<Collider>();
+	Sphere->AddComponent<GoUp>();
+
+	Sphere->transform->RotateRoll(45);
 
 	AddToScene(Sphere);
 

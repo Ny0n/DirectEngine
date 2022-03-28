@@ -50,12 +50,21 @@ void FPCam::LateUpdate()
     transform->SetPosition(tmpPos);
     transform->SetQuaternion(tmpQuat);
 
+    D3DXVECTOR3 pos = cart->transform->GetPosition();
+    pos += cart->transform->GetUp() * 2.0f;
+    cart->transform->SetPosition(pos);
+
     cart->transform->SetPosition(tmpPos);
     cart->transform->SetQuaternion(tmpQuat);
     
+    cart->transform->RotateYaw(180); // temp before changing the .x file
+    D3DXVECTOR3 cartPos = cart->transform->GetPosition();
+    cartPos += -cart->transform->GetUp() * 3.5f;
 
-    transform->RotatePitch(upSpeed, Space::Self);
-    transform->RotateYaw(rightSpeed, Space::Self);
+    cart->transform->SetPosition(cartPos);
+
+    transform->RotatePitch(upSpeed);
+    transform->RotateYaw(rightSpeed);
 //    transform->RotateYaw(yaw, Space::Self);
    // transform->RotateYaw(3.5f, Space::Self);
     //transform->RotateYaw(-45.0f, Space::Self);

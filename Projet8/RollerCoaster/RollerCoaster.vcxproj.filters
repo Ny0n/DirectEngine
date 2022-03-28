@@ -95,6 +95,9 @@
     <ClInclude Include="CECIESTUNSCRIPT.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="RealFPCam.h">
+      <Filter>Game\Scripts\Movement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RainbowBackground.cpp">
@@ -157,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="CECIESTUNSCRIPT.cpp">
       <Filter>Game\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="RealFPCam.cpp">
+      <Filter>Game\Scripts\Movement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
