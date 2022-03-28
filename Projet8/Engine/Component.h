@@ -23,9 +23,9 @@ class Component : public Object
 	virtual void OnDisable() {}
 	virtual void OnDestroy() {}
 
-	virtual void OnCollideEnter(GameObject* other) {}
-	virtual void OnCollide(GameObject* other) {}
-	virtual void OnCollideExit(GameObject* other) {}
+	virtual void OnTriggerExit(GameObject* collide) {}
+	virtual void OnTriggerStay(GameObject* collide) {}
+	virtual void OnTriggerEnter(GameObject* collide) {}
 
 	friend class EngineComponent;
 	friend class MonoBehaviour;
@@ -53,6 +53,7 @@ private:
 	friend class SceneManager;
 	friend class Object;
 	friend class GameObject;
+	friend class PhysicsEngine;
 
 	bool PrivateDestroy() final;
 	void ApplyDestruction() final;

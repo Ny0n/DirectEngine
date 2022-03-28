@@ -55,8 +55,12 @@ void RailMaker::Turn(float rotate)
 	for(int i = 0 ; i < _step; i++)
 	{
 		box = new GameObject();
-		box->AddComponent(new Cube());
-		box->GetComponent<Cube>();
+
+		LPCWSTR path = L"Mesh\\rail.x";
+
+		box->AddComponent<MeshRenderer>(path);
+		//box->GetComponent<MeshRenderer>();
+
 		D3DXVECTOR3  vector;
 		if (!_cubes.empty())
 		{
@@ -77,7 +81,7 @@ void RailMaker::Turn(float rotate)
 		}
 		
 		Instantiate(box);
-		_cubes.push_back(box->GetComponent<Cube>());
+		_cubes.push_back(box->GetComponent<MeshRenderer>());
 	}
 
 	
@@ -99,7 +103,11 @@ void RailMaker::MoveForward()
 	if (farestCubedist < (_maxDistance - _spaceBetween) * (_maxDistance - _spaceBetween))
 	{
 		box = new GameObject();
-		box->AddComponent<Cube>();
+
+		LPCWSTR path = L"Mesh\\rail.x";
+
+		box->AddComponent<MeshRenderer>(path);
+		//box->GetComponent<Cube>();
 
 		D3DXVECTOR3  vector;
 		if (!_cubes.empty())
@@ -118,16 +126,16 @@ void RailMaker::MoveForward()
 		}
 		box->transform->SetPosition(vector);
 		Instantiate(box);
-		_cubes.push_back(box->GetComponent<Cube>());
+		_cubes.push_back(box->GetComponent<MeshRenderer>());
 
 	}
 
 	
 }
 
-Cube* RailMaker::PopFrontCube()
+MeshRenderer* RailMaker::PopFrontCube()
 {
-	Cube* cube = _cubes.front();
+	MeshRenderer* cube = _cubes.front();
 	_cubes.pop_front();
 	return cube;
 }

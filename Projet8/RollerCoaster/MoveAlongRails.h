@@ -21,11 +21,11 @@ public:
     void Move();
 
 private:
-    list<Cube*> _cubes;
+    list<MeshRenderer*> _cubes;
     RailMaker* _rm;
     D3DXVECTOR3 _previousDir;
-    float _speed =70.0f;
-    float _almostOnSpot = 1.0f;
+    float _speed =40.0f;
+    float _almostOnSpot = 3.0f;
     Transform* transformWhithoutCursor;
 
     //Lerp

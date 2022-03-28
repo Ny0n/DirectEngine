@@ -1,5 +1,15 @@
 #include "pch.h"
 
+Collider::Collider()
+{
+	collidersWith = {};
+}
+
+Collider::~Collider()
+{
+	collidersWith.clear();
+}
+
 bool Collider::IsColliding(Collider* other)
 {
 	D3DXVECTOR3 thisPos = transform->GetPosition();
@@ -9,4 +19,10 @@ bool Collider::IsColliding(Collider* other)
 		return true;
 	}
 	return false;
+}
+
+void Collider::RemoveCollideWith(Collider* collide)
+{
+	if (Utils::Contains(&collidersWith, collide))
+		collidersWith.remove(collide);
 }

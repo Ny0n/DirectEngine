@@ -13,16 +13,15 @@ void PhysicsEngine::Update()
 
 void PhysicsEngine::CheckCollisions()
 {
-    // Utils::Println("Checking");
 
-    if (!SceneManager::IsEmpty())
-        return;
+    /*if (!SceneManager::IsEmpty())
+        return;*/
 
     list<AlignedBox*> alignedBoxes = {};
     list<GameObject*> gameObjects = {};
     list<Collider*> colliders = {};
 
-    auto forAllGo = [=](GameObject* go) mutable
+    auto forAllGo = [&](GameObject* go) mutable
     {
         auto tmpAb = go->GetComponent<AlignedBox>();
         if (tmpAb != nullptr)
@@ -57,10 +56,49 @@ void PhysicsEngine::CheckCollisions()
         {
             if (arr[i]->IsColliding(arr[j]))
             {
-                Utils::Println("oui");
+                ExecuteTrigger(arr[i], arr[j]);
+                ExecuteTrigger(arr[j], arr[i]);
+            }else
+            {
+                EndTrigger(arr[i], arr[j]);
+                EndTrigger(arr[j], arr[i]);
             }
         }
     }
 
     free(arr);
+}
+
+
+void PhysicsEngine::ExecuteTrigger(Collider* collider, Collider* collideWith)
+{
+    list<Collider*> colliders = collider->GetCollidersWith();
+
+    if(!Utils::Contains(&colliders, collideWith))
+    {
+        collider->AddCollideWith(collideWith);
+        for (auto component : collider->gameObject->GetComponents())
+        {
+            component->OnTriggerEnter(collideWith->gameObject);
+        }
+    }
+
+    for (auto component : collider->gameObject->GetComponents())
+    {
+        component->OnTriggerStay(collideWith->gameObject);
+    }
+}
+
+void PhysicsEngine::EndTrigger(Collider* collider, Collider* collideWith)
+{
+    list<Collider*> colliders = collider->GetCollidersWith();
+
+    if (!Utils::Contains(&colliders, collideWith))
+        return;
+
+    for (auto component : collider->gameObject->GetComponents())
+    {
+        component->OnTriggerExit(collideWith->gameObject);
+    }
+    collider->RemoveCollideWith(collideWith);
 }

@@ -12,7 +12,7 @@ void Camera::EngineUpdate()
     auto lookAt = pos + transform->GetForward(); // the look-at position (we look in front of us)
     auto camDir = transform->GetUp(); // the up direction
 
-    auto fov = D3DXToRadian(45); // the horizontal field of view
+    auto fov = D3DXToRadian(70); // the horizontal field of view
     auto ratio = (FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT; // aspect ratio
 
     // auto camDir = transform->GetRotation(); // the up direction
@@ -20,6 +20,7 @@ void Camera::EngineUpdate()
     // Utils::Println(s);
 
     // **************************** //
+    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, skyColor, 1.0f, 0); // background color
 
     d3ddev->SetFVF(CUSTOMFVF); // for the lightning
 
@@ -43,4 +44,9 @@ void Camera::ChangeFVP(float newFVP)
 void Camera::ChangeNVP(float newNVP)
 {
     nvp = newNVP;
+}
+
+void Camera::ChangeSkyColor(D3DCOLOR skyColor)
+{
+    this->skyColor = skyColor;
 }

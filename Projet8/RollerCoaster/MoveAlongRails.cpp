@@ -49,7 +49,7 @@ void MoveAlongRails::Move()
 	if (std::abs(pos.x - target.x) <= _almostOnSpot && std::abs(pos.z - target.z) <= _almostOnSpot && std::abs(pos.y - target.y) <= _almostOnSpot)
 	{
 		_previousDir = _cubes.front()->transform->GetForward();
-		Cube* cube = _rm->PopFrontCube();
+		MeshRenderer* cube = _rm->PopFrontCube();
 
 		Destroy(cube->gameObject);
 		_cubes = _rm->GetCube();

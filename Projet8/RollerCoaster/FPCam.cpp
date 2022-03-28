@@ -33,7 +33,7 @@ void FPCam::Update()
         rightSpeed -= 1;
     if (Input::GetKey(KeyCode::D) && rightSpeed < 90)
         rightSpeed+= 1;
-    Utils::Println(upSpeed);
+
   //  yaw += (mouseP.x - SCREEN_WIDTH / 2)/100.0f * sensibility * Time::deltaTime;
 //
 }
