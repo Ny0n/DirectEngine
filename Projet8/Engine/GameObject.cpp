@@ -35,8 +35,6 @@ void GameObject::NotifyInstantiation()
 	}
 
 	this->_instantiatied = true;
-	this->_markedForInstantiation = true;
-	Execution::markedForInstantiation.push_back(this);
 
 	ForEachSelfComponent([](Component* component)
 	{
@@ -59,7 +57,7 @@ bool GameObject::AddComponent(Component* componentIn) // TODO PROTECT THIS (only
 		return false;
 	}
 
-	if (componentIn->_markedForInstantiation)
+	if (componentIn->_instantiatied)
 	{
 		Utils::PrintErr("GameObject::AddComponent #2");
 		return false;
@@ -169,10 +167,10 @@ bool GameObject::SetEnabled(bool enabled)
 	{
 		if (component->IsEnabledSelf())
 		{
-			if (IsEnabled())
-				component->OnEnable(); // we fire the OnEnable only if the component is enabled too
-			else
-				component->OnDisable(); // we fire the OnDisable only if the component wasn't already disabled
+			if (IsEnabled()) // enabling
+				component->NotifyEnabled(); // we fire the OnEnable only if the component is enabled too
+			else // disabling
+				component->NotifyDisabled(); // we fire the OnDisable only if the component wasn't already disabled
 		}
 	}, false);
 

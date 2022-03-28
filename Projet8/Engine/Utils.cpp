@@ -21,7 +21,7 @@ void Utils::Println(string value)
 
 void Utils::PrintErr(string value)
 {
-	Println("ERROR: " + value);
+	Println("WARNING: " + value);
 }
 
 void Utils::Println(int value)

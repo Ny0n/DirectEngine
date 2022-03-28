@@ -18,8 +18,7 @@ Scene::~Scene()
 
 	gameObjects.clear();
 
-	// when deleting a scene, any demand for instantiation or destruction is irrelevant
-	Execution::markedForInstantiation.clear();
+	// when deleting a scene, any new demand for destruction is irrelevant
 	Execution::markedForDestruction.clear();
 }
 

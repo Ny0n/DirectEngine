@@ -1,6 +1,5 @@
 #include "pch.h"
 
-list<Object*> Execution::markedForInstantiation = {};
 list<Object*> Execution::markedForDestruction = {};
 
 void Execution::Clean()
@@ -13,11 +12,7 @@ void Execution::EngineStart()
 {
     SceneManager::ForEachComponent([](Component* component)
     {
-        if (!component->_engineStarted)
-        {
-            component->EngineStart();
-            component->_engineStarted = true;
-        }
+        component->CheckIfEngineStarted();
     });
 }
 
@@ -29,11 +24,7 @@ void Execution::Start()
 
     SceneManager::ForEachComponent([](Component* component)
     {
-        if (!component->_started)
-        {
-            component->Start();
-            component->_started = true;
-        }
+        component->CheckIfStarted();
     });
 
     Time::_inStartStep = false;
@@ -109,18 +100,9 @@ void Execution::EngineUpdate()
 
 void Execution::CheckForSceneUpdate()
 {
-    // we Instantiate/Destroy what needs to be
+    Time::_inSceneStep = true;
 
-    // Instantiation
-    if (!markedForInstantiation.empty())
-    {
-	    for (auto obj : markedForInstantiation)
-            obj->_markedForInstantiation = false; // the obj is now alive!
-
-        markedForInstantiation.clear();
-    }
-
-    // Destruction
+    // we Destroy what needs to be
     if (!markedForDestruction.empty())
     {
         list<Object*> copy(markedForDestruction); // safeguard
@@ -136,4 +118,6 @@ void Execution::CheckForSceneUpdate()
     // we update (load/unload/additive) the scene if we have to
     if (SceneManager::ChangeRequired())
         SceneManager::ApplyChanges();
+
+    Time::_inSceneStep = false;
 }

@@ -58,7 +58,12 @@ private:
 	~Component() override;
 
 	void NotifyInstantiation();
-	
+
+	void NotifyEnabled();
+	void NotifyDisabled();
+
+	void CheckIfEngineStarted();
+	void CheckIfStarted();
 	bool _engineStarted = false;
 	bool _started = false;
 

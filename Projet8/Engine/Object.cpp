@@ -40,7 +40,7 @@ bool Object::SetEnabled(bool enabled) // helper for sub-classes (overriden)
 
 	_enabledSelf = enabled;
 
-	if (!Application::IsPlaying() || Application::IsGeneratingScene())
+	if (!Application::IsPlaying() || !_instantiatied)
 	{
 		Utils::PrintErr("Object::SetEnabled #3");
 		return false;
@@ -61,7 +61,7 @@ bool Object::IsEnabledSelf()
 
 bool Object::IsAlive()
 {
-	return !_markedForDestruction && !_markedForInstantiation && IsEnabled();
+	return !_markedForDestruction && _instantiatied && IsEnabled();
 }
 
 void Object::TryToDelete(Object* obj) // I'M NOT VERY PROUD OF THIS, but since i don't have the time to pententially pass everything to unique_ptr, this will do
@@ -98,13 +98,13 @@ bool Object::Instantiate(GameObject* go) // TODO instantiate as child / other po
 	return true;
 }
 
-bool Object::Destroy(Object* obj)
+bool Object::Destroy(GameObject* go)
 {
-	if (!Application::IsPlaying() || Application::IsGeneratingScene() || obj == nullptr)
+	if (!Application::IsPlaying() || Application::IsGeneratingScene() || go == nullptr)
 	{
 		Utils::PrintErr("Object::Destroy #1");
 		return false;
 	}
 	
-	return obj->PrivateDestroy();
+	return go->PrivateDestroy();
 }

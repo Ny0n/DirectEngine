@@ -28,7 +28,6 @@ class Execution final
 	friend class Object;
 	friend class GameObject;
 	friend class Component;
-	static list<Object*> markedForInstantiation;
 	static list<Object*> markedForDestruction;
 
 public:

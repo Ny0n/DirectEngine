@@ -22,12 +22,13 @@ void Component::NotifyInstantiation()
 	}
 
 	this->_instantiatied = true;
-	this->_markedForInstantiation = true;
-	Execution::markedForInstantiation.push_back(this);
 	
 	Awake();
-	if (IsEnabled())
-		OnEnable();
+	if (!Time::inSceneStep) // later at runtime, not when we load a scene
+	{
+		this->CheckIfEngineStarted();
+		this->CheckIfStarted();
+	}
 }
 
 // **************************** //
@@ -78,12 +79,16 @@ bool Component::SetEnabled(bool enabled)
 		return false;
 	}
 
-	if (gameObject != nullptr && gameObject->IsEnabled())
+	if (gameObject != nullptr && gameObject->IsEnabled()) // there IS a gameObject if we're here, because we can only get here if we're instantiated
 	{
 		if (_enabledSelf)
-			this->OnEnable();
+		{
+			this->NotifyEnabled();
+		}
 		else
-			this->OnDisable();
+		{
+			this->NotifyDisabled();
+		}
 	}
 
 	return true;
@@ -95,4 +100,34 @@ bool Component::IsEnabled()
 		return gameObject->IsEnabled() && _enabledSelf;
 
 	return _enabledSelf;
+}
+
+void Component::NotifyEnabled()
+{
+	this->CheckIfEngineStarted();
+	this->CheckIfStarted();
+	this->OnEnable();
+}
+
+void Component::NotifyDisabled()
+{
+	this->OnDisable();
+}
+
+void Component::CheckIfEngineStarted()
+{
+	if (!_engineStarted)
+	{
+		this->EngineStart();
+		_engineStarted = true;
+	}
+}
+
+void Component::CheckIfStarted()
+{
+	if (!_started)
+	{
+		this->Start();
+		_started = true;
+	}
 }

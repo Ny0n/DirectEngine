@@ -97,7 +97,7 @@ void InputTester::Update()
 			Utils::Println("nullptr");
 			return;
 		}
-
+		
 		auto comp = tester->GetComponent<Rotate>();
 		auto comp2 = tester->GetComponent<Tester>();
 
@@ -105,11 +105,8 @@ void InputTester::Update()
 		{
 			if (Input::GetKey(KeyCode::Shift))
 			{
-				Destroy(comp);
-				Destroy(comp2);
-
-				// DESTROY(comp);
-				// DESTROY(comp2);
+				tester->RemoveComponent(comp);
+				tester->RemoveComponent(comp2);
 			}
 			else
 			{
