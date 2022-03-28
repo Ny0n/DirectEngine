@@ -4,9 +4,8 @@ CECIESTUNSCRIPT::CECIESTUNSCRIPT()
 {
 }
 
-CECIESTUNSCRIPT::CECIESTUNSCRIPT(Image* image) : _image(image)
+CECIESTUNSCRIPT::CECIESTUNSCRIPT(Button* button) : _button(button)
 {
-	_image->rotationCenter = D3DXVECTOR2(100, 100);
 }
 
 CECIESTUNSCRIPT::~CECIESTUNSCRIPT()
@@ -14,13 +13,26 @@ CECIESTUNSCRIPT::~CECIESTUNSCRIPT()
 	//delete _image;
 }
 
+void CECIESTUNSCRIPT::MyFunc()
+{
+	Utils::Println("test");
+	auto pd = rand() % 400;
+	auto fdp = rand() % 350;
+	_button->rectTopLeft = D3DXVECTOR2(pd, fdp);
+	_button->rectBottomRight = D3DXVECTOR2(pd + 300, fdp +50);
+}
+
 // **************************** //
 
 void CECIESTUNSCRIPT::Start()
 {
+	_button->onClick = RUNNER(MyFunc);
+
+	
 }
 
 void CECIESTUNSCRIPT::Update()
 {
-	_image->rotation += Time::deltaTime * speed;
+	
 }
+

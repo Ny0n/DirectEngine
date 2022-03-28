@@ -11,11 +11,12 @@ class CECIESTUNSCRIPT : public MonoBehaviour
 
 public:
 	CECIESTUNSCRIPT();
-	explicit CECIESTUNSCRIPT(Image* image);
+	explicit CECIESTUNSCRIPT(Button* button);
 	~CECIESTUNSCRIPT() override;
 
 private:
-	Image* _image;
+	void MyFunc();
+	Button* _button;
 	float speed = 1.0f;
 
 };

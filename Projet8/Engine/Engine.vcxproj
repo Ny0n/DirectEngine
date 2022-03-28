@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="AlignedBox.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="Collider.h" />
@@ -194,6 +195,7 @@
   <ItemGroup>
     <ClCompile Include="AlignedBox.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="Collider.cpp" />

@@ -13,14 +13,6 @@ Image::Image(): EngineComponent()
 
 void Image::EngineStart()
 {
-	position.x = 0;
-	position.y = 0;
-
-	scale.x = 1;
-	scale.y = 1;
-
-	rotation = 0;
-
 	D3DXIMAGE_INFO info;
 	HR(D3DXGetImageInfoFromFile(filePath, &info))
 

@@ -3,12 +3,6 @@
 class InputField : public EngineComponent
 {
 public:
-	string GetType() override { return NAMEOF(InputField); }
-	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
-
-	void EngineStart() override;
-	void EngineUpdate() override;
-
 	INT fontHeight = 25;
 	UINT fontWidth = 0;
 	UINT fontWeight = FW_NORMAL;
@@ -34,9 +28,6 @@ public:
 	D3DCOLOR normalTextColor = D3DCOLOR_ARGB(255, 0, 0, 0);
 	D3DCOLOR placeHolderTextColor = D3DCOLOR_ARGB(255, 128, 128, 128);
 
-
-
-
 	FLOAT borderThickness = 5;
 
 	bool drawBox = false;
@@ -44,6 +35,12 @@ public:
 	bool togglePlaceholder = true;
 
 private:
+	string GetType() override { return NAMEOF(InputField); }
+	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
+
+	void EngineStart() override;
+	void EngineUpdate() override;
+
 	void Render();
 	bool isAbove();
 	void Focus();

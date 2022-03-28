@@ -51,7 +51,7 @@ void App::Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, i
     _window = CreateWindowEx(NULL,
         L"WindowClass",    // name of the window class
         L"Our First Direct3D Program",   // title of the window
-        WS_OVERLAPPEDWINDOW,    // window style
+        WS_POPUP,    // window style WS_EX_TOPMOST | WS_POPUP
         0,    // x-position of the window
         0,    // y-position of the window
         SCREEN_WIDTH,    // width of the window
