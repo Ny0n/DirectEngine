@@ -42,8 +42,18 @@ void FPCam::LateUpdate()
 {
 
     Transform tmp = static_cast<Transform>(gameObject->GetComponent<MoveAlongRails>()->GetTransfromWhithoutCursor());
-    transform->SetPosition(tmp.GetPosition());
-    transform->SetQuaternion(tmp.GetQuaternion());
+
+
+    D3DXVECTOR3 tmpPos = tmp.GetPosition();
+    D3DXQUATERNION tmpQuat = tmp.GetQuaternion();
+
+    transform->SetPosition(tmpPos);
+    transform->SetQuaternion(tmpQuat);
+
+    cart->transform->SetPosition(tmpPos);
+    cart->transform->SetQuaternion(tmpQuat);
+    
+
     transform->RotatePitch(upSpeed, Space::Self);
     transform->RotateYaw(rightSpeed, Space::Self);
 //    transform->RotateYaw(yaw, Space::Self);

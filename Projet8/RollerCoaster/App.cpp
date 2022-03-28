@@ -70,7 +70,7 @@ void App::Run()
 {
     // first we prep the scenes that will be used in the app
     SceneManager::AddToBuild(new DefaultScene());
-    SceneManager::AddToBuild(new FlavienDevScene());
+    //SceneManager::AddToBuild(new LionelScene());
 	//SceneManager::AddToBuild(new MenuScene());
 
     // and then we run the game

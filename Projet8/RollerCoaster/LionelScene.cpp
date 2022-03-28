@@ -35,9 +35,21 @@ void LionelScene::GenerateContent()
 
 	// Sphere
 
+	GameObject* enorme = CreateEmpty();
+
+	LPCWSTR path2 = L"Mesh\\rail.x";
+	enorme->AddComponent<MeshRenderer>(path2);
+	enorme->AddComponent<Collider>();
+
+	enorme->transform->SetPosition(D3DXVECTOR3(30.0f, 0.0f, 0.0f));
+
+	AddToScene(enorme);
+
+	// Sphere
+
 	GameObject* Sphere = CreateEmpty();
 
-	LPCWSTR path = L"Mesh\\sphere.x";
+	LPCWSTR path = L"Mesh\\minecart.x";
 	Sphere->AddComponent<MeshRenderer>(path);
 	Sphere->AddComponent<Collider>();
 
