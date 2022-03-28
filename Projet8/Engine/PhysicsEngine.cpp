@@ -56,10 +56,49 @@ void PhysicsEngine::CheckCollisions()
         {
             if (arr[i]->IsColliding(arr[j]))
             {
-                Utils::Println("oui");
+                ExecuteTrigger(arr[i], arr[j]);
+                ExecuteTrigger(arr[j], arr[i]);
+            }else
+            {
+                EndTrigger(arr[i], arr[j]);
+                EndTrigger(arr[j], arr[i]);
             }
         }
     }
 
     free(arr);
+}
+
+
+void PhysicsEngine::ExecuteTrigger(Collider* collider, Collider* collideWith)
+{
+    list<Collider*> colliders = collider->GetCollidersWith();
+
+    if(!Utils::Contains(&colliders, collideWith))
+    {
+        collider->AddCollideWith(collideWith);
+        for (auto component : collider->gameObject->components)
+        {
+            component->OnTriggerEnter(collideWith);
+        }
+    }
+
+    for (auto component : collider->gameObject->components)
+    {
+        component->OnTriggerStay(collideWith);
+    }
+}
+
+void PhysicsEngine::EndTrigger(Collider* collider, Collider* collideWith)
+{
+    list<Collider*> colliders = collider->GetCollidersWith();
+
+    if (!Utils::Contains(&colliders, collideWith))
+        return;
+
+    for (auto component : collider->gameObject->components)
+    {
+        component->OnTriggerExit(collideWith);
+    }
+    collider->RemoveCollideWith(collideWith);
 }

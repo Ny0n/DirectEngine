@@ -26,3 +26,19 @@ void BulletMove::Update()
 	}
 
 }
+
+void BulletMove::OnTriggerEnter(Collider* collide)
+{
+	Utils::Println("Je commence la collision");
+	//collide->gameObject->Destroy();
+}
+
+void BulletMove::OnTriggerStay(Collider* collide)
+{
+	Utils::Println("Je suis en collision");
+}
+
+void BulletMove::OnTriggerExit(Collider* collide)
+{
+	Utils::Println("Je sors de la collision");
+}
