@@ -2,15 +2,14 @@
 
 class Textbox final : public EngineComponent
 {
+	void EngineStart() override;
+	void EngineUpdate() override;
 
 public:
 	string GetType() override { return NAMEOF(Textbox); }
 
 	explicit Textbox(LPCWSTR text);
 	~Textbox() override;
-
-	void EngineStart() override;
-	void EngineUpdate() override;
 
 	INT fontHeight = 25;
 	UINT fontWidth = 0;

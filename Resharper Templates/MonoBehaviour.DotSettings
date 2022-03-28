@@ -1,0 +1,69 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Description/@EntryValue">MonoBehaviour</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Text/@EntryValue">$HEADER$#pragma once&#xD;
+&#xD;
+#include "EngineLib.h"&#xD;
+&#xD;
+class $NAME$ : public MonoBehaviour&#xD;
+{&#xD;
+	string GetType() override { return NAMEOF($NAME$);}&#xD;
+&#xD;
+	void Start() override;&#xD;
+	void Update() override;&#xD;
+&#xD;
+public:&#xD;
+	$NAME$();&#xD;
+	~$NAME$() override;&#xD;
+$END$&#xD;
+};</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/CustomProperties/=FileName/@EntryIndexedValue">NewMonoBehaviour</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/CustomProperties/=Extension/@EntryIndexedValue">h</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/CustomProperties/=ValidateFileName/@EntryIndexedValue">False</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Scope/=CD5B1AEA8099834C8F10F84286AA88CA/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Scope/=CD5B1AEA8099834C8F10F84286AA88CA/Type/@EntryValue">InCppProjectFile</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=PCH/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=PCH/Expression/@EntryValue">cppPchIncludeDirective()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=PCH/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=PCH/Order/@EntryValue">0</s:Int64>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=PCH/InitialSection/@EntryValue">B7D5FED7CA76A14CB1ECEB75734F780C</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=NAME/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=NAME/Expression/@EntryValue">getFileNameWithoutExtension()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=NAME/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=NAME/Order/@EntryValue">1</s:Int64>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=NAME/InitialSection/@EntryValue">B7D5FED7CA76A14CB1ECEB75734F780C</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=HEADER/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=HEADER/Expression/@EntryValue">cppFileheader()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=HEADER/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Field/=HEADER/Order/@EntryValue">2</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Section/=B7D5FED7CA76A14CB1ECEB75734F780C/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Section/=B7D5FED7CA76A14CB1ECEB75734F780C/LocationSelectorName/@EntryValue">manual</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Section/=B7D5FED7CA76A14CB1ECEB75734F780C/LocationSelectorConfig/@EntryValue">&lt;RelativeConfig File="$NAME$.cpp" /&gt;</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Section/=B7D5FED7CA76A14CB1ECEB75734F780C/Order/@EntryValue">0</s:Int64>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=029AA35BA6BD024B86B2D78B4F0DF647/Section/=B7D5FED7CA76A14CB1ECEB75734F780C/SectionPlain/Text/@EntryValue">$PCH$#include "$NAME$.h"&#xD;
+&#xD;
+$NAME$::$NAME$()&#xD;
+{&#xD;
+}&#xD;
+&#xD;
+$NAME$::~$NAME$()&#xD;
+{&#xD;
+}&#xD;
+&#xD;
+// **************************** //&#xD;
+&#xD;
+// Start is called before the first frame update&#xD;
+void $NAME$::Start()&#xD;
+{&#xD;
+	&#xD;
+}&#xD;
+&#xD;
+// Update is called once per frame&#xD;
+void $NAME$::Update()&#xD;
+{&#xD;
+	&#xD;
+}&#xD;
+</s:String></wpf:ResourceDictionary>

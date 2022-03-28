@@ -4,8 +4,6 @@
 
 class InputTester : public MonoBehaviour
 {
-
-public:
 	string GetType() override { return NAMEOF(InputTester); }
 
 	void Start() override;

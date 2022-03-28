@@ -1,14 +1,14 @@
 #include "MoveAlongRails.h"
-#include "MoveAlongRails.h"
-void MoveAlongRails::Update()
-{
-	_cubes = _rm->GetCube();
-	Move();
-}
 
 void MoveAlongRails::Start()
 {
 	_rm = gameObject->GetComponent<RailMaker>();
+}
+
+void MoveAlongRails::Update()
+{
+	_cubes = _rm->GetCube();
+	Move();
 }
 
 void MoveAlongRails::Move()

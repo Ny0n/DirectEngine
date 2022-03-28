@@ -53,13 +53,12 @@ void InputTester::Update()
 
 	if (Input::GetKeyDown(KeyCode::A))
 	{
-		// auto comp = gameObject->GetComponent<Move>();
-		// if (comp != nullptr)
-		// {
-		// 	comp->speed *= 2;
-		// 	Utils::Println("Found");
-		// }
-		gameObject->RemoveComponent<Move>();
+		auto comp = tester->GetComponent<Tester>();
+		if (comp != nullptr)
+		{
+			comp->SetEnabled(!comp->IsEnabled());
+		}
+		// gameObject->RemoveComponent<Move>();
 	}
 
 	if (Input::GetKeyDown(KeyCode::E))
@@ -72,6 +71,7 @@ void InputTester::Update()
 		Utils::Println("1");
 	}
 
+	// tester = gameObject;
 	if (Input::GetKeyDown(KeyCode::X))
 	{
 		if (tester == nullptr)
@@ -89,7 +89,7 @@ void InputTester::Update()
 			Instantiate(tester);
 		}
 	}
-	// tester = gameObject;
+
 	if (Input::GetKeyDown(KeyCode::C))
 	{
 		if (tester == nullptr)

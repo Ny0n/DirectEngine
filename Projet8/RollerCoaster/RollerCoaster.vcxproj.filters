@@ -68,10 +68,10 @@
     <ClInclude Include="FlavienDevScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="CECIESTUNSCRIPT.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Tester.h">
+      <Filter>Game\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="CECIESTUNSCRIPT.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
@@ -121,8 +121,10 @@
     <ClCompile Include="FlavienDevScene.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="CECIESTUNSCRIPT.cpp" />
     <ClCompile Include="Tester.cpp">
+      <Filter>Game\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="CECIESTUNSCRIPT.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
   </ItemGroup>

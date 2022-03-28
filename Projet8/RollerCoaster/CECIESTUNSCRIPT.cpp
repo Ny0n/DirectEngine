@@ -1,9 +1,7 @@
 #include "CECIESTUNSCRIPT.h"
 
-void CECIESTUNSCRIPT::Update()
+CECIESTUNSCRIPT::CECIESTUNSCRIPT()
 {
-	_image->rotation += Time::deltaTime * speed;
-	
 }
 
 CECIESTUNSCRIPT::CECIESTUNSCRIPT(Image* image) : _image(image)
@@ -14,4 +12,15 @@ CECIESTUNSCRIPT::CECIESTUNSCRIPT(Image* image) : _image(image)
 CECIESTUNSCRIPT::~CECIESTUNSCRIPT()
 {
 	//delete _image;
+}
+
+// **************************** //
+
+void CECIESTUNSCRIPT::Start()
+{
+}
+
+void CECIESTUNSCRIPT::Update()
+{
+	_image->rotation += Time::deltaTime * speed;
 }

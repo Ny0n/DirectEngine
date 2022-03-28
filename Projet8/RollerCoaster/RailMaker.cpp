@@ -1,18 +1,21 @@
 #include "RailMaker.h"
 
+void RailMaker::Start()
+{
+	//MoveForward();
+	srand(time(0));
+}
 
 void RailMaker::Update()
 {
-	
-
 	/* generate secret number between 1 and 10: */
-	
+
 	float farestCubedist = 0;
 	if (!_cubes.empty())
 		farestCubedist = Utils::DistanceWithOutSquareRoot(transform->GetPosition(), _cubes.back()->transform->GetPosition());
 	if (farestCubedist < (_maxDistance - _spaceBetween) * (_maxDistance - _spaceBetween))
 	{
-		float random = rand()%100;
+		float random = rand() % 100;
 		if (random <= 2.5f)
 		{
 			Turn(-90);
@@ -26,12 +29,6 @@ void RailMaker::Update()
 			MoveForward();
 		}
 	}
-}
-
-void RailMaker::Start()
-{
-	//MoveForward();
-	srand(time(0));
 }
 
 void RailMaker::Turn(float rotate)

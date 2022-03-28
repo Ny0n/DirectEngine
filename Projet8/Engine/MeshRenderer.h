@@ -2,15 +2,14 @@
 
 class MeshRenderer final : public EngineComponent
 {
-
-public:
-	string GetType() override { return NAMEOF(MeshRenderer); }
-
-    MeshRenderer(LPCWSTR path);
-    ~MeshRenderer() override;
+    string GetType() override { return NAMEOF(MeshRenderer); }
 
     void EngineStart() override;
     void EngineUpdate() override;
+
+public:
+    MeshRenderer(LPCWSTR path);
+    ~MeshRenderer() override;
 
 private:
     ID3DXMesh* _pmesh;

@@ -2,13 +2,14 @@
 
 class AlignedBox final : public EngineComponent
 {
-    list<Collider*> colliders;
-
-public :
     string GetType() override { return NAMEOF(AlignedBox); }
 
     void EngineStart() override;
 
+public :
     list<Collider*> AreIn(list<GameObject*> go);
+
+private:
+    list<Collider*> colliders;
 
 };

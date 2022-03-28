@@ -2,9 +2,6 @@
 
 class MonoBehaviour : public Component
 {
-
-public:
-	MonoBehaviour() = default;
 	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
 
 	void Start() override {}
@@ -15,4 +12,7 @@ public:
 	void EngineStart() final {}
 	void EngineUpdate() final {}
 
+public:
+	MonoBehaviour() = default;
+	
 };

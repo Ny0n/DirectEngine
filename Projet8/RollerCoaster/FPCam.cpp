@@ -5,13 +5,13 @@ FPCam::FPCam(float speed) : _speed(speed)
     
 }
 
+// **************************** //
 
 void FPCam::Start()
 {
     Cursor::Lock();
     Cursor::SetVisible(false);
 }
-
 
 void FPCam::Update()
 {

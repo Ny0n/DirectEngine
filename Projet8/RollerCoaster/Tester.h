@@ -4,8 +4,6 @@
 
 class Tester : public MonoBehaviour
 {
-
-public:
 	string GetType() override { return NAMEOF(Tester); }
 
 	void Awake() override;
