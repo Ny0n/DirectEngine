@@ -30,6 +30,7 @@ void DefaultScene::GenerateContent()
 	mainCamera->AddComponent<RailMaker>();
 	mainCamera->AddComponent<MoveAlongRails>();
 	mainCamera->AddComponent<Shoot>();
+	mainCamera->AddComponent<AlignedBox>();
 	AddToScene(mainCamera);
 
 	/*GameObject* inputTester = CreateEmpty();

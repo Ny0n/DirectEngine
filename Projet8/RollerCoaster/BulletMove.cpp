@@ -1,5 +1,7 @@
 ﻿#include "BulletMove.h"
 
+#include "Target.h"
+
 
 // Start is called before the first frame update
 void BulletMove::Start()
@@ -30,7 +32,9 @@ void BulletMove::Update()
 
 void BulletMove::OnTriggerEnter(GameObject* collide)
 {
-	Utils::Println("Je commence la collision");
+	auto t =collide->GetComponent<Target>();
+	if (t != nullptr)
+		t->removeSelf();
 	Destroy(collide);
 	//collide->gameObject->Destroy();
 }

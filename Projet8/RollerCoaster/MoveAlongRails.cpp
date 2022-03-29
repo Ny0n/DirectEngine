@@ -15,7 +15,20 @@ void MoveAlongRails::Update()
 	{
 		MeshRenderer* cube = _toDelete.front();
 		_toDelete.pop_front();
-		Destroy(cube->gameObject);
+		list<GameObject*> targets = _rm->GetTarget();
+		if (!targets.empty())
+		{
+
+
+			GameObject* toBeDeleted = targets.front();
+			if (Utils::DistanceWithOutSquareRoot(toBeDeleted->transform->GetPosition(), cube->transform->GetPosition()) < 1000)
+			{
+				targets.pop_front();
+				Destroy(toBeDeleted);
+				_rm->SetTarget(targets);
+			}
+			Destroy(cube->gameObject);
+		}
 	}
 	Move();
 	if(NbreStep > 0)

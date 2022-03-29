@@ -19,7 +19,6 @@ void Shoot::Update()
 
 	if(shoot == true)
 	{
-		Utils::Println("Shot");
 		GameObject* bullet = new GameObject();
 		bullet->transform->SetQuaternion(transform->GetQuaternion());
 		bullet->transform->SetPosition(transform->GetPosition());

@@ -1,5 +1,7 @@
 #include "RailMaker.h"
 
+#include "Target.h"
+
 void RailMaker::Start()
 {
 	//MoveForward();
@@ -42,6 +44,11 @@ void RailMaker::Update()
 	}
 }
 
+RailMaker::~RailMaker()
+{
+	_target.clear();
+}
+
 void RailMaker::MoveForward()
 {
 	D3DXVECTOR3 position = transform->GetPosition();
@@ -76,7 +83,31 @@ void RailMaker::MoveForward()
 	Instantiate(box);
 	_cubes.push_back(box->GetComponent<MeshRenderer>());
 
+	box->transform->SetPosition(vector);
+	Instantiate(box);
+	float random = rand() % 100;
 	
+	if (random <= 5)
+	{
+		GameObject* targetGo =  new GameObject();
+		float randomX = rand() % 20 - 5;
+		float randomY = rand() % 10 + 5;
+
+		D3DXVECTOR3 targetPos = box->transform->GetPosition();
+		targetPos += box->transform->GetRight() * randomX;
+		targetPos += box->transform->GetUp() * randomY;
+
+		targetGo->transform->SetPosition(targetPos);
+		targetGo->AddComponent<MeshRenderer>(L"Mesh\\sphere.x");
+		targetGo->AddComponent<Collider>();
+
+
+		const auto script = new Target(&_target);
+		targetGo->AddComponent(script);
+
+		Instantiate(targetGo);
+		_target.push_back(targetGo);
+	}
 }
 
 MeshRenderer* RailMaker::PopFrontCube()

@@ -11,13 +11,21 @@ class RailMaker : public MonoBehaviour
 	void Update() override;
 
 public:
+
 	explicit RailMaker() {}
-	
+	~RailMaker() override;
+
 	list<MeshRenderer*> GetCube() { return  _cubes; }
+	list<GameObject*> GetTarget() { return  _target; }
+	void SetTarget(list<GameObject*> targets) { _target = targets; }
+
 	void MoveForward();
+
 	MeshRenderer* PopFrontCube();
 private :
 	list<MeshRenderer*> _cubes = {};
+	list<GameObject*> _target={};
+
 	const float _spaceBetween = 3.0f;
 	int _maxDistance = 50;
 	const float _step = 10;

@@ -98,25 +98,25 @@ bool Object::Instantiate(GameObject* go) // TODO instantiate with specific posit
 {
 	if (go == nullptr)
 	{
-		Utils::PrintErr("Object::Instantiate #1");
+		//Utils::PrintErr("Object::Instantiate #1");
 		return false;
 	}
 
 	if (!Application::IsPlaying())
 	{
-		Utils::PrintErr("Object::Instantiate #2");
+		//Utils::PrintErr("Object::Instantiate #2");
 		return false;
 	}
 
 	if (Application::IsGeneratingScene())
 	{
-		Utils::PrintErr("Object::Instantiate #3");
+		//Utils::PrintErr("Object::Instantiate #3");
 		return false;
 	}
 
 	if (go->_instantiatied)
 	{
-		Utils::PrintErr("Object::Instantiate #4"); // we can't instantiate an object that's already here
+		//Utils::PrintErr("Object::Instantiate #4"); // we can't instantiate an object that's already here
 		return false;
 	}
 
@@ -131,19 +131,19 @@ bool Object::Destroy(GameObject* go)
 {
 	if (go == nullptr)
 	{
-		Utils::PrintErr("Object::Destroy #1");
+		//Utils::PrintErr("Object::Destroy #1");
 		return false;
 	}
 
 	if (!Application::IsPlaying())
 	{
-		Utils::PrintErr("Object::Destroy #2");
+		//Utils::PrintErr("Object::Destroy #2");
 		return false;
 	}
 
 	if (Application::IsGeneratingScene())
 	{
-		Utils::PrintErr("Object::Destroy #3");
+		//Utils::PrintErr("Object::Destroy #3");
 		return false;
 	}
 	
