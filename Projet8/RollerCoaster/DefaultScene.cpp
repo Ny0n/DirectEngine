@@ -22,6 +22,7 @@ void DefaultScene::GenerateContent()
 	Cursor::Lock();
 	Cursor::SetVisible(false);
 
+
 	// tests
 	GameObject* mainCamera = CreateEmpty();
 	mainCamera->AddComponent(new Camera());
@@ -44,7 +45,7 @@ void DefaultScene::GenerateContent()
 	aligneBox->AddComponent<AlignedBox>();
 	AddToScene(aligneBox);
 
-	// camera
+	//cart
 
 	
 	GameObject* cart = CreateEmpty();

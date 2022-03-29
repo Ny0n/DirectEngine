@@ -95,6 +95,9 @@
     <ClInclude Include="CECIESTUNSCRIPT.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="RealFPCam.h">
+      <Filter>Game\Scripts\Movement</Filter>
+    </ClInclude>
     <ClInclude Include="CECINESTPASUNSCRIPT.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
@@ -160,6 +163,9 @@
     </ClCompile>
     <ClCompile Include="CECIESTUNSCRIPT.cpp">
       <Filter>Game\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="RealFPCam.cpp">
+      <Filter>Game\Scripts\Movement</Filter>
     </ClCompile>
     <ClCompile Include="CECINESTPASUNSCRIPT.cpp">
       <Filter>Game\Scripts</Filter>
