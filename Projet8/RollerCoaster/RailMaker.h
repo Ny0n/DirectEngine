@@ -1,7 +1,7 @@
 #pragma once
 
 #include "EngineLib.h"
-
+#include <Tile.h>
 
 class RailMaker : public MonoBehaviour
 {
@@ -12,12 +12,12 @@ class RailMaker : public MonoBehaviour
 
 public:
 	explicit RailMaker() {}
-	
-	list<MeshRenderer*> GetCube() { return  _cubes; }
+	~RailMaker() override;
+	list<Tile*> GetTiles() { return  _tiles; }
 	void MoveForward();
-	MeshRenderer* PopFrontCube();
+	Tile* PopFrontCube();
 private :
-	list<MeshRenderer*> _cubes = {};
+	list<Tile*> _tiles;
 	const float _spaceBetween = 3.0f;
 	int _maxDistance = 50;
 	const float _step = 10;

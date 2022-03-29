@@ -134,6 +134,9 @@
     <ClInclude Include="Button.h">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Source\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">

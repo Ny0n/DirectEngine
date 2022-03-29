@@ -14,7 +14,7 @@ void RailMaker::Update()
 
 	float farestCubedist = 0;
 	
-	if (_cubes.size() < _maxDistance)
+	if (_tiles.size() < _maxDistance)
 	{
 		float random = rand() % 100;
 		if (random <= 1.5f && _currentStepRight == 0)
@@ -42,6 +42,12 @@ void RailMaker::Update()
 	}
 }
 
+RailMaker::~RailMaker()
+{
+
+	_tiles.clear();
+}
+
 void RailMaker::MoveForward()
 {
 	D3DXVECTOR3 position = transform->GetPosition();
@@ -53,10 +59,10 @@ void RailMaker::MoveForward()
 	box->AddComponent<MeshRenderer>(path);
 
 	D3DXVECTOR3  vector;
-	if (!_cubes.empty())
+	if (!_tiles.empty())
 	{
-		vector = _cubes.back()->transform->GetPosition() + _cubes.back()->transform->GetForward() * _spaceBetween;
-		box->transform->SetQuaternion(_cubes.back()->transform->GetQuaternion());
+		vector = _tiles.back()->cube->transform->GetPosition() + _tiles.back()->cube->transform->GetForward() * _spaceBetween;
+		box->transform->SetQuaternion(_tiles.back()->cube->transform->GetQuaternion());
 	}
 	else
 	{
@@ -74,16 +80,35 @@ void RailMaker::MoveForward()
 	}
 	box->transform->SetPosition(vector);
 	Instantiate(box);
-	_cubes.push_back(box->GetComponent<MeshRenderer>());
+	float random = rand() % 100;
+	GameObject* targetGo = nullptr;
+	if(random<=5)
+	{
+		targetGo = new GameObject();
+		float randomX = rand() %20 - 5;
+		float randomY = rand() %10 + 5;
+		GameObject* targetGo = new GameObject();
+		D3DXVECTOR3 targetPos = box->transform->GetPosition();
+		targetPos += box->transform->GetRight() * randomX;
+		targetPos += box->transform->GetUp() * randomY;
+		targetGo->transform->SetPosition(targetPos);
+		targetGo->AddComponent<MeshRenderer>(L"Mesh\\sphere.x");
+		targetGo->AddComponent<Collider>();
+		Instantiate(targetGo);
+	}
+	Tile* t = new Tile();
+	t->cube = box->GetComponent<MeshRenderer>();
+	t->target = targetGo;
+	_tiles.push_back(t);
 
 	
 }
 
-MeshRenderer* RailMaker::PopFrontCube()
+Tile* RailMaker::PopFrontCube()
 {
-	if (_cubes.empty())
+	if (_tiles.empty())
 		return nullptr;
-	MeshRenderer* cube = _cubes.front();
-	_cubes.pop_front();
-	return cube;
+	Tile* tile = _tiles.front();
+	_tiles.pop_front();
+	return tile;
 }

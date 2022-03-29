@@ -27,6 +27,7 @@ void DefaultScene::GenerateContent()
 	// tests
 	GameObject* mainCamera = CreateEmpty();
 	mainCamera->AddComponent(new Camera());
+	mainCamera->AddComponent<AlignedBox>();
 	auto cam = mainCamera->AddComponent<FPCam>();
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
 	mainCamera->AddComponent<RailMaker>();

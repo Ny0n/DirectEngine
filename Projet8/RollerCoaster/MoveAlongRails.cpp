@@ -1,21 +1,28 @@
 #include "MoveAlongRails.h"
 
+
 MoveAlongRails::~MoveAlongRails()
 {
 	if (transformWhithoutCursor != nullptr)
 		transformWhithoutCursor->Delete();
+
+	
 	
 }
 
 void MoveAlongRails::Update()
 {
 
-	_cubes = _rm->GetCube();
+	_tiles = _rm->GetTiles();
 	if (!_toDelete.empty() && _toDelete.size() == 25)
 	{
-		MeshRenderer* cube = _toDelete.front();
+		Tile* tile = _toDelete.front();
 		_toDelete.pop_front();
-		Destroy(cube->gameObject);
+		auto tmp =_tiles.front();
+		if(tile->cube != nullptr)
+			Destroy(tile->cube->gameObject);
+		if(tile->target != nullptr)
+			Destroy(tile->target);
 	}
 	Move();
 	if(NbreStep > 0)
@@ -36,11 +43,11 @@ void MoveAlongRails::Start()
 
 void MoveAlongRails::Move()
 {
-	if(_cubes.empty())
+	if(_tiles.empty())
 		return;
 
 	/*D3DXVECTOR3 target =_cubes.front()->transform->GetPosition();*/
-	D3DXVECTOR3 target = _cubes.front()->transform->GetPosition()+ _cubes.front()->transform->GetUp()*4;
+	D3DXVECTOR3 target = _tiles.front()->cube->transform->GetPosition()+ _tiles.front()->cube->transform->GetUp()*4;
 
 	D3DXVECTOR3 pos = transform->GetPosition();
 	D3DXVECTOR3 vecteurDir = (target - pos);
@@ -50,12 +57,12 @@ void MoveAlongRails::Move()
 	
 	if (std::abs(pos.x - target.x) <= _almostOnSpot && std::abs(pos.z - target.z) <= _almostOnSpot && std::abs(pos.y - target.y) <= _almostOnSpot)
 	{
-		_previousDir = _cubes.front()->transform->GetForward();
-		MeshRenderer* cube = _rm->PopFrontCube();
-		_toDelete.push_back(cube);
-		_cubes = _rm->GetCube();
+		_previousDir = _tiles.front()->cube->transform->GetForward();
+		auto tile = _rm->PopFrontCube();
+		_toDelete.push_back(tile);
+		_tiles = _rm->GetTiles();
 
-		cubeQuat = _cubes.front()->transform->GetQuaternion();
+		cubeQuat = _tiles.front()->cube->transform->GetQuaternion();
 		auto currentquat = transformWhithoutCursor->GetQuaternion();
 		if(cubeQuat.x != currentquat.x || cubeQuat.y != currentquat.y || cubeQuat.z != currentquat.z || cubeQuat.w != currentquat.w)
 			NbreStep = 20;

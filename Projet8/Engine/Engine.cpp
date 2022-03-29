@@ -78,7 +78,7 @@ void Engine::InitD3D()
         End = 100.0f;
 
     // Enable fog blending.
-    d3ddev->SetRenderState(D3DRS_FOGENABLE, TRUE);
+    d3ddev->SetRenderState(D3DRS_FOGENABLE, false);
 
     // Set the fog color.
     d3ddev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_XRGB(0, 0, 0));

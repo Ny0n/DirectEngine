@@ -1,7 +1,6 @@
 #pragma once
 
 #include "EngineLib.h"
-
 #include "RailMaker.h"
 
 class Cube;
@@ -21,11 +20,11 @@ public:
     void Move();
 
 private:
-    list<MeshRenderer*> _cubes;
-    list<MeshRenderer*> _toDelete;
+    list<Tile*> _tiles;
+    list<Tile*> _toDelete;
     RailMaker* _rm;
     D3DXVECTOR3 _previousDir;
-    float _speed =25.0f;
+    float _speed = 25.0f;
     float _almostOnSpot = 1.0f;
     Transform* transformWhithoutCursor;
 

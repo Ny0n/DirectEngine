@@ -187,6 +187,7 @@
     <ClInclude Include="Profiler.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Textbox.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Transform.h" />
