@@ -15,6 +15,8 @@ public:
 	UINT height;
 	UINT width;
 	bool originalSize = false;
+	D3DCOLOR imageColor = D3DCOLOR_ARGB(255,255,255,255);
+	bool drawFromCenter = false;
 
 	D3DXVECTOR2 position = D3DXVECTOR2(0 ,0);
 	D3DXVECTOR2 scale = D3DXVECTOR2(1, 1);

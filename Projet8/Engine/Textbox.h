@@ -7,6 +7,7 @@ class Textbox final : public EngineComponent
 
 public:
 	string GetType() override { return NAMEOF(Textbox); }
+	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
 
 	explicit Textbox();
 	~Textbox() override;

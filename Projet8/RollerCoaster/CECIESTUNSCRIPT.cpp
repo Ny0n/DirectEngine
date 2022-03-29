@@ -24,7 +24,8 @@ void CECIESTUNSCRIPT::MyFunc()
 
 void CECIESTUNSCRIPT::OnPlay()
 {
-	Utils::Println("play");
+	SceneManager::LoadScene("DefaultScene");
+	Cursor::SetVisible(false);
 }
 
 void CECIESTUNSCRIPT::OnCredits()
@@ -34,7 +35,7 @@ void CECIESTUNSCRIPT::OnCredits()
 
 void CECIESTUNSCRIPT::OnQuit()
 {
-	Utils::Println("quit");
+	Application::Quit();
 }
 
 // **************************** //

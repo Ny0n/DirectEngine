@@ -8,7 +8,6 @@ Textbox::Textbox()
 Textbox::~Textbox()
 {
 	font->Release();
-	texture->Release();
 	ppSprite->Release();
 	line->Release();
 }
@@ -75,7 +74,7 @@ void Textbox::Render()
 
 	if (drawBox)
 	{
-		HR(ppSprite->Begin(0))
+		HR(ppSprite->Begin(D3DXSPRITE_ALPHABLEND))
 
 		const auto spritePostion = D3DXVECTOR3(rectTopLeft.x, rectTopLeft.y, 0);
 		HR(ppSprite->Draw(texture, NULL, NULL, &spritePostion, boxColor))

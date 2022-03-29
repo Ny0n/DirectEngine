@@ -55,9 +55,14 @@ void Image::Render()
 	D3DXMATRIX Mat;
 	D3DXMatrixTransformation2D(&Mat, NULL, NULL, &scale, &rotationCenter, rotation, &position);
 	//Render mon image
-	HR(ppSprite->Begin(0))
+
+	D3DXVECTOR3 center = D3DXVECTOR3(0,0, 0);
+	if (drawFromCenter)
+		center = D3DXVECTOR3(width * .5f, height * .5f, 0);
+
+	HR(ppSprite->Begin(D3DXSPRITE_ALPHABLEND))
 	HR(ppSprite->SetTransform(&Mat))
-	HR(ppSprite->Draw(ppTexture, NULL, NULL, NULL, 0xFFFFFFFF))
+	HR(ppSprite->Draw(ppTexture, NULL, &center, NULL, imageColor))
 
 	HR(ppSprite->End())
 }

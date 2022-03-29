@@ -88,7 +88,7 @@ void Button::Render()
 
 	if (drawBox)
 	{
-		HR(ppSprite->Begin(0))
+		HR(ppSprite->Begin(D3DXSPRITE_ALPHABLEND))
 
 		auto spritePostion = D3DXVECTOR3(rectTopLeft.x, rectTopLeft.y, 0);
 		HR(ppSprite->Draw(texture, NULL, NULL, &spritePostion, boxColor))

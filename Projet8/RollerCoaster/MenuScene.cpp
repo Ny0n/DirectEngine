@@ -17,7 +17,7 @@ void MenuScene::GenerateContent()
 	GameObject* canvas = CreateEmpty();
 
 	auto BackgroundImg = canvas->AddComponent<Image>();
-	BackgroundImg->filePath = L"Image\\test.jpg";
+	BackgroundImg->filePath = L"Image\\background.jpg";
 	BackgroundImg->width = 1920;
 	BackgroundImg->height = 1080;
 
@@ -36,7 +36,7 @@ void MenuScene::GenerateContent()
 	QuitBtn->text = L"QUIT";
 	btnList[2] = QuitBtn;
 
-	auto tb = canvas->AddComponent<Textbox>();
+	canvas->AddComponent<Textbox>();
 
 	auto input = canvas->AddComponent<InputField>();
 

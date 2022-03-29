@@ -39,6 +39,7 @@ public:
 	bool drawBox = true;
 	bool drawBorder = true;
 	bool isDisabled = false;
+
 private:
 	string GetType() override { return NAMEOF(Button); }
 	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
