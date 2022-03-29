@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="AlignedBox.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="Collider.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="InputField.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="KeyCodes.h" />
     <ClInclude Include="MeshRenderer.h" />
@@ -193,6 +195,7 @@
   <ItemGroup>
     <ClCompile Include="AlignedBox.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -204,6 +207,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputField.cpp" />
     <ClCompile Include="IScene.cpp" />
     <ClCompile Include="KeyCodes.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />

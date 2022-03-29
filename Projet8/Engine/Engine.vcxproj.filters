@@ -128,6 +128,12 @@
     <ClInclude Include="Object.h">
       <Filter>Source\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="InputField.h">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -210,6 +216,12 @@
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Source\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="InputField.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

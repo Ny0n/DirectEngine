@@ -2,7 +2,6 @@
 
 #include "DefaultScene.h"
 #include "FlavienDevScene.h"
-#include "LionelScene.h"
 #include "MenuScene.h"
 
 // this is the main message handler for the program
@@ -52,7 +51,7 @@ void App::Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, i
     _window = CreateWindowEx(NULL,
         L"WindowClass",    // name of the window class
         L"Our First Direct3D Program",   // title of the window
-        WS_OVERLAPPEDWINDOW,    // window style
+        WS_EX_TOPMOST | WS_POPUP,    // window style WS_EX_TOPMOST | WS_POPUP
         0,    // x-position of the window
         0,    // y-position of the window
         SCREEN_WIDTH,    // width of the window
@@ -69,9 +68,10 @@ void App::Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, i
 void App::Run()
 {
     // first we prep the scenes that will be used in the app
+    //SceneManager::AddToBuild(new FlavienDevScene());
+    SceneManager::AddToBuild(new MenuScene());
     SceneManager::AddToBuild(new DefaultScene());
-    //SceneManager::AddToBuild(new LionelScene());
-	//SceneManager::AddToBuild(new MenuScene());
+	
 
     // and then we run the game
     Engine::GetInstance()->Run(_window);

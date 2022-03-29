@@ -1,5 +1,6 @@
 #include "DefaultScene.h"
 
+#include "CECINESTPASUNSCRIPT.h"
 #include "Cube.h"
 #include "DontDestroyOnLoad.h"
 #include "GoUp.h"
@@ -37,7 +38,13 @@ void DefaultScene::GenerateContent()
 	AddToScene(mainCamera);
 
 	// tests
-
+	GameObject* mainCamera = CreateEmpty();
+	mainCamera->AddComponent(new Camera());
+	auto cam = mainCamera->AddComponent<FPCam>();
+	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
+	mainCamera->AddComponent<RailMaker>();
+	mainCamera->AddComponent<MoveAlongRails>();
+	AddToScene(mainCamera);
 	GameObject* inputTester = CreateEmpty();
 	inputTester->AddComponent<InputTester>();
 	AddToScene(inputTester);
@@ -54,14 +61,35 @@ void DefaultScene::GenerateContent()
 
 	//cart
 
+	
 	GameObject* cart = CreateEmpty();
 
-	LPCWSTR cartPath = L"Mesh\\minecart.x";
-	cart->AddComponent<MeshRenderer>(cartPath);
+	LPCWSTR cartPath = L"Mesh\\tiger.x";
+	//cart->AddComponent<MeshRenderer>(cartPath);
+	cart->AddComponent<MeshRenderer>(L"Mesh\\tiger.x");
 
 
 	AddToScene(cart);
 
-	FpCamCompo->SetCart(cart);
+	cam->SetCart(cart);
 
+
+	// cube
+
+	auto crossGO = CreateEmpty();
+	auto img = crossGO->AddComponent<Image>();
+
+	img->filePath = L"Image\\flavien3.png";
+	img->position = D3DXVECTOR2(SCREEN_WIDTH * .5f, SCREEN_HEIGHT * .5f);
+	img->originalSize = true;
+	//img->scale = D3DXVECTOR2(.1f, .1f);
+	img->scale = D3DXVECTOR2(.5f, .5f);
+	img->imageColor = D3DCOLOR_ARGB(255, 255, 0, 0);
+	img->drawFromCenter = true;
+
+	crossGO->AddComponent<CECINESTPASUNSCRIPT>(img);
+
+	AddToScene(crossGO);
+	
+	
 }

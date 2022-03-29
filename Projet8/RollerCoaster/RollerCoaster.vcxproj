@@ -148,6 +148,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="BulletMove.h" />
     <ClInclude Include="CECIESTUNSCRIPT.h" />
+    <ClInclude Include="CECINESTPASUNSCRIPT.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DefaultScene.h" />
     <ClInclude Include="DontDestroyOnLoad.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="BulletMove.cpp" />
     <ClCompile Include="CECIESTUNSCRIPT.cpp" />
+    <ClCompile Include="CECINESTPASUNSCRIPT.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="DontDestroyOnLoad.cpp" />

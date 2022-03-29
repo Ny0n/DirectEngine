@@ -16,5 +16,5 @@ private:
     float nvp = 1.0f; // the near view-plane
     float fvp = 1000.0f; // the far view-plane
 
-    D3DCOLOR skyColor = D3DCOLOR_XRGB(80, 140, 220); // light-blue background
+    D3DCOLOR skyColor = D3DCOLOR_XRGB(0, 0, 0); // light-blue background
 };

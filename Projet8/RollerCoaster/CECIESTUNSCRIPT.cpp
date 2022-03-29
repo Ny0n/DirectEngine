@@ -1,12 +1,11 @@
 #include "CECIESTUNSCRIPT.h"
 
-CECIESTUNSCRIPT::CECIESTUNSCRIPT()
-{
-}
 
-CECIESTUNSCRIPT::CECIESTUNSCRIPT(Image* image) : _image(image)
+CECIESTUNSCRIPT::CECIESTUNSCRIPT(Button* listBtn[3])
 {
-	_image->rotationCenter = D3DXVECTOR2(100, 100);
+	_listBtn[0] = listBtn[0];
+	_listBtn[1] = listBtn[1];
+	_listBtn[2] = listBtn[2];
 }
 
 CECIESTUNSCRIPT::~CECIESTUNSCRIPT()
@@ -14,13 +13,43 @@ CECIESTUNSCRIPT::~CECIESTUNSCRIPT()
 	//delete _image;
 }
 
+void CECIESTUNSCRIPT::MyFunc()
+{
+	/*auto randX = rand() % 400;
+	auto randY = rand() % 350;
+	_button->rectTopLeft = D3DXVECTOR2(randX, randY);
+	_button->rectBottomRight = D3DXVECTOR2(randX + 300, randY +50);*/
+	
+}
+
+void CECIESTUNSCRIPT::OnPlay()
+{
+	SceneManager::LoadScene("DefaultScene");
+	Cursor::SetVisible(false);
+}
+
+void CECIESTUNSCRIPT::OnCredits()
+{
+	Utils::Println("credits");
+}
+
+void CECIESTUNSCRIPT::OnQuit()
+{
+	Application::Quit();
+}
+
 // **************************** //
 
 void CECIESTUNSCRIPT::Start()
 {
+	//_button->onClick = RUNNER(MyFunc);
+	_listBtn[0]->onClick = RUNNER(OnPlay);
+	_listBtn[1]->onClick = RUNNER(OnCredits);
+	_listBtn[2]->onClick = RUNNER(OnQuit);
 }
 
 void CECIESTUNSCRIPT::Update()
 {
-	_image->rotation += Time::deltaTime * speed;
+	
 }
+

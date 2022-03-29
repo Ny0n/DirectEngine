@@ -8,7 +8,6 @@ Textbox::Textbox()
 Textbox::~Textbox()
 {
 	font->Release();
-	texture->Release();
 	ppSprite->Release();
 	line->Release();
 }
@@ -29,7 +28,7 @@ void Textbox::EngineStart()
 		&font))
 
 	const auto result = SetRect(&textRect, rectTopLeft.x, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
-	if (result != 0)
+	if (result <= 0)
 		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
 
 	D3DXIMAGE_INFO info;
@@ -75,7 +74,7 @@ void Textbox::Render()
 
 	if (drawBox)
 	{
-		HR(ppSprite->Begin(0))
+		HR(ppSprite->Begin(D3DXSPRITE_ALPHABLEND))
 
 		const auto spritePostion = D3DXVECTOR3(rectTopLeft.x, rectTopLeft.y, 0);
 		HR(ppSprite->Draw(texture, NULL, NULL, &spritePostion, boxColor))
@@ -88,14 +87,17 @@ void Textbox::Render()
 		HR(line->Begin())
 
 		D3DXVECTOR2 linesList[] = {
-				D3DXVECTOR2(rectTopLeft.x,rectTopLeft.y),
-				D3DXVECTOR2(rectBottomRight.x,rectTopLeft.y),
-				D3DXVECTOR2(rectBottomRight.x,rectBottomRight.y),
-				D3DXVECTOR2(rectTopLeft.x,rectBottomRight.y),
-				D3DXVECTOR2(rectTopLeft.x,rectTopLeft.y),
+			D3DXVECTOR2(rectTopLeft.x - borderThickness * 0.5f,rectTopLeft.y),
+			D3DXVECTOR2(rectBottomRight.x + borderThickness * 0.5f,rectTopLeft.y),
+			D3DXVECTOR2(rectBottomRight.x,rectTopLeft.y),
+			D3DXVECTOR2(rectBottomRight.x,rectBottomRight.y),
+			D3DXVECTOR2(rectBottomRight.x + borderThickness * 0.5f,rectBottomRight.y),
+			D3DXVECTOR2(rectTopLeft.x - borderThickness * 0.5f,rectBottomRight.y),
+			D3DXVECTOR2(rectTopLeft.x,rectBottomRight.y),
+			D3DXVECTOR2(rectTopLeft.x,rectTopLeft.y),
 		};
 
-		HR(line->Draw(linesList, 5, borderColor))
+		HR(line->Draw(linesList, 8, borderColor))
 
 		HR(line->End())
 	}
