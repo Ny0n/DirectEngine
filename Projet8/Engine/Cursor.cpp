@@ -4,6 +4,7 @@ LockMode Cursor::cursorLockMode = LockMode::None;
 
 void Cursor::Lock()
 {
+	SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	cursorLockMode = LockMode::Locked;
 }
 

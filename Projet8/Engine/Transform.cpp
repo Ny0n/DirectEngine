@@ -82,18 +82,28 @@ void Transform::Rotate(float pitch, float yaw, float roll, Space relativeTo)
 	D3DXVECTOR3 yAxis;
 	D3DXVECTOR3 zAxis;
 
-	if(relativeTo == Space::Self)
-	{
-		xAxis = right;
-		yAxis = up;
-		zAxis = forward;
+	switch (relativeTo)
+		{
+		case Space::World:
+			{
+				xAxis = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+				yAxis = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+				zAxis = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+			} break;
+		case Space::Self:
+			{
+				xAxis = right;
+				yAxis = up;
+				zAxis = forward;
+			} break;
+		case Space::Custom:
+			{
+				xAxis = customRight;
+				yAxis = customUp;
+				zAxis = customForward;
+			}break;
 	}
-	else
-	{
-		xAxis = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
-		yAxis = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-		zAxis = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
-	}
+	
 
 	D3DXQUATERNION quat;
 
@@ -192,6 +202,13 @@ void Transform::SetQuaternion(D3DXQUATERNION quat)
 {
 	quaternion = quat;
 	UpdateRotationFromQuaternion();
+}
+
+void Transform::SetCustomAxis(D3DXVECTOR3 right, D3DXVECTOR3 up, D3DXVECTOR3 forward)
+{
+	customForward = forward;
+	customRight = right;
+	customUp = up;
 }
 
 void Transform::SetPosition(D3DXVECTOR3 pos)
