@@ -110,6 +110,9 @@
     <ClInclude Include="Target.h">
       <Filter>Framework</Filter>
     </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Game\Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RainbowBackground.cpp">
@@ -185,6 +188,9 @@
       <Filter>Game\Scripts\UI</Filter>
     </ClCompile>
     <ClCompile Include="Target.cpp" />
+    <ClCompile Include="Score.cpp">
+      <Filter>Game\Scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RollerCoaster.rc">

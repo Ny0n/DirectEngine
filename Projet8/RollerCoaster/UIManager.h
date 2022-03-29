@@ -20,7 +20,8 @@ private:
 	void Pause();
 	void Resume();
 	void OnRestart();
-	void onMenu();
+	void OnMenu();
+	void ShowFPS();
 
 	bool isPaused;
 	GameObject* _pauseGO;
@@ -28,4 +29,6 @@ private:
 	FPCam* _cam;
 	Button* _listBtn[3];
 	Textbox* _fpsCounter;
+
+	list<int> averageFPS;
 };

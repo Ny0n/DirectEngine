@@ -12,6 +12,7 @@
 #include "RailMaker.h"
 #include "RainbowBackground.h"
 #include "Rotate.h"
+#include "Score.h"
 #include "Shoot.h"
 #include "UIManager.h"
 
@@ -68,15 +69,30 @@ void DefaultScene::GenerateContent()
 #pragma region fpsCounter
 	auto fpsCounter = CreateEmpty();
 	auto fpsText = fpsCounter->AddComponent<Textbox>();
-	fpsText->size = D3DXVECTOR2(50, 25);
-	fpsText->drawBox = true;
+	fpsText->size = D3DXVECTOR2(90, 25);
+	fpsText->textFormat = DT_LEFT | DT_VCENTER;
+	fpsText->textColor = D3DCOLOR_ARGB(255, 0, 255, 0);
 
 	AddToScene(fpsCounter);
 
 #pragma endregion fpsCounter
 
-	#pragma region pause
+#pragma region Score
+	auto scoreGO = CreateEmpty();
 
+	auto scoreText = scoreGO->AddComponent<Textbox>();
+	scoreText->textColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+	scoreText->text = L"Score: 0";
+	scoreText->size = D3DXVECTOR2(300, 50);
+	scoreText->fontHeight = 50;
+	scoreText->position = D3DXVECTOR2(SCREEN_WIDTH * .5f - scoreText->size.x * .5f, 75);
+
+	scoreGO->AddComponent<Score>(scoreText);
+
+	AddToScene(scoreGO);
+#pragma endregion Score
+
+#pragma region pause
 	// menu pause
 	auto pauseCanvas = CreateEmpty();
 	pauseCanvas->AddComponent<PauseScript>();
@@ -124,8 +140,7 @@ void DefaultScene::GenerateContent()
 	listBtn[2] = menuBtn;
 
 	AddToScene(pauseCanvas);
-
-	#pragma endregion pause
+#pragma endregion pause
 
 	// UI Manager
 	auto UIManagerGO = CreateEmpty();

@@ -40,9 +40,31 @@ void UIManager::OnRestart()
 	Cursor::SetVisible(false);
 }
 
-void UIManager::onMenu()
+void UIManager::OnMenu()
 {
 	SceneManager::LoadScene(1);
+}
+
+void UIManager::ShowFPS()
+{
+	auto currFps = static_cast<int>(Time::currentFps());
+
+	if (averageFPS.size() >= 100)
+	{
+		averageFPS.pop_front();
+		averageFPS.push_back(currFps);
+	}
+	else
+		averageFPS.push_back(currFps);
+
+	int fps = 0;
+
+	for (auto e : averageFPS)
+	{
+		fps += e;
+	}
+
+	_fpsCounter->text = L"FPS: " + to_wstring(fps / averageFPS.size());
 }
 
 // **************************** //
@@ -52,13 +74,14 @@ void UIManager::Start()
 {
 	_listBtn[0]->onClick = RUNNER(Resume);
 	_listBtn[1]->onClick = RUNNER(OnRestart);
-	_listBtn[2]->onClick = RUNNER(onMenu);
+	_listBtn[2]->onClick = RUNNER(OnMenu);
+
 }
 
 // Update is called once per frame
 void UIManager::Update()
 {
-	_fpsCounter->text = to_wstring(static_cast<int>(Time::currentFps()));
+	ShowFPS();
 
 	if (Engine::GetInstance()->window != GetForegroundWindow())
 		Pause();

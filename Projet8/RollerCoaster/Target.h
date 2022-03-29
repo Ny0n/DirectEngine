@@ -13,6 +13,7 @@ class Target :
 public:
     Target(list<GameObject*>* gos) { _listGameObject = gos; }
     void removeSelf();
-   
+
+    int points = 10;
 };
 
