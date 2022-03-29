@@ -16,6 +16,7 @@ void BulletMove::Update()
 	pos += dir * bulletSpeed * Time::deltaTime;
 
 	transform->SetPosition(pos);
+	transform->RotateRoll(-600.0f * Time::deltaTime);
 
 	if(currentTimer < 0)
 	{
