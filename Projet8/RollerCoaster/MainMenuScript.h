@@ -10,17 +10,23 @@ class MainMenuScript : public MonoBehaviour
 	void Update() override;
 
 public:
-	explicit MainMenuScript(Button* listBtn[3]);
+	explicit MainMenuScript(GameObject* menuGO, GameObject* optionsGO, GameObject* creditsGO, Button* listBtn[4]);
 	~MainMenuScript() override;
 
 private:
 	void MyFunc();
 
 	void OnPlay();
+	void OnOptions();
 	void OnCredits();
 	void OnQuit();
+	void BackToMenu();
 
-	Button* _listBtn[3];
+	GameObject* _menuGO;
+	GameObject* _optionsGO;
+	GameObject* _creditsGO;
+
+	Button* _listBtn[4];
 	float speed = 1.0f;
 	bool noir = true;
 };

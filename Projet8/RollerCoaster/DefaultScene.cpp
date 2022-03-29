@@ -38,7 +38,7 @@ void DefaultScene::GenerateContent()
 	inputTester->AddComponent<InputTester>();
 	AddToScene(inputTester);*/
 
-	//cart
+#pragma region cart
 	GameObject* cart = CreateEmpty();
 
 	LPCWSTR cartPath = L"Mesh\\minecart.x";
@@ -48,16 +48,15 @@ void DefaultScene::GenerateContent()
 	AddToScene(cart);
 
 	cam->SetCart(cart);
+#pragma endregion cart
 
-
-	// crosshair
+#pragma region crosshair
 	auto crossGO = CreateEmpty();
 	auto img = crossGO->AddComponent<Image>();
 
 	img->filePath = L"Image\\flavien3.png";
 	img->position = D3DXVECTOR2(SCREEN_WIDTH * .5f, SCREEN_HEIGHT * .5f);
 	img->originalSize = true;
-	//img->scale = D3DXVECTOR2(.1f, .1f);
 	img->scale = D3DXVECTOR2(.5f, .5f);
 	img->imageColor = D3DCOLOR_ARGB(255, 255, 0, 0);
 	img->drawFromCenter = true;
@@ -65,6 +64,7 @@ void DefaultScene::GenerateContent()
 	crossGO->AddComponent<CrosshairScript>(img);
 
 	AddToScene(crossGO);
+#pragma endregion crosshair
 
 #pragma region fpsCounter
 	auto fpsCounter = CreateEmpty();
@@ -116,7 +116,7 @@ void DefaultScene::GenerateContent()
 	pauseTitle->position = D3DXVECTOR2(panelPosition.x + (panel->width * 0.5f) - pauseTitle->size.x *.5f, panelPosition.y + 30);
 
 	//Buttons
-	Button* listBtn[3] = {nullptr};
+	Button* listBtn[4] = {nullptr};
 
 	auto resumeBtn = pauseCanvas->AddComponent<Button>();
 	resumeBtn->text = L"RESUME";
@@ -129,15 +129,22 @@ void DefaultScene::GenerateContent()
 	restartBtn->text = L"RESTART";
 	restartBtn->size = D3DXVECTOR2(250, 60);
 	restartBtn->position.x = panelPosition.x + (panel->width * 0.5f) - restartBtn->size.x * .5f;
-	restartBtn->position.y = resumeBtn->position.y + 100;
+	restartBtn->position.y = resumeBtn->position.y + 80;
 	listBtn[1] = restartBtn;
 
 	auto menuBtn = pauseCanvas->AddComponent<Button>();
 	menuBtn->text = L"BACK TO MENU";
 	menuBtn->size = D3DXVECTOR2(250, 60);
 	menuBtn->position.x = panelPosition.x + (panel->width * 0.5f) - menuBtn->size.x * .5f;
-	menuBtn->position.y = restartBtn->position.y + 100;
+	menuBtn->position.y = restartBtn->position.y + 80;
 	listBtn[2] = menuBtn;
+
+	auto quitBtn = pauseCanvas->AddComponent<Button>();
+	quitBtn->text = L"QUIT";
+	quitBtn->size = D3DXVECTOR2(250, 60);
+	quitBtn->position.x = panelPosition.x + (panel->width * 0.5f) - quitBtn->size.x * .5f;
+	quitBtn->position.y = menuBtn->position.y + 80;
+	listBtn[3] = quitBtn;
 
 	AddToScene(pauseCanvas);
 #pragma endregion pause
@@ -149,4 +156,7 @@ void DefaultScene::GenerateContent()
 	UIManagerGO->AddComponent(managerScript);
 
 	AddToScene(UIManagerGO);
+
+	
+
 }

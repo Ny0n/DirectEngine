@@ -11,7 +11,7 @@ class UIManager : public MonoBehaviour
 	void Update() override;
 
 public:
-	explicit UIManager(GameObject* goToEnable, GameObject* goToDisable, FPCam* cam, Button* listBtn[3], Textbox* fpsCounter);
+	explicit UIManager(GameObject* goToEnable, GameObject* goToDisable, FPCam* cam, Button* listBtn[4], Textbox* fpsCounter);
 	~UIManager() override;
 
 	bool IsPaused();
@@ -27,7 +27,7 @@ private:
 	GameObject* _pauseGO;
 	GameObject* _crossGO;
 	FPCam* _cam;
-	Button* _listBtn[3];
+	Button* _listBtn[4];
 	Textbox* _fpsCounter;
 
 	list<int> averageFPS;

@@ -1,10 +1,11 @@
 ﻿#include "UIManager.h"
 
-UIManager::UIManager(GameObject* go, GameObject* goToDisable, FPCam* cam, Button* listBtn[3], Textbox* fpsCounter): _pauseGO(go), _crossGO(goToDisable), _cam(cam), _fpsCounter(fpsCounter)
+UIManager::UIManager(GameObject* go, GameObject* goToDisable, FPCam* cam, Button* listBtn[4], Textbox* fpsCounter): _pauseGO(go), _crossGO(goToDisable), _cam(cam), _fpsCounter(fpsCounter)
 {
 	_listBtn[0] = listBtn[0];
 	_listBtn[1] = listBtn[1];
 	_listBtn[2] = listBtn[2];
+	_listBtn[3] = listBtn[3];
 }
 
 UIManager::~UIManager()
@@ -75,6 +76,7 @@ void UIManager::Start()
 	_listBtn[0]->onClick = RUNNER(Resume);
 	_listBtn[1]->onClick = RUNNER(OnRestart);
 	_listBtn[2]->onClick = RUNNER(OnMenu);
+	_listBtn[3]->onClick = Application::Quit;
 
 }
 
