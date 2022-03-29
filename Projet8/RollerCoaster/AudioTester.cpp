@@ -15,7 +15,7 @@ void AudioTester::Start()
 {
 	_source = gameObject->GetComponent<AudioSource>();
 	if (_source != nullptr)
-		_source->SetSound(L"Audio\\gnome.wav");
+		_source->SetSound(L"Audio\\music.wav");
 }
 
 // Update is called once per frame

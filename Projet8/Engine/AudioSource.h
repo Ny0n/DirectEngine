@@ -15,6 +15,7 @@ public:
 	void Flush();
 
 	void Play();
+	void Resume();
 	void Pause();
 	void Toggle();
 	void Stop();
@@ -40,7 +41,7 @@ private:
 	// custom voice callback
 	friend class AudioManager::AudioSourceCallbacks;
 	AudioManager::AudioSourceCallbacks* pSourceCallback;
-	bool _restarted = false;
+	bool _restarting = false;
 
 	bool _playing = false;
 	bool _paused = false;

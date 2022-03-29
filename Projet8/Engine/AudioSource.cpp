@@ -114,7 +114,16 @@ COM_DECLSPEC_NOTHROW void AudioManager::AudioSourceCallbacks::OnBufferEnd(void* 
 {
 	Utils::Println("END");
 
-	if (!source->_wasPlaying)
+	if (source->_restarting)
+	{
+		source->_restarting = false;
+		return;
+	}
+
+	source->_playing = false;
+	source->_paused = false;
+
+	if (!source->_wasPlaying) // this means we want to loop
 	{
 		Utils::Println("NOPE");
 		return;
@@ -137,18 +146,32 @@ void AudioSource::Play()
 {
 	CHECKSOURCE()
 
+	if (_paused)
+	{
+		Resume();
+		return;
+	}
+
 	if (_playing)
 		return;
 
-	if (!_hasSetBuffer)
-	{
-		HRSOUND(pSourceVoice->SubmitSourceBuffer(&buffer));
-		_hasSetBuffer = true;
-	}
+	HRSOUND(pSourceVoice->FlushSourceBuffers());
+	HRSOUND(pSourceVoice->SubmitSourceBuffer(&buffer));
 
 	HRSOUND(pSourceVoice->Start());
 
 	_playing = true;
+}
+
+void AudioSource::Resume()
+{
+	CHECKSOURCE()
+
+	if (!_paused)
+		return;
+	
+	HRSOUND(pSourceVoice->Start());
+
 	_paused = false;
 }
 
@@ -160,8 +183,7 @@ void AudioSource::Pause()
 		return;
 
 	HRSOUND(pSourceVoice->Stop());
-
-	_playing = false;
+	
 	_paused = true;
 }
 
@@ -169,7 +191,7 @@ void AudioSource::Toggle()
 {
 	CHECKSOURCE()
 
-	if (!_playing)
+	if (_paused)
 		Play();
 	else
 		Pause();
@@ -179,12 +201,11 @@ void AudioSource::Stop()
 {
 	CHECKSOURCE()
 
-	if (_playing)
-		HRSOUND(pSourceVoice->Stop());
-	
+	Utils::Println("before");
+	pSourceVoice->Stop();
 	HRSOUND(pSourceVoice->FlushSourceBuffers());
-	_hasSetBuffer = false;
-	
+	Utils::Println("after");
+
 	_playing = false;
 	_paused = false;
 }
@@ -193,8 +214,11 @@ void AudioSource::Restart()
 {
 	CHECKSOURCE()
 
+	_restarting = true;
 	Stop();
 	Play();
+	Utils::Println("PLAYING:");
+	Utils::Println(_playing);
 }
 
 // **************************** //
@@ -221,18 +245,6 @@ void AudioSource::SetLooping(bool loop)
 		{
 			_wasPlaying = true;
 		}
-		// if playing ended:
-		// Stop()
-		// Flush
-		// Submit
-
-		// ON END
-		// if looping
-		// Flush
-		// Submit
-
-		// HRSOUND(pSourceVoice->FlushSourceBuffers());
-		// HRSOUND(pSourceVoice->SubmitSourceBuffer(&buffer));
 	}
 	else
 	{
