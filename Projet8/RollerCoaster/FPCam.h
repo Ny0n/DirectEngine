@@ -20,5 +20,5 @@ private:
 
 	float rightSpeed;
 	float upSpeed;
-	float yaw;
+	float upSpeedLimit = 30.0f;
 };

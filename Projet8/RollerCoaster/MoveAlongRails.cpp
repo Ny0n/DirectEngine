@@ -9,12 +9,14 @@ MoveAlongRails::~MoveAlongRails()
 
 void MoveAlongRails::Update()
 {
-	if(_cubes.empty() && initialiased == false)
-	{
-		Init();
-	}
-	_cubes = _rm->GetCube();
 
+	_cubes = _rm->GetCube();
+	if (!_toDelete.empty() && _toDelete.size() == 25)
+	{
+		MeshRenderer* cube = _toDelete.front();
+		_toDelete.pop_front();
+		Destroy(cube->gameObject);
+	}
 	Move();
 	if(NbreStep > 0)
 	{
@@ -50,8 +52,7 @@ void MoveAlongRails::Move()
 	{
 		_previousDir = _cubes.front()->transform->GetForward();
 		MeshRenderer* cube = _rm->PopFrontCube();
-
-		Destroy(cube->gameObject);
+		_toDelete.push_back(cube);
 		_cubes = _rm->GetCube();
 
 		cubeQuat = _cubes.front()->transform->GetQuaternion();
@@ -62,17 +63,6 @@ void MoveAlongRails::Move()
 	transformWhithoutCursor->SetPosition(pos);
 }
 
-void MoveAlongRails::Init()
-{
-	_cubes = _rm->GetCube();
-	if(!_cubes.empty())
-	{
-		D3DXVECTOR3 pos = _cubes.front()->transform->GetPosition() + _cubes.front()->transform->GetUp() * 4;
-		transformWhithoutCursor->SetPosition(pos);
-		transformWhithoutCursor->SetQuaternion(_cubes.front()->transform->GetQuaternion());
-		MeshRenderer* cube = _rm->PopFrontCube();
-		initialiased = true;
-	}
-}
+
 
 

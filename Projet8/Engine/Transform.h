@@ -4,6 +4,7 @@ enum class Space
 {
 	World,
     Self,
+    Custom,
 };
 
 class Transform final : public EngineComponent
@@ -45,6 +46,8 @@ public:
     D3DXVECTOR3 GetRight() const { return right; }
     D3DXVECTOR3 GetUp() const { return up; }
 
+    void SetCustomAxis(D3DXVECTOR3 right, D3DXVECTOR3 up, D3DXVECTOR3 forward);
+
 private:
     D3DXMATRIX matrix;
 
@@ -57,5 +60,10 @@ private:
     D3DXVECTOR3 forward;
     D3DXVECTOR3 right;
     D3DXVECTOR3 up;
+
+
+    D3DXVECTOR3 customForward = D3DXVECTOR3(1,0,0);
+    D3DXVECTOR3 customRight = D3DXVECTOR3(0, 1, 0);
+    D3DXVECTOR3 customUp = D3DXVECTOR3(0, 0, 1);
 
 };

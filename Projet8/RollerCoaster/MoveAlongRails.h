@@ -19,7 +19,6 @@ public:
 
     Transform* GetTransfromWhithoutCursor() const { return transformWhithoutCursor;}
     void Move();
-    void Init();
 
 private:
     list<MeshRenderer*> _cubes;
@@ -34,7 +33,6 @@ private:
     D3DXQUATERNION quat;
     D3DXQUATERNION cubeQuat;
     int NbreStep = 0;
-    bool initialiased = false;
 
 };
 

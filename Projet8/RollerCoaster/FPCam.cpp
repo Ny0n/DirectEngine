@@ -25,25 +25,21 @@ void FPCam::Update()
     float sensibility = 5.0f;
     GetCursorPos(&mouseP);
 
-    if (Input::GetKey(KeyCode::Z) && upSpeed > -90)
+    if (Input::GetKey(KeyCode::Z) && upSpeed > -70)
         upSpeed -=1;
-    if (Input::GetKey(KeyCode::S) && upSpeed < 90)
+    if (Input::GetKey(KeyCode::S) && upSpeed < 180)
         upSpeed += 1;
-    if (Input::GetKey(KeyCode::Q) && rightSpeed > -90)
+    if (Input::GetKey(KeyCode::Q))
         rightSpeed -= 1;
-    if (Input::GetKey(KeyCode::D) && rightSpeed < 90)
+    if (Input::GetKey(KeyCode::D) )
         rightSpeed+= 1;
 
     rightSpeed += (mouseP.x - SCREEN_WIDTH / 2) / 100.0f * sensibility;
     upSpeed += (mouseP.y - SCREEN_HEIGHT / 2) / 100.0f * sensibility;
-    if (rightSpeed > 90)
-        rightSpeed = 90;
-    if (rightSpeed < -90)
-        rightSpeed = -90;
-    if (upSpeed > 90)
-        upSpeed = 90;
-    if (upSpeed < -90)
-        upSpeed = -90;
+    if (upSpeed < -upSpeedLimit)
+        upSpeed = -upSpeedLimit;
+    if (upSpeed > upSpeedLimit)
+        upSpeed = upSpeedLimit;
 
     
 }
@@ -59,11 +55,13 @@ void FPCam::LateUpdate()
 	    const Transform* tmp = mar->GetTransfromWhithoutCursor();
         transform->SetPosition(tmp->GetPosition());
         transform->SetQuaternion(tmp->GetQuaternion());
+        transform->SetCustomAxis(tmp->GetRight(), tmp->GetUp(), tmp->GetForward());
         tmpPos = tmp->GetPosition();
         tmpQuat = tmp->GetQuaternion();
     }
+    
     transform->RotatePitch(upSpeed, Space::Self);
-    transform->RotateYaw(rightSpeed, Space::Self);
+    transform->RotateYaw(rightSpeed, Space::Custom);
     cart->transform->SetPosition(tmpPos);
     cart->transform->SetQuaternion(tmpQuat);
 
