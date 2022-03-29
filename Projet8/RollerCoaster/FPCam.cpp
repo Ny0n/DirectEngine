@@ -67,7 +67,8 @@ void FPCam::LateUpdate()
 
     cart->transform->RotateYaw(180); // temp before changing the .x file
     D3DXVECTOR3 cartPos = cart->transform->GetPosition();
-    cartPos += -cart->transform->GetUp() * 1.5f;
+    cartPos += -cart->transform->GetUp() * 3.5f;
+    cartPos += cart->transform->GetForward() * 1;
 
     cart->transform->SetPosition(cartPos);
 }
