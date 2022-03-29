@@ -169,9 +169,7 @@ void InputTester::Update()
 	// {
 	// 	Utils::Println("Key Up");
 	// }
-
-	if (Input::GetKeyDown(KeyCode::Escape))
-		Application::Quit();
+	
 }
 
 void InputTester::OnDestroy()

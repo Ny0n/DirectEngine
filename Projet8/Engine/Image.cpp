@@ -57,6 +57,7 @@ void Image::Render()
 	//Render mon image
 
 	D3DXVECTOR3 center = D3DXVECTOR3(0,0, 0);
+
 	if (drawFromCenter)
 		center = D3DXVECTOR3(width * .5f, height * .5f, 0);
 

@@ -27,25 +27,19 @@ void Textbox::EngineStart()
 		textFont,
 		&font))
 
-	const auto result = SetRect(&textRect, rectTopLeft.x, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
-	if (result <= 0)
-		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
 
 	D3DXIMAGE_INFO info;
 	HR(D3DXGetImageInfoFromFile(boxFilepath, &info))
 
-	width = abs(rectTopLeft.x - rectBottomRight.x);
-	height = abs(rectTopLeft.y - rectBottomRight.y);
-
-	if(width <= 0 || height <= 0 )
+	if(size.x <= 0 || size.y <= 0 )
 	{
 		drawBox = false;
 	}
 
 	HR(D3DXCreateTextureFromFileEx(d3ddev,
 		boxFilepath,
-		width,
-		height,
+		size.x,
+		size.y,
 		info.MipLevels,
 		0,
 		info.Format,
@@ -71,6 +65,12 @@ void Textbox::EngineUpdate()
 
 void Textbox::Render()
 {
+	rectTopLeft = position;
+	rectBottomRight = position + size;
+
+	const auto res = SetRect(&textRect, rectTopLeft.x, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
+	if (res <= 0)
+		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
 
 	if (drawBox)
 	{

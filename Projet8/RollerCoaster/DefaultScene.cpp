@@ -8,10 +8,12 @@
 #include "InputTester.h"
 #include "Move.h"
 #include "MoveAlongRails.h"
+#include "PauseScript.h"
 #include "RailMaker.h"
 #include "RainbowBackground.h"
 #include "Rotate.h"
 #include "Shoot.h"
+#include "UIManager.h"
 
 string DefaultScene::GetName()
 {
@@ -20,10 +22,6 @@ string DefaultScene::GetName()
 
 void DefaultScene::GenerateContent()
 {
-	Cursor::Lock();
-	Cursor::SetVisible(false);
-
-
 	// tests
 	GameObject* mainCamera = CreateEmpty();
 	mainCamera->AddComponent(new Camera());
@@ -33,9 +31,10 @@ void DefaultScene::GenerateContent()
 	mainCamera->AddComponent<MoveAlongRails>();
 	mainCamera->AddComponent<Shoot>();
 	AddToScene(mainCamera);
-	GameObject* inputTester = CreateEmpty();
+
+	/*GameObject* inputTester = CreateEmpty();
 	inputTester->AddComponent<InputTester>();
-	AddToScene(inputTester);
+	AddToScene(inputTester);*/
 
 	//cart
 	GameObject* cart = CreateEmpty();
@@ -64,6 +63,61 @@ void DefaultScene::GenerateContent()
 	crossGO->AddComponent<CrosshairScript>(img);
 
 	AddToScene(crossGO);
-	
-	//
+
+	// menu pause
+	auto pauseCanvas = CreateEmpty();
+	pauseCanvas->AddComponent<PauseScript>();
+
+	// panel
+	auto panel = pauseCanvas->AddComponent<Image>();
+	panel->filePath = L"Image\\blanc.png";
+	panel->height = 500;
+	panel->width = 500;
+	auto panelPosition = D3DXVECTOR2((SCREEN_WIDTH - panel->width) * .5f, (SCREEN_HEIGHT - panel->height) * .5f);
+	panel->position = panelPosition;
+	panel->imageColor = D3DCOLOR_ARGB(120, 153, 153, 153);
+
+	// title
+	auto pauseTitle = pauseCanvas->AddComponent<Textbox>();
+	pauseTitle->text = L"PAUSE";
+	pauseTitle->textColor = D3DCOLOR_ARGB(120, 255, 255, 255);
+	pauseTitle->fontHeight = 100;
+	pauseTitle->fontWeight = FW_BOLD;
+	pauseTitle->size = D3DXVECTOR2(300, 100);
+	pauseTitle->position = D3DXVECTOR2(panelPosition.x + (panel->width * 0.5f) - pauseTitle->size.x *.5f, panelPosition.y + 30);
+
+	//Buttons
+	Button* listBtn[3] = {nullptr};
+
+	auto resumeBtn = pauseCanvas->AddComponent<Button>();
+	resumeBtn->text = L"RESUME";
+	resumeBtn->size = D3DXVECTOR2(250 , 60);
+	resumeBtn->position.x = panelPosition.x + (panel->width * 0.5f) - resumeBtn->size.x * .5f;
+	resumeBtn->position.y = panelPosition.y + 175;
+	listBtn[0] = resumeBtn;
+
+	auto restartBtn = pauseCanvas->AddComponent<Button>();
+	restartBtn->text = L"RESTART";
+	restartBtn->size = D3DXVECTOR2(250, 60);
+	restartBtn->position.x = panelPosition.x + (panel->width * 0.5f) - restartBtn->size.x * .5f;
+	restartBtn->position.y = resumeBtn->position.y + 100;
+	listBtn[1] = restartBtn;
+
+	auto menuBtn = pauseCanvas->AddComponent<Button>();
+	menuBtn->text = L"BACK TO MENU";
+	menuBtn->size = D3DXVECTOR2(250, 60);
+	menuBtn->position.x = panelPosition.x + (panel->width * 0.5f) - menuBtn->size.x * .5f;
+	menuBtn->position.y = restartBtn->position.y + 100;
+	listBtn[2] = menuBtn;
+
+
+	AddToScene(pauseCanvas);
+
+	// UI Manager
+	auto UIManagerGO = CreateEmpty();
+
+	const auto managerScript = new UIManager(pauseCanvas, crossGO, cam, listBtn);
+	UIManagerGO->AddComponent(managerScript);
+
+	AddToScene(UIManagerGO);
 }

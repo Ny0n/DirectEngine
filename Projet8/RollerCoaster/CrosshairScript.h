@@ -14,6 +14,9 @@ public:
 	~CrosshairScript() override;
 
 private:
+	void OnEnable() override;
+	void OnDisable() override;
+
 	Image* _img;
 };
 

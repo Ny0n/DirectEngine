@@ -27,6 +27,9 @@
     <Filter Include="Game\Scripts\Bullet">
       <UniqueIdentifier>{91edca26-f7b7-46a3-89f2-f9721c0e2f24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Scripts\UI">
+      <UniqueIdentifier>{fd5308fb-b86f-447f-8847-c8ad1ea8d490}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -65,9 +68,6 @@
     <ClInclude Include="FlavienDevScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="UIManager.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="LionelScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
@@ -98,8 +98,17 @@
     <ClInclude Include="RealFPCam.h">
       <Filter>Game\Scripts\Movement</Filter>
     </ClInclude>
+    <ClInclude Include="PauseScript.h">
+      <Filter>Game\Scripts\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScript.h">
+      <Filter>Game\Scripts\UI</Filter>
+    </ClInclude>
     <ClInclude Include="CrosshairScript.h">
-      <Filter>Game\Scripts</Filter>
+      <Filter>Game\Scripts\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Game\Scripts\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -136,7 +145,6 @@
     <ClCompile Include="FlavienDevScene.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="LionelScene.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
@@ -167,8 +175,17 @@
     <ClCompile Include="RealFPCam.cpp">
       <Filter>Game\Scripts\Movement</Filter>
     </ClCompile>
+    <ClCompile Include="PauseScript.cpp">
+      <Filter>Game\Scripts\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuScript.cpp">
+      <Filter>Game\Scripts\UI</Filter>
+    </ClCompile>
     <ClCompile Include="CrosshairScript.cpp">
-      <Filter>Game\Scripts</Filter>
+      <Filter>Game\Scripts\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Game\Scripts\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

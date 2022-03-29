@@ -1,7 +1,6 @@
-#include "UIManager.h"
+﻿#include "UIManager.h"
 
-
-UIManager::UIManager(Button* listBtn[3])
+UIManager::UIManager(GameObject* go, GameObject* goToDisable, FPCam* cam, Button* listBtn[3]): _pauseGO(go), _crossGO(goToDisable), _cam(cam)
 {
 	_listBtn[0] = listBtn[0];
 	_listBtn[1] = listBtn[1];
@@ -10,46 +9,69 @@ UIManager::UIManager(Button* listBtn[3])
 
 UIManager::~UIManager()
 {
-	//delete _image;
 }
 
-void UIManager::MyFunc()
+bool UIManager::IsPaused()
 {
-	/*auto randX = rand() % 400;
-	auto randY = rand() % 350;
-	_button->rectTopLeft = D3DXVECTOR2(randX, randY);
-	_button->rectBottomRight = D3DXVECTOR2(randX + 300, randY +50);*/
-	
+	return isPaused;
 }
 
-void UIManager::OnPlay()
+void UIManager::Pause()
 {
-	SceneManager::LoadScene("DefaultScene");
+	_pauseGO->SetEnabled(true);
+	_crossGO->SetEnabled(false);
+	Cursor::Unlock();
+	_cam->SetEnabled(false);
+	isPaused = true;
+}
+
+void UIManager::Resume()
+{
+	_pauseGO->SetEnabled(false);
+	_crossGO->SetEnabled(true);
+	Cursor::Lock();
+	_cam->SetEnabled(true);
+	isPaused = false;
+}
+
+void UIManager::OnRestart()
+{
+	SceneManager::LoadScene(SceneManager::GetActiveSceneName());
 	Cursor::SetVisible(false);
 }
 
-void UIManager::OnCredits()
+void UIManager::onMenu()
 {
-	Utils::Println("credits");
-}
-
-void UIManager::OnQuit()
-{
-	Application::Quit();
+	SceneManager::LoadScene(1);
 }
 
 // **************************** //
 
+// Start is called before the first frame update
 void UIManager::Start()
 {
-	//_button->onClick = RUNNER(MyFunc);
-	_listBtn[0]->onClick = RUNNER(OnPlay);
-	_listBtn[1]->onClick = RUNNER(OnCredits);
-	_listBtn[2]->onClick = RUNNER(OnQuit);
+	_listBtn[0]->onClick = RUNNER(Resume);
+	_listBtn[1]->onClick = RUNNER(OnRestart);
+	_listBtn[2]->onClick = RUNNER(onMenu);
 }
 
+// Update is called once per frame
 void UIManager::Update()
 {
-	
+	if (Engine::GetInstance()->window != GetForegroundWindow())
+		Pause();
+
+	if (Input::GetKeyDown(KeyCode::Tab) || Input::GetKeyDown(KeyCode::Escape))
+	{
+		if (isPaused)
+			isPaused = false;
+		else
+			isPaused = true;
+	}
+
+	if (isPaused)
+		Pause();
+	else
+		Resume();
 }
 

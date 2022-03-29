@@ -1,6 +1,7 @@
-#pragma once
+﻿#pragma once
 
 #include "EngineLib.h"
+#include "FPCam.h"
 
 class UIManager : public MonoBehaviour
 {
@@ -10,18 +11,20 @@ class UIManager : public MonoBehaviour
 	void Update() override;
 
 public:
-	explicit UIManager(Button* listBtn[3]);
+	explicit UIManager(GameObject* goToEnable, GameObject* goToDisable, FPCam* cam, Button* listBtn[3]);
 	~UIManager() override;
 
+	bool IsPaused();
+
 private:
-	void MyFunc();
+	void Pause();
+	void Resume();
+	void OnRestart();
+	void onMenu();
 
-	void OnPlay();
-	void OnCredits();
-	void OnQuit();
-
+	bool isPaused;
+	GameObject* _pauseGO;
+	GameObject* _crossGO;
+	FPCam* _cam;
 	Button* _listBtn[3];
-	float speed = 1.0f;
-	bool noir = true;
 };
-
