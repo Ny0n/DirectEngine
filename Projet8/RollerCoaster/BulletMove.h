@@ -18,6 +18,6 @@ public:
 
 private:
 	float bulletSpeed = 10.0f;
-	float maxTimer = 5.0f; //time before destroy
+	float maxTimer = 1.0f; //time before destroy
 	float currentTimer;
 };

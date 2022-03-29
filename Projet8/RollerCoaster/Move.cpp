@@ -16,14 +16,21 @@ void Move::Update()
 
     D3DXVECTOR3 movement = D3DXVECTOR3(0, 0, 0);
 
-    if (Input::GetKey(KeyCode::Z))
+    if (Input::GetKey(KeyCode::Up))
         movement.z += 1;
-    if (Input::GetKey(KeyCode::S))
+    if (Input::GetKey(KeyCode::Down))
         movement.z += -1;
-    if (Input::GetKey(KeyCode::Q))
+    if (Input::GetKey(KeyCode::Left))
         movement.x += -1;
-    if (Input::GetKey(KeyCode::D))
+    if (Input::GetKey(KeyCode::Right))
         movement.x += 1;
+
+
+    if (Input::GetKey(KeyCode::Space))
+        movement.y += 1;
+
+    if (Input::GetKey(KeyCode::A))
+        movement.y -= 1;
 
     D3DXVec3Normalize(&movement, &movement); // so that we don't go faster in diagonals
 

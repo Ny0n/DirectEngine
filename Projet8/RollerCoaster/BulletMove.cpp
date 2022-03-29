@@ -19,7 +19,7 @@ void BulletMove::Update()
 
 	if(currentTimer < 0)
 	{
-		//gameObject->Destroy(); // throw an exception :/
+		Destroy(gameObject); // throw an exception :/
 	}else
 	{
 		currentTimer -= Time::deltaTime;
@@ -30,6 +30,7 @@ void BulletMove::Update()
 void BulletMove::OnTriggerEnter(GameObject* collide)
 {
 	Utils::Println("Je commence la collision");
+	Destroy(collide);
 	//collide->gameObject->Destroy();
 }
 
