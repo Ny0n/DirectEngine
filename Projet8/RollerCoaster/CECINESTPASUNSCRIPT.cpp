@@ -20,4 +20,5 @@ void CECINESTPASUNSCRIPT::Start()
 void CECINESTPASUNSCRIPT::Update()
 {
 	_img->rotation += .01f;
+	_img->scale = D3DXVECTOR2(cos(Time::time), cos(Time::time));
 }

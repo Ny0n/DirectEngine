@@ -10,9 +10,10 @@ class CECINESTPASUNSCRIPT : public MonoBehaviour
 	void Update() override;
 
 public:
-	CECINESTPASUNSCRIPT(Image *img);
+	CECINESTPASUNSCRIPT(Image* img);
 	~CECINESTPASUNSCRIPT() override;
 
 private:
 	Image* _img;
 };
+
