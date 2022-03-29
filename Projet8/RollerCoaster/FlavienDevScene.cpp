@@ -1,5 +1,6 @@
 #include "FlavienDevScene.h"
 
+#include "AudioTester.h"
 #include "Cube.h"
 #include "InputTester.h"
 #include "Move.h"
@@ -19,7 +20,8 @@ void FlavienDevScene::GenerateContent()
 	// camera
 	
 	GameObject* mainCamera = CreateEmpty();
-	mainCamera->AddComponent<Camera>();
+	auto cam = mainCamera->AddComponent<Camera>();
+	cam->ChangeSkyColor(D3DCOLOR_XRGB(0, 0, 0));
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
 	AddToScene(mainCamera);
 	
@@ -27,10 +29,11 @@ void FlavienDevScene::GenerateContent()
 	
 	GameObject* tester = CreateEmpty();
 
-	tester->AddComponent<InputTester>();
-	tester->AddComponent<Move>();
-	tester->AddComponent<Cube>();
+	// tester->AddComponent<InputTester>();
+	tester->AddComponent<Move>(30.0f);
 	tester->AddComponent<Rotate>(150.0f, true);
+	tester->AddComponent<MeshRenderer>(L"Mesh\\cube.x");
+	tester->transform->SetScale(tester->transform->GetScale() * 0.02f);
 	auto x = tester->AddComponent<Tester>();
 	x->SetEnabled(true);
 
@@ -39,6 +42,13 @@ void FlavienDevScene::GenerateContent()
 	tester->transform->Rotate(40, -40, 0);
 
 	AddToScene(tester);
+
+	// tests
+
+	GameObject* audio = CreateEmpty();
+	audio->AddComponent<AudioTester>();
+	audio->AddComponent<AudioSource>();
+	AddToScene(audio);
 
 	// // monkey
 	//

@@ -95,6 +95,9 @@
     <ClInclude Include="CECIESTUNSCRIPT.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="AudioTester.h">
+      <Filter>Game\Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RainbowBackground.cpp">
@@ -156,6 +159,9 @@
       <Filter>Game\Scripts</Filter>
     </ClCompile>
     <ClCompile Include="CECIESTUNSCRIPT.cpp">
+      <Filter>Game\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioTester.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
   </ItemGroup>

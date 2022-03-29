@@ -10,6 +10,7 @@
 
 #include "Profiler.h"
 #include "Engine.h"
+#include "AudioManager.h"
 #include "Execution.h"
 #include "PhysicsEngine.h"
 
@@ -31,6 +32,7 @@
 #include "MeshRenderer.h"
 #include "Collider.h"
 #include "AlignedBox.h"
+#include "AudioSource.h"
 
 // UI Components
 #include "Canvas.h"
