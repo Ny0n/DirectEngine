@@ -2,6 +2,8 @@
 
 AudioSource::AudioSource()
 {
+	pSourceCallback = new AudioManager::AudioSourceCallbacks();
+	pSourceCallback->source = this;
 }
 
 AudioSource::~AudioSource()
@@ -93,12 +95,10 @@ void AudioSource::SetSound(LPCWSTR fileName)
 	buffer.pAudioData = pDataBuffer;  //buffer containing audio data
 	buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
 
-	// Sound Player
-	
-	HRSOUND(AudioManager::pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<WAVEFORMATEX*>(&wfx)));
+	UpdateLooping();
 
-	HRSOUND(pSourceVoice->SubmitSourceBuffer(&buffer));
-	_hasSetBuffer = true;
+	// Sound Player
+	HRSOUND(AudioManager::pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<WAVEFORMATEX*>(&wfx), 0, 2, pSourceCallback)); // WARNING: Crashes if no output device is set on the system!
 }
 
 #define CHECKSOURCE(x)\
@@ -106,6 +106,29 @@ if (pSourceVoice == nullptr)\
 {\
 	Utils::Println("You must set a sound to the Audio Source!");\
 	return x;\
+}
+
+// **************************** //
+
+COM_DECLSPEC_NOTHROW void AudioManager::AudioSourceCallbacks::OnBufferEnd(void* pBufferContext)
+{
+	Utils::Println("END");
+
+	if (!source->_wasPlaying)
+	{
+		Utils::Println("NOPE");
+		return;
+	}
+
+	source->_wasPlaying = false;
+	
+	Utils::Println("Restarting...");
+	source->Restart(); // the callback when a loop ends is OnLoopEnd, so we won't get back here
+}
+
+void AudioManager::AudioSourceCallbacks::OnLoopEnd(void* pBufferContext)
+{
+	Utils::Println("LOOP END");
 }
 
 // **************************** //
@@ -158,10 +181,10 @@ void AudioSource::Stop()
 
 	if (_playing)
 		HRSOUND(pSourceVoice->Stop());
-
+	
 	HRSOUND(pSourceVoice->FlushSourceBuffers());
 	_hasSetBuffer = false;
-
+	
 	_playing = false;
 	_paused = false;
 }
@@ -170,14 +193,68 @@ void AudioSource::Restart()
 {
 	CHECKSOURCE()
 
-	HRSOUND(pSourceVoice->Stop());
-	HRSOUND(pSourceVoice->FlushSourceBuffers());
-	HRSOUND(pSourceVoice->SubmitSourceBuffer(&buffer));
-	HRSOUND(pSourceVoice->Start());
+	Stop();
+	Play();
+}
 
-	_hasSetBuffer = true;
-	_playing = true;
-	_paused = false;
+// **************************** //
+
+bool AudioSource::IsLooping()
+{
+	return _isLooping;
+}
+
+void AudioSource::SetLooping(bool loop)
+{
+	CHECKSOURCE()
+
+	if (_isLooping == loop)
+		return;
+
+	_isLooping = loop;
+
+	UpdateLooping();
+
+	if (_isLooping)
+	{
+		if (_playing)
+		{
+			_wasPlaying = true;
+		}
+		// if playing ended:
+		// Stop()
+		// Flush
+		// Submit
+
+		// ON END
+		// if looping
+		// Flush
+		// Submit
+
+		// HRSOUND(pSourceVoice->FlushSourceBuffers());
+		// HRSOUND(pSourceVoice->SubmitSourceBuffer(&buffer));
+	}
+	else
+	{
+		HRSOUND(pSourceVoice->ExitLoop());
+		_wasPlaying = false;
+	}
+}
+
+void AudioSource::UpdateLooping()
+{
+	if (_isLooping)
+	{
+		buffer.LoopBegin = buffer.PlayBegin;
+		buffer.LoopLength = buffer.PlayLength;
+		buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
+	}
+	else
+	{
+		buffer.LoopBegin = 0;
+		buffer.LoopLength = 0;
+		buffer.LoopCount = 0;
+	}
 }
 
 float AudioSource::GetVolume()

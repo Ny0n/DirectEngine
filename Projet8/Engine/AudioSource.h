@@ -20,6 +20,8 @@ public:
 	void Stop();
 	void Restart();
 
+	bool IsLooping();
+	void SetLooping(bool loop); // SetLooping(true) does not start the audio automatically!
 	float GetVolume();
 	void SetVolume(float volume);
 
@@ -30,14 +32,22 @@ private:
 	// sound data
 	WAVEFORMATEXTENSIBLE wfx;
 	XAUDIO2_BUFFER buffer;
+	bool _hasSetBuffer = false;
 
 	// sound player
 	IXAudio2SourceVoice* pSourceVoice;
 
+	// custom voice callback
+	friend class AudioManager::AudioSourceCallbacks;
+	AudioManager::AudioSourceCallbacks* pSourceCallback;
+	bool _restarted = false;
+
 	bool _playing = false;
 	bool _paused = false;
 
-	bool _hasSetBuffer = false;
+	bool _isLooping = false;
+	bool _wasPlaying = false;
+	void UpdateLooping();
 
 	float MAX_VOLUME = 20.0f;
 	float MIN_VOLUME = 0.0f;

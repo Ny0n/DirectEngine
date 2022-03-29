@@ -19,7 +19,7 @@ void AudioManager::Initialize()
 void AudioManager::Clean()
 {
 	// if (pXAudio2 != nullptr)
-		// pXAudio2->Release();
+	// 	pXAudio2->Release();
 }
 
 // **************************** //
