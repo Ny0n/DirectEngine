@@ -64,6 +64,18 @@ void DefaultScene::GenerateContent()
 
 	AddToScene(crossGO);
 
+#pragma region fpsCounter
+	auto fpsCounter = CreateEmpty();
+	auto fpsText = fpsCounter->AddComponent<Textbox>();
+	fpsText->size = D3DXVECTOR2(50, 25);
+	fpsText->drawBox = true;
+
+	AddToScene(fpsCounter);
+
+#pragma endregion fpsCounter
+
+	#pragma region pause
+
 	// menu pause
 	auto pauseCanvas = CreateEmpty();
 	pauseCanvas->AddComponent<PauseScript>();
@@ -110,13 +122,14 @@ void DefaultScene::GenerateContent()
 	menuBtn->position.y = restartBtn->position.y + 100;
 	listBtn[2] = menuBtn;
 
-
 	AddToScene(pauseCanvas);
+
+	#pragma endregion pause
 
 	// UI Manager
 	auto UIManagerGO = CreateEmpty();
 
-	const auto managerScript = new UIManager(pauseCanvas, crossGO, cam, listBtn);
+	const auto managerScript = new UIManager(pauseCanvas, crossGO, cam, listBtn, fpsText);
 	UIManagerGO->AddComponent(managerScript);
 
 	AddToScene(UIManagerGO);

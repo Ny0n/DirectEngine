@@ -45,13 +45,13 @@ bool Object::SetEnabled(bool enabled) // helper for sub-classes (overriden)
 {
 	if (_markedForDestruction)
 	{
-		Utils::PrintErr("Object::SetEnabled #1");
+		//Utils::PrintErr("Object::SetEnabled #1");
 		return false;
 	}
 
 	if (_enabledSelf == enabled)
 	{
-		Utils::PrintErr("Object::SetEnabled #2");
+		//Utils::PrintErr("Object::SetEnabled #2");
 		return false;
 	}
 
@@ -59,7 +59,7 @@ bool Object::SetEnabled(bool enabled) // helper for sub-classes (overriden)
 
 	if (!_instantiatied)
 	{
-		Utils::PrintErr("Object::SetEnabled #3");
+		//Utils::PrintErr("Object::SetEnabled #3");
 		return false;
 	}
 

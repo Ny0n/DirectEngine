@@ -167,7 +167,7 @@ bool GameObject::SetEnabled(bool enabled)
 {
 	if (!Object::SetEnabled(enabled))
 	{
-		Utils::PrintErr("GameObject::SetEnabled #1");
+		//Utils::PrintErr("GameObject::SetEnabled #1");
 		return false;
 	}
 	

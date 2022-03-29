@@ -31,5 +31,4 @@ void PauseScript::Start()
 // Update is called once per frame
 void PauseScript::Update()
 {
-	Utils::Println("JE SUIS EN PAUSE!!");
 }
