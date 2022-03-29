@@ -36,6 +36,7 @@
 #include "Canvas.h"
 #include "Image.h"
 #include "Textbox.h"
+#include "InputField.h"
 
 // ** App Data ** //
 

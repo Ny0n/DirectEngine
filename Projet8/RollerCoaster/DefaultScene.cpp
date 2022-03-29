@@ -22,7 +22,13 @@ void DefaultScene::GenerateContent()
 	Cursor::SetVisible(false);
 
 	// tests
-
+	GameObject* mainCamera = CreateEmpty();
+	mainCamera->AddComponent(new Camera());
+	auto cam = mainCamera->AddComponent<FPCam>();
+	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
+	mainCamera->AddComponent<RailMaker>();
+	mainCamera->AddComponent<MoveAlongRails>();
+	AddToScene(mainCamera);
 	GameObject* inputTester = CreateEmpty();
 	inputTester->AddComponent<InputTester>();
 	AddToScene(inputTester);
@@ -39,13 +45,7 @@ void DefaultScene::GenerateContent()
 
 	// camera
 
-	GameObject* mainCamera = CreateEmpty();
-	mainCamera->AddComponent(new Camera());
-	auto cam = mainCamera->AddComponent<FPCam>();
-	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
-	mainCamera->AddComponent<RailMaker>();
-	mainCamera->AddComponent<MoveAlongRails>();
-	AddToScene(mainCamera);
+	
 	GameObject* cart = CreateEmpty();
 
 	LPCWSTR cartPath = L"Mesh\\tiger.x";

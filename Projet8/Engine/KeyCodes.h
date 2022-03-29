@@ -34,8 +34,8 @@ enum class KeyCode : USHORT
     Alt = 0x12,
     // /// <summary></summary>
     // Pause = 0x13,
-    // /// <summary></summary>
-    // CapsLock = 0x14,
+    /// <summary></summary>
+    CapsLock = 0x14,
 
     // /// <summary></summary>
     // Kana = 0x15,
@@ -90,8 +90,8 @@ enum class KeyCode : USHORT
     // Snapshot = 0x2C,
     // /// <summary></summary>
     // Insert = 0x2D,
-    // /// <summary></summary>
-    // Delete = 0x2E,
+    /// <summary></summary>
+    Delete = 0x2E,
     // /// <summary>Win+F1?</summary>
     // Help = 0x2F,
 

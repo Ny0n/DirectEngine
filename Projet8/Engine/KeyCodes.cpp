@@ -92,4 +92,6 @@ const map<KeyCode, USHORT> OptimizedKeyCodes::table = {
         {KeyCode::RightControl, static_cast<USHORT>(KeyCode::RightControl)},
         {KeyCode::LeftAlt, static_cast<USHORT>(KeyCode::LeftAlt)},
         {KeyCode::RightAlt, static_cast<USHORT>(KeyCode::RightAlt)},
+		{KeyCode::Delete, static_cast<USHORT>(KeyCode::Delete)},
+		{KeyCode::CapsLock, static_cast<USHORT>(KeyCode::CapsLock)},
 };

@@ -28,6 +28,9 @@ const int& Time::frameCount = _frameCount;
 const int& Time::fixedUpdateCount = _fixedUpdateCount;
 
 const function<float()> Time::runTime = SUPPLIER(_profiler->GetSystemTime);
+const function<float()> Time::currentFps = SUPPLIER(_profiler->GetCurrentFPS);
+const function<float()> Time::frameTime = SUPPLIER(_profiler->GetFrameTime);
+
 const float& Time::time = _time;
 const float& Time::fixedTime = _fixedTime;
 

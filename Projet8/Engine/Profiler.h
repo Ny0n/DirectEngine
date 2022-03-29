@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#define PROFILER_DISPLAY_ENABLED TRUE   // Is the display enabled?
+#define PROFILER_DISPLAY_ENABLED true   // Is the display enabled?
 #define PROFILER_DISPLAY_COOLDOWN 1     // The time between each display in seconds, less or equal to the set FPS means every frame
 
 // Only the Engine has an access to this class, since everything is private
@@ -29,6 +29,8 @@ class Profiler final {
     // *** Timing Methods *** //
 
     float GetSystemTime(); // Returns the current time since InitSystemTime() was last called
+    float GetCurrentFPS();
+    float GetFrameTime();
 
     template<typename T>
     void* TimedRunner(float& timeVar, const T& func);

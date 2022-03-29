@@ -23,6 +23,7 @@ public:
 
 private:
     list<MeshRenderer*> _cubes;
+    list<MeshRenderer*> _toDelete;
     RailMaker* _rm;
     D3DXVECTOR3 _previousDir;
     float _speed =25.0f;

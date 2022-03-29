@@ -3,6 +3,8 @@
 #include "CECIESTUNSCRIPT.h"
 #include "InputTester.h"
 
+class InputField;
+
 string MenuScene::GetName()
 {
 	return "MenuScene";
@@ -14,7 +16,7 @@ void MenuScene::GenerateContent()
 
 	GameObject* canvas = CreateEmpty();
 
-	const auto image = new Image();
+	/*const auto image = new Image();
 	image->width = 200;
 	image->height = 200;
 	image->filePath = L"Image\\blanc.png";
@@ -26,8 +28,12 @@ void MenuScene::GenerateContent()
 	canvas->AddComponent(tb);
 	
 
-	// const auto script = new CECIESTUNSCRIPT(image, tb);
-	// canvas->AddComponent(script);
+	const auto script = new CECIESTUNSCRIPT(image, tb);
+	canvas->AddComponent(script);*/
+
+	auto ip = canvas->AddComponent<InputField>();
+	ip->drawBorder = true;
+	ip->drawBox = true;
 
 	AddToScene(canvas);
 }

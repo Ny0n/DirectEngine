@@ -5,11 +5,14 @@ class Input final
 
 public:
 	Input() = delete;
-	
+
 	static bool GetKey(KeyCode key);
 	static bool GetKeyDown(KeyCode key);
 	static bool GetKeyUp(KeyCode key);
+	static USHORT GetLastKeyDown();
+	static void ResetLastKeyDown();
 
+	static USHORT lastKeyDown;
 	// GetAxis()
 	// GetAxisRaw()
 	// GetMouseButton()
@@ -17,7 +20,6 @@ public:
 	// anyKeyDown
 	// anyKeyUp
 	// mousePosition
-
 private:
 	friend class Engine;
 	friend class Execution;
@@ -34,5 +36,4 @@ private:
 	static void UpdateInputs();
 
 	static void Clean();
-
 };
