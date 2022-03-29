@@ -23,20 +23,6 @@ void DefaultScene::GenerateContent()
 	Cursor::SetVisible(false);
 
 
-
-	// camera
-
-	GameObject* mainCamera = CreateEmpty();
-	auto cam = mainCamera->AddComponent<Camera>();
-	cam->ChangeNVP(0.0f);
-
-	auto FpCamCompo = mainCamera->AddComponent<FPCam>();
-
-	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
-	mainCamera->AddComponent<RailMaker>();
-	mainCamera->AddComponent<MoveAlongRails>();
-	AddToScene(mainCamera);
-
 	// tests
 	GameObject* mainCamera = CreateEmpty();
 	mainCamera->AddComponent(new Camera());
