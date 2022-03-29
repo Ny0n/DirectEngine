@@ -11,6 +11,7 @@
 #include "RailMaker.h"
 #include "RainbowBackground.h"
 #include "Rotate.h"
+#include "Shoot.h"
 
 string DefaultScene::GetName()
 {
@@ -30,6 +31,7 @@ void DefaultScene::GenerateContent()
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
 	mainCamera->AddComponent<RailMaker>();
 	mainCamera->AddComponent<MoveAlongRails>();
+	mainCamera->AddComponent<Shoot>();
 	AddToScene(mainCamera);
 	GameObject* inputTester = CreateEmpty();
 	inputTester->AddComponent<InputTester>();
@@ -38,9 +40,9 @@ void DefaultScene::GenerateContent()
 	//cart
 	GameObject* cart = CreateEmpty();
 
-	LPCWSTR cartPath = L"Mesh\\tiger.x";
+	LPCWSTR cartPath = L"Mesh\\minecart.x";
 	//cart->AddComponent<MeshRenderer>(cartPath);
-	cart->AddComponent<MeshRenderer>(L"Mesh\\tiger.x");
+	cart->AddComponent<MeshRenderer>(cartPath);
 
 	AddToScene(cart);
 

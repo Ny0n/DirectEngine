@@ -30,7 +30,7 @@ void Shoot::Update()
 
 		auto bulletMove = bullet->AddComponent<BulletMove>();
 
-		bulletMove->SetBulletSpeed(25.0f);
+		bulletMove->SetBulletSpeed(100.0f);
 
 
 		Instantiate(bullet);

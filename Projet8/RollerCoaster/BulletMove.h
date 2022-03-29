@@ -13,11 +13,9 @@ public:
 	void SetmaxTimer(float time) { maxTimer = time; }
 
 	void OnTriggerEnter(GameObject* collide) override;
-	void OnTriggerStay(GameObject* collide) override;
-	void OnTriggerExit(GameObject* collide) override;
 
 private:
 	float bulletSpeed = 10.0f;
-	float maxTimer = 1.0f; //time before destroy
+	float maxTimer = 10.0f; //time before destroy
 	float currentTimer;
 };
