@@ -44,7 +44,11 @@ void RailMaker::Update()
 
 RailMaker::~RailMaker()
 {
-	Utils::DeleteList(_tiles);
+	for (auto t : _tiles)
+	{
+		delete t;
+	}
+
 }
 
 void RailMaker::MoveForward()
@@ -97,8 +101,9 @@ void RailMaker::MoveForward()
 	}
 	Tile* t = new Tile( box->GetComponent<MeshRenderer>(),	targetGo);
 
-	t->_cube = box->GetComponent<MeshRenderer>();
-	t->_target = targetGo;
+	/*t->_cube = box->GetComponent<MeshRenderer>();
+	t->_target = targetGo;*/
+
 	_tiles.push_back(t);
 
 	

@@ -8,7 +8,7 @@ public :
 	GameObject* _target;
 	Tile(MeshRenderer* cube, GameObject* target) { _cube = cube; _target = target; }
 
-	~Tile() { }
+	~Tile() { delete _cube; delete _target; }
 
 private:
 };
