@@ -4,15 +4,15 @@ MoveAlongRails::~MoveAlongRails()
 {
 	if (transformWhithoutCursor != nullptr)
 		transformWhithoutCursor->Delete();
-	transformWhithoutCursor->SetQuaternion(D3DXQUATERNION(1.0f,0.0f,0.0f,0.0f));
+	
 }
 
 void MoveAlongRails::Update()
 {
-	/*if(_cubes.empty() && initialiased == false)
+	if(_cubes.empty() && initialiased == false)
 	{
 		Init();
-	}*/
+	}
 	_cubes = _rm->GetCube();
 
 	Move();
@@ -71,7 +71,6 @@ void MoveAlongRails::Init()
 		transformWhithoutCursor->SetPosition(pos);
 		transformWhithoutCursor->SetQuaternion(_cubes.front()->transform->GetQuaternion());
 		MeshRenderer* cube = _rm->PopFrontCube();
-		Utils::Println("start");
 		initialiased = true;
 	}
 }

@@ -41,11 +41,22 @@ void DefaultScene::GenerateContent()
 
 	GameObject* mainCamera = CreateEmpty();
 	mainCamera->AddComponent(new Camera());
-	mainCamera->AddComponent(new FPCam());
+	auto cam = mainCamera->AddComponent<FPCam>();
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
 	mainCamera->AddComponent<RailMaker>();
 	mainCamera->AddComponent<MoveAlongRails>();
 	AddToScene(mainCamera);
+	GameObject* cart = CreateEmpty();
+
+	LPCWSTR cartPath = L"Mesh\\tiger.x";
+	//cart->AddComponent<MeshRenderer>(cartPath);
+	cart->AddComponent<MeshRenderer>(L"Mesh\\tiger.x");
+
+
+	AddToScene(cart);
+
+	cam->SetCart(cart);
+
 
 	// cube
 

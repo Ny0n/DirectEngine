@@ -17,9 +17,9 @@ void Move::Update()
     D3DXVECTOR3 movement = D3DXVECTOR3(0, 0, 0);
 
     if (Input::GetKey(KeyCode::Z))
-        movement.y += 1;
+        movement.z += 1;
     if (Input::GetKey(KeyCode::S))
-        movement.y += -1;
+        movement.z += -1;
     if (Input::GetKey(KeyCode::Q))
         movement.x += -1;
     if (Input::GetKey(KeyCode::D))

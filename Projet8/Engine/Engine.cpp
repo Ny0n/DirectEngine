@@ -74,8 +74,8 @@ void Engine::InitD3D()
     d3ddev->SetRenderState(D3DRS_LIGHTING, true);    // turn on the 3D lighting
     d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(155, 155, 155));    // ambient light
     d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
-    float Start = 30.0f,    // Linear fog distances
-        End = 80.0f;
+    float Start = 60.0f,    // Linear fog distances
+        End = 100.0f;
 
     // Enable fog blending.
     d3ddev->SetRenderState(D3DRS_FOGENABLE, TRUE);
@@ -250,10 +250,7 @@ void Engine::CheckForProfilerDisplay()
 
 void Engine::RunFrame()
 {
-    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-
-    d3ddev->BeginScene();    // begins the 3D scene
-
+  
     Execution::CheckForSceneUpdate();
     _profiler->TimedRunner(_profiler->engineStartTime, Execution::EngineStart);
     _profiler->TimedRunner(_profiler->startTime, Execution::Start);
@@ -261,6 +258,10 @@ void Engine::RunFrame()
     _profiler->TimedRunner(_profiler->inputTime, Execution::Input);
     _profiler->TimedRunner(_profiler->updateTime, Execution::Update);
     _profiler->TimedRunner(_profiler->lateUpdateTime, Execution::LateUpdate);
+
+    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+    d3ddev->BeginScene();    // begins the 3D scene
+
     _profiler->TimedRunner(_profiler->engineUpdateTime, Execution::EngineUpdate);
 
     d3ddev->EndScene();    // ends the 3D scene
