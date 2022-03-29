@@ -92,14 +92,14 @@
     <ClInclude Include="Tester.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="CECIESTUNSCRIPT.h">
-      <Filter>Game\Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="RealFPCam.h">
       <Filter>Game\Scripts\Movement</Filter>
     </ClInclude>
     <ClInclude Include="CrosshairScript.h">
       <Filter>Game\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -161,15 +161,13 @@
     <ClCompile Include="Tester.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="CECIESTUNSCRIPT.cpp">
-      <Filter>Game\Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="RealFPCam.cpp">
       <Filter>Game\Scripts\Movement</Filter>
     </ClCompile>
     <ClCompile Include="CrosshairScript.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RollerCoaster.rc">

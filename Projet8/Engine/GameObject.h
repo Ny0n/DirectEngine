@@ -31,6 +31,8 @@ public:
 	void ForEachChildrenGameObject(const function<void(GameObject*)>& consumer, bool onlyAlive = true);
 	void ForEachSelfComponent(const function<void(Component*)>& consumer, bool onlyAlive = true);
 
+	~GameObject() override;
+
 private:
 	friend class Execution;
 	friend class SceneManager;
@@ -40,7 +42,7 @@ private:
 
 	bool PrivateDestroy() final;
 	void ApplyDestruction() final;
-	~GameObject() override;
+	
 	bool NotifyInstantiation() final;
 
 	list<Component*> _components;

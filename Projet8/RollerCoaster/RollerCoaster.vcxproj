@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="BulletMove.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="CrosshairScript.h" />
     <ClInclude Include="Cube.h" />
@@ -172,6 +173,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="BulletMove.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="CrosshairScript.cpp" />
     <ClCompile Include="Cube.cpp" />

@@ -44,8 +44,7 @@ void RailMaker::Update()
 
 RailMaker::~RailMaker()
 {
-
-	_tiles.clear();
+	Utils::DeleteList(_tiles);
 }
 
 void RailMaker::MoveForward()
@@ -61,8 +60,8 @@ void RailMaker::MoveForward()
 	D3DXVECTOR3  vector;
 	if (!_tiles.empty())
 	{
-		vector = _tiles.back()->cube->transform->GetPosition() + _tiles.back()->cube->transform->GetForward() * _spaceBetween;
-		box->transform->SetQuaternion(_tiles.back()->cube->transform->GetQuaternion());
+		vector = _tiles.back()->_cube->transform->GetPosition() + _tiles.back()->_cube->transform->GetForward() * _spaceBetween;
+		box->transform->SetQuaternion(_tiles.back()->_cube->transform->GetQuaternion());
 	}
 	else
 	{
@@ -96,9 +95,10 @@ void RailMaker::MoveForward()
 		targetGo->AddComponent<Collider>();
 		Instantiate(targetGo);
 	}
-	Tile* t = new Tile();
-	t->cube = box->GetComponent<MeshRenderer>();
-	t->target = targetGo;
+	Tile* t = new Tile( box->GetComponent<MeshRenderer>(),	targetGo);
+
+	t->_cube = box->GetComponent<MeshRenderer>();
+	t->_target = targetGo;
 	_tiles.push_back(t);
 
 	
