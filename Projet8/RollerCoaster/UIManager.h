@@ -2,16 +2,16 @@
 
 #include "EngineLib.h"
 
-class CECIESTUNSCRIPT : public MonoBehaviour
+class UIManager : public MonoBehaviour
 {
-	string GetType() override { return NAMEOF(CECIESTUNSCRIPT); }
+	string GetType() override { return NAMEOF(UIManager); }
 
 	void Start() override;
 	void Update() override;
 
 public:
-	explicit CECIESTUNSCRIPT(Button* listBtn[3]);
-	~CECIESTUNSCRIPT() override;
+	explicit UIManager(Button* listBtn[3]);
+	~UIManager() override;
 
 private:
 	void MyFunc();

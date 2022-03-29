@@ -1,19 +1,19 @@
-#include "CECIESTUNSCRIPT.h"
+#include "UIManager.h"
 
 
-CECIESTUNSCRIPT::CECIESTUNSCRIPT(Button* listBtn[3])
+UIManager::UIManager(Button* listBtn[3])
 {
 	_listBtn[0] = listBtn[0];
 	_listBtn[1] = listBtn[1];
 	_listBtn[2] = listBtn[2];
 }
 
-CECIESTUNSCRIPT::~CECIESTUNSCRIPT()
+UIManager::~UIManager()
 {
 	//delete _image;
 }
 
-void CECIESTUNSCRIPT::MyFunc()
+void UIManager::MyFunc()
 {
 	/*auto randX = rand() % 400;
 	auto randY = rand() % 350;
@@ -22,25 +22,25 @@ void CECIESTUNSCRIPT::MyFunc()
 	
 }
 
-void CECIESTUNSCRIPT::OnPlay()
+void UIManager::OnPlay()
 {
 	SceneManager::LoadScene("DefaultScene");
 	Cursor::SetVisible(false);
 }
 
-void CECIESTUNSCRIPT::OnCredits()
+void UIManager::OnCredits()
 {
 	Utils::Println("credits");
 }
 
-void CECIESTUNSCRIPT::OnQuit()
+void UIManager::OnQuit()
 {
 	Application::Quit();
 }
 
 // **************************** //
 
-void CECIESTUNSCRIPT::Start()
+void UIManager::Start()
 {
 	//_button->onClick = RUNNER(MyFunc);
 	_listBtn[0]->onClick = RUNNER(OnPlay);
@@ -48,7 +48,7 @@ void CECIESTUNSCRIPT::Start()
 	_listBtn[2]->onClick = RUNNER(OnQuit);
 }
 
-void CECIESTUNSCRIPT::Update()
+void UIManager::Update()
 {
 	
 }

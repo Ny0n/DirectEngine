@@ -65,7 +65,7 @@
     <ClInclude Include="FlavienDevScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="CECIESTUNSCRIPT.h">
+    <ClInclude Include="UIManager.h">
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="LionelScene.h">
@@ -98,7 +98,7 @@
     <ClInclude Include="RealFPCam.h">
       <Filter>Game\Scripts\Movement</Filter>
     </ClInclude>
-    <ClInclude Include="CECINESTPASUNSCRIPT.h">
+    <ClInclude Include="CrosshairScript.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
@@ -136,7 +136,7 @@
     <ClCompile Include="FlavienDevScene.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="CECIESTUNSCRIPT.cpp" />
+    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="LionelScene.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
@@ -167,7 +167,7 @@
     <ClCompile Include="RealFPCam.cpp">
       <Filter>Game\Scripts\Movement</Filter>
     </ClCompile>
-    <ClCompile Include="CECINESTPASUNSCRIPT.cpp">
+    <ClCompile Include="CrosshairScript.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
   </ItemGroup>

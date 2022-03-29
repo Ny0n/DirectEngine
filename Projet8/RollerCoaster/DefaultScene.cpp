@@ -1,6 +1,6 @@
 #include "DefaultScene.h"
 
-#include "CECINESTPASUNSCRIPT.h"
+#include "CrosshairScript.h"
 #include "Cube.h"
 #include "DontDestroyOnLoad.h"
 #include "GoUp.h"
@@ -35,33 +35,19 @@ void DefaultScene::GenerateContent()
 	inputTester->AddComponent<InputTester>();
 	AddToScene(inputTester);
 
-	// rgb background
-
-	GameObject* rgb = CreateEmpty();
-	rgb->AddComponent<RainbowBackground>();
-	AddToScene(rgb);
-
-	GameObject* aligneBox = CreateEmpty();
-	aligneBox->AddComponent<AlignedBox>();
-	AddToScene(aligneBox);
-
 	//cart
-
-	
 	GameObject* cart = CreateEmpty();
 
 	LPCWSTR cartPath = L"Mesh\\tiger.x";
 	//cart->AddComponent<MeshRenderer>(cartPath);
 	cart->AddComponent<MeshRenderer>(L"Mesh\\tiger.x");
 
-
 	AddToScene(cart);
 
 	cam->SetCart(cart);
 
 
-	// cube
-
+	// crosshair
 	auto crossGO = CreateEmpty();
 	auto img = crossGO->AddComponent<Image>();
 
@@ -73,9 +59,9 @@ void DefaultScene::GenerateContent()
 	img->imageColor = D3DCOLOR_ARGB(255, 255, 0, 0);
 	img->drawFromCenter = true;
 
-	crossGO->AddComponent<CECINESTPASUNSCRIPT>(img);
+	crossGO->AddComponent<CrosshairScript>(img);
 
 	AddToScene(crossGO);
 	
-	
+	//
 }

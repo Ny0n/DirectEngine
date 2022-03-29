@@ -1,6 +1,6 @@
 #include "MenuScene.h"
 
-#include "CECIESTUNSCRIPT.h"
+#include "UIManager.h"
 #include "InputTester.h"
 
 class InputField;
@@ -40,7 +40,7 @@ void MenuScene::GenerateContent()
 
 	auto input = canvas->AddComponent<InputField>();
 
-	const auto script = new CECIESTUNSCRIPT(btnList);
+	const auto script = new UIManager(btnList);
 	canvas->AddComponent(script);
 
 	AddToScene(canvas);

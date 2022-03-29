@@ -1,23 +1,23 @@
-﻿#include "CECINESTPASUNSCRIPT.h"
+﻿#include "CrosshairScript.h"
 
-CECINESTPASUNSCRIPT::CECINESTPASUNSCRIPT(Image* img) : _img(img)
+CrosshairScript::CrosshairScript(Image* img) : _img(img)
 {
 
 }
 
-CECINESTPASUNSCRIPT::~CECINESTPASUNSCRIPT()
+CrosshairScript::~CrosshairScript()
 {
 }
 
 // **************************** //
 
 // Start is called before the first frame update
-void CECINESTPASUNSCRIPT::Start()
+void CrosshairScript::Start()
 {
 }
 
 // Update is called once per frame
-void CECINESTPASUNSCRIPT::Update()
+void CrosshairScript::Update()
 {
 	_img->rotation += .01f;
 	_img->scale = D3DXVECTOR2(cos(Time::time), cos(Time::time));
