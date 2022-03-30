@@ -10,12 +10,19 @@ AudioTester::~AudioTester()
 
 // **************************** //
 
+LPCWSTR tbl[3];
+static int i = 0;
+
 // Start is called before the first frame update
 void AudioTester::Start()
 {
+	tbl[0] = L"Audio\\gnome.wav";
+	tbl[1] = L"Audio\\waka.wav";
+	tbl[2] = L"Audio\\music.wav";
+
 	_source = gameObject->GetComponent<AudioSource>();
 	if (_source != nullptr)
-		_source->SetSound(L"Audio\\music.wav");
+		_source->SetSound(tbl[0]);
 }
 
 // Update is called once per frame
@@ -36,10 +43,15 @@ void AudioTester::Update()
 
 	if (Input::GetKeyDown(KeyCode::Z))
 	{
-		_source->Pause();
+		_source->Resume();
 	}
 
 	if (Input::GetKeyDown(KeyCode::E))
+	{
+		_source->Pause();
+	}
+
+	if (Input::GetKeyDown(KeyCode::S))
 	{
 		_source->Stop();
 	}
@@ -66,12 +78,31 @@ void AudioTester::Update()
 
 	if (Input::GetKeyDown(KeyCode::Alpha5))
 	{
-		_source->SetSound(L"Audio\\gnome.wav");
+		i++;
+		if (i > 2)
+			i = 0;
+
+		_source->SetSound(tbl[i]);
 	}
 
 	if (Input::GetKeyDown(KeyCode::L))
 	{
 		_source->SetLooping(!_source->IsLooping());
 		Utils::Println(_source->IsLooping());
+	}
+
+	if (Input::GetKeyDown(KeyCode::T))
+	{
+		_source->Testing();
+	}
+
+	if (Input::GetKeyDown(KeyCode::Alpha1))
+	{
+		Utils::Println(1);
+	}
+
+	if (Input::GetKeyDown(KeyCode::Escape))
+	{
+		Application::Quit();
 	}
 }

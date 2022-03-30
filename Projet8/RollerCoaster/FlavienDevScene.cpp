@@ -30,7 +30,7 @@ void FlavienDevScene::GenerateContent()
 	GameObject* tester = CreateEmpty();
 
 	// tester->AddComponent<InputTester>();
-	tester->AddComponent<Move>(30.0f);
+	// tester->AddComponent<Move>(30.0f);
 	tester->AddComponent<Rotate>(150.0f, true);
 	tester->AddComponent<MeshRenderer>(L"Mesh\\cube.x");
 	tester->transform->SetScale(tester->transform->GetScale() * 0.02f);

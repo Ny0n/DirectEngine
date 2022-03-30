@@ -12,7 +12,6 @@ public:
 	~AudioSource() override;
 
 	void SetSound(LPCWSTR fileName);
-	void Flush();
 
 	void Play();
 	void Resume();
@@ -20,6 +19,8 @@ public:
 	void Toggle();
 	void Stop();
 	void Restart();
+
+	void Testing();
 
 	bool IsLooping();
 	void SetLooping(bool loop); // SetLooping(true) does not start the audio automatically!
@@ -41,6 +42,11 @@ private:
 	// custom voice callback
 	friend class AudioManager::AudioSourceCallbacks;
 	AudioManager::AudioSourceCallbacks* pSourceCallback;
+
+	HRESULT Flush();
+	HRESULT Submit();
+	bool _hasBuffer = false;
+	bool _ended = false;
 	bool _restarting = false;
 
 	bool _playing = false;
