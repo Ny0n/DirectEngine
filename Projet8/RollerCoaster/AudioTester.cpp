@@ -101,8 +101,8 @@ void AudioTester::Update()
 		Utils::Println(1);
 	}
 
-	if (Input::GetKeyDown(KeyCode::Escape))
-	{
-		Application::Quit();
-	}
+	// if (Input::GetKeyDown(KeyCode::Escape))
+	// {
+	// 	Application::Quit();
+	// }
 }

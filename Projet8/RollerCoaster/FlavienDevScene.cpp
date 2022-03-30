@@ -29,7 +29,7 @@ void FlavienDevScene::GenerateContent()
 	
 	GameObject* tester = CreateEmpty();
 
-	// tester->AddComponent<InputTester>();
+	tester->AddComponent<InputTester>();
 	// tester->AddComponent<Move>(30.0f);
 	tester->AddComponent<Rotate>(150.0f, true);
 	tester->AddComponent<MeshRenderer>(L"Mesh\\cube.x");
@@ -45,10 +45,10 @@ void FlavienDevScene::GenerateContent()
 
 	// tests
 
-	GameObject* audio = CreateEmpty();
-	audio->AddComponent<AudioTester>();
-	audio->AddComponent<AudioSource>();
-	AddToScene(audio);
+	// GameObject* audio = CreateEmpty();
+	// audio->AddComponent<AudioTester>();
+	// audio->AddComponent<AudioSource>();
+	// AddToScene(audio);
 
 	// // monkey
 	//

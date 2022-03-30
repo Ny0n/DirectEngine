@@ -8,7 +8,6 @@ AudioSource::AudioSource()
 
 AudioSource::~AudioSource()
 {
-	pSourceVoice->DestroyVoice();
 }
 
 // **************************** //
@@ -23,10 +22,46 @@ void AudioSource::EngineUpdate()
 {
 }
 
+void AudioSource::OnEnable()
+{
+	if (!_wasPaused)
+		Resume();
+}
+
+void AudioSource::OnDisable()
+{
+	_overrideEnabledCheck = true;
+	_wasPaused = _paused;
+	Pause();
+	_overrideEnabledCheck = false;
+}
+
+void AudioSource::OnDestroy()
+{
+	pSourceVoice->DestroyVoice();
+}
+
 // **************************** //
+
+#define CHECKENABLED(x)\
+if (!_overrideEnabledCheck && !IsEnabled())\
+{\
+	Utils::Println("WARNING: Cannot modify the AudioSource while it is disabled!");\
+	return x;\
+}
+
+#define CHECKSOURCE(x)\
+if (pSourceVoice == nullptr)\
+{\
+	Utils::Println("You must set a sound to the Audio Source!");\
+	return x;\
+}\
+CHECKENABLED(x)
 
 void AudioSource::SetSound(LPCWSTR fileName)
 {
+	CHECKENABLED()
+
 	if (pSourceVoice != nullptr)
 		Stop();
 
@@ -99,13 +134,6 @@ void AudioSource::SetSound(LPCWSTR fileName)
 
 	// Sound Player
 	HRSOUND(AudioManager::pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<WAVEFORMATEX*>(&wfx), 0, XAUDIO2_DEFAULT_FREQ_RATIO, pSourceCallback)); // WARNING: Crashes if no output device is set on the system!
-}
-
-#define CHECKSOURCE(x)\
-if (pSourceVoice == nullptr)\
-{\
-	Utils::Println("You must set a sound to the Audio Source!");\
-	return x;\
 }
 
 // **************************** //

@@ -1,6 +1,8 @@
 #include "InputTester.h"
 
+#include "AudioTester.h"
 #include "Cube.h"
+#include "DontDestroyOnLoad.h"
 #include "FlavienDevScene.h"
 #include "GoUp.h"
 #include "Move.h"
@@ -31,7 +33,7 @@ void InputTester::Update()
 	// Utils::Println(to_string(Time::inUpdateStep));
 
 	static int i = SceneManager::GetActiveSceneIndex();
-	if (Input::GetKeyDown(KeyCode::F))
+	if (Input::GetKeyDown(KeyCode::X))
 	{
 		i++;
 		if (i > SceneManager::BuildScenesCount())
@@ -46,49 +48,28 @@ void InputTester::Update()
 		// 	SceneManager::LoadScene("MenuScene");
 	}
 
-	if (Input::GetKeyDown(KeyCode::R))
-	{
-		SceneManager::LoadScene(SceneManager::GetActiveSceneName());
-	}
-
-	if (Input::GetKeyDown(KeyCode::A))
-	{
-		if (tester != nullptr)
-		{
-			auto comp = tester->GetComponent<Tester>();
-			if (comp != nullptr)
-			{
-				comp->SetEnabled(!comp->IsEnabled());
-			}
-			// gameObject->RemoveComponent<Move>();
-		}
-	}
-
-	if (Input::GetKeyDown(KeyCode::E))
-	{
-		gameObject->AddComponent<Move>();
-	}
-
-	if (Input::GetKey(KeyCode::Alpha4))
-	{
-		Utils::Println("1");
-	}
+	if (Input::GetKeyDown(KeyCode::Escape))
+		Application::Quit();
 
 	// tester = gameObject;
-	if (Input::GetKeyDown(KeyCode::X))
+	if (Input::GetKeyDown(KeyCode::W))
 	{
 		if (tester == nullptr)
 		{
+			// tester = new GameObject();
+			//
+			// tester->AddComponent<Cube>();
+			// // tester->AddComponent<GoUp>(4.0f);
+			// tester->AddComponent<Rotate>(150.0f, true);
+			// tester->AddComponent<Tester>();
+			//
+			// tester->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+			// tester->transform->Rotate(40, -40, 0);
+
 			tester = new GameObject();
-		
-			tester->AddComponent<Cube>();
-			// tester->AddComponent<GoUp>(4.0f);
-			tester->AddComponent<Rotate>(150.0f, true);
-			tester->AddComponent<Tester>();
-		
-			tester->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-			tester->transform->Rotate(40, -40, 0);
-		
+			tester->AddComponent<AudioTester>();
+			tester->AddComponent<AudioSource>();
+			tester->AddComponent<DontDestroyOnLoad>();
 			Instantiate(tester);
 		}
 	}
@@ -101,20 +82,17 @@ void InputTester::Update()
 			return;
 		}
 		
-		auto comp = tester->GetComponent<Rotate>();
-		auto comp2 = tester->GetComponent<Tester>();
+		auto comp = tester->GetComponent<AudioSource>();
 
 		if (comp != nullptr)
 		{
 			if (Input::GetKey(KeyCode::Shift))
 			{
 				tester->RemoveComponent(comp);
-				tester->RemoveComponent(comp2);
 			}
 			else
 			{
 				comp->SetEnabled(!comp->IsEnabled());
-				comp2->SetEnabled(!comp2->IsEnabled());
 			}
 		}
 	}
@@ -169,9 +147,6 @@ void InputTester::Update()
 	// {
 	// 	Utils::Println("Key Up");
 	// }
-
-	if (Input::GetKeyDown(KeyCode::Escape))
-		Application::Quit();
 }
 
 void InputTester::OnDestroy()

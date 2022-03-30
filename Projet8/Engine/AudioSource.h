@@ -7,6 +7,10 @@ class AudioSource : public EngineComponent
 	void EngineStart() override;
 	void EngineUpdate() override;
 
+	void OnEnable() override;
+	void OnDisable() override;
+	void OnDestroy() override;
+
 public:
 	AudioSource();
 	~AudioSource() override;
@@ -34,7 +38,6 @@ private:
 	// sound data
 	WAVEFORMATEXTENSIBLE wfx;
 	XAUDIO2_BUFFER buffer;
-	bool _hasSetBuffer = false;
 
 	// sound player
 	IXAudio2SourceVoice* pSourceVoice;
@@ -47,10 +50,12 @@ private:
 	HRESULT Submit();
 	bool _hasBuffer = false;
 	bool _ended = false;
-	bool _restarting = false;
 
 	bool _playing = false;
 	bool _paused = false;
+
+	bool _wasPaused = false;
+	bool _overrideEnabledCheck = false;
 
 	bool _isLooping = false;
 	bool _wasPlaying = false;
