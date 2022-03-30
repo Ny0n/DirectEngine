@@ -17,15 +17,16 @@ public:
     MoveAlongRails(){}
     ~MoveAlongRails() override;
 
-    Transform GetTransfromWhithoutCursor() const { return *transformWhithoutCursor;}
+    Transform* GetTransfromWhithoutCursor() const { return transformWhithoutCursor;}
     void Move();
 
 private:
     list<MeshRenderer*> _cubes;
+    list<MeshRenderer*> _toDelete;
     RailMaker* _rm;
     D3DXVECTOR3 _previousDir;
-    float _speed =40.0f;
-    float _almostOnSpot = 3.0f;
+    float _speed =25.0f;
+    float _almostOnSpot = 1.0f;
     Transform* transformWhithoutCursor;
 
     //Lerp

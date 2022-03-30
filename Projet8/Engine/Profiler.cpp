@@ -54,7 +54,7 @@ float Profiler::GetSystemTime()
     {
         LARGE_INTEGER counter;
         QueryPerformanceCounter(&counter);
-        return (float)(counter.QuadPart - originalPreciseTime) / precisefrequency;
+        return static_cast<float>(counter.QuadPart - originalPreciseTime) / precisefrequency;
     }
 
     // Classic

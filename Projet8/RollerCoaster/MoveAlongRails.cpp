@@ -4,11 +4,32 @@ MoveAlongRails::~MoveAlongRails()
 {
 	if (transformWhithoutCursor != nullptr)
 		transformWhithoutCursor->Delete();
+	
 }
 
 void MoveAlongRails::Update()
 {
+
 	_cubes = _rm->GetCube();
+	if (!_toDelete.empty() && _toDelete.size() == 25)
+	{
+		MeshRenderer* cube = _toDelete.front();
+		_toDelete.pop_front();
+		list<GameObject*> targets = _rm->GetTarget();
+		if (!targets.empty())
+		{
+
+
+			GameObject* toBeDeleted = targets.front();
+			if (Utils::DistanceWithOutSquareRoot(toBeDeleted->transform->GetPosition(), cube->transform->GetPosition()) < 1000)
+			{
+				targets.pop_front();
+				Destroy(toBeDeleted);
+				_rm->SetTarget(targets);
+			}
+			Destroy(cube->gameObject);
+		}
+	}
 	Move();
 	if(NbreStep > 0)
 	{
@@ -33,13 +54,7 @@ void MoveAlongRails::Move()
 
 	/*D3DXVECTOR3 target =_cubes.front()->transform->GetPosition();*/
 	D3DXVECTOR3 target = _cubes.front()->transform->GetPosition()+ _cubes.front()->transform->GetUp()*4;
-	//Utils::Println("----------------------------");
-	//Utils::Println(_cubes.front()->transform->GetUp().x);
-	//Utils::Println(_cubes.front()->transform->GetUp().y);
-	//Utils::Println(_cubes.front()->transform->GetUp().z);
-	//Utils::Println(transform->GetUp().x);
-	//Utils::Println(transform->GetUp().y);
-	//Utils::Println(transform->GetUp().z);
+
 	D3DXVECTOR3 pos = transform->GetPosition();
 	D3DXVECTOR3 vecteurDir = (target - pos);
 	D3DXVec3Normalize(&vecteurDir, &vecteurDir);
@@ -50,13 +65,17 @@ void MoveAlongRails::Move()
 	{
 		_previousDir = _cubes.front()->transform->GetForward();
 		MeshRenderer* cube = _rm->PopFrontCube();
-
-		Destroy(cube->gameObject);
+		_toDelete.push_back(cube);
 		_cubes = _rm->GetCube();
 
 		cubeQuat = _cubes.front()->transform->GetQuaternion();
-		transformWhithoutCursor->SetQuaternion(cubeQuat);
-		NbreStep = 20;
+		auto currentquat = transformWhithoutCursor->GetQuaternion();
+		if(cubeQuat.x != currentquat.x || cubeQuat.y != currentquat.y || cubeQuat.z != currentquat.z || cubeQuat.w != currentquat.w)
+			NbreStep = 20;
 	}
 	transformWhithoutCursor->SetPosition(pos);
 }
+
+
+
+

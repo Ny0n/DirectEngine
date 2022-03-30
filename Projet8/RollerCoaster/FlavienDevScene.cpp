@@ -2,6 +2,7 @@
 
 #include "AudioTester.h"
 #include "Cube.h"
+#include "DontDestroyOnLoad.h"
 #include "InputTester.h"
 #include "Move.h"
 #include "Rotate.h"
@@ -45,15 +46,16 @@ void FlavienDevScene::GenerateContent()
 
 	// tests
 
-	// GameObject* audio = CreateEmpty();
-	// // audio->AddComponent<AudioTester>();
-	// audio->AddComponent<AudioSource>(L"Audio\\music.wav", true, 0.3f);
-	// AddToScene(audio);
+	GameObject* audio = CreateEmpty();
+	audio->AddComponent<DontDestroyOnLoad>();
+	audio->AddComponent<AudioTester>();
+	audio->AddComponent<AudioSource>(L"Audio\\giveitup.wav", true, 0.6f);
+	AddToScene(audio);
 
-	GameObject* audio2 = CreateEmpty();
-	audio2->AddComponent<AudioTester>();
-	audio2->AddComponent<AudioSource>(L"Audio\\gnome.wav", false, 0.3f);
-	AddToScene(audio2);
+	// GameObject* audio2 = CreateEmpty();
+	// audio2->AddComponent<AudioTester>();
+	// audio2->AddComponent<AudioSource>(L"Audio\\gnome.wav", false, 0.3f);
+	// AddToScene(audio2);
 
 	// // monkey
 	//

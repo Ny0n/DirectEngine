@@ -1,5 +1,8 @@
 ﻿#include "BulletMove.h"
 
+#include "Score.h"
+#include "Target.h"
+
 
 // Start is called before the first frame update
 void BulletMove::Start()
@@ -16,10 +19,11 @@ void BulletMove::Update()
 	pos += dir * bulletSpeed * Time::deltaTime;
 
 	transform->SetPosition(pos);
+	transform->RotateRoll(-600.0f * Time::deltaTime);
 
 	if(currentTimer < 0)
 	{
-		//gameObject->Destroy(); // throw an exception :/
+		Destroy(gameObject); // throw an exception :/
 	}else
 	{
 		currentTimer -= Time::deltaTime;
@@ -29,16 +33,13 @@ void BulletMove::Update()
 
 void BulletMove::OnTriggerEnter(GameObject* collide)
 {
-	Utils::Println("Je commence la collision");
+	auto t = collide->GetComponent<Target>();
+	if (t != nullptr)
+	{
+		t->removeSelf();
+		Score::AddScore(t->points);
+	}
+
+	Destroy(collide);
 	//collide->gameObject->Destroy();
-}
-
-void BulletMove::OnTriggerStay(GameObject* collide)
-{
-	Utils::Println("Je suis en collision");
-}
-
-void BulletMove::OnTriggerExit(GameObject* collide)
-{
-	Utils::Println("Je sors de la collision");
 }

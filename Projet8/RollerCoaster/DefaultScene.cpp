@@ -1,5 +1,6 @@
 #include "DefaultScene.h"
 
+#include "CrosshairScript.h"
 #include "Cube.h"
 #include "DontDestroyOnLoad.h"
 #include "GoUp.h"
@@ -7,9 +8,13 @@
 #include "InputTester.h"
 #include "Move.h"
 #include "MoveAlongRails.h"
+#include "PauseScript.h"
 #include "RailMaker.h"
 #include "RainbowBackground.h"
 #include "Rotate.h"
+#include "Score.h"
+#include "Shoot.h"
+#include "UIManager.h"
 
 string DefaultScene::GetName()
 {
@@ -18,73 +23,140 @@ string DefaultScene::GetName()
 
 void DefaultScene::GenerateContent()
 {
-	Cursor::Lock();
-	Cursor::SetVisible(false);
-
 	// tests
-
-	GameObject* inputTester = CreateEmpty();
-	inputTester->AddComponent<InputTester>();
-	AddToScene(inputTester);
-
-	// rgb background
-
-	GameObject* rgb = CreateEmpty();
-	rgb->AddComponent<RainbowBackground>();
-	AddToScene(rgb);
-
-	GameObject* aligneBox = CreateEmpty();
-	aligneBox->AddComponent<AlignedBox>();
-	AddToScene(aligneBox);
-
-	// camera
-
 	GameObject* mainCamera = CreateEmpty();
 	mainCamera->AddComponent(new Camera());
-	mainCamera->AddComponent(new FPCam());
+	auto cam = mainCamera->AddComponent<FPCam>();
 	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
 	mainCamera->AddComponent<RailMaker>();
 	mainCamera->AddComponent<MoveAlongRails>();
+	mainCamera->AddComponent<Shoot>();
+	mainCamera->AddComponent<AlignedBox>();
 	AddToScene(mainCamera);
 
-	// cube
+	/*GameObject* inputTester = CreateEmpty();
+	inputTester->AddComponent<InputTester>();
+	AddToScene(inputTester);*/
 
-	GameObject* cube1 = CreateEmpty();
-	cube1->AddComponent<Cube>();
-	cube1->AddComponent<Move>();
-	cube1->AddComponent<Collider>();
-	cube1->AddComponent<Rotate>(150.0f, true);
-	// cube1->AddComponent<DontDestroyOnLoad>();
+#pragma region cart
+	GameObject* cart = CreateEmpty();
 
-	cube1->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	cube1->transform->Rotate(40, -40, 0);
+	LPCWSTR cartPath = L"Mesh\\minecart.x";
+	//cart->AddComponent<MeshRenderer>(cartPath);
+	cart->AddComponent<MeshRenderer>(cartPath);
 
-	AddToScene(cube1);
+	AddToScene(cart);
 
-	GameObject* cube2 = CreateEmpty();
-	cube2->AddComponent<Cube>();
-	cube2->AddComponent<Collider>();
-	cube2->AddComponent<Rotate>(150.0f);
+	cam->SetCart(cart);
+#pragma endregion cart
 
-	cube2->transform->SetPosition(D3DXVECTOR3(5.0f, 0.0f, 0.0f));
-	cube2->transform->Rotate(40, 40, 0);
+#pragma region crosshair
+	auto crossGO = CreateEmpty();
+	auto img = crossGO->AddComponent<Image>();
 
-	AddToScene(cube2);
+	img->filePath = L"Image\\flavien3.png";
+	img->position = D3DXVECTOR2(SCREEN_WIDTH * .5f, SCREEN_HEIGHT * .5f);
+	img->originalSize = true;
+	img->scale = D3DXVECTOR2(.5f, .5f);
+	img->imageColor = D3DCOLOR_ARGB(255, 255, 0, 0);
+	img->drawFromCenter = true;
 
-	// tigre
+	crossGO->AddComponent<CrosshairScript>(img);
 
-	GameObject* tigre = CreateEmpty();
+	AddToScene(crossGO);
+#pragma endregion crosshair
 
-	LPCWSTR path = L"Mesh\\cube.x";
-	tigre->AddComponent<MeshRenderer>(path);
-	//tigre->AddComponent<Move>();
-	tigre->AddComponent<Collider>();
-	// tigre->AddComponent<GoUp>(8);
-	tigre->AddComponent<Rotate>();
+#pragma region fpsCounter
+	auto fpsCounter = CreateEmpty();
+	auto fpsText = fpsCounter->AddComponent<Textbox>();
+	fpsText->size = D3DXVECTOR2(90, 25);
+	fpsText->textFormat = DT_LEFT | DT_VCENTER;
+	fpsText->textColor = D3DCOLOR_ARGB(255, 0, 255, 0);
 
-	tigre->transform->SetPosition(D3DXVECTOR3(0.0f, -5.0f, 0.0f));
-	tigre->transform->RotateYaw(22);
-	tigre->transform->SetScale(tigre->transform->GetScale() * 0.01f);
+	AddToScene(fpsCounter);
 
-	AddToScene(tigre);
+#pragma endregion fpsCounter
+
+#pragma region Score
+	auto scoreGO = CreateEmpty();
+
+	auto scoreText = scoreGO->AddComponent<Textbox>();
+	scoreText->textColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+	scoreText->text = L"Score: 0";
+	scoreText->size = D3DXVECTOR2(300, 50);
+	scoreText->fontHeight = 50;
+	scoreText->position = D3DXVECTOR2(SCREEN_WIDTH * .5f - scoreText->size.x * .5f, 75);
+
+	scoreGO->AddComponent<Score>(scoreText);
+
+	AddToScene(scoreGO);
+#pragma endregion Score
+
+#pragma region pause
+	// menu pause
+	auto pauseCanvas = CreateEmpty();
+	pauseCanvas->AddComponent<PauseScript>();
+
+	// panel
+	auto panel = pauseCanvas->AddComponent<Image>();
+	panel->filePath = L"Image\\blanc.png";
+	panel->height = 500;
+	panel->width = 500;
+	auto panelPosition = D3DXVECTOR2((SCREEN_WIDTH - panel->width) * .5f, (SCREEN_HEIGHT - panel->height) * .5f);
+	panel->position = panelPosition;
+	panel->imageColor = D3DCOLOR_ARGB(120, 153, 153, 153);
+
+	// title
+	auto pauseTitle = pauseCanvas->AddComponent<Textbox>();
+	pauseTitle->text = L"PAUSE";
+	pauseTitle->textColor = D3DCOLOR_ARGB(120, 255, 255, 255);
+	pauseTitle->fontHeight = 100;
+	pauseTitle->fontWeight = FW_BOLD;
+	pauseTitle->size = D3DXVECTOR2(300, 100);
+	pauseTitle->position = D3DXVECTOR2(panelPosition.x + (panel->width * 0.5f) - pauseTitle->size.x *.5f, panelPosition.y + 30);
+
+	//Buttons
+	Button* listBtn[4] = {nullptr};
+
+	auto resumeBtn = pauseCanvas->AddComponent<Button>();
+	resumeBtn->text = L"RESUME";
+	resumeBtn->size = D3DXVECTOR2(250 , 60);
+	resumeBtn->position.x = panelPosition.x + (panel->width * 0.5f) - resumeBtn->size.x * .5f;
+	resumeBtn->position.y = panelPosition.y + 175;
+	listBtn[0] = resumeBtn;
+
+	auto restartBtn = pauseCanvas->AddComponent<Button>();
+	restartBtn->text = L"RESTART";
+	restartBtn->size = D3DXVECTOR2(250, 60);
+	restartBtn->position.x = panelPosition.x + (panel->width * 0.5f) - restartBtn->size.x * .5f;
+	restartBtn->position.y = resumeBtn->position.y + 80;
+	listBtn[1] = restartBtn;
+
+	auto menuBtn = pauseCanvas->AddComponent<Button>();
+	menuBtn->text = L"BACK TO MENU";
+	menuBtn->size = D3DXVECTOR2(250, 60);
+	menuBtn->position.x = panelPosition.x + (panel->width * 0.5f) - menuBtn->size.x * .5f;
+	menuBtn->position.y = restartBtn->position.y + 80;
+	listBtn[2] = menuBtn;
+
+	auto quitBtn = pauseCanvas->AddComponent<Button>();
+	quitBtn->text = L"QUIT";
+	quitBtn->size = D3DXVECTOR2(250, 60);
+	quitBtn->position.x = panelPosition.x + (panel->width * 0.5f) - quitBtn->size.x * .5f;
+	quitBtn->position.y = menuBtn->position.y + 80;
+	listBtn[3] = quitBtn;
+
+	AddToScene(pauseCanvas);
+#pragma endregion pause
+
+	// UI Manager
+	auto UIManagerGO = CreateEmpty();
+
+	const auto managerScript = new UIManager(pauseCanvas, crossGO, cam, listBtn, fpsText);
+	UIManagerGO->AddComponent(managerScript);
+
+	AddToScene(UIManagerGO);
+
+	
+
 }

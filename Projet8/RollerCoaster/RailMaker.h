@@ -2,7 +2,6 @@
 
 #include "EngineLib.h"
 
-#include "Cube.h"
 
 class RailMaker : public MonoBehaviour
 {
@@ -12,20 +11,29 @@ class RailMaker : public MonoBehaviour
 	void Update() override;
 
 public:
-	explicit RailMaker() {}
 
-	void Turn(float rotate);
+	explicit RailMaker() {}
+	~RailMaker() override;
+
 	list<MeshRenderer*> GetCube() { return  _cubes; }
+	list<GameObject*> GetTarget() { return  _target; }
+	void SetTarget(list<GameObject*> targets) { _target = targets; }
+
 	void MoveForward();
+
 	MeshRenderer* PopFrontCube();
 private :
 	list<MeshRenderer*> _cubes = {};
+	list<GameObject*> _target={};
+
 	const float _spaceBetween = 3.0f;
-	float _maxDistance = 100.0f;
+	int _maxDistance = 50;
 	const float _step = 10;
 
 	float _angleUp = 90;
-	float _currentStep;
+	float _currentStepUp;
 
+	float _angleRight = 90;
+	float _currentStepRight;
 };
 

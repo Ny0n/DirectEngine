@@ -256,13 +256,8 @@ void AudioSource::Stop()
 
 void AudioSource::Restart()
 {
-	CHECKSOURCE()
-		
-	HRSOUND(pSourceVoice->Stop());
-	HRSOUND(Flush());
-	HRSOUND(Submit());
-	HRSOUND(pSourceVoice->Start());
-	_playing = true;
+	Stop();
+	Play();
 }
 
 HRESULT AudioSource::Flush()

@@ -19,18 +19,18 @@ void Shoot::Update()
 
 	if(shoot == true)
 	{
-		Utils::Println("Shot");
 		GameObject* bullet = new GameObject();
 		bullet->transform->SetQuaternion(transform->GetQuaternion());
 		bullet->transform->SetPosition(transform->GetPosition());
+		bullet->transform->SetScale(bullet->transform->GetScale() * 0.5f);
 
-		LPCWSTR path = L"Mesh\\sphere.x";
+		LPCWSTR path = L"Mesh\\bullet.x";
 		bullet->AddComponent<MeshRenderer>(path);
 		bullet->AddComponent<Collider>();
 
 		auto bulletMove = bullet->AddComponent<BulletMove>();
 
-		bulletMove->SetBulletSpeed(25.0f);
+		bulletMove->SetBulletSpeed(100.0f);
 
 
 		Instantiate(bullet);

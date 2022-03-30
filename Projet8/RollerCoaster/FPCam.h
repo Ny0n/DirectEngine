@@ -13,11 +13,12 @@ class FPCam : public MonoBehaviour
 public:
 	FPCam() = default;
 	explicit FPCam(float speed);
-
+	void SetCart(GameObject* newCart) { cart = newCart; }
 private:
 	float _speed{ 10.0f };
 
 	float rightSpeed;
 	float upSpeed;
-	float yaw;
+	float upSpeedLimit = 30.0f;
+	GameObject* cart;
 };

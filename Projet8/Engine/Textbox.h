@@ -7,6 +7,7 @@ class Textbox final : public EngineComponent
 
 public:
 	string GetType() override { return NAMEOF(Textbox); }
+	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
 
 	explicit Textbox();
 	~Textbox() override;
@@ -22,8 +23,8 @@ public:
 
 	LPCWSTR boxFilepath = L"Image\\blanc.png";
 
-	D3DXVECTOR2 rectTopLeft = {0,0 };
-	D3DXVECTOR2 rectBottomRight = { 200, 50 };
+	D3DXVECTOR2 position = { 0,0 };
+	D3DXVECTOR2 size = { 200, 50 };
 
 	D3DCOLOR borderColor = D3DCOLOR_ARGB(255, 255, 166, 0);
 	D3DCOLOR boxColor = D3DCOLOR_ARGB(255, 0, 255, 255);
@@ -33,13 +34,12 @@ public:
 
 	bool drawBox = false;
 	bool drawBorder = false;
-	
 
 private:
 	void Render();
-
-	UINT width;
-	UINT height;
+	
+	D3DXVECTOR2 rectTopLeft;
+	D3DXVECTOR2 rectBottomRight;
 
 	ID3DXLine* line = nullptr;
 	LPDIRECT3DTEXTURE9 texture;
