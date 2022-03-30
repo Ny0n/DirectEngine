@@ -26,8 +26,6 @@ public:
 	void Stop();
 	void Restart();
 
-	void Testing();
-
 	bool IsLooping();
 	void SetLooping(bool loop); // SetLooping(true) does not start the audio automatically!
 	float GetVolume();

@@ -93,7 +93,7 @@ void AudioTester::Update()
 
 	if (Input::GetKeyDown(KeyCode::T))
 	{
-		_source->Testing();
+		// _source->Testing();
 	}
 
 	if (Input::GetKeyDown(KeyCode::Alpha1))

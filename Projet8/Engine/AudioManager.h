@@ -1,11 +1,11 @@
 #pragma once
 
-#define HRSOUND(expression)											\
+#define HRSOUND(expression, r)										\
 if (FAILED(AudioManager::hr = expression))							\
 {																	\
 	Utils::PrintError(__FILE__, __LINE__, L"HRSOUND audio error");	\
 	Utils::Println(AudioManager::hr);								\
-	return;															\
+	return r;														\
 }1
 
 #ifdef _XBOX //Big-Endian

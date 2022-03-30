@@ -166,47 +166,25 @@ void AudioSource::SetSound(LPCWSTR fileName)
 
 COM_DECLSPEC_NOTHROW void AudioManager::AudioSourceCallbacks::OnBufferEnd(void* pBufferContext)
 {
-	Utils::Println("END " + to_string(source->_playing));
-
-	// HRSOUND(source->pSourceVoice->Stop());
-	// // Utils::Println(Time::runTime());
-	//
 	if (source->_ended)
 	{
 		source->_ended = false;
 		return;
 	}
-	//
-	// Utils::Println("--> PASSED?!");
-	//
-	// return;
-	//
-	// if (source->_restarting)
-	// {
-	// 	source->_restarting = false;
-	// 	return;
-	// }
 	
 	source->_playing = false;
 	source->_paused = false;
-
-	Utils::Println("SET PLAYING FALSE");
 	
 	if (!source->_wasPlaying) // if this is false, it means we want to start looping
-	{
-		Utils::Println("NOPE");
 		return;
-	}
 	
 	source->_wasPlaying = false;
 	
-	Utils::Println("Restarting...");
 	source->Play(); // the callback when a loop ends is OnLoopEnd, so we won't get back here
 }
 
 void AudioManager::AudioSourceCallbacks::OnLoopEnd(void* pBufferContext)
 {
-	Utils::Println("LOOP END");
 }
 
 // **************************** //
@@ -226,13 +204,9 @@ void AudioSource::Play()
 	
 	HRSOUND(Flush());
 	HRSOUND(Submit());
-	// HRSOUND(pSourceVoice->FlushSourceBuffers());
-	// HRSOUND(pSourceVoice->SubmitSourceBuffer(&buffer));
 
 	HRSOUND(pSourceVoice->Start());
-
 	_playing = true;
-	Utils::Println("WTF");
 }
 
 void AudioSource::Resume()
@@ -274,7 +248,6 @@ void AudioSource::Stop()
 	CHECKSOURCE()
 		
 	HRSOUND(pSourceVoice->Stop());
-	// HRSOUND(pSourceVoice->FlushSourceBuffers());
 	HRSOUND(Flush());
 
 	_playing = false;
@@ -284,57 +257,22 @@ void AudioSource::Stop()
 void AudioSource::Restart()
 {
 	CHECKSOURCE()
-
-	// _restarting = true;
+		
 	HRSOUND(pSourceVoice->Stop());
 	HRSOUND(Flush());
 	HRSOUND(Submit());
 	HRSOUND(pSourceVoice->Start());
 	_playing = true;
-	Utils::Println("SET PLAYING TRUE");
-
-	// HRSOUND(pSourceVoice->Stop());
-	// HRSOUND(pSourceVoice->FlushSourceBuffers());
-	// HRSOUND(pSourceVoice->SubmitSourceBuffer(&buffer));
-	// HRSOUND(pSourceVoice->Start());
-
-	// Stop();
-	// Play();
-	// Utils::Println("PLAYING:");
-	// Utils::Println(_playing);
-}
-
-void AudioSource::Testing()
-{
-	// Utils::Println("TESTING");
-	
-	HRSOUND(pSourceVoice->Stop());
-	Utils::Println("a");
-	Utils::Println(Time::runTime());
-	HRSOUND(Flush());
-	Utils::Println("b");
-	Utils::Println(Time::runTime());
-	// HRSOUND(pSourceVoice->SubmitSourceBuffer(&buffer));
-	// HRSOUND(pSourceVoice->Start());
-	// Utils::Println("after");
-
-	// _playing = false;
-	// _paused = false;
 }
 
 HRESULT AudioSource::Flush()
 {
 	if (_hasBuffer)
 	{
-		Utils::Println("FLUSHING");
-
-		// TODO change macro or don't use it, to change _hasBuffer only if succeded
-		pSourceVoice->FlushSourceBuffers(); // THIS LINE only triggers an end callback IF we flush an UNFINISHED buffer
+		HRSOUND(pSourceVoice->FlushSourceBuffers(), AudioManager::hr); // THIS LINE only triggers an end callback IF we flush an UNFINISHED buffer
 
 		if (_playing) // so we're checking that here, and saying "hey, we terminated an unfinished buffer, expect an unnessary callback)
 			_ended = true;
-
-		Utils::Println("FLUSHED");
 
 		_hasBuffer = false;
 	}
@@ -346,11 +284,7 @@ HRESULT AudioSource::Submit()
 {
 	if (!_hasBuffer)
 	{
-		Utils::Println("SUBMITTING");
-
-		pSourceVoice->SubmitSourceBuffer(&buffer);
-
-		Utils::Println("SUBMITTED");
+		HRSOUND(pSourceVoice->SubmitSourceBuffer(&buffer), AudioManager::hr);
 
 		_hasBuffer = true;
 	}
@@ -379,16 +313,12 @@ void AudioSource::SetLooping(bool loop)
 	if (_isLooping)
 	{
 		if (_playing)
-		{
 			_wasPlaying = true;
-			Utils::Println("WASPLAYING SET");
-		}
 	}
 	else
 	{
 		HRSOUND(pSourceVoice->ExitLoop());
 		_wasPlaying = false;
-		Utils::Println("WASPLAYING UNSET");
 	}
 }
 
