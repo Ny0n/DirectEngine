@@ -35,6 +35,8 @@ public:
 	bool IsPaused();
 
 private:
+	HANDLE hFile;
+
 	// sound data
 	WAVEFORMATEXTENSIBLE wfx;
 	XAUDIO2_BUFFER buffer;

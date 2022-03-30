@@ -1,5 +1,7 @@
 ﻿#include "pch.h"
 
+#include "EngineLib.h"
+
 AudioSource::AudioSource()
 {
 	pSourceCallback = new AudioManager::AudioSourceCallbacks();
@@ -16,6 +18,9 @@ AudioSource::AudioSource(LPCWSTR defaultFileName, bool playOnStart, float defaul
 
 AudioSource::~AudioSource()
 {
+	delete pSourceCallback;
+	if (hFile != nullptr)
+		CloseHandle(hFile);
 }
 
 // **************************** //
@@ -49,7 +54,11 @@ void AudioSource::OnDisable()
 
 void AudioSource::OnDestroy()
 {
-	pSourceVoice->DestroyVoice();
+	if (pSourceVoice != nullptr)
+	{
+		pSourceVoice->DestroyVoice();
+		pSourceVoice = nullptr;
+	}	
 }
 
 // **************************** //
@@ -90,7 +99,7 @@ void AudioSource::SetSound(LPCWSTR fileName)
 
 	// ** Open the audio file ** //
 
-	HANDLE hFile = CreateFile(
+	hFile = CreateFile(
 		fileName,
 		GENERIC_READ,
 		FILE_SHARE_READ,
@@ -145,8 +154,10 @@ void AudioSource::SetSound(LPCWSTR fileName)
 	buffer.AudioBytes = dwChunkSize;  //size of the audio buffer in bytes
 	buffer.pAudioData = pDataBuffer;  //buffer containing audio data
 	buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
-
+	
 	UpdateLooping();
+
+	delete pDataBuffer;
 
 	// Sound Player
 

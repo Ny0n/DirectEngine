@@ -114,7 +114,7 @@ void MenuScene::GenerateContent()
 	AddToScene(MenuManager);
 
 	GameObject* audio = CreateEmpty();
-	audio->AddComponent<DontDestroyOnLoad>();
+	//audio->AddComponent<DontDestroyOnLoad>();
 	audio->AddComponent<AudioTester>();
 	audio->AddComponent<AudioSource>(L"Audio\\giveitup.wav", true, 0.6f);
 	AddToScene(audio);
