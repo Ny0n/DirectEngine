@@ -18,7 +18,7 @@ void RealFPCam::Update()
     float upSpeed = (mouseP.y - SCREEN_HEIGHT / 2) * sensibility * Time::deltaTime;
     float rightSpeed = (mouseP.x - SCREEN_WIDTH / 2) * sensibility * Time::deltaTime;
 
-    Utils::Println(upSpeed);
+    // Utils::Println(upSpeed);
 
     transform->RotatePitch(upSpeed);
     transform->RotateYaw(rightSpeed, Space::World);

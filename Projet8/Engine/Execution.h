@@ -20,6 +20,7 @@ class Execution final
 	static void Update();
 	static void LateUpdate();
 	static void EngineUpdate();
+	static void EngineUpdate2();
 
 	static void CheckForSceneUpdate();
 

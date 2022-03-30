@@ -140,6 +140,7 @@
     <ClInclude Include="Button.h">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClInclude>
+    <ClInclude Include="PointLight.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -234,6 +235,9 @@
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Source\Objects\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -99,6 +99,14 @@ void Execution::EngineUpdate()
     });
 }
 
+void Execution::EngineUpdate2()
+{
+    SceneManager::ForEachComponent([](Component* component)
+        {
+            component->EngineUpdate2();
+        });
+}
+
 void Execution::CheckForSceneUpdate()
 {
     Time::_inSceneStep = true;

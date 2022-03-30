@@ -17,6 +17,7 @@ class Component : public Object
 	virtual void Update() = 0;
 	virtual void LateUpdate() = 0;
 	virtual void EngineUpdate() = 0;
+	virtual void EngineUpdate2() = 0;
 
 	virtual void Awake() {}
 	virtual void OnEnable() {}

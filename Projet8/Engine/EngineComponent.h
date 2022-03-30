@@ -11,6 +11,7 @@ class EngineComponent : public Component
 
 	void EngineStart() override {}
 	void EngineUpdate() override {}
+	void EngineUpdate2() override {}
 
 public:
 	EngineComponent() = default; // TEMPORARY, while we're actively coding

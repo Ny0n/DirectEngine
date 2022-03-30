@@ -7,6 +7,25 @@ LPDIRECT3DDEVICE9 d3ddev; // the pointer to the device class
 LPDIRECT3DVERTEXBUFFER9 _VBuffer = nullptr;
 LPDIRECT3DINDEXBUFFER9 _IBuffer = nullptr;
 
+//--------------------------------------------------------------------------------------
+// Structures
+//--------------------------------------------------------------------------------------
+struct SimpleVertex
+{
+    D3DXVECTOR3 Pos;
+    D3DXVECTOR3 Normal;
+};
+
+
+//--------------------------------------------------------------------------------------
+// Global Variables
+//--------------------------------------------------------------------------------------
+HINSTANCE                   g_hInst = NULL;
+HWND                        g_hWnd = NULL;
+D3DXMATRIX                  g_World;
+D3DXMATRIX                  g_View;
+D3DXMATRIX                  g_Projection;
+
 // **************************** //
 
 Engine* Engine::instance = nullptr;
@@ -22,28 +41,6 @@ Engine::~Engine()
     instance = nullptr;
 }
 
-// **************************** //
-
-void Engine::InitLight()
-{
-    D3DLIGHT9 light;    // create the light struct
-    D3DMATERIAL9 material;    // create the material struct
-
-    ZeroMemory(&light, sizeof(light));    // clear out the light struct for use
-    light.Type = D3DLIGHT_DIRECTIONAL;    // make the light type 'directional light'
-    light.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);    // set the light's color
-    light.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);    // set the light's color
-    light.Direction = D3DXVECTOR3(0.0f, -0.3f, 0.0f);
-
-    d3ddev->SetLight(0, &light);    // send the light struct properties to light #0
-    d3ddev->LightEnable(0, TRUE);    // turn on light #0
-
-    ZeroMemory(&material, sizeof(D3DMATERIAL9));    // clear out the struct for use
-    material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set diffuse color to white
-    material.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set ambient color to white
-
-    d3ddev->SetMaterial(&material);    // set the globably-used material to &material
-}
 
 void Engine::InitD3D()
 {
@@ -70,10 +67,11 @@ void Engine::InitD3D()
         &d3dpp,
         &d3ddev);
 
-    InitLight();
+    //
     d3ddev->SetRenderState(D3DRS_LIGHTING, true);    // turn on the 3D lighting
-    d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(155, 155, 155));    // ambient light
-    d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
+    // d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(250, 250,210 ));    // ambient light
+
+    // d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
     float Start = 60.0f,    // Linear fog distances
         End = 100.0f;
 
@@ -102,6 +100,36 @@ void Engine::InitD3D()
         D3DPOOL_MANAGED,
         &_IBuffer,
         NULL);
+
+ //   // Create the effect
+ //   ID3DXEffect* g_pEffect = NULL;
+
+ //   DWORD dwShaderFlags = 0;
+	//dwShaderFlags |= D3DXSHADER_FORCE_VS_SOFTWARE_NOOPT;
+ //   dwShaderFlags |= D3DXSHADER_FORCE_PS_SOFTWARE_NOOPT;
+ //   dwShaderFlags |= D3DXSHADER_NO_PRESHADER;
+
+ //   HRESULT hr = D3DXCreateEffectFromFile(d3ddev, L"C:\\Users\\fcalvet\\Desktop\\direct8\\Projet8\\RollerCoaster\\Tutorial06.fx", NULL, NULL, dwShaderFlags, NULL, &g_pEffect, NULL);
+ //   if (FAILED(hr))
+ //   {
+ //       Utils::Println(hr);
+ //       Utils::Println(D3DERR_INVALIDCALL);
+ //       Utils::Println(D3DXERR_INVALIDDATA);
+ //       Utils::Println(E_OUTOFMEMORY);
+
+ //   }
+
+ //   // Obtain the techniques
+ //   D3DXHANDLE g_pTechniqueRender = g_pEffect->GetTechniqueByName("Render");
+ //   D3DXHANDLE g_pTechniqueRenderLight = g_pEffect->GetTechniqueByName("RenderLight");
+
+    // Obtain the variables
+    // g_pWorldVariable = g_pEffect->GetVariableByName("")->AsMatrix();
+    // g_pViewVariable = g_pEffect->GetVariableByName("View")->AsMatrix();
+    // g_pProjectionVariable = g_pEffect->GetVariableByName("Projection")->AsMatrix();
+    // g_pLightDirVariable = g_pEffect->GetVariableByName("vLightDir")->AsVector();
+    // g_pLightColorVariable = g_pEffect->GetVariableByName("vLightColor")->AsVector();
+    // g_pOutputColorVariable = g_pEffect->GetVariableByName("vOutputColor")->AsVector();
 }
 
 void Engine::UninitD3D()
@@ -251,10 +279,13 @@ void Engine::CheckForProfilerDisplay()
 }
 
 // ************/ Execution /************ //
-
+D3DLIGHT9 light;
+static float pos = 0.0f;
 void Engine::RunFrame()
 {
-  
+
+
+
     Execution::CheckForSceneUpdate();
     _profiler->TimedRunner(_profiler->engineStartTime, Execution::EngineStart);
     _profiler->TimedRunner(_profiler->startTime, Execution::Start);
@@ -263,9 +294,11 @@ void Engine::RunFrame()
     _profiler->TimedRunner(_profiler->updateTime, Execution::Update);
     _profiler->TimedRunner(_profiler->lateUpdateTime, Execution::LateUpdate);
 
+
     d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
     d3ddev->BeginScene();    // begins the 3D scene
 
+    _profiler->TimedRunner(_profiler->engineUpdateTime, Execution::EngineUpdate2);
     _profiler->TimedRunner(_profiler->engineUpdateTime, Execution::EngineUpdate);
 
     d3ddev->EndScene();    // ends the 3D scene

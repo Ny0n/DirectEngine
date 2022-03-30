@@ -11,6 +11,7 @@ class MonoBehaviour : public Component
 
 	void EngineStart() final {}
 	void EngineUpdate() final {}
+	void EngineUpdate2() final {}
 
 public:
 	MonoBehaviour() = default;
