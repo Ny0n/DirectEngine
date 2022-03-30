@@ -22,6 +22,6 @@ class ParticleSystem : public EngineComponent
 	void EngineUpdate() override;
 
 
-	~ParticleSystem();
+	~ParticleSystem() override;
 
 };

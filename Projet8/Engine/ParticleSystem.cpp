@@ -2,11 +2,15 @@
 
 
 // Start is called before the first frame update
-void ParticleSystem::Start()
+void ParticleSystem::EngineStart()
 {
 }
 
 // Update is called once per frame
-void ParticleSystem::Update()
+void ParticleSystem::EngineUpdate()
+{
+}
+
+ParticleSystem::~ParticleSystem()
 {
 }
