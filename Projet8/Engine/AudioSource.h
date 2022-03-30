@@ -13,7 +13,7 @@ class AudioSource : public EngineComponent
 
 public:
 	AudioSource();
-	explicit AudioSource(LPCWSTR defaultFileName, bool playOnStart = true, float volume = 0.8f);
+	explicit AudioSource(LPCWSTR defaultFileName, bool playOnStart = true, float volume = 0.8f, bool isLooping = false);
 	~AudioSource() override;
 
 	LPCWSTR GetSound();
@@ -51,6 +51,7 @@ private:
 	LPCWSTR _fileName = L"";
 	bool _playOnStart = false;
 	float _volume = 0.8f;
+	bool _isLooping = false;
 
 	HRESULT Flush();
 	HRESULT Submit();
@@ -63,7 +64,6 @@ private:
 	bool _wasPaused = false;
 	bool _overrideEnabledCheck = false;
 
-	bool _isLooping = false;
 	bool _wasPlaying = false;
 	void UpdateLooping();
 

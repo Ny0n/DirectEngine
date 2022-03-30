@@ -6,11 +6,12 @@ AudioSource::AudioSource()
 	pSourceCallback->source = this;
 }
 
-AudioSource::AudioSource(LPCWSTR defaultFileName, bool playOnStart, float defaultVolume) : AudioSource()
+AudioSource::AudioSource(LPCWSTR defaultFileName, bool playOnStart, float defaultVolume, bool isLooping) : AudioSource()
 {
 	_fileName = defaultFileName;
 	_playOnStart = playOnStart;
-	_volume = defaultVolume;
+	SetVolume(defaultVolume);
+	SetLooping(isLooping);
 }
 
 AudioSource::~AudioSource()
@@ -366,12 +367,12 @@ bool AudioSource::IsLooping()
 
 void AudioSource::SetLooping(bool loop)
 {
-	CHECKSOURCE()
-
 	if (_isLooping == loop)
 		return;
 
 	_isLooping = loop;
+
+	CHECKSOURCE()
 
 	UpdateLooping();
 
@@ -416,14 +417,15 @@ float AudioSource::GetVolume()
 
 void AudioSource::SetVolume(float volume)
 {
-	CHECKSOURCE()
-
 	if (volume < MIN_VOLUME)
 		volume = MIN_VOLUME;
 	else if (volume > MAX_VOLUME)
 		volume = MAX_VOLUME;
 	
 	_volume = volume;
+
+	CHECKSOURCE()
+
 	pSourceVoice->SetVolume(volume);
 }
 

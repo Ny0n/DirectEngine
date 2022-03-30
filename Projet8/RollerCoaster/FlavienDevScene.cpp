@@ -46,9 +46,14 @@ void FlavienDevScene::GenerateContent()
 	// tests
 
 	GameObject* audio = CreateEmpty();
-	audio->AddComponent<AudioTester>();
-	audio->AddComponent<AudioSource>(L"Audio\\giveitup.wav");
+	// audio->AddComponent<AudioTester>();
+	audio->AddComponent<AudioSource>(L"Audio\\music.wav", true, 0.3f);
 	AddToScene(audio);
+
+	GameObject* audio2 = CreateEmpty();
+	audio2->AddComponent<AudioTester>();
+	audio2->AddComponent<AudioSource>(L"Audio\\waka.wav", false, 0.3f);
+	AddToScene(audio2);
 
 	// // monkey
 	//
