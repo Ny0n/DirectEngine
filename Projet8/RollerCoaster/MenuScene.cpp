@@ -24,11 +24,6 @@ void MenuScene::GenerateContent()
 	BackgroundImg->width = 1920;
 	BackgroundImg->height = 1080;
 
-	auto logoImg = backgroundCanvas->AddComponent<Image>();
-	logoImg->filePath = L"Image\\mine.png";
-	logoImg->position = D3DXVECTOR2(500, 50);
-	logoImg->originalSize = true;
-
 	AddToScene(backgroundCanvas);
 #pragma endregion BackGround
 
@@ -36,6 +31,11 @@ void MenuScene::GenerateContent()
 	Button* menuBtnList[4] = {nullptr};
 
 	GameObject* menuCanvas = CreateEmpty();
+
+	auto logoImg = menuCanvas->AddComponent<Image>();
+	logoImg->filePath = L"Image\\mine.png";
+	logoImg->position = D3DXVECTOR2(500, 50);
+	logoImg->originalSize = true;
 
 	auto PlayBtn = menuCanvas->AddComponent<Button>();
 	PlayBtn->position = D3DXVECTOR2(1300, 500);
