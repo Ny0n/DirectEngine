@@ -134,6 +134,9 @@
     <ClInclude Include="Button.h">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -222,6 +225,9 @@
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Source\Objects\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source\Objects\Components\Custom</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

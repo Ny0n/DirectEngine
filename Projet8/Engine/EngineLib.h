@@ -31,6 +31,7 @@
 #include "MeshRenderer.h"
 #include "Collider.h"
 #include "AlignedBox.h"
+#include "ParticleSystem.h"
 
 // UI Components
 #include "Canvas.h"
