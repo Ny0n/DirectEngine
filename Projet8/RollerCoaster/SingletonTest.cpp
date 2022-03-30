@@ -23,5 +23,6 @@ void SingletonTest::Update()
 	if (Input::GetKeyDown(KeyCode::N))
 	{
 		Utils::Println("SingletonTest");
+		AudioManager::SetActive(!AudioManager::IsActive());
 	}
 }
