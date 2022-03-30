@@ -227,6 +227,46 @@ void MenuScene::GenerateContent()
 	creditsText->fontHeight = 85;
 	creditsText->position = creditsPanelPosition;
 
+	auto groupeText = creditsCanvas->AddComponent<Textbox>();
+	groupeText->text = L"~~ Groupe 7 ~~";
+	groupeText->fontHeight = 60;
+	groupeText->size.x = 350;
+	groupeText->textColor = D3DCOLOR_ARGB(255, 0, 255, 0);
+	groupeText->position.x = SCREEN_WIDTH * .5f - groupeText->size.x * .5f;
+	groupeText->position.y = creditsPanelPosition.y + 200;
+
+	auto flavienText = creditsCanvas->AddComponent<Textbox>();
+	flavienText->text = L"Flavien MERITTO";
+	flavienText->fontHeight = 40;
+	flavienText->size.x = 300;
+	flavienText->textColor = D3DCOLOR_ARGB(255, 10, 240, 163);
+	flavienText->position.x = SCREEN_WIDTH * .5f - flavienText->size.x *.5f;
+	flavienText->position.y = groupeText->position.y + flavienText->size.y + 60;
+
+	auto lionelText = creditsCanvas->AddComponent<Textbox>();
+	lionelText->text = L"Lionel JANIN";
+	lionelText->fontHeight = 40;
+	lionelText->size.x = 300;
+	lionelText->textColor = D3DCOLOR_ARGB(255, 30, 30, 255);
+	lionelText->position.x = SCREEN_WIDTH * .5f - lionelText->size.x * .5f;
+	lionelText->position.y = flavienText->position.y + lionelText->size.y + 30;
+
+	auto franText = creditsCanvas->AddComponent<Textbox>();
+	franText->text = L"François CALVET";
+	franText->fontHeight = 40;
+	franText->size.x = 300;
+	franText->textColor = D3DCOLOR_ARGB(255, 255,0,0);
+	franText->position.x = SCREEN_WIDTH * .5f - franText->size.x * .5f;
+	franText->position.y = lionelText->position.y + franText->size.y + 30;
+
+	auto killianText = creditsCanvas->AddComponent<Textbox>();
+	killianText->text = L"Killian PEREZ";
+	killianText->fontHeight = 40;
+	killianText->size.x = 300;
+	killianText->textColor = D3DCOLOR_ARGB(255, 255, 255, 0);
+	killianText->position.x = SCREEN_WIDTH * .5f - killianText->size.x * .5f;
+	killianText->position.y = franText->position.y + killianText->size.y + 30;
+
 	auto creditsBtn = creditsCanvas->AddComponent<Button>();
 	creditsBtn->text = L"BACK TO MENU";
 	creditsBtn->position.x = creditsPanelPosition.x + creditsPanel->width - creditsBtn->size.x - padding;

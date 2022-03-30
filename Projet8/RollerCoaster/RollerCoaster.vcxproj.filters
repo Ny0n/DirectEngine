@@ -110,9 +110,6 @@
     <ClInclude Include="UIManager.h">
       <Filter>Game\Scripts\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Target.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Score.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
@@ -127,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="Options.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Target.h">
+      <Filter>Game\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -202,7 +202,6 @@
     <ClCompile Include="UIManager.cpp">
       <Filter>Game\Scripts\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Target.cpp" />
     <ClCompile Include="Score.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
@@ -217,6 +216,9 @@
     </ClCompile>
     <ClCompile Include="Options.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Target.cpp">
+      <Filter>Game\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
