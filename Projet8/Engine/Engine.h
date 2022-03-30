@@ -27,8 +27,7 @@ private:
 
 	HWND _window;
 	Profiler* _profiler;
-
-	void InitLight();
+	
 	void InitD3D();
 	void UninitD3D();
 

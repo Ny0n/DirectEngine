@@ -30,13 +30,15 @@ void AudioTester::Start()
 // Update is called once per frame
 void AudioTester::Update()
 {
+	return;
+
 	if (_source == nullptr)
 		return;
 
-	if (Input::GetKeyDown(KeyCode::Escape))
-	{
-		Application::Quit();
-	}
+	// if (Input::GetKeyDown(KeyCode::Escape))
+	// {
+	// 	Application::Quit();
+	// }
 
 	if (Input::GetKeyDown(KeyCode::A))
 	{

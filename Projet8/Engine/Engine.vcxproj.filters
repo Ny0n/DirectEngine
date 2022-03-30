@@ -143,6 +143,9 @@
     <ClInclude Include="CheckBox.h">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -240,6 +243,9 @@
     </ClCompile>
     <ClCompile Include="CheckBox.cpp">
       <Filter>Source\Objects\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>Source\Objects\Components\Custom</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

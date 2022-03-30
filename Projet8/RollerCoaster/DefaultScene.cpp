@@ -25,13 +25,14 @@ void DefaultScene::GenerateContent()
 {
 	// tests
 	GameObject* mainCamera = CreateEmpty();
-	mainCamera->AddComponent(new Camera());
-	auto cam = mainCamera->AddComponent<FPCam>();
-	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
+	mainCamera->AddComponent<Camera>();
+	auto fpCam = mainCamera->AddComponent<FPCam>();
 	mainCamera->AddComponent<RailMaker>();
 	mainCamera->AddComponent<MoveAlongRails>();
 	mainCamera->AddComponent<Shoot>();
 	mainCamera->AddComponent<AlignedBox>();
+	auto light = mainCamera->AddComponent<PointLight>(D3DCOLOR_RGBA(255, 100, 0, 255));
+	light->offset = DATASUPPLIER( mainCamera->transform->GetUp() * -5 );
 	AddToScene(mainCamera);
 
 	/*GameObject* inputTester = CreateEmpty();
@@ -47,7 +48,7 @@ void DefaultScene::GenerateContent()
 
 	AddToScene(cart);
 
-	cam->SetCart(cart);
+	fpCam->SetCart(cart);
 #pragma endregion cart
 
 #pragma region crosshair
@@ -152,7 +153,7 @@ void DefaultScene::GenerateContent()
 	// UI Manager
 	auto UIManagerGO = CreateEmpty();
 
-	const auto managerScript = new UIManager(pauseCanvas, crossGO, cam, listBtn, fpsText);
+	const auto managerScript = new UIManager(pauseCanvas, crossGO, fpCam, listBtn, fpsText);
 	UIManagerGO->AddComponent(managerScript);
 
 	AddToScene(UIManagerGO);

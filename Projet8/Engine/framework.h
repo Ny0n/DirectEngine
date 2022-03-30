@@ -62,6 +62,7 @@ using namespace std;
 
 #define RUNNER(func) [=] { func(); }
 #define SUPPLIER(func) [=] { return func(); }
+#define DATASUPPLIER(data) [=] { return data; }
 #define CONSUMER(param, func) [=](param) func
 #define CONSUMERN(func, param) [=](param) { func(param); }
 // #define FUNCTION(Param, func) [=]((Param)* param) { return func(param); }
