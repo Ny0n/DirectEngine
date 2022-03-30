@@ -4,6 +4,7 @@
 #include "DontDestroyOnLoad.h"
 #include "MainMenuScript.h"
 #include "InputTester.h"
+#include "SingletonTest.h"
 
 class InputField;
 
@@ -114,8 +115,11 @@ void MenuScene::GenerateContent()
 	AddToScene(MenuManager);
 
 	GameObject* audio = CreateEmpty();
-	//audio->AddComponent<DontDestroyOnLoad>();
 	audio->AddComponent<AudioTester>();
 	audio->AddComponent<AudioSource>(L"Audio\\giveitup.wav", true, 0.6f);
 	AddToScene(audio);
+
+	// GameObject* stest = CreateEmpty();
+	// stest->AddComponent<SingletonTest>();
+	// AddToScene(stest);
 }

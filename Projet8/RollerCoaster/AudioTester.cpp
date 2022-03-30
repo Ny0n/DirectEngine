@@ -1,5 +1,7 @@
 ﻿#include "AudioTester.h"
 
+AudioTester* SceneSingleton<AudioTester>::Instance;
+
 AudioTester::AudioTester()
 {
 }

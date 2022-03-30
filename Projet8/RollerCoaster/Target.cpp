@@ -8,5 +8,5 @@ void Target::removeSelf()
 
 void Target::Update()
 {
-	Utils::Println(_listGameObject->size());
+	// Utils::Println(_listGameObject->size());
 }

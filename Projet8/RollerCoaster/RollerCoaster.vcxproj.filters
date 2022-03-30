@@ -30,6 +30,9 @@
     <Filter Include="Game\Scripts\UI">
       <UniqueIdentifier>{fd5308fb-b86f-447f-8847-c8ad1ea8d490}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Scripts\Singletons">
+      <UniqueIdentifier>{28ee407d-2605-466a-abd4-c87d095042e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -113,8 +116,14 @@
     <ClInclude Include="Score.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="SceneSingleton.h">
+      <Filter>Game\Scripts\Singletons</Filter>
+    </ClInclude>
     <ClInclude Include="AudioTester.h">
-      <Filter>Game\Scripts</Filter>
+      <Filter>Game\Scripts\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonTest.h">
+      <Filter>Game\Scripts\Singletons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -194,8 +203,14 @@
     <ClCompile Include="Score.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
+    <ClCompile Include="SceneSingleton.cpp">
+      <Filter>Game\Scripts\Singletons</Filter>
+    </ClCompile>
     <ClCompile Include="AudioTester.cpp">
-      <Filter>Game\Scripts</Filter>
+      <Filter>Game\Scripts\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="SingletonTest.cpp">
+      <Filter>Game\Scripts\Singletons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
