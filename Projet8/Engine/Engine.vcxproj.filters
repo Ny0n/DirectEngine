@@ -140,6 +140,9 @@
     <ClInclude Include="Button.h">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClInclude>
+    <ClInclude Include="CheckBox.h">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -233,6 +236,9 @@
       <Filter>Source\Objects\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckBox.cpp">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClCompile>
   </ItemGroup>

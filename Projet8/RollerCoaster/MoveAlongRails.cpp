@@ -1,5 +1,7 @@
 #include "MoveAlongRails.h"
 
+#include "Options.h"
+
 MoveAlongRails::~MoveAlongRails()
 {
 	if (transformWhithoutCursor != nullptr)
@@ -59,7 +61,7 @@ void MoveAlongRails::Move()
 	D3DXVECTOR3 vecteurDir = (target - pos);
 	D3DXVec3Normalize(&vecteurDir, &vecteurDir);
 	
-	pos += vecteurDir * _speed * Time::deltaTime;
+	pos += vecteurDir * Options::playerSpeed * Time::deltaTime;
 	
 	if (std::abs(pos.x - target.x) <= _almostOnSpot && std::abs(pos.z - target.z) <= _almostOnSpot && std::abs(pos.y - target.y) <= _almostOnSpot)
 	{

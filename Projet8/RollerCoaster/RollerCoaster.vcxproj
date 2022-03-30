@@ -152,6 +152,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="AudioTester.h" />
     <ClInclude Include="BulletMove.h" />
+    <ClInclude Include="Options.h" />
     <ClInclude Include="PauseScript.h" />
     <ClInclude Include="MainMenuScript.h" />
     <ClInclude Include="CrosshairScript.h" />
@@ -182,6 +183,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AudioTester.cpp" />
     <ClCompile Include="BulletMove.cpp" />
+    <ClCompile Include="Options.cpp" />
     <ClCompile Include="PauseScript.cpp" />
     <ClCompile Include="MainMenuScript.cpp" />
     <ClCompile Include="CrosshairScript.cpp" />

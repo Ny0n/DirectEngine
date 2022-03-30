@@ -40,6 +40,7 @@
 #include "Textbox.h"
 #include "InputField.h"
 #include "Button.h"
+#include "CheckBox.h"
 
 // ** App Data ** //
 
