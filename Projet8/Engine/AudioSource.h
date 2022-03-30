@@ -13,9 +13,11 @@ class AudioSource : public EngineComponent
 
 public:
 	AudioSource();
+	explicit AudioSource(LPCWSTR defaultFileName, bool playOnStart = true, float volume = 0.8f);
 	~AudioSource() override;
 
-	void SetSound(LPCWSTR fileName);
+	LPCWSTR GetSound();
+	void SetSound(LPCWSTR fileName); // MUST be called before anything else (called by the second constructor in Start)
 
 	void Play();
 	void Resume();
@@ -45,6 +47,10 @@ private:
 	// custom voice callback
 	friend class AudioManager::AudioSourceCallbacks;
 	AudioManager::AudioSourceCallbacks* pSourceCallback;
+
+	LPCWSTR _fileName = L"";
+	bool _playOnStart = false;
+	float _volume = 0.8f;
 
 	HRESULT Flush();
 	HRESULT Submit();

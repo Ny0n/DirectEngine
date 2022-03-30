@@ -21,8 +21,8 @@ void AudioTester::Start()
 	tbl[2] = L"Audio\\music.wav";
 
 	_source = gameObject->GetComponent<AudioSource>();
-	if (_source != nullptr)
-		_source->SetSound(tbl[0]);
+	// if (_source != nullptr)
+	// 	_source->SetSound(tbl[0]);
 }
 
 // Update is called once per frame

@@ -45,10 +45,10 @@ void FlavienDevScene::GenerateContent()
 
 	// tests
 
-	// GameObject* audio = CreateEmpty();
-	// audio->AddComponent<AudioTester>();
-	// audio->AddComponent<AudioSource>();
-	// AddToScene(audio);
+	GameObject* audio = CreateEmpty();
+	audio->AddComponent<AudioTester>();
+	audio->AddComponent<AudioSource>(L"Audio\\giveitup.wav");
+	AddToScene(audio);
 
 	// // monkey
 	//

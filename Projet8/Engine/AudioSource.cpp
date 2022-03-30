@@ -6,6 +6,13 @@ AudioSource::AudioSource()
 	pSourceCallback->source = this;
 }
 
+AudioSource::AudioSource(LPCWSTR defaultFileName, bool playOnStart, float defaultVolume) : AudioSource()
+{
+	_fileName = defaultFileName;
+	_playOnStart = playOnStart;
+	_volume = defaultVolume;
+}
+
 AudioSource::~AudioSource()
 {
 }
@@ -15,6 +22,9 @@ AudioSource::~AudioSource()
 // EngineStart is called once, before the MonoBehaviour Start
 void AudioSource::EngineStart()
 {
+	SetSound(_fileName);
+	if (_playOnStart)
+		Play();
 }
 
 // EngineUpdate is called once per frame, after the MonoBehaviour Update & LateUpdate
@@ -57,6 +67,11 @@ if (pSourceVoice == nullptr)\
 	return x;\
 }\
 CHECKENABLED(x)
+
+LPCWSTR AudioSource::GetSound()
+{
+	return _fileName;
+}
 
 void AudioSource::SetSound(LPCWSTR fileName)
 {
@@ -133,7 +148,17 @@ void AudioSource::SetSound(LPCWSTR fileName)
 	UpdateLooping();
 
 	// Sound Player
-	HRSOUND(AudioManager::pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<WAVEFORMATEX*>(&wfx), 0, XAUDIO2_DEFAULT_FREQ_RATIO, pSourceCallback)); // WARNING: Crashes if no output device is set on the system!
+
+	_fileName = fileName;
+	try
+	{
+		HRSOUND(AudioManager::pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<WAVEFORMATEX*>(&wfx), 0, XAUDIO2_DEFAULT_FREQ_RATIO, pSourceCallback)); // WARNING: Crashes if no output device is set on the system!
+		SetVolume(_volume);
+	}
+	catch(...)
+	{
+		_fileName = L"";
+	}
 }
 
 // **************************** //
@@ -382,23 +407,24 @@ void AudioSource::UpdateLooping()
 	}
 }
 
+// **************************** //
+
 float AudioSource::GetVolume()
 {
-	CHECKSOURCE(0.0f)
-
-	float ref = 0.0f;
-	pSourceVoice->GetVolume(&ref);
-	return ref;
+	return _volume;
 }
-
-// **************************** //
 
 void AudioSource::SetVolume(float volume)
 {
 	CHECKSOURCE()
 
-	if (volume >= MIN_VOLUME && volume <= MAX_VOLUME)
-		pSourceVoice->SetVolume(volume);
+	if (volume < MIN_VOLUME)
+		volume = MIN_VOLUME;
+	else if (volume > MAX_VOLUME)
+		volume = MAX_VOLUME;
+	
+	_volume = volume;
+	pSourceVoice->SetVolume(volume);
 }
 
 // **************************** //
