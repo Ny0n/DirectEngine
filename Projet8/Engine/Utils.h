@@ -42,6 +42,12 @@ public:
 	static D3DXVECTOR4 GetVec4FromQuat(D3DXQUATERNION* q);
 	static D3DXQUATERNION GetQuatFromVec4( D3DXVECTOR4* q);
 	static D3DXQUATERNION SLERP(const D3DXQUATERNION* a, const D3DXQUATERNION* b, const float t);
+
+
+	static float GetRandomFloat(float lowBound, float highBound);
+	static void GetRandomVector(D3DXVECTOR3* out, D3DXVECTOR3* min, D3DXVECTOR3* max);
+	
+	static DWORD FToDword(float f) { return *((DWORD*)&f); }
 };
 
 #include "Utils.tpp"
