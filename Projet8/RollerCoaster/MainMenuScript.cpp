@@ -72,6 +72,7 @@ void MainMenuScript::BackToMenu()
 
 void MainMenuScript::ToggleAudio()
 {
+	AudioManager::SetActive(_listCheckBox[2]->IsChecked());
 }
 
 // **************************** //

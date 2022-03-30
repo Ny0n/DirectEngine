@@ -36,6 +36,8 @@ class AudioManager final
 	static void Initialize();
 	static void Clean();
 
+	static bool isActive;
+
 	// XAudio2 interface
 	static IXAudio2* pXAudio2;
 	static IXAudio2MasteringVoice* pMasterVoice;
@@ -64,5 +66,9 @@ class AudioManager final
 		AudioSource* source; // ref to self
 
 	};
+
+public:
+	static void SetActive(bool active);
+	static bool IsActive();
 
 };

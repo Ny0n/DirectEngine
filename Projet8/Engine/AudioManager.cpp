@@ -1,5 +1,6 @@
 #include "pch.h"
 
+bool AudioManager::isActive = true;
 IXAudio2* AudioManager::pXAudio2 = nullptr;
 IXAudio2MasteringVoice* AudioManager::pMasterVoice = nullptr;
 HRESULT AudioManager::hr = 0;
@@ -19,6 +20,27 @@ void AudioManager::Clean()
 {
 	// if (pXAudio2 != nullptr)
 	// 	pXAudio2->Release();
+}
+
+void AudioManager::SetActive(bool active)
+{
+	if (isActive == active)
+		return;
+
+	isActive = active;
+
+	if (pXAudio2 != nullptr)
+	{
+		if (isActive)
+			pXAudio2->StartEngine();
+		else
+			pXAudio2->StopEngine();
+	}
+}
+
+bool AudioManager::IsActive()
+{
+	return isActive;
 }
 
 // **************************** //

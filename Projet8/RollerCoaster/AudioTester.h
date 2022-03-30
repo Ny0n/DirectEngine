@@ -1,8 +1,9 @@
 ﻿#pragma once
 
 #include "EngineLib.h"
+#include "SceneSingleton.h"
 
-class AudioTester : public MonoBehaviour
+class AudioTester : public SceneSingleton<AudioTester>
 {
 	string GetType() override { return NAMEOF(AudioTester); }
 
