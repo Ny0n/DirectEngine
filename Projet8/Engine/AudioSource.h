@@ -40,6 +40,7 @@ private:
 	// sound data
 	WAVEFORMATEXTENSIBLE wfx;
 	XAUDIO2_BUFFER buffer;
+	BYTE* pDataBuffer;
 
 	// sound player
 	IXAudio2SourceVoice* pSourceVoice;

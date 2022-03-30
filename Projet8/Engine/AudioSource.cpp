@@ -19,6 +19,7 @@ AudioSource::AudioSource(LPCWSTR defaultFileName, bool playOnStart, float defaul
 AudioSource::~AudioSource()
 {
 	delete pSourceCallback;
+	delete[] pDataBuffer;
 	if (hFile != nullptr)
 		CloseHandle(hFile);
 }
@@ -146,7 +147,10 @@ void AudioSource::SetSound(LPCWSTR fileName)
 	// ** Fill out the audio data buffer with the contents of the fourccDATA chunk ** //
 
 	AudioManager::FindChunk(hFile, fourccDATA, dwChunkSize, dwChunkPosition);
-	BYTE* pDataBuffer = new BYTE[dwChunkSize];
+	
+	delete[] pDataBuffer;
+	pDataBuffer = new BYTE[dwChunkSize];
+
 	AudioManager::ReadChunkData(hFile, pDataBuffer, dwChunkSize, dwChunkPosition);
 
 	// ** Remplissage de la  _ mémoire tampon XAUDIO2 ** //
@@ -154,10 +158,7 @@ void AudioSource::SetSound(LPCWSTR fileName)
 	buffer.AudioBytes = dwChunkSize;  //size of the audio buffer in bytes
 	buffer.pAudioData = pDataBuffer;  //buffer containing audio data
 	buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
-	
 	UpdateLooping();
-
-	delete pDataBuffer;
 
 	// Sound Player
 
