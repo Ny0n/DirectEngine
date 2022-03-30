@@ -10,93 +10,84 @@ Transform::Transform()
  */
 void Transform::Identity()
 {
-	scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f); //Default scale
+	_scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f); //Default scale
 
+	_right = D3DXVECTOR3(1.0f, 0.0f, 0.0f);	 //Default right vector (x axis)
+	_up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);		 //Default up vector (y axis)
+	_forward = D3DXVECTOR3(0.0f, 0.0f, 1.0f); //Default forward vector (z axis)
 
-	right = D3DXVECTOR3(1.0f, 0.0f, 0.0f);	 //Default right vector (x axis)
-	up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);		 //Default up vector (y axis)
-	forward = D3DXVECTOR3(0.0f, 0.0f, 1.0f); //Default forward vector (z axis)
+	D3DXQuaternionIdentity(&_quaternion); //Default quaternion
 
-	D3DXQuaternionIdentity(&quaternion); //Default quaternion
+	D3DXMatrixRotationQuaternion(&_rotation, &_quaternion); //Default matrix rotation
 
-	D3DXMatrixRotationQuaternion(&rotation, &quaternion); //Default matrix rotation
+	_position = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //Default position
 
-
-	position = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //Default position
-
-	D3DXMatrixIdentity(&matrix);
+	D3DXMatrixIdentity(&_matrix);
 }
 
 void Transform::RotationIdentity()
 {
-	right = D3DXVECTOR3(1.0f, 0.0f, 0.0f);	 //Default right vector (x axis)
-	up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);		 //Default up vector (y axis)
-	forward = D3DXVECTOR3(0.0f, 0.0f, 1.0f); //Default forward vector (z axis)
+	_right = D3DXVECTOR3(1.0f, 0.0f, 0.0f);	 //Default right vector (x axis)
+	_up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);		 //Default up vector (y axis)
+	_forward = D3DXVECTOR3(0.0f, 0.0f, 1.0f); //Default forward vector (z axis)
 
-	D3DXQuaternionIdentity(&quaternion); //Default quaternion
+	D3DXQuaternionIdentity(&_quaternion); //Default quaternion
 
-	D3DXMatrixRotationQuaternion(&rotation, &quaternion); //Default matrix rotation
-}
-
-
-void Transform::FromMatrix(D3DXMATRIX* pMat)
-{
+	D3DXMatrixRotationQuaternion(&_rotation, &_quaternion); //Default matrix rotation
 }
 
 void Transform::SetRotationFromVectors(D3DXVECTOR3* right, D3DXVECTOR3* up, D3DXVECTOR3* forward)
 {
-	rotation._11 = right->x;
-	rotation._12 = right->y;
-	rotation._13 = right->z;
+	_rotation._11 = right->x;
+	_rotation._12 = right->y;
+	_rotation._13 = right->z;
 
-	rotation._21 = up->x;
-	rotation._22 = up->y;
-	rotation._23 = up->z;
+	_rotation._21 = up->x;
+	_rotation._22 = up->y;
+	_rotation._23 = up->z;
 
-	rotation._31 = forward->x;
-	rotation._32 = forward->y;
-	rotation._33 = forward->z;
+	_rotation._31 = forward->x;
+	_rotation._32 = forward->y;
+	_rotation._33 = forward->z;
 
-	D3DXQuaternionRotationMatrix(&quaternion, &rotation);
+	D3DXQuaternionRotationMatrix(&_quaternion, &_rotation);
 	UpdateMatrix();
 }
 
 void Transform::UpdateRotationFromQuaternion()
 {
-	D3DXMatrixRotationQuaternion(&rotation, &quaternion);
+	D3DXMatrixRotationQuaternion(&_rotation, &_quaternion);
 
 	//change axis value
 	//x axis
-	right.x = rotation._11;
-	right.y = rotation._12;
-	right.z = rotation._13;
+	_right.x = _rotation._11;
+	_right.y = _rotation._12;
+	_right.z = _rotation._13;
 
 	//y axis
-	up.x = rotation._21;
-	up.y = rotation._22;
-	up.z = rotation._23;
+	_up.x = _rotation._21;
+	_up.y = _rotation._22;
+	_up.z = _rotation._23;
 
 	//z axis
-	forward.x = rotation._31;
-	forward.y = rotation._32;
-	forward.z = rotation._33;
+	_forward.x = _rotation._31;
+	_forward.y = _rotation._32;
+	_forward.z = _rotation._33;
 
 	UpdateMatrix();
 }
 
-void Transform::UpdateRotationFromMatrix()
-{
-}
-
 void Transform::UpdateMatrix()
 {
-	matrix = rotation;
 	D3DXMATRIX matScale,matTranslate;
 
-	D3DXMatrixScaling(&matScale, scale.x, scale.y, scale.z);
-	matrix *= matScale;
-	D3DXMatrixTranslation(&matTranslate, position.x, position.y, position.z);
-	matrix *= matTranslate;
+	_matrix = _rotation;
+
+	D3DXMatrixScaling(&matScale, _scale.x, _scale.y, _scale.z);
+	_matrix *= matScale;
+
+	D3DXMatrixTranslation(&matTranslate, _position.x, _position.y, _position.z);
+	_matrix *= matTranslate;
 }
 
 void Transform::Rotate(float pitch, float yaw, float roll, Space relativeTo)
@@ -118,15 +109,15 @@ void Transform::Rotate(float pitch, float yaw, float roll, Space relativeTo)
 			} break;
 		case Space::Self:
 			{
-				xAxis = right;
-				yAxis = up;
-				zAxis = forward;
+				xAxis = _right;
+				yAxis = _up;
+				zAxis = _forward;
 			} break;
 		case Space::Custom:
 			{
-				xAxis = customRight;
-				yAxis = customUp;
-				zAxis = customForward;
+				xAxis = _customRight;
+				yAxis = _customUp;
+				zAxis = _customForward;
 			}break;
 	}
 	
@@ -146,26 +137,26 @@ void Transform::Rotate(float pitch, float yaw, float roll, Space relativeTo)
 	quatRot *= quat;
 
 	//add the new rotation to the actual one
-	quaternion *= quatRot;
+	_quaternion *= quatRot;
 
 	//create a new rotation matrix
-	D3DXMatrixRotationQuaternion(&rotation, &quaternion);
+	D3DXMatrixRotationQuaternion(&_rotation, &_quaternion);
 
 	//change axis value
 	//x axis
-	right.x = rotation._11;
-	right.y = rotation._12;
-	right.z = rotation._13;
+	_right.x = _rotation._11;
+	_right.y = _rotation._12;
+	_right.z = _rotation._13;
 
 	//y axis
-	up.x = rotation._21;
-	up.y = rotation._22;
-	up.z = rotation._23;
+	_up.x = _rotation._21;
+	_up.y = _rotation._22;
+	_up.z = _rotation._23;
 
 	//z axis
-	forward.x = rotation._31;
-	forward.y = rotation._32;
-	forward.z = rotation._33;
+	_forward.x = _rotation._31;
+	_forward.y = _rotation._32;
+	_forward.z = _rotation._33;
 
 	UpdateMatrix();
 }
@@ -197,55 +188,54 @@ void Transform::RotateRoll(float angle, Space relativeTo)
 	Rotate(0, 0, angle, relativeTo);
 }
 
-void Transform::RotateWorld(D3DXMATRIX* pMatrix)
-{
-}
-
 void Transform::AddRotationMatrix(D3DXMATRIX p)
 {
-	rotation *= p;
+
 	D3DXQUATERNION quat;
-	D3DXQuaternionRotationMatrix(&quat, &rotation);
-	quaternion *= quat;
-	right.x = rotation._11;
-	right.y = rotation._12;
-	right.z = rotation._13;
+
+	_rotation *= p;
+	D3DXQuaternionRotationMatrix(&quat, &_rotation);
+	_quaternion *= quat;
+
+	_right.x = _rotation._11;
+	_right.y = _rotation._12;
+	_right.z = _rotation._13;
 
 	//y axis
-	up.x = rotation._21;
-	up.y = rotation._22;
-	up.z = rotation._23;
+	_up.x = _rotation._21;
+	_up.y = _rotation._22;
+	_up.z = _rotation._23;
 
 	//z axis
-	forward.x = rotation._31;
-	forward.y = rotation._32;
-	forward.z = rotation._33;
+	_forward.x = _rotation._31;
+	_forward.y = _rotation._32;
+	_forward.z = _rotation._33;
 
 	UpdateMatrix();
 }
 
 void Transform::SetQuaternion(D3DXQUATERNION quat)
 {
-	quaternion = quat;
+	_quaternion = quat;
 	UpdateRotationFromQuaternion();
 }
 
 void Transform::SetCustomAxis(D3DXVECTOR3 right, D3DXVECTOR3 up, D3DXVECTOR3 forward)
 {
-	customForward = forward;
-	customRight = right;
-	customUp = up;
+	_customForward = forward;
+	_customRight = right;
+	_customUp = up;
 }
 
 void Transform::SetPosition(D3DXVECTOR3 pos)
 {
-	position = pos;
+	_position = pos;
 	UpdateMatrix();
 }
 
 void Transform::SetScale(D3DXVECTOR3 s)
 {
-	scale = s;
+	_scale = s;
 	UpdateMatrix();
 }
 

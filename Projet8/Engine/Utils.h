@@ -39,8 +39,7 @@ public:
 
 	static float DistanceWithOutSquareRoot(D3DXVECTOR3 a, D3DXVECTOR3 b);
 	static float Distance(D3DXVECTOR3 a, D3DXVECTOR3 b) ;
-	static D3DXVECTOR4 GetVec4FromQuat(D3DXQUATERNION* q);
-	static D3DXQUATERNION GetQuatFromVec4( D3DXVECTOR4* q);
+
 	static D3DXQUATERNION SLERP(const D3DXQUATERNION* a, const D3DXQUATERNION* b, const float t);
 };
 

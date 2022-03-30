@@ -1,15 +1,36 @@
 #include "Cube.h"
 
-void Cube::Start()
-{
-    // Utils::Println("Start Cube");
-}
 
 void Cube::Update()
 {
-    // Utils::Println("Update");
     CubeRender();
     CubePlacement();
+}
+
+Cube::~Cube()
+{
+    // close and release the vertex buffer
+    _vBuffer->Release();
+    _iBuffer->Release();
+}
+
+Cube::Cube()
+{
+    // _VBuffer
+    d3ddev->CreateVertexBuffer(24 * sizeof(CUSTOMVERTEX),
+        0,
+        CUSTOMFVF,
+        D3DPOOL_MANAGED,
+        &_vBuffer,
+        NULL);
+
+    // _IBuffer
+    d3ddev->CreateIndexBuffer(36 * sizeof(short),
+        0,
+        D3DFMT_INDEX16,
+        D3DPOOL_MANAGED,
+        &_iBuffer,
+        NULL);
 }
 
 void Cube::CubeRender()
@@ -54,9 +75,9 @@ void Cube::CubeRender()
     VOID* pVoid;    // a void pointer
 
     // lock _VBuffer and load the vertices into it
-    _VBuffer->Lock(0, 0, (void**)&pVoid, 0);
+    _vBuffer->Lock(0, 0, (void**)&pVoid, 0);
     memcpy(pVoid, vertices, sizeof(vertices));
-    _VBuffer->Unlock();
+    _vBuffer->Unlock();
 
     // create the indices using an int array
     short indices[] =
@@ -76,29 +97,18 @@ void Cube::CubeRender()
     };
 
     // lock i_buffer and load the indices into it
-    _IBuffer->Lock(0, 0, (void**)&pVoid, 0);
+    _iBuffer->Lock(0, 0, (void**)&pVoid, 0);
     memcpy(pVoid, indices, sizeof(indices));
-    _IBuffer->Unlock();
+    _iBuffer->Unlock();
 }
 
 void Cube::CubePlacement()
 {
-    // Utils::Println("Test0");
     D3DXMATRIX finalMat = transform->GetMatrix();
     d3ddev->SetTransform(D3DTS_WORLD, &(finalMat));
-    d3ddev->SetStreamSource(0, _VBuffer, 0, sizeof(CUSTOMVERTEX));
-    d3ddev->SetIndices(_IBuffer);
+    d3ddev->SetStreamSource(0, _vBuffer, 0, sizeof(CUSTOMVERTEX));
+    d3ddev->SetIndices(_iBuffer);
 
     // draw the cube
     HR(d3ddev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 0, 12))
-    // HRESULT hr = ;
-    // if (FAILED(hr))
-    // {
-    //     Utils::Println("Failed");
-    //     Utils::Println(std::to_string(hr));
-    // }
-
-    // Utils::Println("Test");
-    // copy the vertex buffer to the back buffer
-    // d3ddev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
 }

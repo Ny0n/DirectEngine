@@ -4,8 +4,7 @@
 
 LPDIRECT3D9 d3d; // the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev; // the pointer to the device class
-LPDIRECT3DVERTEXBUFFER9 _VBuffer = nullptr;
-LPDIRECT3DINDEXBUFFER9 _IBuffer = nullptr;
+
 
 // **************************** //
 
@@ -62,21 +61,7 @@ void Engine::InitD3D()
     d3ddev->SetRenderState(D3DRS_FOGSTART, *(DWORD*)(&Start));
         d3ddev->SetRenderState(D3DRS_FOGEND, *(DWORD*)(&End));
 
-    // _VBuffer
-    d3ddev->CreateVertexBuffer(24 * sizeof(CUSTOMVERTEX),
-        0,
-        CUSTOMFVF,
-        D3DPOOL_MANAGED,
-        &_VBuffer,
-        NULL);
-
-    // _IBuffer
-    d3ddev->CreateIndexBuffer(36 * sizeof(short),
-        0,
-        D3DFMT_INDEX16,
-        D3DPOOL_MANAGED,
-        &_IBuffer,
-        NULL);
+    
 }
 
 void Engine::UninitD3D()
@@ -84,10 +69,6 @@ void Engine::UninitD3D()
     // close and release Direct3D
     d3ddev->Release();
     d3d->Release();
-
-    // close and release the vertex buffer
-    _VBuffer->Release();
-    _IBuffer->Release();
 
     // Audio
     AudioManager::Clean();

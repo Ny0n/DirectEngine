@@ -5,18 +5,19 @@ class Target :
 {
     string GetType() override { return NAMEOF(Target); }
 
-    
     void Update() override;
 
-    list<GameObject*>* _listGameObject;
-    Transform* _LookAt;
-
 public:
-    Target(list<GameObject*>* gos) { _listGameObject = gos; }
+    Target(list<GameObject*>* gos) { _pListGameObject = gos; }
 
     void removeSelf();
-    void SetLookAt(Transform* LookAt) { _LookAt = LookAt; }
+
+    void SetLookAt(Transform* LookAt) { _pLookAt = LookAt; }
 
     int points = 10;
+private :
+    Transform* _pLookAt;
+
+    list<GameObject*>* _pListGameObject;
 };
 

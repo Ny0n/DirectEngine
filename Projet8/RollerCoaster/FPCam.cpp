@@ -6,69 +6,74 @@ class MoveAlongRails;
 
 FPCam::FPCam(float speed) : _speed(speed)
 {
-
 }
 
 // **************************** //
 
 void FPCam::Start()
 {
-    upSpeed = 0;
-    rightSpeed = 0;
+    _upSpeed = 0;
+    _rightSpeed = 0;
 }
 
 void FPCam::Update()
 {
-
-
     POINT mouseP;
     float sensibility = 5.0f;
     GetCursorPos(&mouseP);
 
-    if (Input::GetKey(KeyCode::Z) && upSpeed > -70)
-        upSpeed -=1;
-    if (Input::GetKey(KeyCode::S) && upSpeed < 180)
-        upSpeed += 1;
+    if (Input::GetKey(KeyCode::Z) && _upSpeed > -70)
+        _upSpeed -=1;
+    if (Input::GetKey(KeyCode::S) && _upSpeed < 180)
+        _upSpeed += 1;
     if (Input::GetKey(KeyCode::Q))
-        rightSpeed -= 1;
+        _rightSpeed -= 1;
     if (Input::GetKey(KeyCode::D) )
-        rightSpeed+= 1;
+        _rightSpeed+= 1;
 
-    rightSpeed += (mouseP.x - SCREEN_WIDTH / 2) / 100.0f * sensibility;
-    upSpeed += (mouseP.y - SCREEN_HEIGHT / 2) / 100.0f * sensibility;
-    if (upSpeed < -upSpeedLimit)
-        upSpeed = -upSpeedLimit;
-    if (upSpeed > upSpeedLimit)
-        upSpeed = upSpeedLimit;
+    _rightSpeed += (mouseP.x - SCREEN_WIDTH / 2) / 100.0f * sensibility;
+    _upSpeed += (mouseP.y - SCREEN_HEIGHT / 2) / 100.0f * sensibility;
+
+    if (_upSpeed < -_upSpeedLimit)
+        _upSpeed = -_upSpeedLimit;
+    
+    if (_upSpeed > _upSpeedLimit)
+        _upSpeed = _upSpeedLimit;
 
     
 }
 
 void FPCam::LateUpdate()
 {
-	auto* mar = gameObject->GetComponent<MoveAlongRails>();
+    MoveAlongRails* moveAlongRails = gameObject->GetComponent<MoveAlongRails>();
 
     D3DXVECTOR3 tmpPos;
     D3DXQUATERNION tmpQuat = D3DXQUATERNION(0.0f, 0.0f, 0.0f, 0.0f);
-    if( mar != nullptr )
+
+    if(moveAlongRails != nullptr )
     {
-	    const Transform* tmp = mar->GetTransfromWhithoutCursor();
+        //get the transform without the rotation of the cursor
+	    const Transform* tmp = moveAlongRails->GetTransfromWhithoutCursor();
+        
         transform->SetPosition(tmp->GetPosition());
         transform->SetQuaternion(tmp->GetQuaternion());
         transform->SetCustomAxis(tmp->GetRight(), tmp->GetUp(), tmp->GetForward());
+
         tmpPos = tmp->GetPosition();
         tmpQuat = tmp->GetQuaternion();
     }
     
-    transform->RotatePitch(upSpeed, Space::Self);
-    transform->RotateYaw(rightSpeed, Space::Custom);
-    cart->transform->SetPosition(tmpPos);
-    cart->transform->SetQuaternion(tmpQuat);
+    transform->RotatePitch(_upSpeed, Space::Self);
+    transform->RotateYaw(_rightSpeed, Space::Custom);
 
-    cart->transform->RotateYaw(180); // temp before changing the .x file
-    D3DXVECTOR3 cartPos = cart->transform->GetPosition();
-    cartPos += -cart->transform->GetUp() * 3.5f;
-    cartPos += cart->transform->GetForward() * 1;
+    _pCart->transform->SetPosition(tmpPos);
+    _pCart->transform->SetQuaternion(tmpQuat);
 
-    cart->transform->SetPosition(cartPos);
+    _pCart->transform->RotateYaw(180); // temp before changing the .x file
+
+    D3DXVECTOR3 cartPos = _pCart->transform->GetPosition();
+    cartPos += -_pCart->transform->GetUp() * 3.5f;
+    cartPos += _pCart->transform->GetForward() * 1;
+
+    _pCart->transform->SetPosition(cartPos);
 }

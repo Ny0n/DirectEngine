@@ -4,49 +4,52 @@
 
 MoveAlongRails::~MoveAlongRails()
 {
-	if (transformWhithoutCursor != nullptr)
-		transformWhithoutCursor->Delete();
-	
+	if (_pTransformWhithoutCursor != nullptr)
+		_pTransformWhithoutCursor->Delete();
 }
 
 void MoveAlongRails::Update()
 {
+	_cubes = _pRailMaker->GetCube();
 
-	_cubes = _rm->GetCube();
 	if (!_toDelete.empty() && _toDelete.size() == 25)
 	{
 		MeshRenderer* cube = _toDelete.front();
 		_toDelete.pop_front();
-		list<GameObject*> targets = _rm->GetTarget();
+		list<GameObject*> targets = _pRailMaker->GetTarget();
+
 		if (!targets.empty())
 		{
-
-
 			GameObject* toBeDeleted = targets.front();
+
 			if (Utils::DistanceWithOutSquareRoot(toBeDeleted->transform->GetPosition(), cube->transform->GetPosition()) < 1000)
 			{
 				targets.pop_front();
 				Destroy(toBeDeleted);
-				_rm->SetTarget(targets);
+				_pRailMaker->SetTarget(targets);
 			}
+
 			Destroy(cube->gameObject);
 		}
 	}
+
 	Move();
-	if(NbreStep > 0)
+
+	if(_nbStep > 0)
 	{
-		D3DXQUATERNION currentQuat = transformWhithoutCursor->GetQuaternion();
-		currentQuat = Utils::SLERP(&currentQuat, &cubeQuat, 10*Time::deltaTime);
-		transformWhithoutCursor->SetQuaternion(currentQuat);
-		NbreStep--;
+		D3DXQUATERNION currentQuat = _pTransformWhithoutCursor->GetQuaternion();
+		currentQuat = Utils::SLERP(&currentQuat, &_cubeQuat, 10*Time::deltaTime);
+		_pTransformWhithoutCursor->SetQuaternion(currentQuat);
+
+		_nbStep--;
 	}
 }
 
 void MoveAlongRails::Start()
 {
-	_rm = gameObject->GetComponent<RailMaker>();
-	transformWhithoutCursor = new Transform();
-	transformWhithoutCursor->SetPosition(transform->GetPosition());
+	_pRailMaker = gameObject->GetComponent<RailMaker>();
+	_pTransformWhithoutCursor = new Transform();
+	_pTransformWhithoutCursor->SetPosition(transform->GetPosition());
 }
 
 void MoveAlongRails::Move()
@@ -54,8 +57,8 @@ void MoveAlongRails::Move()
 	if(_cubes.empty())
 		return;
 
-	/*D3DXVECTOR3 target =_cubes.front()->transform->GetPosition();*/
-	D3DXVECTOR3 target = _cubes.front()->transform->GetPosition()+ _cubes.front()->transform->GetUp()*4;
+	D3DXVECTOR3 target = _cubes.front()->transform->GetPosition() 
+						+ _cubes.front()->transform->GetUp() * 4;
 
 	D3DXVECTOR3 pos = transform->GetPosition();
 	D3DXVECTOR3 vecteurDir = (target - pos);
@@ -63,19 +66,23 @@ void MoveAlongRails::Move()
 	
 	pos += vecteurDir * Options::playerSpeed * Time::deltaTime;
 	
-	if (std::abs(pos.x - target.x) <= _almostOnSpot && std::abs(pos.z - target.z) <= _almostOnSpot && std::abs(pos.y - target.y) <= _almostOnSpot)
+	if (std::abs(pos.x - target.x) <= _almostOnSpot 
+		&& std::abs(pos.z - target.z) <= _almostOnSpot 
+		&& std::abs(pos.y - target.y) <= _almostOnSpot)
 	{
-		_previousDir = _cubes.front()->transform->GetForward();
-		MeshRenderer* cube = _rm->PopFrontCube();
+		MeshRenderer* cube = _pRailMaker->PopFrontCube();
 		_toDelete.push_back(cube);
-		_cubes = _rm->GetCube();
+		_cubes = _pRailMaker->GetCube();
 
-		cubeQuat = _cubes.front()->transform->GetQuaternion();
-		auto currentquat = transformWhithoutCursor->GetQuaternion();
-		if(cubeQuat.x != currentquat.x || cubeQuat.y != currentquat.y || cubeQuat.z != currentquat.z || cubeQuat.w != currentquat.w)
-			NbreStep = 20;
+		_cubeQuat = _cubes.front()->transform->GetQuaternion();
+		auto currentquat = _pTransformWhithoutCursor->GetQuaternion();
+
+		if(_cubeQuat.x != currentquat.x || _cubeQuat.y != currentquat.y 
+			|| _cubeQuat.z != currentquat.z || _cubeQuat.w != currentquat.w)
+			_nbStep = 20; //Smooth rotation
 	}
-	transformWhithoutCursor->SetPosition(pos);
+
+	_pTransformWhithoutCursor->SetPosition(pos);
 }
 
 

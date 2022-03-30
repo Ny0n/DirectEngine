@@ -2,18 +2,18 @@
 
 void Target::removeSelf()
 {
-	_listGameObject->remove(gameObject);
+	_pListGameObject->remove(gameObject);
 }
 
 void Target::Update()
 {
-	if(_LookAt != nullptr)
+	if(_pLookAt != nullptr)
 	{
-		D3DXVECTOR3 directionForward = transform->GetPosition() - _LookAt->GetPosition();
+		D3DXVECTOR3 directionForward = transform->GetPosition() - _pLookAt->GetPosition();
 
 		D3DXVec3Normalize(&directionForward, &directionForward);
 		
-		D3DXVECTOR3 directionUp = _LookAt->GetUp();
+		D3DXVECTOR3 directionUp = _pLookAt->GetUp();
 		D3DXVECTOR3 directionRight;
 
 		D3DXVec3Cross(&directionRight, &directionForward, &directionUp);

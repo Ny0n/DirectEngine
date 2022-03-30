@@ -90,8 +90,6 @@ using namespace std;
 //directx
 extern LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 extern LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
-extern LPDIRECT3DVERTEXBUFFER9 _VBuffer;    // the pointer to the vertex buffer
-extern LPDIRECT3DINDEXBUFFER9 _IBuffer;    // the pointer to the index buffer
 
 //structure
 struct CUSTOMVERTEX { FLOAT X, Y, Z; D3DVECTOR NORMAL; };
