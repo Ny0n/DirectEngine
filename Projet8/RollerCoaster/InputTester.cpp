@@ -1,6 +1,6 @@
 #include "InputTester.h"
 
-#include "AudioTester.h"
+#include "BackgroundMusic.h"
 #include "Cube.h"
 #include "DontDestroyOnLoad.h"
 #include "FlavienDevScene.h"
@@ -23,6 +23,12 @@ void InputTester::Start()
 
 void InputTester::Update()
 {
+	if (Input::GetKeyDown(KeyCode::A))
+	{
+		BackgroundMusic::Instance->source->Toggle();
+	}
+
+	return;
 	// test = 0;
 	// Utils::Println("Update");
 	// Utils::Println(to_string(Time::runTime()));
@@ -67,7 +73,7 @@ void InputTester::Update()
 			// tester->transform->Rotate(40, -40, 0);
 
 			tester = new GameObject();
-			tester->AddComponent<AudioTester>();
+			tester->AddComponent<BackgroundMusic>();
 			tester->AddComponent<AudioSource>();
 			tester->AddComponent<DontDestroyOnLoad>();
 			Instantiate(tester);

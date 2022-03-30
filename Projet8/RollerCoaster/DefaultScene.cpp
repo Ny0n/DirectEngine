@@ -35,9 +35,9 @@ void DefaultScene::GenerateContent()
 	light->offset = DATASUPPLIER( mainCamera->transform->GetUp() * -5 );
 	AddToScene(mainCamera);
 
-	/*GameObject* inputTester = CreateEmpty();
-	inputTester->AddComponent<InputTester>();
-	AddToScene(inputTester);*/
+	// GameObject* inputTester = CreateEmpty();
+	// inputTester->AddComponent<InputTester>();
+	// AddToScene(inputTester);
 
 #pragma region cart
 	GameObject* cart = CreateEmpty();

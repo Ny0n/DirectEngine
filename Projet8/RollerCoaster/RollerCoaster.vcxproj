@@ -150,7 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
-    <ClInclude Include="AudioTester.h" />
+    <ClInclude Include="BackgroundMusic.h" />
     <ClInclude Include="BulletMove.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="PauseScript.h" />
@@ -183,7 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="AudioTester.cpp" />
+    <ClCompile Include="BackgroundMusic.cpp" />
     <ClCompile Include="BulletMove.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="PauseScript.cpp" />

@@ -116,7 +116,7 @@
     <ClInclude Include="SceneSingleton.h">
       <Filter>Game\Scripts\Singletons</Filter>
     </ClInclude>
-    <ClInclude Include="AudioTester.h">
+    <ClInclude Include="BackgroundMusic.h">
       <Filter>Game\Scripts\Singletons</Filter>
     </ClInclude>
     <ClInclude Include="SingletonTest.h">
@@ -208,7 +208,7 @@
     <ClCompile Include="SceneSingleton.cpp">
       <Filter>Game\Scripts\Singletons</Filter>
     </ClCompile>
-    <ClCompile Include="AudioTester.cpp">
+    <ClCompile Include="BackgroundMusic.cpp">
       <Filter>Game\Scripts\Singletons</Filter>
     </ClCompile>
     <ClCompile Include="SingletonTest.cpp">

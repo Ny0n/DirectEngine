@@ -1,6 +1,6 @@
 #include "MenuScene.h"
 
-#include "AudioTester.h"
+#include "BackgroundMusic.h"
 #include "CheckBox.h"
 #include "DontDestroyOnLoad.h"
 #include "MainMenuScript.h"
@@ -284,7 +284,7 @@ void MenuScene::GenerateContent()
 	AddToScene(MenuManager);
 
 	GameObject* audio = CreateEmpty();
-	audio->AddComponent<AudioTester>();
+	audio->AddComponent<BackgroundMusic>();
 	audio->AddComponent<AudioSource>(L"Audio\\giveitup.wav", true, 0.6f);
 	AddToScene(audio);
 

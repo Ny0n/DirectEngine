@@ -1,6 +1,6 @@
 #include "FlavienDevScene.h"
 
-#include "AudioTester.h"
+#include "BackgroundMusic.h"
 #include "Cube.h"
 #include "DontDestroyOnLoad.h"
 #include "InputTester.h"
@@ -48,7 +48,7 @@ void FlavienDevScene::GenerateContent()
 
 	GameObject* audio = CreateEmpty();
 	audio->AddComponent<DontDestroyOnLoad>();
-	audio->AddComponent<AudioTester>();
+	audio->AddComponent<BackgroundMusic>();
 	audio->AddComponent<AudioSource>(L"Audio\\giveitup.wav", true, 0.6f);
 	AddToScene(audio);
 
