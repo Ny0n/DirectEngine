@@ -7,6 +7,7 @@ class Image final : public EngineComponent
 
 public:
 	string GetType() override { return NAMEOF(Image); }
+	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
 
 	~Image() override;
 	Image();

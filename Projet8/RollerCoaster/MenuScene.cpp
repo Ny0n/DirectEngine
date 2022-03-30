@@ -24,6 +24,11 @@ void MenuScene::GenerateContent()
 	BackgroundImg->width = 1920;
 	BackgroundImg->height = 1080;
 
+	auto logoImg = backgroundCanvas->AddComponent<Image>();
+	logoImg->filePath = L"Image\\mine.png";
+	logoImg->position = D3DXVECTOR2(500, 50);
+	logoImg->originalSize = true;
+
 	AddToScene(backgroundCanvas);
 #pragma endregion BackGround
 
@@ -51,8 +56,6 @@ void MenuScene::GenerateContent()
 	QuitBtn->position = D3DXVECTOR2(1300, menuBtnList[2]->position.y + 110);
 	QuitBtn->text = L"QUIT";
 	menuBtnList[3] = QuitBtn;
-
-	menuCanvas->AddComponent<Textbox>();
 
 	AddToScene(menuCanvas);
 #pragma endregion Main Menu Canvas
