@@ -1,10 +1,20 @@
 #include "pch.h"
 #include "InputField.h"
 
+void InputField::SetText(wstring string)
+{
+	text = string;
+	isPlaceholder = false;
+	textColor = normalTextColor;
+}
+
+wstring InputField::GetText()
+{
+	return text;
+}
+
 void InputField::EngineStart()
 {
-	text.clear();
-
 	HR(D3DXCreateFont(d3ddev,
 		fontHeight,
 		fontWidth,
@@ -17,30 +27,19 @@ void InputField::EngineStart()
 		FF_DONTCARE,
 		textFont,
 		&font))
-
-	const auto result = SetRect(&textRect, rectTopLeft.x, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
-	if (result <= 0)
-		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
-
-	const auto res = SetRect(&txtRect, rectTopLeft.x + borderThickness * .5f, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
-	if (res <= 0)
-		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
-
+	
 	D3DXIMAGE_INFO info;
 	HR(D3DXGetImageInfoFromFile(boxFilepath, &info))
-
-	width = abs(rectTopLeft.x - rectBottomRight.x);
-	height = abs(rectTopLeft.y - rectBottomRight.y);
-
-	if (width <= 0 || height <= 0)
+		
+	if (size.x <= 0 || size.y <= 0)
 	{
 		drawBox = false;
 	}
 
 	HR(D3DXCreateTextureFromFileEx(d3ddev,
 		boxFilepath,
-		width,
-		height,
+		size.x,
+		size.y,
 		info.MipLevels,
 		0,
 		info.Format,
@@ -52,11 +51,11 @@ void InputField::EngineStart()
 		NULL,
 		&texture))
 
-		HR(D3DXCreateSprite(d3ddev, &ppSprite))
+	HR(D3DXCreateSprite(d3ddev, &ppSprite))
 
-		HR(D3DXCreateLine(d3ddev, &line))
-		HR(line->SetWidth(borderThickness))
-		HR(line->SetAntialias(true))
+	HR(D3DXCreateLine(d3ddev, &line))
+	HR(line->SetWidth(borderThickness))
+	HR(line->SetAntialias(true))
 }
 
 void InputField::EngineUpdate()
@@ -78,6 +77,17 @@ void InputField::EngineUpdate()
 
 void InputField::Render()
 {
+	rectTopLeft = position;
+	rectBottomRight = position + size;
+
+	const auto result = SetRect(&textRect, rectTopLeft.x, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
+	if (result <= 0)
+		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
+
+	const auto res = SetRect(&txtRect, rectTopLeft.x + borderThickness + 5, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
+	if (res <= 0)
+		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
+
 	if (drawBox)
 	{
 		HR(ppSprite->Begin(0))
@@ -175,10 +185,12 @@ void InputField::HandleKeyInput()
 			text.clear();
 			break;
 		default:
+			if (text.length() >= textMaxCaracters && textMaxCaracters != 0)
+				break;
+
 			if (!maj && isLetter)
-			{
 				lastKey += 32;
-			}
+
 			const char key = static_cast<char>(lastKey);
 			text += key;
 			break;

@@ -128,10 +128,19 @@
     <ClInclude Include="Object.h">
       <Filter>Source\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Source\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSource.h">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClInclude>
     <ClInclude Include="InputField.h">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckBox.h">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
@@ -220,10 +229,19 @@
     <ClCompile Include="Object.cpp">
       <Filter>Source\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSource.cpp">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClCompile>
     <ClCompile Include="InputField.cpp">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckBox.cpp">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">

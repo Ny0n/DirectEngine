@@ -10,7 +10,7 @@ class MainMenuScript : public MonoBehaviour
 	void Update() override;
 
 public:
-	explicit MainMenuScript(GameObject* menuGO, GameObject* optionsGO, GameObject* creditsGO, Button* listBtn[4]);
+	explicit MainMenuScript(GameObject* menuGO, GameObject* optionsGO, GameObject* creditsGO, Button* listBtn[4], InputField* listInputField[3], CheckBox* listCheckBox[5]);
 	~MainMenuScript() override;
 
 private:
@@ -21,12 +21,16 @@ private:
 	void OnCredits();
 	void OnQuit();
 	void BackToMenu();
+	void ToggleAudio();
 
 	GameObject* _menuGO;
 	GameObject* _optionsGO;
 	GameObject* _creditsGO;
 
 	Button* _listBtn[4];
+	InputField* _listInputField[3];
+	CheckBox* _listCheckBox[5];
+
 	float speed = 1.0f;
 	bool noir = true;
 };

@@ -3,24 +3,27 @@
 class InputField : public EngineComponent
 {
 public:
+	void SetText(wstring string);
+	wstring GetText();
+
 	INT fontHeight = 25;
 	UINT fontWidth = 0;
 	UINT fontWeight = FW_NORMAL;
 	BOOL fontItalic = false;
 	LPCWSTR textFont = L"Arial";
 
-	wstring text;
+	
 	wstring placeholderText = L"Placeholder text...";
 
 	DWORD textFormat = DT_LEFT | DT_VCENTER;
 
 	LPCWSTR boxFilepath = L"Image\\blanc.png";
 
-	D3DXVECTOR2 rectTopLeft = { 100,50 };
-	D3DXVECTOR2 rectBottomRight = { 400, 100 };
-
-	D3DCOLOR notFocusBorderColor = D3DCOLOR_ARGB(255, 255, 166, 0);
-	D3DCOLOR focusBorderColor = D3DCOLOR_ARGB(255, 0, 0, 255);
+	D3DXVECTOR2 position = { 100,50 };
+	D3DXVECTOR2 size = { 300, 50 };
+	
+	D3DCOLOR notFocusBorderColor = D3DCOLOR_ARGB(255, 102, 102, 102);
+	D3DCOLOR focusBorderColor = D3DCOLOR_ARGB(255, 62, 62, 62);
 
 	D3DCOLOR notFocusedBoxColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 	D3DCOLOR focusedBoxColor = D3DCOLOR_ARGB(255, 255, 255, 255);
@@ -30,9 +33,12 @@ public:
 
 	FLOAT borderThickness = 5;
 
-	bool drawBox = false;
-	bool drawBorder = false;
+	int textMaxCaracters = 0;
+
+	bool drawBox = true;
+	bool drawBorder = true;
 	bool togglePlaceholder = true;
+	bool isPlaceholder = true;
 
 private:
 	string GetType() override { return NAMEOF(InputField); }
@@ -48,9 +54,13 @@ private:
 	void EnterFocus();
 	void ExitFocus();
 
+	wstring text;
+
 	bool hasFocus = false;
-	bool isPlaceholder = true;
 	bool maj;
+
+	D3DXVECTOR2 rectTopLeft;
+	D3DXVECTOR2 rectBottomRight;
 
 	POINT mousePos;
 

@@ -1,5 +1,7 @@
 ﻿#include "CrosshairScript.h"
 
+#include "Options.h"
+
 CrosshairScript::CrosshairScript(Image* img) : _img(img)
 {
 
@@ -29,6 +31,9 @@ void CrosshairScript::Start()
 // Update is called once per frame
 void CrosshairScript::Update()
 {
-	_img->rotation += 1 * Time::deltaTime;
-	_img->scale = D3DXVECTOR2(cos(Time::time), cos(Time::time));
+	if (Options::rotatingCrosshair)
+		_img->rotation += 1 * Time::deltaTime;
+
+	if (Options::pulsingCrosshair)
+		_img->scale = D3DXVECTOR2(cos(Time::time), cos(Time::time));
 }

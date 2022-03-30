@@ -100,7 +100,7 @@ void DefaultScene::GenerateContent()
 	// panel
 	auto panel = pauseCanvas->AddComponent<Image>();
 	panel->filePath = L"Image\\blanc.png";
-	panel->height = 500;
+	panel->height = 520;
 	panel->width = 500;
 	auto panelPosition = D3DXVECTOR2((SCREEN_WIDTH - panel->width) * .5f, (SCREEN_HEIGHT - panel->height) * .5f);
 	panel->position = panelPosition;

@@ -50,7 +50,6 @@ void Button::EngineStart()
 		&texture))
 
 	HR(D3DXCreateSprite(d3ddev, &ppSprite))
-
 	HR(D3DXCreateLine(d3ddev, &line))
 	HR(line->SetWidth(borderThickness))
 	HR(line->SetAntialias(true))
@@ -66,7 +65,7 @@ void Button::EngineUpdate()
 
 	if (isAbove() && !isDisabled)
 	{
-		if (Input::GetKey(KeyCode::Mouse0) || Input::GetKeyUp(KeyCode::Mouse0))
+		if (Input::GetKeyDown(KeyCode::Mouse0) || Input::GetKeyUp(KeyCode::Mouse0))
 			OnClick();
 		else
 			OnHover();

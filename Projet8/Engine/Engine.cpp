@@ -113,6 +113,9 @@ void Engine::UninitD3D()
     // close and release the vertex buffer
     _VBuffer->Release();
     _IBuffer->Release();
+
+    // Audio
+    AudioManager::Clean();
 }
 
 // **************************** //
@@ -142,9 +145,9 @@ void Engine::Run(HWND window)
 
     // *** Part 1: Initialization *** //
 
-    SceneManager::LoadScene(1);
-
     InitD3D();
+    SceneManager::LoadScene(1);
+    AudioManager::Initialize();
 
     MSG msg; // this struct holds Windows event messages
 
@@ -176,6 +179,7 @@ void Engine::Run(HWND window)
 
     UninitD3D();
     SceneManager::Clean();
+    AudioManager::Clean();
     Execution::Clean();
     PhysicsEngine::Clean();
     Input::Clean();

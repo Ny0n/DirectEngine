@@ -7,7 +7,7 @@
 #define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Windows headers
 
 // Windows Header Files
-#include <windows.h>
+#include <Windows.h>
 #include <windowsx.h>
 
 // C RunTime Header Files
@@ -31,9 +31,15 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include <X3DAudio.h>
+#include <XAudio2.h>
+#include <XAudio2fx.h>
+
 // include the Direct3D Library file
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
+#pragma comment (lib, "X3DAudio.lib")
+#pragma comment (lib, "dsound.lib")
 
 #pragma comment(lib, "secur32.lib")
 #pragma comment(lib, "winmm.lib")
@@ -57,6 +63,7 @@ using namespace std;
 #define RUNNER(func) [=] { func(); }
 #define SUPPLIER(func) [=] { return func(); }
 #define CONSUMER(param, func) [=](param) func
+#define CONSUMERN(func, param) [=](param) { func(param); }
 // #define FUNCTION(Param, func) [=]((Param)* param) { return func(param); }
 
 // gives the pure name of a class

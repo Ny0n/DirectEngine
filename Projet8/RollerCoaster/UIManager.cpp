@@ -1,5 +1,7 @@
 ﻿#include "UIManager.h"
 
+#include "Options.h"
+
 UIManager::UIManager(GameObject* go, GameObject* goToDisable, FPCam* cam, Button* listBtn[4], Textbox* fpsCounter): _pauseGO(go), _crossGO(goToDisable), _cam(cam), _fpsCounter(fpsCounter)
 {
 	_listBtn[0] = listBtn[0];
@@ -83,7 +85,10 @@ void UIManager::Start()
 // Update is called once per frame
 void UIManager::Update()
 {
-	ShowFPS();
+	if (Options::showFps)
+		ShowFPS();
+	else
+		_fpsCounter->SetEnabled(false);
 
 	if (Engine::GetInstance()->window != GetForegroundWindow())
 		Pause();
