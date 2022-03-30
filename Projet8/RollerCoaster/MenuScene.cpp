@@ -1,5 +1,7 @@
 #include "MenuScene.h"
 
+#include "AudioTester.h"
+#include "DontDestroyOnLoad.h"
 #include "MainMenuScript.h"
 #include "InputTester.h"
 
@@ -109,6 +111,11 @@ void MenuScene::GenerateContent()
 	auto MenuManager = CreateEmpty();
 	const auto script = new MainMenuScript(menuCanvas, optionsCanvas, creditsCanvas, menuBtnList);
 	MenuManager->AddComponent(script);
-
 	AddToScene(MenuManager);
+
+	GameObject* audio = CreateEmpty();
+	audio->AddComponent<DontDestroyOnLoad>();
+	audio->AddComponent<AudioTester>();
+	audio->AddComponent<AudioSource>(L"Audio\\giveitup.wav", true, 0.6f);
+	AddToScene(audio);
 }

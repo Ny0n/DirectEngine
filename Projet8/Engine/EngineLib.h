@@ -41,7 +41,6 @@
 #include "InputField.h"
 #include "Button.h"
 
-
 // ** App Data ** //
 
 #include "KeyCodes.h"
