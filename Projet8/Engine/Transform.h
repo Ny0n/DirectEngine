@@ -15,8 +15,9 @@ public:
     Transform();
 
     void Identity();
+    void RotationIdentity();
     void FromMatrix(D3DXMATRIX* pMat);
-    void UpdateRotationFromVectors();
+    void SetRotationFromVectors(D3DXVECTOR3* right, D3DXVECTOR3* up, D3DXVECTOR3* forward);
     void UpdateRotationFromQuaternion();
     void UpdateRotationFromMatrix();
     void UpdateMatrix();

@@ -11,15 +11,15 @@ void BulletMove::Start()
 }
 
 // Update is called once per frame
-void BulletMove::Update()
+void BulletMove::FixedUpdate()
 {
 	auto dir = transform->GetForward();
 
 	D3DXVECTOR3 pos = transform->GetPosition();
-	pos += dir * bulletSpeed * Time::deltaTime;
+	pos += dir * bulletSpeed * Time::fixedDeltaTime;
 
 	transform->SetPosition(pos);
-	transform->RotateRoll(-600.0f * Time::deltaTime);
+	transform->RotateRoll(-600.0f * Time::fixedDeltaTime);
 
 	if(currentTimer < 0)
 	{

@@ -27,12 +27,38 @@ void Transform::Identity()
 	D3DXMatrixIdentity(&matrix);
 }
 
+void Transform::RotationIdentity()
+{
+	right = D3DXVECTOR3(1.0f, 0.0f, 0.0f);	 //Default right vector (x axis)
+	up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);		 //Default up vector (y axis)
+	forward = D3DXVECTOR3(0.0f, 0.0f, 1.0f); //Default forward vector (z axis)
+
+	D3DXQuaternionIdentity(&quaternion); //Default quaternion
+
+	D3DXMatrixRotationQuaternion(&rotation, &quaternion); //Default matrix rotation
+}
+
+
 void Transform::FromMatrix(D3DXMATRIX* pMat)
 {
 }
 
-void Transform::UpdateRotationFromVectors()
+void Transform::SetRotationFromVectors(D3DXVECTOR3* right, D3DXVECTOR3* up, D3DXVECTOR3* forward)
 {
+	rotation._11 = right->x;
+	rotation._12 = right->y;
+	rotation._13 = right->z;
+
+	rotation._21 = up->x;
+	rotation._22 = up->y;
+	rotation._23 = up->z;
+
+	rotation._31 = forward->x;
+	rotation._32 = forward->y;
+	rotation._33 = forward->z;
+
+	D3DXQuaternionRotationMatrix(&quaternion, &rotation);
+	UpdateMatrix();
 }
 
 void Transform::UpdateRotationFromQuaternion()

@@ -7,7 +7,7 @@ class BulletMove : public MonoBehaviour
 public:
 	string GetType() override { return NAMEOF(BulletMove); }
 	void Start() override;
-	void Update() override;
+	void FixedUpdate() override;
 
 	void SetBulletSpeed(float speed) { bulletSpeed = speed; }
 	void SetmaxTimer(float time) { maxTimer = time; }
@@ -15,7 +15,7 @@ public:
 	void OnTriggerEnter(GameObject* collide) override;
 
 private:
-	float bulletSpeed = 10.0f;
+	float bulletSpeed = 30.0f;
 	float maxTimer = 10.0f; //time before destroy
 	float currentTimer;
 };

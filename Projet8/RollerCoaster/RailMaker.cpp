@@ -98,11 +98,12 @@ void RailMaker::MoveForward()
 		targetPos += box->transform->GetUp() * randomY;
 
 		targetGo->transform->SetPosition(targetPos);
-		targetGo->AddComponent<MeshRenderer>(L"Mesh\\sphere.x");
+		targetGo->AddComponent<MeshRenderer>(L"Mesh\\target.x");
 		targetGo->AddComponent<Collider>();
 
 
 		const auto script = new Target(&_target);
+		script->SetLookAt(transform);
 		targetGo->AddComponent(script);
 
 		Instantiate(targetGo);
