@@ -31,7 +31,7 @@ void DefaultScene::GenerateContent()
 	mainCamera->AddComponent<MoveAlongRails>();
 	mainCamera->AddComponent<Shoot>();
 	mainCamera->AddComponent<AlignedBox>();
-	auto light = mainCamera->AddComponent<PointLight>(D3DCOLOR_RGBA(255, 100, 0, 255));
+	auto light = mainCamera->AddComponent<PointLight>(D3DCOLOR_RGBA(255, 100, 0, 255), 100);
 	light->offset = DATASUPPLIER( mainCamera->transform->GetUp() * -5 );
 	AddToScene(mainCamera);
 
