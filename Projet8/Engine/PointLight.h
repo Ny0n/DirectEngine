@@ -22,5 +22,6 @@ private:
 	int _lightID;
 
 	D3DLIGHT9 _light;
+	bool _started = false;
 
 };

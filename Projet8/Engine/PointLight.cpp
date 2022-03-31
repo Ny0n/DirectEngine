@@ -9,6 +9,8 @@ PointLight::PointLight(D3DXCOLOR color, float range, float attenuation): _color(
 
 PointLight::~PointLight()
 {
+    if (_started)
+        d3ddev->LightEnable(_lightID, FALSE); // turn off the light
 }
 
 // **************************** //
@@ -34,6 +36,7 @@ void PointLight::EngineStart()
 
     d3ddev->SetLight(_lightID, &_light); // send the light struct properties to directx
 	d3ddev->LightEnable(_lightID, TRUE); // turn on the light
+    _started = true;
 }
 
 // EngineUpdate is called once per frame, after the MonoBehaviour Update & LateUpdate
