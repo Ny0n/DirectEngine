@@ -15,10 +15,6 @@ void Camera::EngineUpdate()
     auto fov = D3DXToRadian(70); // the horizontal field of view
     auto ratio = (FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT; // aspect ratio
 
-    // auto camDir = transform->GetRotation(); // the up direction
-    // string s = "" + to_string(transform->GetRotation().x) + " " + to_string(transform->GetRotation().y) + " " + to_string(transform->GetRotation().z);
-    // Utils::Println(s);
-
     // **************************** //
     d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, skyColor, 1.0f, 0); // background color
 
@@ -31,9 +27,6 @@ void Camera::EngineUpdate()
     D3DXMATRIX matProjection; // the projection transform matrix
     D3DXMatrixPerspectiveFovLH(&matProjection, fov, ratio, nvp, fvp);
     d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection); // set the projection
-
-    // D3DXMATRIX matViewInversed;
-    // D3DXMatrixInverse(&matViewInversed, NULL, &matView);
 }
 
 void Camera::ChangeFVP(float newFVP)

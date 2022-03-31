@@ -78,8 +78,7 @@ void MeshRenderer::EngineUpdate()
     // we draw the mesh
     D3DXMATRIX finalMat = transform->GetMatrix();
     d3ddev->SetTransform(D3DTS_WORLD, &finalMat);
-    // Meshes are divided into subsets, one for each material. Render them in
-        // a loop
+    // Meshes are divided into subsets, one for each material. Render them in a loop
     for (DWORD i = 0; i < g_dwNumMaterials; i++)
     {
         // Set the material and texture for this subset
