@@ -2,6 +2,7 @@
 
 #include "BulletMove.h"
 #include "Cube.h"
+#include "GameManager.h"
 
 void Shoot::Start()
 {
@@ -14,7 +15,8 @@ void Shoot::Update()
 
 	if(Input::GetKeyDown(KeyCode::Mouse0))
 	{
-		shoot = true;
+		if (!GameManager::IsPaused())
+			shoot = true;
 	}
 
 	if(shoot == true)

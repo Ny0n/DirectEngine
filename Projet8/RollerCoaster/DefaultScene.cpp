@@ -213,6 +213,7 @@ void DefaultScene::GenerateContent()
 	auto endgameScore = endgameGO->AddComponent<Textbox>();
 	endgameScore->text = L"Score: 0000";
 	endgameScore->fontHeight = 40;
+	endgameScore->size.x += 200;
 	endgameScore->position.x = endgamePanelPos.x + (endgamePanel->width * 0.5f) - endgameScore->size.x * .5f;
 	endgameScore->position.y = endgameDesc->position.y + endgameDesc->size.y + 50;
 	endgameScore->textColor = D3DCOLOR_ARGB(255, 255, 255, 255);
@@ -231,7 +232,7 @@ void DefaultScene::GenerateContent()
 #pragma region UIManager
 	auto UIManagerGO = CreateEmpty();
 
-	const auto managerScript = new UIManager(pauseCanvas, crossGO, fpCam, fpsText, timerText, scoreText, listBtn, endgameGO);
+	const auto managerScript = new UIManager(pauseCanvas, crossGO, fpCam, fpsText, timerText, scoreText, listBtn, endgameGO, endgameTitle, endgameDesc, endgameScore);
 	UIManagerGO->AddComponent(managerScript);
 
 	AddToScene(UIManagerGO);
@@ -240,7 +241,7 @@ void DefaultScene::GenerateContent()
 #pragma region GameManager
 	auto gameManagerGO = CreateEmpty();
 
-	const auto gameManagerScript = new GameManager(listBtn);
+	const auto gameManagerScript = new GameManager(listBtn, endBtn);
 	gameManagerGO->AddComponent(gameManagerScript);
 
 	AddToScene(gameManagerGO);

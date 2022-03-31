@@ -6,8 +6,11 @@
 int GameManager::_score = 0;
 float GameManager::_timer = 0;
 bool GameManager::_isPaused = false;
+bool GameManager::_won = false;
+bool GameManager::_lost = false;
+bool GameManager::_drew = false;
 
-GameManager::GameManager(Button* listBtn[4])
+GameManager::GameManager(Button* listBtn[4], Button* endBtn) : _endBtn(endBtn)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -34,9 +37,33 @@ bool GameManager::IsPaused()
 	return _isPaused;
 }
 
+int GameManager::GetGameStatus()
+{
+	if (_won)
+		return 1;
+	else if (_lost)
+		return 2;
+	else if (_drew)
+		return 3;
+	else
+		return 0;
+}
+
 void GameManager::AddScore(int n)
 {
 	_score += n;
+}
+
+void GameManager::EndGame()
+{
+	_isPaused = false;
+	SceneManager::LoadScene(1);
+
+	_score = 0;
+	_timer = Options::timerValue;
+	_won = false;
+	_lost = false;
+	_drew = false;
 }
 
 void GameManager::Pause()
@@ -76,17 +103,23 @@ void GameManager::Timer()
 
 void GameManager::Win()
 {
-	Utils::Println("YOU WIN!!");
+	_won = true;
+
+	Pause();
 }
 
 void GameManager::Lose()
 {
-	Utils::Println("YOU LOSE!!");
+	_lost = true;
+	
+	Pause();
 }
 
 void GameManager::Draw()
 {
-	Utils::Println("YOU FINISHED THE GAME!!");
+	_drew = true;
+	
+	Pause();
 }
 
 // **************************** //
@@ -100,6 +133,8 @@ void GameManager::Start()
 	_listBtn[1]->onClick = RUNNER(Restart);
 	_listBtn[2]->onClick = RUNNER(Menu);
 	_listBtn[3]->onClick = Application::Quit;
+
+	_endBtn->onClick = RUNNER(EndGame);
 }
 
 // Update is called once per frame
@@ -128,14 +163,15 @@ void GameManager::Update()
 	else if (_score >= Options::scoreMin && Options::showScore)
 			Win();
 
-	//TODO CHECK IF GAME IS FINISHED
-
-	if (Input::GetKeyDown(KeyCode::Tab) || Input::GetKeyDown(KeyCode::Escape))
+	if (GameManager::GetGameStatus() == 0)
 	{
-		if (_isPaused)
-			_isPaused = false;
-		else
-			_isPaused = true;
+		if (Input::GetKeyDown(KeyCode::Tab) || Input::GetKeyDown(KeyCode::Escape))
+		{
+			if (_isPaused)
+				_isPaused = false;
+			else
+				_isPaused = true;
+		}
 	}
 
 	if (_isPaused)

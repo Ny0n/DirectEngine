@@ -4,8 +4,8 @@
 #include "GameManager.h"
 #include "Options.h"
 
-UIManager::UIManager(GameObject* pauseGO, GameObject* crossGO, FPCam* cam, Textbox* fpsCounter, Textbox* timerText, Textbox* scoreText, Button* btnList[4], GameObject* endgameGO)
-	: _pauseGO(pauseGO), _crossGO(crossGO), _cam(cam), _fpsCounter(fpsCounter), _timerText(timerText), _scoreText(scoreText), _endgameGO(endgameGO)
+UIManager::UIManager(GameObject* pauseGO, GameObject* crossGO, FPCam* cam, Textbox* fpsCounter, Textbox* timerText, Textbox* scoreText, Button* btnList[4], GameObject* endgameGO, Textbox* endgameTitle, Textbox* endgameDesc, Textbox* endgameScore)
+	: _pauseGO(pauseGO), _crossGO(crossGO), _cam(cam), _fpsCounter(fpsCounter), _timerText(timerText), _scoreText(scoreText), _endgameGO(endgameGO), _endgameTitle(endgameTitle), _endgameDesc(endgameDesc), _endgameScore(endgameScore)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -89,6 +89,50 @@ void UIManager::UpdateScore()
 		_scoreText->textColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 }
 
+void UIManager::EndGame()
+{
+	_endgameGO->SetEnabled(true);
+
+	Cursor::SetVisible(true);
+
+	_pauseGO->SetEnabled(false);
+	_crossGO->SetEnabled(false);
+	_cam->SetEnabled(false);
+	_scoreText->SetEnabled(false);
+	_timerText->SetEnabled(false);
+
+	_endgameScore->text = L"Score: " + to_wstring(GameManager::GetScore()) + L'/' + to_wstring(Options::scoreMin);
+}
+
+void UIManager::Won()
+{
+	EndGame();
+
+	_endgameTitle->text = L"You Won!";
+	_endgameTitle->textColor = D3DCOLOR_ARGB(255, 0, 255, 0);
+
+	_endgameDesc->text = L"Congratulations " + Options::pseudo + L"!";
+}
+
+void UIManager::Lost()
+{
+	EndGame();
+
+	_endgameTitle->text = L"You Lost!";
+	_endgameTitle->textColor = D3DCOLOR_ARGB(255, 255, 0, 0);
+
+	_endgameDesc->text = L"Better luck next time " + Options::pseudo + L"!";
+}
+
+void UIManager::Drew()
+{
+	EndGame();
+
+	_endgameTitle->text = L"Finished!";
+
+	_endgameDesc->text = L"Hope you liked playing " + Options::pseudo + L"!";
+}
+
 // **************************** //
 
 // Start is called before the first frame update
@@ -96,16 +140,15 @@ void UIManager::Start()
 {
 	_listBtn[0]->onClick = RUNNER(Resume);
 	_listBtn[1]->onClick = RUNNER(Restart);
+	
+	//An object whose never been enabled isnt destroyed
+	_endgameGO->SetEnabled(true);
+	_endgameGO->SetEnabled(false);
 }
 
 // Update is called once per frame
 void UIManager::Update()
 {
-	if (Input::GetKeyDown(KeyCode::A))
-	{
-		_endgameGO->SetEnabled(true);
-	}
-
 	auto isPaused = GameManager::IsPaused();
 
 	if (Options::showScore)
@@ -127,5 +170,25 @@ void UIManager::Update()
 		Pause();
 	else
 		Resume();
+
+	int status = GameManager::GetGameStatus();
+	if (status != 0)
+	{
+		switch (status)
+		{
+		case 1:
+			Won();
+			break;
+		case 2:
+			Lost();
+			break;
+		case 3:
+			Drew();
+			break;
+		default:
+			Utils::PrintErr("Unexpected game status value.");
+			break;
+		}
+	}
 }
 

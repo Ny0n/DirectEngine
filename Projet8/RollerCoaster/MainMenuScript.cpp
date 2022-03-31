@@ -125,7 +125,7 @@ void MainMenuScript::Start()
 	_listCheckBox[5]->onClick = RUNNER(DisableScore);
 
 	_menuGO->SetEnabled(true);
-
+	
 	//if the gameobject is never set to true it wont be destroyed
 	_optionsGO->SetEnabled(true);
 	_optionsGO->SetEnabled(false);

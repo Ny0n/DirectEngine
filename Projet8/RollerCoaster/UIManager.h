@@ -11,7 +11,7 @@ class UIManager : public MonoBehaviour
 	void Update() override;
 
 public:
-	explicit UIManager(GameObject* pauseGO, GameObject* crossGO, FPCam* cam, Textbox* fpsCounter, Textbox* timerText, Textbox* scoreText, Button* btnList[4], GameObject* endgameGO);
+	explicit UIManager(GameObject* pauseGO, GameObject* crossGO, FPCam* cam, Textbox* fpsCounter, Textbox* timerText, Textbox* scoreText, Button* btnList[4], GameObject* endgameGO, Textbox* endgameTitle, Textbox* endgameDesc, Textbox* endgameScore);
 	~UIManager() override;
 
 private:
@@ -21,6 +21,11 @@ private:
 	void ShowFPS();
 	void ShowTimer();
 	void UpdateScore();
+
+	void EndGame();
+	void Won();
+	void Lost();
+	void Drew();
 
 	GameObject* _endgameGO;
 	GameObject* _pauseGO;
@@ -32,6 +37,10 @@ private:
 	Textbox* _fpsCounter;
 	Textbox* _timerText;
 	Textbox* _scoreText;
+
+	Textbox* _endgameTitle;
+	Textbox* _endgameDesc;
+	Textbox* _endgameScore;
 	
 	list<int> averageFPS;
 };
