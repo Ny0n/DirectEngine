@@ -49,7 +49,7 @@ void App::Init(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, i
     // create the window and use the result as the handle
     _window = CreateWindowEx(NULL,
         L"WindowClass",    // name of the window class
-        L"Our First Direct3D Program",   // title of the window
+        L"Mine",   // title of the window
         WS_EX_TOPMOST | WS_POPUP,    // window style WS_EX_TOPMOST | WS_POPUP
         0,    // x-position of the window
         0,    // y-position of the window
