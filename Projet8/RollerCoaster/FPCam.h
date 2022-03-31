@@ -16,6 +16,7 @@ public:
 
 	void SetCart(GameObject* newCart) { _pCart = newCart; }
 
+	void SetParticle(GameObject* newParticle) { _pParticle = newParticle; }
 private:
 	float _speed{ 10.0f };
 
@@ -24,4 +25,5 @@ private:
 	float _upSpeedLimit = 30.0f;
 	
 	GameObject* _pCart;
+	GameObject* _pParticle;
 };

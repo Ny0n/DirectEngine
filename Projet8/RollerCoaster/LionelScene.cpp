@@ -3,7 +3,6 @@
 #include "GoUp.h"
 #include "InputTester.h"
 #include "Move.h"
-#include "RealFPCam.h"
 #include "Shoot.h"
 
 string LionelScene::GetName()
@@ -23,28 +22,27 @@ void LionelScene::GenerateContent()
 	GameObject* Camera = CreateEmpty();
 
 	//Camera Data
-	Camera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -60.0f));
+	Camera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -10.0f));
 
 	// Camera Component
-	Camera->AddComponent<class Camera>();
-	Camera->AddComponent<RealFPCam>();
+	auto cam = Camera->AddComponent<class Camera>();
+	cam->ChangeSkyColor(D3DCOLOR_XRGB(255, 0, 0));
+	//Camera->AddComponent<RealFPCam>();
 	Camera->AddComponent<InputTester>();
 	Camera->AddComponent<Move>();
 	Camera->AddComponent<Shoot>();
 
 	AddToScene(Camera);
 
-	// Sphere
+	// particule
 
-	GameObject* Sphere = CreateEmpty();
+	GameObject* particuleTest = CreateEmpty();
 
-	LPCWSTR path = L"Mesh\\minecart.x";
-	Sphere->AddComponent<MeshRenderer>(path);
-	Sphere->AddComponent<Collider>();
-	Sphere->AddComponent<GoUp>();
 
-	Sphere->transform->RotateRoll(45);
+	particuleTest->AddComponent<ParticleSystem>();
+	//particuleTest->AddComponent<MeshRenderer>(L"Mesh\\tiger.x");
 
-	AddToScene(Sphere);
+	AddToScene(particuleTest);
+	
 
 }
