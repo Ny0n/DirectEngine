@@ -6,30 +6,20 @@
 // Start is called before the first frame update
 void ParticleSystem::EngineStart()
 {
-	init(L"");
+	_vbSize = 20;
+	_vbBatchSize = 10;
+	Init(_fileName);
 	for(int i = 0; i < _vbSize; i++)
 	{
-		addParticle();
+		AddParticle();
 	}
 }
 
 // Update is called once per frame
 void ParticleSystem::EngineUpdate()
 {
-	for (auto attribute : _particles)
-	{
-		attribute->_position += attribute->_velocity * Time::deltaTime;
-		
-		// is the point outside bounds?
-		if (attribute->_position.y <= -30)
-		{
-			// nope so kill it, but we want to recycle dead
-			// particles, so respawn it instead.
-			resetParticle(attribute);
-		}
-	}
-
-	render();
+	AnimateParticle();
+	Render();
 }
 
 ParticleSystem::~ParticleSystem()
@@ -46,11 +36,11 @@ ParticleSystem::~ParticleSystem()
 	}
 }
 
-void ParticleSystem::init(LPCWSTR texFileName)
+void ParticleSystem::Init(string texFileName)
 {
 	//D3DXCreateTextureFromFile(d3ddev, L"Particle\\corona.png", &_tex);
 
-	string pathTexture = "Particle\\pierre.png";
+	string pathTexture = "Particle\\" + texFileName;
 	// Create the texture
 	if (FAILED(D3DXCreateTextureFromFileA(d3ddev,
 		pathTexture.c_str(),
@@ -73,48 +63,55 @@ void ParticleSystem::init(LPCWSTR texFileName)
 		0);
 }
 
-void ParticleSystem::reset()
+void ParticleSystem::Reset()
 {
 	for (auto attribute : _particles)
 	{
-		resetParticle(attribute);
+		ResetParticle(attribute);
 	}
 }
 
-void ParticleSystem::resetParticle(Attribute* attribute)
+//resetParticule initialise a particle
+void ParticleSystem::ResetParticle(Attribute* attribute)
 {
+	//is meant to do a snow effect but is modified to have rock falling
+
 	attribute->_isAlive = true;
 	// get random x, z coordinate for the position of the snowflake.
 
-	D3DXVECTOR3 min = D3DXVECTOR3(-50, 20, -50);
-	D3DXVECTOR3 max = D3DXVECTOR3(50, 20, 50);
+	D3DXVECTOR3 minM = D3DXVECTOR3(-50,-50,-50);
+	D3DXVECTOR3 maxM = D3DXVECTOR3(50, 50, 50);
 
 	Utils::GetRandomVector(
 		&attribute->_position,
-		&min,
-		&max);
-
+		&minM,
+		&maxM);
 	// no randomness for height (y-coordinate). Snowflake
 	// always starts at the top of bounding box.
-	//attribute->_position.y = 20;
+	attribute->_position.y = maxM.y;
 	// snowflakes fall downward and slightly to the left
-	attribute->_velocity.x = 0;
-	attribute->_velocity.y = Utils::GetRandomFloat(0.0f, 1.0f) * -20.0f;
+	attribute->_velocity.x = Utils::GetRandomFloat(0.0f, 1.0f) * -1.0f;
+	attribute->_velocity.y = Utils::GetRandomFloat(3.0f, 10.0f) * -10.0f;
 	attribute->_velocity.z = 0.0f;
+
+	attribute->_age = 0.0f;
+	attribute->_lifeTime = 20.0f;
+
 	// white snowflake
-	attribute->_color = D3DCOLOR_ARGB(0,255,255, 255);
+	attribute->_color = D3DCOLOR_XRGB(120, 120, 120);
+
 }
 
-void ParticleSystem::addParticle()
+void ParticleSystem::AddParticle()
 {
 	Attribute* attribute = new Attribute();
 
-	resetParticle(attribute);
+	ResetParticle(attribute);
 
 	_particles.push_back(attribute);
 }
 
-void ParticleSystem::preRender()
+void ParticleSystem::PreRender()
 {
 	d3ddev->SetRenderState(D3DRS_LIGHTING, false);
 	d3ddev->SetRenderState(D3DRS_POINTSPRITEENABLE, true);
@@ -134,20 +131,17 @@ void ParticleSystem::preRender()
 	d3ddev->SetRenderState(D3DRS_ZWRITEENABLE, false);
 }
 
-void ParticleSystem::render()
+void ParticleSystem::Render()
 {
 	if (!_particles.empty())
 	{
 		// set render states
-		preRender();
+		PreRender();
 		d3ddev->SetMaterial(&_mat);
 
 		d3ddev->SetTexture(0, _tex);
 		d3ddev->SetFVF(FVF);
 		d3ddev->SetStreamSource(0, _vb, 0, sizeof(Particle));
-
-		D3DXMATRIX matrix = transform->GetMatrix();
-		d3ddev->SetTransform(D3DTS_WORLD, &matrix);
 
 
 		// start at beginning if we're at the end of the vb
@@ -184,6 +178,19 @@ void ParticleSystem::render()
 					// copied to the vertex buffer.
 					//
 					_vb->Unlock();
+
+					if (attribute->_matrixInitialized == false && _attachMatrix == false)
+					{
+						attribute->_transformM = transform->GetMatrix();
+						attribute->_matrixInitialized = true;
+					}
+					else if (_attachMatrix == true)
+					{
+						attribute->_transformM = transform->GetMatrix();
+					}
+
+					d3ddev->SetTransform(D3DTS_WORLD, &attribute->_transformM);
+
 					d3ddev->DrawPrimitive(
 						D3DPT_POINTLIST,
 						_vbOffset,
@@ -222,11 +229,11 @@ void ParticleSystem::render()
 		}
 		// next block
 		_vbOffset += _vbBatchSize;
-		postRender();
+		PostRender();
 	}//end if
 }
 
-void ParticleSystem::postRender()
+void ParticleSystem::PostRender()
 {
 	d3ddev->SetRenderState(D3DRS_LIGHTING, true);
 	d3ddev->SetRenderState(D3DRS_POINTSPRITEENABLE, false);
@@ -235,31 +242,36 @@ void ParticleSystem::postRender()
 	d3ddev->SetRenderState(D3DRS_ZWRITEENABLE, true);
 }
 
-bool ParticleSystem::isEmpty()
+void ParticleSystem::AnimateParticle()
 {
-	return false;
+	for (auto attribute : _particles)
+	{
+		attribute->_position += attribute->_velocity * Time::deltaTime;
+
+		// nope so kill it, but we want to recycle dead
+		// particles, so respawn it instead.
+		attribute->_age += Time::deltaTime;
+
+		if (attribute->_position.y <= -150)
+		{
+			ResetParticle(attribute);
+		}
+	}
 }
 
-bool ParticleSystem::isDead()
-{
-	return false;
-}
 
 void ParticleSystem::removeDeadParticles()
 {
-	list<Attribute*>::iterator i;
+	bool noMoreAlive = true;
 
 	for (auto attribute : _particles)
 	{
-		if ( attribute->_isAlive == false)
-		{
-			// erase returns the next iterator, so no need
-			// to incrememnt to the next one ourselves.
-			i = _particles.erase(i);
-		}
-		else
-		{
-			i++; // next in list
-		}
+		if (attribute->_isAlive == true)
+			noMoreAlive = false;
+	}
+
+	if (noMoreAlive == true)
+	{
+		Destroy(gameObject);
 	}
 }

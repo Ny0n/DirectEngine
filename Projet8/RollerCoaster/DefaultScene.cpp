@@ -50,6 +50,17 @@ void DefaultScene::GenerateContent()
 	cam->SetCart(cart);
 #pragma endregion cart
 
+#pragma region particle
+	GameObject* particle = CreateEmpty();
+	
+	particle->AddComponent<ParticleSystem>();
+
+	AddToScene(particle);
+
+	cam->SetParticle(particle);
+
+#pragma endregion particle
+
 #pragma region crosshair
 	auto crossGO = CreateEmpty();
 	auto img = crossGO->AddComponent<Image>();

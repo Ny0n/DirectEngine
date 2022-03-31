@@ -3,7 +3,6 @@
 #include "GoUp.h"
 #include "InputTester.h"
 #include "Move.h"
-#include "RealFPCam.h"
 #include "Shoot.h"
 
 string LionelScene::GetName()

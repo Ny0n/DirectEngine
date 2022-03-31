@@ -14,6 +14,8 @@ public:
 	FPCam() = default;
 	explicit FPCam(float speed);
 	void SetCart(GameObject* newCart) { cart = newCart; }
+	void SetParticle(GameObject* newParticle) { _particle = newParticle; }
+
 private:
 	float _speed{ 10.0f };
 
@@ -21,4 +23,5 @@ private:
 	float upSpeed;
 	float upSpeedLimit = 30.0f;
 	GameObject* cart;
+	GameObject* _particle;
 };
