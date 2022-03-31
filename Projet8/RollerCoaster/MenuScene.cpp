@@ -331,6 +331,7 @@ void MenuScene::GenerateContent()
 
 	const auto script = new MainMenuScript(menuCanvas, optionsCanvas, creditsCanvas, menuBtnList, inputOptionsList, checkboxOptionsList, timerValue, scoreMinValue, easterEgg);
 	MenuManager->AddComponent(script);
+	MenuManager->AddComponent<AudioSource>(L"Audio\\music.wav", false, 0.3f);
 
 	AddToScene(MenuManager);
 #pragma endregion MenuManager
@@ -339,7 +340,7 @@ void MenuScene::GenerateContent()
 	GameObject* audio = CreateEmpty();
 
 	audio->AddComponent<BackgroundMusic>();
-	audio->AddComponent<AudioSource>(L"Audio\\giveitup.wav", true, 0.6f);
+	audio->AddComponent<AudioSource>(L"Audio\\giveitup.wav", true, 0.3f);
 
 	AddToScene(audio);
 #pragma endregion Audio

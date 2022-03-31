@@ -40,5 +40,6 @@ private:
 	Textbox* _scoreIPText;
 
 	bool _playingEasterEgg = false;
+	AudioSource* _easterEggSource = nullptr;
 };
 

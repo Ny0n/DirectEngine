@@ -1,5 +1,6 @@
 #include "MainMenuScript.h"
 
+#include "BackgroundMusic.h"
 #include "Options.h"
 
 
@@ -48,7 +49,6 @@ void MainMenuScript::OnCredits()
 
 	auto btn = _creditsGO->GetComponent<Button>();
 	btn->onClick = RUNNER(BackToMenu);
-	_playingEasterEgg = false;
 }
 
 void MainMenuScript::OnQuit()
@@ -61,30 +61,25 @@ void MainMenuScript::BackToMenu()
 	_menuGO->SetEnabled(true);
 	_optionsGO->SetEnabled(false);
 	_creditsGO->SetEnabled(false);
+	StopEasterEgg();
 }
 
 void MainMenuScript::ToggleEasterEgg()
 {
-	if (_playingEasterEgg)
-	{
-		_playingEasterEgg = false;
-		_easterEggGO->GetComponent<Image>()->SetEnabled(false);
-	}
-	else
-	{
-		_playingEasterEgg = true;
-		_easterEggGO->GetComponent<Image>()->SetEnabled(true);
-	}
+	_easterEggGO->GetComponent<Image>()->SetEnabled(true);
+	StartEasterEgg();
 }
 
 void MainMenuScript::StartEasterEgg()
 {
-	//TODO play music
+	BackgroundMusic::Instance->source->Pause();
+	_easterEggSource->Restart();
 }
 
 void MainMenuScript::StopEasterEgg()
 {
-	//TODO stop music
+	_easterEggSource->Stop();
+	BackgroundMusic::Instance->source->Resume();
 }
 
 void MainMenuScript::ToggleAudio()
@@ -176,6 +171,8 @@ void MainMenuScript::Start()
 	_listCheckBox[3]->SetCheck(Options::rotatingCrosshair);
 	_listCheckBox[4]->SetCheck(Options::pulsingCrosshair);
 	_listCheckBox[5]->SetCheck(Options::showScore);
+
+	_easterEggSource = gameObject->GetComponent<AudioSource>();
 }
 
 void MainMenuScript::Update()
@@ -201,10 +198,5 @@ void MainMenuScript::Update()
 		_easterEggGO->SetEnabled(false);
 		_easterEggGO->GetComponent<Image>()->SetEnabled(false);
 	}
-
-	if (_playingEasterEgg)
-		StartEasterEgg();
-	else
-		StopEasterEgg();
 }
 
