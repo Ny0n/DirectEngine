@@ -180,7 +180,7 @@ void MainMenuScript::Start()
 
 void MainMenuScript::Update()
 {
-	Options::pseudo = _listInputField[0]->GetText();
+	Options::pseudo = _listInputField[0]->GetText().c_str();
 	Options::playerSpeed = static_cast<float>(_wtof(_listInputField[1]->GetText().c_str()));
 	Options::timerValue = static_cast<float>(_wtof(_listInputField[2]->GetText().c_str()));
 	Options::scoreMin = _wtoi(_listInputField[3]->GetText().c_str());
