@@ -7,11 +7,12 @@ class SceneSingleton : public MonoBehaviour // if a script extends from this cla
 {
 	string GetType() override { return NAMEOF(SceneSingleton); }
 
-    static T* Instance;
 	void Awake() final;
     bool singletonDestroy = false;
 
 public:
+    static T* Instance;
+
     SceneSingleton() = default;
     ~SceneSingleton() override
 	{

@@ -4,8 +4,7 @@
 
 LPDIRECT3D9 d3d; // the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev; // the pointer to the device class
-LPDIRECT3DVERTEXBUFFER9 _VBuffer = nullptr;
-LPDIRECT3DINDEXBUFFER9 _IBuffer = nullptr;
+
 
 // **************************** //
 
@@ -23,27 +22,6 @@ Engine::~Engine()
 }
 
 // **************************** //
-
-void Engine::InitLight()
-{
-    D3DLIGHT9 light;    // create the light struct
-    D3DMATERIAL9 material;    // create the material struct
-
-    ZeroMemory(&light, sizeof(light));    // clear out the light struct for use
-    light.Type = D3DLIGHT_DIRECTIONAL;    // make the light type 'directional light'
-    light.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);    // set the light's color
-    light.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);    // set the light's color
-    light.Direction = D3DXVECTOR3(0.0f, -0.3f, 0.0f);
-
-    d3ddev->SetLight(0, &light);    // send the light struct properties to light #0
-    d3ddev->LightEnable(0, TRUE);    // turn on light #0
-
-    ZeroMemory(&material, sizeof(D3DMATERIAL9));    // clear out the struct for use
-    material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set diffuse color to white
-    material.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set ambient color to white
-
-    d3ddev->SetMaterial(&material);    // set the globably-used material to &material
-}
 
 void Engine::InitD3D()
 {
@@ -69,39 +47,21 @@ void Engine::InitD3D()
         D3DCREATE_SOFTWARE_VERTEXPROCESSING,
         &d3dpp,
         &d3ddev);
+    
+    d3ddev->SetRenderState(D3DRS_LIGHTING, true); // turn on the 3D lighting
+    // d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(155, 155, 155));    // ambient light
 
-    InitLight();
-    d3ddev->SetRenderState(D3DRS_LIGHTING, true);    // turn on the 3D lighting
-    d3ddev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(155, 155, 155));    // ambient light
     d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
-    float Start = 60.0f,    // Linear fog distances
-        End = 100.0f;
 
-    // Enable fog blending.
-    d3ddev->SetRenderState(D3DRS_FOGENABLE, TRUE);
-
-    // Set the fog color.
-    d3ddev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_XRGB(0, 0, 0));
-
+    // Fog
+    float Start = 60.0f, End = 100.0f; // Linear fog distances
+    d3ddev->SetRenderState(D3DRS_FOGENABLE, TRUE); // Enable fog blending
+    d3ddev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_XRGB(0, 0, 0)); // Set the fog color
     d3ddev->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_LINEAR);
     d3ddev->SetRenderState(D3DRS_FOGSTART, *(DWORD*)(&Start));
         d3ddev->SetRenderState(D3DRS_FOGEND, *(DWORD*)(&End));
 
-    // _VBuffer
-    d3ddev->CreateVertexBuffer(24 * sizeof(CUSTOMVERTEX),
-        0,
-        CUSTOMFVF,
-        D3DPOOL_MANAGED,
-        &_VBuffer,
-        NULL);
-
-    // _IBuffer
-    d3ddev->CreateIndexBuffer(36 * sizeof(short),
-        0,
-        D3DFMT_INDEX16,
-        D3DPOOL_MANAGED,
-        &_IBuffer,
-        NULL);
+    
 }
 
 void Engine::UninitD3D()
@@ -109,10 +69,6 @@ void Engine::UninitD3D()
     // close and release Direct3D
     d3ddev->Release();
     d3d->Release();
-
-    // close and release the vertex buffer
-    _VBuffer->Release();
-    _IBuffer->Release();
 
     // Audio
     AudioManager::Clean();

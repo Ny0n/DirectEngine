@@ -10,6 +10,6 @@ public :
     list<Collider*> AreIn(list<GameObject*> go);
 
 private:
-    list<Collider*> colliders;
+    list<Collider*> _colliders;
 
 };

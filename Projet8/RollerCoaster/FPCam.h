@@ -13,15 +13,17 @@ class FPCam : public MonoBehaviour
 public:
 	FPCam() = default;
 	explicit FPCam(float speed);
-	void SetCart(GameObject* newCart) { cart = newCart; }
-	void SetParticle(GameObject* newParticle) { _particle = newParticle; }
 
+	void SetCart(GameObject* newCart) { _pCart = newCart; }
+
+	void SetParticle(GameObject* newParticle) { _particle = newParticle; }
 private:
 	float _speed{ 10.0f };
 
-	float rightSpeed;
-	float upSpeed;
-	float upSpeedLimit = 30.0f;
-	GameObject* cart;
+	float _rightSpeed;
+	float _upSpeed;
+	float _upSpeedLimit = 30.0f;
+	
+	GameObject* _pCart;
 	GameObject* _particle;
 };

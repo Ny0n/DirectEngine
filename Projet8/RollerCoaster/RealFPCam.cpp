@@ -4,8 +4,6 @@
 // Start is called before the first frame update
 void RealFPCam::Start()
 {
-    Cursor::Lock();
-    Cursor::SetVisible(false);
 }
 
 // Update is called once per frame

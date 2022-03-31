@@ -14,6 +14,8 @@ void AudioManager::Initialize()
 	HRSOUND(XAudio2Create(&pXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR));
 	
 	HRSOUND(pXAudio2->CreateMasteringVoice(&pMasterVoice));
+
+	SetActive(false);
 }
 
 void AudioManager::Clean()

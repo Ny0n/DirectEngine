@@ -1,6 +1,6 @@
 #include "MenuScene.h"
 
-#include "AudioTester.h"
+#include "BackgroundMusic.h"
 #include "CheckBox.h"
 #include "DontDestroyOnLoad.h"
 #include "MainMenuScript.h"
@@ -32,6 +32,11 @@ void MenuScene::GenerateContent()
 
 	GameObject* menuCanvas = CreateEmpty();
 
+	auto logoImg = menuCanvas->AddComponent<Image>();
+	logoImg->filePath = L"Image\\mine.png";
+	logoImg->position = D3DXVECTOR2(500, 50);
+	logoImg->originalSize = true;
+
 	auto PlayBtn = menuCanvas->AddComponent<Button>();
 	PlayBtn->position = D3DXVECTOR2(1300, 500);
 	PlayBtn->text = L"PLAY";
@@ -52,18 +57,17 @@ void MenuScene::GenerateContent()
 	QuitBtn->text = L"QUIT";
 	menuBtnList[3] = QuitBtn;
 
-	menuCanvas->AddComponent<Textbox>();
-
 	AddToScene(menuCanvas);
 #pragma endregion Main Menu Canvas
 
 #pragma region Options Canvas
 	auto optionsCanvas = CreateEmpty();
 
-	InputField* inputOptionsList[3] = {nullptr};
-	CheckBox* checkboxOptionsList[5] = {nullptr};
+	InputField* inputOptionsList[4] = {nullptr};
+	CheckBox* checkboxOptionsList[6] = {nullptr};
 
 	int padding = 30;
+	int columnPadding = 190;
 
 	auto optionsPanel = optionsCanvas->AddComponent<Image>();
 	optionsPanel->filePath = L"Image\\blanc.png";
@@ -132,12 +136,13 @@ void MenuScene::GenerateContent()
 	timerCategory->size.x = 320;
 	timerCategory->textFormat = DT_LEFT | DT_VCENTER;
 	timerCategory->textColor = D3DCOLOR_ARGB(120, 255, 255, 255);
-	timerCategory->position.x = playerCategory->position.x + playerCategory->size.x + 350;
+	timerCategory->position.x = playerCategory->position.x + playerCategory->size.x + columnPadding;
 	timerCategory->position.y = optionsPanelPosition.y + padding + 170;
 
 	auto showTimer = optionsCanvas->AddComponent<CheckBox>();
-	showTimer->text = L"Show Timer";
+	showTimer->text = L"Play with Timer";
 	showTimer->fontHeight = 25;
+	showTimer->textBoxWidth += 10;
 	showTimer->position.x = timerCategory->position.x + padding * 2;
 	showTimer->position.y = timerCategory->position.y + padding * 3;
 	checkboxOptionsList[0] = showTimer;
@@ -206,6 +211,38 @@ void MenuScene::GenerateContent()
 	pulsingCrosshair->position.y = rotatingCrosshair->position.y + 50;
 	checkboxOptionsList[4] = pulsingCrosshair;
 
+	auto scoreCategory = optionsCanvas->AddComponent<Textbox>();
+	scoreCategory->text = L"Score Options";
+	scoreCategory->fontHeight = 42;
+	scoreCategory->size.x = 320;
+	scoreCategory->textFormat = DT_LEFT | DT_VCENTER;
+	scoreCategory->textColor = D3DCOLOR_ARGB(120, 255, 255, 255);
+	scoreCategory->position.x = timerCategory->position.x + timerCategory->size.x + columnPadding;
+	scoreCategory->position.y = optionsPanelPosition.y + padding + 170;
+
+	auto showScore = optionsCanvas->AddComponent<CheckBox>();
+	showScore->text = L"Play for Score";
+	showScore->fontHeight = 25;
+	showScore->position.x = scoreCategory->position.x + padding * 2;
+	showScore->position.y = scoreCategory->position.y + padding * 3;
+	checkboxOptionsList[5] = showScore;
+
+	auto scoreMinValue = optionsCanvas->AddComponent<Textbox>();
+	scoreMinValue->text = L"Value: ";
+	scoreMinValue->position.x = scoreCategory->position.x + padding * 2;
+	scoreMinValue->position.y = showScore->position.y + 70;
+	scoreMinValue->textFormat = DT_LEFT | DT_VCENTER;
+	scoreMinValue->size.x = 80;
+	scoreMinValue->textColor = D3DCOLOR_ARGB(120, 255, 255, 255);
+
+	auto scoreInputField = optionsCanvas->AddComponent<InputField>();
+	scoreInputField->position.x = scoreMinValue->position.x + scoreMinValue->size.x;
+	scoreInputField->position.y = scoreMinValue->position.y + 5;
+	scoreInputField->size.x = 200;
+	scoreInputField->size.y = 40;
+	scoreInputField->textMaxCaracters = 4;
+	inputOptionsList[3] = scoreInputField;
+
 	AddToScene(optionsCanvas);
 #pragma endregion Options Canvas
 
@@ -227,6 +264,46 @@ void MenuScene::GenerateContent()
 	creditsText->fontHeight = 85;
 	creditsText->position = creditsPanelPosition;
 
+	auto groupeText = creditsCanvas->AddComponent<Textbox>();
+	groupeText->text = L"~~ Groupe 7 ~~";
+	groupeText->fontHeight = 60;
+	groupeText->size.x = 350;
+	groupeText->textColor = D3DCOLOR_ARGB(255, 0, 255, 0);
+	groupeText->position.x = SCREEN_WIDTH * .5f - groupeText->size.x * .5f;
+	groupeText->position.y = creditsPanelPosition.y + 200;
+
+	auto flavienText = creditsCanvas->AddComponent<Textbox>();
+	flavienText->text = L"Flavien MERITTO";
+	flavienText->fontHeight = 40;
+	flavienText->size.x = 300;
+	flavienText->textColor = D3DCOLOR_ARGB(255, 10, 240, 163);
+	flavienText->position.x = SCREEN_WIDTH * .5f - flavienText->size.x *.5f;
+	flavienText->position.y = groupeText->position.y + flavienText->size.y + 60;
+
+	auto lionelText = creditsCanvas->AddComponent<Textbox>();
+	lionelText->text = L"Lionel JANIN";
+	lionelText->fontHeight = 40;
+	lionelText->size.x = 300;
+	lionelText->textColor = D3DCOLOR_ARGB(255, 30, 30, 255);
+	lionelText->position.x = SCREEN_WIDTH * .5f - lionelText->size.x * .5f;
+	lionelText->position.y = flavienText->position.y + lionelText->size.y + 30;
+
+	auto franText = creditsCanvas->AddComponent<Textbox>();
+	franText->text = L"François CALVET";
+	franText->fontHeight = 40;
+	franText->size.x = 300;
+	franText->textColor = D3DCOLOR_ARGB(255, 255,0,0);
+	franText->position.x = SCREEN_WIDTH * .5f - franText->size.x * .5f;
+	franText->position.y = lionelText->position.y + franText->size.y + 30;
+
+	auto killianText = creditsCanvas->AddComponent<Textbox>();
+	killianText->text = L"Killian PEREZ";
+	killianText->fontHeight = 40;
+	killianText->size.x = 300;
+	killianText->textColor = D3DCOLOR_ARGB(255, 255, 255, 0);
+	killianText->position.x = SCREEN_WIDTH * .5f - killianText->size.x * .5f;
+	killianText->position.y = franText->position.y + killianText->size.y + 30;
+
 	auto creditsBtn = creditsCanvas->AddComponent<Button>();
 	creditsBtn->text = L"BACK TO MENU";
 	creditsBtn->position.x = creditsPanelPosition.x + creditsPanel->width - creditsBtn->size.x - padding;
@@ -236,12 +313,12 @@ void MenuScene::GenerateContent()
 #pragma endregion Credits Canvas
 
 	auto MenuManager = CreateEmpty();
-	const auto script = new MainMenuScript(menuCanvas, optionsCanvas, creditsCanvas, menuBtnList, inputOptionsList, checkboxOptionsList);
+	const auto script = new MainMenuScript(menuCanvas, optionsCanvas, creditsCanvas, menuBtnList, inputOptionsList, checkboxOptionsList, timerValue, scoreMinValue);
 	MenuManager->AddComponent(script);
 	AddToScene(MenuManager);
 
 	GameObject* audio = CreateEmpty();
-	audio->AddComponent<AudioTester>();
+	audio->AddComponent<BackgroundMusic>();
 	audio->AddComponent<AudioSource>(L"Audio\\giveitup.wav", true, 0.6f);
 	AddToScene(audio);
 

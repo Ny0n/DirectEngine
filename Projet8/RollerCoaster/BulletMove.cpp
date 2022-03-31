@@ -1,6 +1,6 @@
 ﻿#include "BulletMove.h"
 
-#include "Score.h"
+#include "GameManager.h"
 #include "Target.h"
 
 
@@ -37,7 +37,7 @@ void BulletMove::OnTriggerEnter(GameObject* collide)
 	if (t != nullptr)
 	{
 		t->removeSelf();
-		Score::AddScore(t->points);
+		GameManager::AddScore(t->points);
 	}
 
 	Destroy(collide);

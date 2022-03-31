@@ -1,58 +1,50 @@
 ﻿#include "UIManager.h"
 
+#include "App.h"
+#include "GameManager.h"
 #include "Options.h"
 
-UIManager::UIManager(GameObject* go, GameObject* goToDisable, FPCam* cam, Button* listBtn[4], Textbox* fpsCounter): _pauseGO(go), _crossGO(goToDisable), _cam(cam), _fpsCounter(fpsCounter)
+UIManager::UIManager(GameObject* pauseGO, GameObject* crossGO, FPCam* cam, Textbox* fpsCounter, Textbox* timerText, Textbox* scoreText, Button* btnList[4])
+	: _pauseGO(pauseGO), _crossGO(crossGO), _cam(cam), _fpsCounter(fpsCounter), _timerText(timerText), _scoreText(scoreText)
 {
-	_listBtn[0] = listBtn[0];
-	_listBtn[1] = listBtn[1];
-	_listBtn[2] = listBtn[2];
-	_listBtn[3] = listBtn[3];
+	for (int i = 0; i < 4; i++)
+	{
+		_listBtn[i] = btnList[i];
+	}
 }
 
 UIManager::~UIManager()
 {
 }
 
-bool UIManager::IsPaused()
-{
-	return isPaused;
-}
-
 void UIManager::Pause()
 {
+	Cursor::SetVisible(true);
+
 	_pauseGO->SetEnabled(true);
 	_crossGO->SetEnabled(false);
-	Cursor::Unlock();
 	_cam->SetEnabled(false);
-	isPaused = true;
 }
 
 void UIManager::Resume()
 {
+	Cursor::SetVisible(false);
+
 	_pauseGO->SetEnabled(false);
 	_crossGO->SetEnabled(true);
-	Cursor::Lock();
 	_cam->SetEnabled(true);
-	isPaused = false;
 }
 
-void UIManager::OnRestart()
+void UIManager::Restart()
 {
-	SceneManager::LoadScene(SceneManager::GetActiveSceneName());
 	Cursor::SetVisible(false);
-}
-
-void UIManager::OnMenu()
-{
-	SceneManager::LoadScene(1);
 }
 
 void UIManager::ShowFPS()
 {
 	auto currFps = static_cast<int>(Time::currentFps());
 
-	if (averageFPS.size() >= 100)
+	if (averageFPS.size() >= 50)
 	{
 		averageFPS.pop_front();
 		averageFPS.push_back(currFps);
@@ -70,21 +62,58 @@ void UIManager::ShowFPS()
 	_fpsCounter->text = L"FPS: " + to_wstring(fps / averageFPS.size());
 }
 
+void UIManager::ShowTimer()
+{
+	auto currTimer = GameManager::GetTimer();
+
+	wstring strTimer = to_wstring(currTimer);
+
+	_timerText->text = strTimer.substr(0, strTimer.find('.') + 3);
+
+	if (currTimer <= Options::timerValue / 5)
+		_timerText->textColor = D3DCOLOR_ARGB(255, 255, 0, 0);
+	else
+		_timerText->textColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+}
+
+void UIManager::UpdateScore()
+{
+	auto currScore = GameManager::GetScore();
+	auto targetScore = Options::scoreMin;
+
+	_scoreText->text = L"Score: " + to_wstring(currScore) + L"/" + to_wstring(targetScore);
+
+	if (currScore >= targetScore)
+		_scoreText->textColor = D3DCOLOR_ARGB(255, 0, 255, 0);
+	else
+		_scoreText->textColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+}
+
 // **************************** //
 
 // Start is called before the first frame update
 void UIManager::Start()
 {
 	_listBtn[0]->onClick = RUNNER(Resume);
-	_listBtn[1]->onClick = RUNNER(OnRestart);
-	_listBtn[2]->onClick = RUNNER(OnMenu);
-	_listBtn[3]->onClick = Application::Quit;
-
+	_listBtn[1]->onClick = RUNNER(Restart);
 }
 
 // Update is called once per frame
 void UIManager::Update()
 {
+	auto isPaused = GameManager::IsPaused();
+
+
+	if (Options::showScore)
+		UpdateScore();
+	else
+		_scoreText->SetEnabled(false);
+
+	if (Options::showTimer && !isPaused)
+		ShowTimer();
+	else if (!isPaused)
+		_timerText->SetEnabled(false);
+
 	if (Options::showFps)
 		ShowFPS();
 	else
@@ -92,14 +121,6 @@ void UIManager::Update()
 
 	if (Engine::GetInstance()->window != GetForegroundWindow())
 		Pause();
-
-	if (Input::GetKeyDown(KeyCode::Tab) || Input::GetKeyDown(KeyCode::Escape))
-	{
-		if (isPaused)
-			isPaused = false;
-		else
-			isPaused = true;
-	}
 
 	if (isPaused)
 		Pause();

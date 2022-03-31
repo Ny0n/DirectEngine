@@ -12,7 +12,7 @@
 #include "RailMaker.h"
 #include "RainbowBackground.h"
 #include "Rotate.h"
-#include "Score.h"
+#include "GameManager.h"
 #include "Shoot.h"
 #include "UIManager.h"
 
@@ -25,18 +25,19 @@ void DefaultScene::GenerateContent()
 {
 	// tests
 	GameObject* mainCamera = CreateEmpty();
-	mainCamera->AddComponent(new Camera());
-	auto cam = mainCamera->AddComponent<FPCam>();
-	mainCamera->transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
+	mainCamera->AddComponent<Camera>();
+	auto fpCam = mainCamera->AddComponent<FPCam>();
 	mainCamera->AddComponent<RailMaker>();
 	mainCamera->AddComponent<MoveAlongRails>();
 	mainCamera->AddComponent<Shoot>();
 	mainCamera->AddComponent<AlignedBox>();
+	auto light = mainCamera->AddComponent<PointLight>(D3DCOLOR_RGBA(255, 100, 0, 255), 100);
+	light->offset = DATASUPPLIER( mainCamera->transform->GetUp() * -5 );
 	AddToScene(mainCamera);
 
-	/*GameObject* inputTester = CreateEmpty();
-	inputTester->AddComponent<InputTester>();
-	AddToScene(inputTester);*/
+	// GameObject* inputTester = CreateEmpty();
+	// inputTester->AddComponent<InputTester>();
+	// AddToScene(inputTester);
 
 #pragma region cart
 	GameObject* cart = CreateEmpty();
@@ -47,7 +48,7 @@ void DefaultScene::GenerateContent()
 
 	AddToScene(cart);
 
-	cam->SetCart(cart);
+	fpCam->SetCart(cart);
 #pragma endregion cart
 
 #pragma region particle
@@ -89,17 +90,21 @@ void DefaultScene::GenerateContent()
 #pragma endregion fpsCounter
 
 #pragma region Score
+	int Ypadding = 75;
+
+	//FPS Counter is not included in HUD
+	int hudTextSize = 50;
+	auto hudColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+
 	auto scoreGO = CreateEmpty();
 
 	auto scoreText = scoreGO->AddComponent<Textbox>();
-	scoreText->textColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+	scoreText->textColor = hudColor;
 	scoreText->text = L"Score: 0";
 	scoreText->size = D3DXVECTOR2(300, 50);
-	scoreText->fontHeight = 50;
-	scoreText->position = D3DXVECTOR2(SCREEN_WIDTH * .5f - scoreText->size.x * .5f, 75);
-
-	scoreGO->AddComponent<Score>(scoreText);
-
+	scoreText->fontHeight = hudTextSize;
+	scoreText->position = D3DXVECTOR2(SCREEN_WIDTH * .5f - scoreText->size.x * .5f, Ypadding);
+	
 	AddToScene(scoreGO);
 #pragma endregion Score
 
@@ -160,14 +165,35 @@ void DefaultScene::GenerateContent()
 	AddToScene(pauseCanvas);
 #pragma endregion pause
 
-	// UI Manager
+#pragma region Timer
+	auto timerGO = CreateEmpty();
+
+	auto timerText = timerGO->AddComponent<Textbox>();
+	timerText->text = L"000.00";
+	timerText->fontHeight = hudTextSize;
+	timerText->textColor = hudColor;
+	timerText->position.x = SCREEN_WIDTH * .5f - timerText->size.x * .5f;
+	timerText->position.y = SCREEN_HEIGHT - timerText->size.y - Ypadding;
+
+	AddToScene(timerGO);
+#pragma endregion Timer
+
+#pragma region UIManager
 	auto UIManagerGO = CreateEmpty();
 
-	const auto managerScript = new UIManager(pauseCanvas, crossGO, cam, listBtn, fpsText);
+	const auto managerScript = new UIManager(pauseCanvas, crossGO, fpCam, fpsText, timerText, scoreText, listBtn);
 	UIManagerGO->AddComponent(managerScript);
 
 	AddToScene(UIManagerGO);
+#pragma endregion UIManager
 
-	
+#pragma region GameManager
+	auto gameManagerGO = CreateEmpty();
+
+	const auto gameManagerScript = new GameManager(listBtn);
+	gameManagerGO->AddComponent(gameManagerScript);
+
+	AddToScene(gameManagerGO);
+#pragma endregion GameManager
 
 }

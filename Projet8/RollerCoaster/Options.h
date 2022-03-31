@@ -11,10 +11,13 @@ public:
 	static bool rotatingCrosshair;
 	static bool pulsingCrosshair;
 	static bool toggleAudio;
+	static bool showScore;
 
 	static wstring pseudo;
 
 	static float timerValue;
 	static float playerSpeed;
+
+	static int scoreMin;
 };
 

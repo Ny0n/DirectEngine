@@ -13,12 +13,10 @@ CrosshairScript::~CrosshairScript()
 
 void CrosshairScript::OnEnable()
 {
-	Cursor::SetVisible(false);
 }
 
 void CrosshairScript::OnDisable()
 {
-	Cursor::SetVisible(true);
 }
 
 // **************************** //

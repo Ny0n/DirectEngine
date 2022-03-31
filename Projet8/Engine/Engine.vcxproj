@@ -192,6 +192,7 @@
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PhysicsEngine.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="Profiler.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Textbox.h" />
@@ -232,6 +233,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="PhysicsEngine.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Textbox.cpp" />

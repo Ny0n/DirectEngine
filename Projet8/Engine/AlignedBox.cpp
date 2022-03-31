@@ -2,13 +2,12 @@
 
 void AlignedBox::EngineStart()
 {
-	colliders = {};
 	transform->SetScale(D3DXVECTOR3(50.0f, 50.0f, 50.0f));
 }
 
 list<Collider*> AlignedBox::AreIn(const list<GameObject*> go)
 {
-	colliders.clear();
+	list<Collider*> colliders = {};
 	const D3DXVECTOR3 pos = transform->GetPosition();
 	const D3DXVECTOR3 scale = transform->GetScale();
 	for(GameObject* g : go)
