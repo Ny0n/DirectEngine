@@ -29,7 +29,7 @@ MainMenuScript::~MainMenuScript()
 
 void MainMenuScript::OnPlay()
 {
-	SceneManager::LoadScene("DefaultScene");
+	SceneManager::LoadScene("GameScene");
 	Cursor::SetVisible(false);
 }
 

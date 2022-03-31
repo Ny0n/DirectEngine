@@ -44,7 +44,7 @@
     <ClInclude Include="App.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="DefaultScene.h">
+    <ClInclude Include="GameScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="MenuScene.h">
@@ -100,7 +100,7 @@
     <ClCompile Include="App.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="DefaultScene.cpp">
+    <ClCompile Include="GameScene.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">

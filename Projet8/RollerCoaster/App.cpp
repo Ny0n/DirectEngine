@@ -1,6 +1,6 @@
 #include "App.h"
 
-#include "DefaultScene.h"
+#include "GameScene.h"
 #include "MenuScene.h"
 
 // this is the main message handler for the program
@@ -68,7 +68,7 @@ void App::Run()
 {
     // first we prep the scenes that will be used in the app
     SceneManager::AddToBuild(new MenuScene());
-    SceneManager::AddToBuild(new DefaultScene());
+    SceneManager::AddToBuild(new GameScene());
 	
     // and then we run the game
     Engine::GetInstance()->Run(_window);

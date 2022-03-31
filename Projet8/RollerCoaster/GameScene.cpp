@@ -1,4 +1,4 @@
-#include "DefaultScene.h"
+#include "GameScene.h"
 
 #include "CrosshairScript.h"
 #include "FPCam.h"
@@ -9,12 +9,12 @@
 #include "Shoot.h"
 #include "UIManager.h"
 
-string DefaultScene::GetName()
+string GameScene::GetName()
 {
-	return "DefaultScene";
+	return "GameScene";
 }
 
-void DefaultScene::GenerateContent()
+void GameScene::GenerateContent()
 {
 #pragma region Player
 	// PlayerComponent
