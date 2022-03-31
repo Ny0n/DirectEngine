@@ -10,7 +10,7 @@ class MainMenuScript : public MonoBehaviour
 	void Update() override;
 
 public:
-	explicit MainMenuScript(GameObject* menuGO, GameObject* optionsGO, GameObject* creditsGO, Button* listBtn[4], InputField* listInputField[4], CheckBox* listCheckBox[6], Textbox* timerIPText, Textbox* scoreIPText);
+	explicit MainMenuScript(GameObject* menuGO, GameObject* optionsGO, GameObject* creditsGO, Button* listBtn[4], InputField* listInputField[4], CheckBox* listCheckBox[6], Textbox* timerIPText, Textbox* scoreIPText, GameObject* easterEggGO);
 	~MainMenuScript() override;
 
 private:
@@ -19,6 +19,9 @@ private:
 	void OnCredits();
 	void OnQuit();
 	void BackToMenu();
+	void ToggleEasterEgg();
+	void StartEasterEgg();
+	void StopEasterEgg();
 	void ToggleAudio();
 	void DisableTimer();
 	void DisableScore();
@@ -27,6 +30,7 @@ private:
 	GameObject* _menuGO;
 	GameObject* _optionsGO;
 	GameObject* _creditsGO;
+	GameObject* _easterEggGO;
 
 	Button* _listBtn[4];
 	InputField* _listInputField[4];
@@ -34,5 +38,7 @@ private:
 
 	Textbox* _timerIPText;
 	Textbox* _scoreIPText;
+
+	bool _playingEasterEgg = false;
 };
 

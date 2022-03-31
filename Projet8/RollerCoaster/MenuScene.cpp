@@ -256,7 +256,7 @@ void MenuScene::GenerateContent()
 	auto creditsPanelPosition = D3DXVECTOR2((SCREEN_WIDTH - creditsPanel->width) * .5f, (SCREEN_HEIGHT - creditsPanel->height) * .5f);
 	creditsPanel->position = creditsPanelPosition;
 	creditsPanel->imageColor = D3DCOLOR_ARGB(120, 153, 153, 153);
-
+	
 	auto creditsText = creditsCanvas->AddComponent<Textbox>();
 	creditsText->text = L"CREDITS";
 	creditsText->textColor = D3DCOLOR_ARGB(120, 255, 255, 255);
@@ -304,6 +304,24 @@ void MenuScene::GenerateContent()
 	killianText->position.x = SCREEN_WIDTH * .5f - killianText->size.x * .5f;
 	killianText->position.y = franText->position.y + killianText->size.y + 30;
 
+	//easter egg hidden in credits menu
+	auto easterEgg = CreateEmpty();
+
+	auto easterEggBtn = easterEgg->AddComponent<Button>();
+	easterEggBtn->text = L"hi";
+	easterEggBtn->drawBorder = false;
+	easterEggBtn->size = { 50,30 };
+	easterEggBtn->normalBoxColor = D3DCOLOR_ARGB(120, 153, 153, 153);
+	easterEggBtn->position = D3DXVECTOR2(SCREEN_WIDTH - easterEggBtn->size.x, 0);
+
+	auto easterEggImg = easterEgg->AddComponent<Image>();
+	easterEggImg->filePath = L"Image\\easterEgg.png";
+	easterEggImg->width = SCREEN_WIDTH;
+	easterEggImg->height = SCREEN_HEIGHT;
+	easterEggImg->SetEnabled(false);
+
+	AddToScene(easterEgg);
+
 	auto creditsBtn = creditsCanvas->AddComponent<Button>();
 	creditsBtn->text = L"BACK TO MENU";
 	creditsBtn->position.x = creditsPanelPosition.x + creditsPanel->width - creditsBtn->size.x - padding;
@@ -313,7 +331,7 @@ void MenuScene::GenerateContent()
 #pragma endregion Credits Canvas
 
 	auto MenuManager = CreateEmpty();
-	const auto script = new MainMenuScript(menuCanvas, optionsCanvas, creditsCanvas, menuBtnList, inputOptionsList, checkboxOptionsList, timerValue, scoreMinValue);
+	const auto script = new MainMenuScript(menuCanvas, optionsCanvas, creditsCanvas, menuBtnList, inputOptionsList, checkboxOptionsList, timerValue, scoreMinValue, easterEgg);
 	MenuManager->AddComponent(script);
 	AddToScene(MenuManager);
 

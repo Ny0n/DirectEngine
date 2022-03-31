@@ -3,8 +3,8 @@
 #include "Options.h"
 
 
-MainMenuScript::MainMenuScript(GameObject* menuGO, GameObject* optionsGO, GameObject* creditsGO,Button* listBtn[4], InputField* listInputField[3], CheckBox* listCheckBox[5], Textbox* timerIPText, Textbox* scoreIPText)
-: _menuGO(menuGO), _optionsGO(optionsGO), _creditsGO(creditsGO), _timerIPText(timerIPText), _scoreIPText(scoreIPText)
+MainMenuScript::MainMenuScript(GameObject* menuGO, GameObject* optionsGO, GameObject* creditsGO,Button* listBtn[4], InputField* listInputField[3], CheckBox* listCheckBox[5], Textbox* timerIPText, Textbox* scoreIPText, GameObject* easterEggGO)
+: _menuGO(menuGO), _optionsGO(optionsGO), _creditsGO(creditsGO), _timerIPText(timerIPText), _scoreIPText(scoreIPText), _easterEggGO(easterEggGO)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -48,6 +48,7 @@ void MainMenuScript::OnCredits()
 
 	auto btn = _creditsGO->GetComponent<Button>();
 	btn->onClick = RUNNER(BackToMenu);
+	_playingEasterEgg = false;
 }
 
 void MainMenuScript::OnQuit()
@@ -60,6 +61,30 @@ void MainMenuScript::BackToMenu()
 	_menuGO->SetEnabled(true);
 	_optionsGO->SetEnabled(false);
 	_creditsGO->SetEnabled(false);
+}
+
+void MainMenuScript::ToggleEasterEgg()
+{
+	if (_playingEasterEgg)
+	{
+		_playingEasterEgg = false;
+		_easterEggGO->GetComponent<Image>()->SetEnabled(false);
+	}
+	else
+	{
+		_playingEasterEgg = true;
+		_easterEggGO->GetComponent<Image>()->SetEnabled(true);
+	}
+}
+
+void MainMenuScript::StartEasterEgg()
+{
+	//TODO play music
+}
+
+void MainMenuScript::StopEasterEgg()
+{
+	//TODO stop music
 }
 
 void MainMenuScript::ToggleAudio()
@@ -130,9 +155,13 @@ void MainMenuScript::Start()
 	_optionsGO->SetEnabled(true);
 	_optionsGO->SetEnabled(false);
 
-	//if the gameobject is never set to true it wont be destroyed
 	_creditsGO->SetEnabled(true);
 	_creditsGO->SetEnabled(false);
+
+	_easterEggGO->SetEnabled(true);
+	_easterEggGO->SetEnabled(false);
+
+	_easterEggGO->GetComponent<Button>()->onClick = RUNNER(ToggleEasterEgg);
 
 	_listInputField[0]->SetText(Options::pseudo);
 	_listInputField[1]->SetText(to_wstring(static_cast<int>(Options::playerSpeed)));
@@ -160,5 +189,20 @@ void MainMenuScript::Update()
 	Options::rotatingCrosshair = _listCheckBox[3]->IsChecked();
 	Options::pulsingCrosshair = _listCheckBox[4]->IsChecked();
 	Options::showScore = _listCheckBox[5]->IsChecked();
+
+	if (_creditsGO->IsEnabled())
+	{
+		_easterEggGO->SetEnabled(true);
+	}
+	else
+	{
+		_easterEggGO->SetEnabled(false);
+		_easterEggGO->GetComponent<Image>()->SetEnabled(false);
+	}
+
+	if (_playingEasterEgg)
+		StartEasterEgg();
+	else
+		StopEasterEgg();
 }
 

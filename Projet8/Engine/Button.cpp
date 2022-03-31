@@ -113,11 +113,11 @@ void Button::Render()
 		HR(line->Draw(linesList, 8, borderColor))
 
 		HR(line->End())
-
-			const int result = font->DrawText(NULL, text.c_str(), text.length(), &textRect, textFormat, textColor);
-		if (result <= 0)
-			Utils::PrintError(__FILE__, __LINE__, L"DrawText() failed.");
 	}
+
+	const int res = font->DrawText(NULL, text.c_str(), text.length(), &textRect, textFormat, textColor);
+	if (res <= 0)
+		Utils::PrintError(__FILE__, __LINE__, L"DrawText() failed.");
 }
 
 void Button::OnHover()
