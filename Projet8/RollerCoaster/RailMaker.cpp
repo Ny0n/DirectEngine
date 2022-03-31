@@ -21,7 +21,7 @@ void RailMaker::Update()
 		}
 		else if (random <= 3.0f && _currentStepRight == 0)
 		{
-			_angleRight = 45;
+			_angleRight = -45;
 			_currentStepRight = _step;
 		}
 		
