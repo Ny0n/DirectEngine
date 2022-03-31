@@ -13,10 +13,6 @@ void PhysicsEngine::Update()
 
 void PhysicsEngine::CheckCollisions()
 {
-
-    /*if (!SceneManager::IsEmpty())
-        return;*/
-
     list<AlignedBox*> alignedBoxes = {};
     list<GameObject*> gameObjects = {};
     list<Collider*> colliders = {};

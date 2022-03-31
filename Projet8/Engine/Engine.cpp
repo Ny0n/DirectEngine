@@ -111,8 +111,6 @@ void Engine::Run(HWND window)
 
     while (!Application::quit)
     {
-        // _profiler->loopCount++;
-
         // Check to see if any messages are waiting in the queue
         while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
@@ -151,15 +149,15 @@ void Engine::CheckForNewFrame()
 
     static float frameElapsed;
 
-    if (_profiler->lastFrameTime < 0.0f) // THE first frame
+    if (_profiler->_lastFrameTime < 0.0f) // THE first frame
     {
-        _profiler->lastFrameTime = 0.0f;
+        _profiler->_lastFrameTime = 0.0f;
         _profiler->InitSystemTime();
         NewFrame();
         return;
     }
 
-    frameElapsed = Time::runTime() - _profiler->lastFrameTime;
+    frameElapsed = Time::runTime() - _profiler->_lastFrameTime;
     if (frameElapsed >= Application::targetFrameRate) // new frame
         NewFrame();
 }
@@ -170,8 +168,8 @@ void Engine::NewFrame()
 
     const float time = Time::runTime();
 
-    const float frameRate = time - _profiler->lastFrameTime; // => elapsed
-    _profiler->lastFrameTime = time;
+    const float frameRate = time - _profiler->_lastFrameTime; // => elapsed
+    _profiler->_lastFrameTime = time;
 
     Time::_frameCount++;
     Time::_time = time;
@@ -180,7 +178,7 @@ void Engine::NewFrame()
 
     // then we run the frame
 
-    _profiler->TimedRunner(_profiler->frameTime, RUNNER(RunFrame));
+    _profiler->TimedRunner(_profiler->_frameTime, RUNNER(RunFrame));
 
 #if PROFILER_DISPLAY_ENABLED
     CheckForProfilerDisplay();
@@ -195,14 +193,14 @@ void Engine::CheckForProfilerDisplay()
 
     static float profilerElapsed;
 
-    if (_profiler->lastDisplayTime < 0.0f) // the first frame
+    if (_profiler->_lastDisplayTime < 0.0f) // the first frame
     {
         _profiler->DisplayData();
         return;
     }
 
-    profilerElapsed = Time::time - _profiler->lastDisplayTime;
-    if (profilerElapsed >= _profiler->displayCooldown) // new display
+    profilerElapsed = Time::time - _profiler->_lastDisplayTime;
+    if (profilerElapsed >= _profiler->_displayCooldown) // new display
         _profiler->DisplayData();
 }
 
@@ -212,21 +210,21 @@ void Engine::RunFrame()
 {
   
     Execution::CheckForSceneUpdate();
-    _profiler->TimedRunner(_profiler->engineStartTime, Execution::EngineStart);
-    _profiler->TimedRunner(_profiler->startTime, Execution::Start);
+    _profiler->TimedRunner(_profiler->_engineStartTime, Execution::EngineStart);
+    _profiler->TimedRunner(_profiler->_startTime, Execution::Start);
     CheckForNewFixedUpdate();
-    _profiler->TimedRunner(_profiler->inputTime, Execution::Input);
-    _profiler->TimedRunner(_profiler->updateTime, Execution::Update);
-    _profiler->TimedRunner(_profiler->lateUpdateTime, Execution::LateUpdate);
+    _profiler->TimedRunner(_profiler->_inputTime, Execution::Input);
+    _profiler->TimedRunner(_profiler->_updateTime, Execution::Update);
+    _profiler->TimedRunner(_profiler->_lateUpdateTime, Execution::LateUpdate);
 
     d3ddev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
     d3ddev->BeginScene();    // begins the 3D scene
 
-    _profiler->TimedRunner(_profiler->engineUpdateTime, Execution::EngineUpdate);
+    _profiler->TimedRunner(_profiler->_engineUpdateTime, Execution::EngineUpdate);
 
     d3ddev->EndScene();    // ends the 3D scene
 
-    _profiler->TimedRunner(_profiler->presentTime, [=] { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
+    _profiler->TimedRunner(_profiler->_presentTime, [=] { d3ddev->Present(NULL, NULL, NULL, NULL); }); // displays the created frame
 }
 
 void Engine::CheckForNewFixedUpdate()
@@ -239,13 +237,13 @@ void Engine::CheckForNewFixedUpdate()
     Time::_fixedDeltaTime = timestep / abs(Time::timeScale);
     Time::_fixedUnscaledDeltaTime = timestep;
 
-    if (_profiler->lastFixedTime < 0.0f) // the first frame
+    if (_profiler->_lastFixedTime < 0.0f) // the first frame
     {
         NewFixedUpdate();
         return;
     }
 
-    fixedElapsed = Time::time - _profiler->lastFixedTime;
+    fixedElapsed = Time::time - _profiler->_lastFixedTime;
     if (fixedElapsed >= Time::fixedDeltaTime)
     {
         static float maxTimestepRemainder = 0.0f;
@@ -270,13 +268,13 @@ void Engine::NewFixedUpdate()
 
     const float time = Time::time;
 
-    _profiler->lastFixedTime = time;
+    _profiler->_lastFixedTime = time;
 
     Time::_fixedUpdateCount++;
     Time::_fixedTime = time;
 
     // then we run the fixed update
 
-    _profiler->TimedRunner(_profiler->fixedUpdateTime, Execution::FixedUpdate); // FixedUpdate
-    _profiler->TimedRunner(_profiler->physicsTime, Execution::PhysicsUpdate); // Physics Engine update
+    _profiler->TimedRunner(_profiler->_fixedUpdateTime, Execution::FixedUpdate); // FixedUpdate
+    _profiler->TimedRunner(_profiler->_physicsTime, Execution::PhysicsUpdate); // Physics Engine update
 }
