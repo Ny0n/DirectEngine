@@ -1,22 +1,22 @@
 ﻿#include "pch.h"
 
-Scene::Scene(IScene* scene) : name(scene->GetName())
+Scene::Scene(IScene* scene) : _name(scene->GetName())
 {
 	Application::_generatingScene = true;
-	gameObjects = scene->GetContent();
+	_gameObjects = scene->GetContent();
 	Application::_generatingScene = false;
 }
 
 Scene::~Scene()
 {
-	list<GameObject*> goCopy(gameObjects); // safeguard
+	list<GameObject*> goCopy(_gameObjects); // safeguard
 
 	for (auto go : goCopy) // we instantly destroy EVERYTHING
 		Object::TryToDelete(go);
 
 	goCopy.clear();
 
-	gameObjects.clear();
+	_gameObjects.clear();
 
 	// when deleting a scene, any new demand for destruction is irrelevant
 	Execution::markedForDestruction.clear();
@@ -26,14 +26,14 @@ Scene::~Scene()
 
 bool Scene::IsEmpty() const
 {
-	return gameObjects.empty();
+	return _gameObjects.empty();
 }
 
 // **************************** //
 
 bool Scene::IsInScene(GameObject* go)
 {
-	return any_of(gameObjects.begin(), gameObjects.end(), [&](GameObject* sceneGo)
+	return any_of(_gameObjects.begin(), _gameObjects.end(), [&](GameObject* sceneGo)
 	{
 		return sceneGo == go;
 	});
@@ -51,7 +51,7 @@ bool Scene::AddToScene(GameObject* go)
 {
 	if (!IsInScene(go))
 	{
-		gameObjects.push_back(go);
+		_gameObjects.push_back(go);
 		return true;
 	}
 	return false;
@@ -62,6 +62,6 @@ GameObject* Scene::RemoveFromScene(GameObject* go)
 	if (!IsInScene(go))
 		return nullptr;
 
-	gameObjects.remove(go);
+	_gameObjects.remove(go);
 	return go;
 }

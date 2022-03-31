@@ -17,6 +17,6 @@ public:
 
 private:
 	friend class GameObject;
-	static const list<string> unremovableEngineComponents;
+	static const list<string> _unremovableEngineComponents;
 
 };

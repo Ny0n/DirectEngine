@@ -13,9 +13,9 @@ public:
 
 private:
     ID3DXMesh* _pmesh;
-    D3DMATERIAL9* g_pMeshMaterials = NULL; // Materials for our mesh
-    LPDIRECT3DTEXTURE9* g_pMeshTextures = NULL; // Textures for our mesh
+    D3DMATERIAL9* _pMeshMaterials = NULL; // Materials for our mesh
+    LPDIRECT3DTEXTURE9* _pMeshTextures = NULL; // Textures for our mesh
     LPCWSTR _path;
-    DWORD  g_dwNumMaterials = 0L;
+    DWORD  _dwNumMaterials = 0L;
 
 };

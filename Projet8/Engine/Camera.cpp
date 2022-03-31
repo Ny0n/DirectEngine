@@ -16,7 +16,7 @@ void Camera::EngineUpdate()
     auto ratio = (FLOAT)SCREEN_WIDTH / (FLOAT)SCREEN_HEIGHT; // aspect ratio
 
     // **************************** //
-    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, skyColor, 1.0f, 0); // background color
+    d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, _skyColor, 1.0f, 0); // background color
 
     d3ddev->SetFVF(CUSTOMFVF); // for the lightning
 
@@ -25,21 +25,21 @@ void Camera::EngineUpdate()
     d3ddev->SetTransform(D3DTS_VIEW, &matView); // set the view transform to matView
 
     D3DXMATRIX matProjection; // the projection transform matrix
-    D3DXMatrixPerspectiveFovLH(&matProjection, fov, ratio, nvp, fvp);
+    D3DXMatrixPerspectiveFovLH(&matProjection, fov, ratio, _nvp, _fvp);
     d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection); // set the projection
 }
 
 void Camera::ChangeFVP(float newFVP)
 {
-    fvp = newFVP;
+    _fvp = newFVP;
 }
 
 void Camera::ChangeNVP(float newNVP)
 {
-    nvp = newNVP;
+    _nvp = newNVP;
 }
 
 void Camera::ChangeSkyColor(D3DCOLOR skyColor)
 {
-    this->skyColor = skyColor;
+    this->_skyColor = skyColor;
 }

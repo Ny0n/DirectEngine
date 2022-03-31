@@ -35,19 +35,19 @@ public:
 	bool IsPaused();
 
 private:
-	HANDLE hFile;
+	HANDLE _hFile;
 
 	// sound data
-	WAVEFORMATEXTENSIBLE wfx;
-	XAUDIO2_BUFFER buffer;
-	BYTE* pDataBuffer;
+	WAVEFORMATEXTENSIBLE _wfx;
+	XAUDIO2_BUFFER _buffer;
+	BYTE* _pDataBuffer;
 
 	// sound player
-	IXAudio2SourceVoice* pSourceVoice;
+	IXAudio2SourceVoice* _pSourceVoice;
 
 	// custom voice callback
 	friend class AudioManager::AudioSourceCallbacks;
-	AudioManager::AudioSourceCallbacks* pSourceCallback;
+	AudioManager::AudioSourceCallbacks* _pSourceCallback;
 
 	LPCWSTR _fileName = L"";
 	bool _playOnStart = false;
@@ -68,7 +68,6 @@ private:
 	bool _wasPlaying = false;
 	void UpdateLooping();
 
-	float MAX_VOLUME = 20.0f;
-	float MIN_VOLUME = 0.0f;
-
+	float _maxValue = 20.0f;
+	float _minValue = 0.0f;
 };

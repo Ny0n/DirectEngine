@@ -13,11 +13,11 @@ public:
 public:
     bool IsColliding(Collider* other);
 
-    void AddCollideWith(Collider* collide) { collidersWith.push_back(collide); }
+    void AddCollideWith(Collider* collide) { _collidersWith.push_back(collide); }
     void RemoveCollideWith(Collider* collide);
-    list<Collider*> GetCollidersWith() { return collidersWith; }
+    list<Collider*> GetCollidersWith() { return _collidersWith; }
 
 
 private:
-    list<Collider*> collidersWith;
+    list<Collider*> _collidersWith;
 };

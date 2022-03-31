@@ -25,8 +25,6 @@ void PointLight::EngineStart()
     _light.Type = D3DLIGHT_POINT;
 
     _light.Ambient = _color;
-    // _light.Diffuse = (D3DXCOLOR)D3DCOLOR_RGBA(255, 255, 0, 255);
-    // _light.Specular = (D3DXCOLOR)D3DCOLOR_RGBA(150, 150, 150, 255);
 
     _light.Range = _range;    // light.Position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 

@@ -9,17 +9,17 @@ MeshRenderer::~MeshRenderer()
     if(_pmesh != nullptr)
 		_pmesh->Release();
 
-    if (g_pMeshMaterials != nullptr)
-        delete[] g_pMeshMaterials;
+    if (_pMeshMaterials != nullptr)
+        delete[] _pMeshMaterials;
 
-    if (g_pMeshTextures)
+    if (_pMeshTextures)
     {
-        for (DWORD i = 0; i < g_dwNumMaterials; i++)
+        for (DWORD i = 0; i < _dwNumMaterials; i++)
         {
-            if (g_pMeshTextures[i])
-                g_pMeshTextures[i]->Release();
+            if (_pMeshTextures[i])
+                _pMeshTextures[i]->Release();
         }
-        delete[] g_pMeshTextures;
+        delete[] _pMeshTextures;
     }
 }
 
@@ -27,28 +27,28 @@ void MeshRenderer::EngineStart()
 {
     // we load the mesh
     LPD3DXBUFFER pMtrlBuffer = nullptr;
-    if (FAILED(D3DXLoadMeshFromX(_path, D3DXMESH_SYSTEMMEM, d3ddev, NULL, &pMtrlBuffer, NULL, &g_dwNumMaterials, &_pmesh))) {
+    if (FAILED(D3DXLoadMeshFromX(_path, D3DXMESH_SYSTEMMEM, d3ddev, NULL, &pMtrlBuffer, NULL, &_dwNumMaterials, &_pmesh))) {
         MessageBox(0, L"Failed to load mesh from disk", 0, 0);
         return;
     }
 
     D3DXMATERIAL* d3dxMaterials = (D3DXMATERIAL*) pMtrlBuffer->GetBufferPointer();
-    g_pMeshMaterials = new D3DMATERIAL9[g_dwNumMaterials];
-    if (g_pMeshMaterials == NULL)
+    _pMeshMaterials = new D3DMATERIAL9[_dwNumMaterials];
+    if (_pMeshMaterials == NULL)
         return;
-    g_pMeshTextures = new LPDIRECT3DTEXTURE9[g_dwNumMaterials];
-    if (g_pMeshTextures == NULL)
+    _pMeshTextures = new LPDIRECT3DTEXTURE9[_dwNumMaterials];
+    if (_pMeshTextures == NULL)
         return;
 
-    for (DWORD i = 0; i < g_dwNumMaterials; i++)
+    for (DWORD i = 0; i < _dwNumMaterials; i++)
     {
         // Copy the material
-        g_pMeshMaterials[i] = d3dxMaterials[i].MatD3D;
+        _pMeshMaterials[i] = d3dxMaterials[i].MatD3D;
 
         // Set the ambient color for the material (D3DX does not do this)
-        g_pMeshMaterials[i].Ambient = g_pMeshMaterials[i].Diffuse;
+        _pMeshMaterials[i].Ambient = _pMeshMaterials[i].Diffuse;
 
-        g_pMeshTextures[i] = NULL;
+        _pMeshTextures[i] = NULL;
         if (d3dxMaterials[i].pTextureFilename != NULL &&
             lstrlenA(d3dxMaterials[i].pTextureFilename) > 0)
         {
@@ -59,7 +59,7 @@ void MeshRenderer::EngineStart()
             // Create the texture
             if (FAILED(D3DXCreateTextureFromFileA(d3ddev,
                 pathTexture.c_str(),
-                &g_pMeshTextures[i])))
+                &_pMeshTextures[i])))
             {
                 MessageBox(0, L"Failed to load texture from disk", 0, 0);
             }
@@ -79,11 +79,11 @@ void MeshRenderer::EngineUpdate()
     D3DXMATRIX finalMat = transform->GetMatrix();
     d3ddev->SetTransform(D3DTS_WORLD, &finalMat);
     // Meshes are divided into subsets, one for each material. Render them in a loop
-    for (DWORD i = 0; i < g_dwNumMaterials; i++)
+    for (DWORD i = 0; i < _dwNumMaterials; i++)
     {
         // Set the material and texture for this subset
-        d3ddev->SetMaterial(&g_pMeshMaterials[i]);
-        d3ddev->SetTexture(0, g_pMeshTextures[i]);
+        d3ddev->SetMaterial(&_pMeshMaterials[i]);
+        d3ddev->SetTexture(0, _pMeshTextures[i]);
 
         // Draw the mesh subset
         _pmesh->DrawSubset(i);

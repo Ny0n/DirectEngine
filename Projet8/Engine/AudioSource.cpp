@@ -4,8 +4,8 @@
 
 AudioSource::AudioSource()
 {
-	pSourceCallback = new AudioManager::AudioSourceCallbacks();
-	pSourceCallback->source = this;
+	_pSourceCallback = new AudioManager::AudioSourceCallbacks();
+	_pSourceCallback->source = this;
 }
 
 AudioSource::AudioSource(LPCWSTR defaultFileName, bool playOnStart, float defaultVolume, bool isLooping) : AudioSource()
@@ -18,10 +18,10 @@ AudioSource::AudioSource(LPCWSTR defaultFileName, bool playOnStart, float defaul
 
 AudioSource::~AudioSource()
 {
-	delete pSourceCallback;
-	delete[] pDataBuffer;
-	if (hFile != nullptr)
-		CloseHandle(hFile);
+	delete _pSourceCallback;
+	delete[] _pDataBuffer;
+	if (_hFile != nullptr)
+		CloseHandle(_hFile);
 }
 
 // **************************** //
@@ -55,10 +55,10 @@ void AudioSource::OnDisable()
 
 void AudioSource::OnDestroy()
 {
-	if (pSourceVoice != nullptr)
+	if (_pSourceVoice != nullptr)
 	{
-		pSourceVoice->DestroyVoice();
-		pSourceVoice = nullptr;
+		_pSourceVoice->DestroyVoice();
+		_pSourceVoice = nullptr;
 	}	
 }
 
@@ -72,7 +72,7 @@ if (!_overrideEnabledCheck && !IsEnabled())\
 }
 
 #define CHECKSOURCE(x)\
-if (pSourceVoice == nullptr)\
+if (_pSourceVoice == nullptr)\
 {\
 	Utils::Println("You must set a sound to the Audio Source!");\
 	return x;\
@@ -88,19 +88,19 @@ void AudioSource::SetSound(LPCWSTR fileName)
 {
 	CHECKENABLED()
 
-	if (pSourceVoice != nullptr)
+	if (_pSourceVoice != nullptr)
 		Stop();
 
 	// Sound data
 
 	// ** Init ** //
 
-	wfx = { 0 };
-	buffer = { 0 };
+	_wfx = { 0 };
+	_buffer = { 0 };
 
 	// ** Open the audio file ** //
 
-	hFile = CreateFile(
+	_hFile = CreateFile(
 		fileName,
 		GENERIC_READ,
 		FILE_SHARE_READ,
@@ -109,14 +109,14 @@ void AudioSource::SetSound(LPCWSTR fileName)
 		0,
 		NULL);
 
-	if (INVALID_HANDLE_VALUE == hFile)
+	if (INVALID_HANDLE_VALUE == _hFile)
 	{
 		Utils::PrintError(__FILE__, __LINE__, L"INVALID_HANDLE_VALUE audio error");
 		Utils::Println(HRESULT_FROM_WIN32(GetLastError()));
 		return;
 	}
 
-	if (INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0, NULL, FILE_BEGIN))
+	if (INVALID_SET_FILE_POINTER == SetFilePointer(_hFile, 0, NULL, FILE_BEGIN))
 	{
 		Utils::PrintError(__FILE__, __LINE__, L"INVALID_SET_FILE_POINTER audio error");
 		Utils::Println(HRESULT_FROM_WIN32(GetLastError()));
@@ -129,9 +129,9 @@ void AudioSource::SetSound(LPCWSTR fileName)
 	DWORD dwChunkPosition;
 
 	//check the file type, should be fourccWAVE or 'XWMA'
-	AudioManager::FindChunk(hFile, fourccRIFF, dwChunkSize, dwChunkPosition);
+	AudioManager::FindChunk(_hFile, fourccRIFF, dwChunkSize, dwChunkPosition);
 	DWORD filetype;
-	AudioManager::ReadChunkData(hFile, &filetype, sizeof(DWORD), dwChunkPosition);
+	AudioManager::ReadChunkData(_hFile, &filetype, sizeof(DWORD), dwChunkPosition);
 
 	if (filetype != fourccWAVE)
 	{
@@ -141,23 +141,23 @@ void AudioSource::SetSound(LPCWSTR fileName)
 
 	// ** Locate the "fmt" segment ** //
 
-	AudioManager::FindChunk(hFile, fourccFMT, dwChunkSize, dwChunkPosition);
-	AudioManager::ReadChunkData(hFile, &wfx, dwChunkSize, dwChunkPosition);
+	AudioManager::FindChunk(_hFile, fourccFMT, dwChunkSize, dwChunkPosition);
+	AudioManager::ReadChunkData(_hFile, &_wfx, dwChunkSize, dwChunkPosition);
 
 	// ** Fill out the audio data buffer with the contents of the fourccDATA chunk ** //
 
-	AudioManager::FindChunk(hFile, fourccDATA, dwChunkSize, dwChunkPosition);
+	AudioManager::FindChunk(_hFile, fourccDATA, dwChunkSize, dwChunkPosition);
 	
-	delete[] pDataBuffer;
-	pDataBuffer = new BYTE[dwChunkSize];
+	delete[] _pDataBuffer;
+	_pDataBuffer = new BYTE[dwChunkSize];
 
-	AudioManager::ReadChunkData(hFile, pDataBuffer, dwChunkSize, dwChunkPosition);
+	AudioManager::ReadChunkData(_hFile, _pDataBuffer, dwChunkSize, dwChunkPosition);
 
 	// ** Remplissage de la  _ mémoire tampon XAUDIO2 ** //
 
-	buffer.AudioBytes = dwChunkSize;  //size of the audio buffer in bytes
-	buffer.pAudioData = pDataBuffer;  //buffer containing audio data
-	buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
+	_buffer.AudioBytes = dwChunkSize;  //size of the audio buffer in bytes
+	_buffer.pAudioData = _pDataBuffer;  //buffer containing audio data
+	_buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
 	UpdateLooping();
 
 	// Sound Player
@@ -165,7 +165,7 @@ void AudioSource::SetSound(LPCWSTR fileName)
 	_fileName = fileName;
 	try
 	{
-		HRSOUND(AudioManager::pXAudio2->CreateSourceVoice(&pSourceVoice, reinterpret_cast<WAVEFORMATEX*>(&wfx), 0, XAUDIO2_DEFAULT_FREQ_RATIO, pSourceCallback)); // WARNING: Crashes if no output device is set on the system!
+		HRSOUND(AudioManager::pXAudio2->CreateSourceVoice(&_pSourceVoice, reinterpret_cast<WAVEFORMATEX*>(&_wfx), 0, XAUDIO2_DEFAULT_FREQ_RATIO, _pSourceCallback)); // WARNING: Crashes if no output device is set on the system!
 		SetVolume(_volume);
 	}
 	catch(...)
@@ -217,7 +217,7 @@ void AudioSource::Play()
 	HRSOUND(Flush());
 	HRSOUND(Submit());
 
-	HRSOUND(pSourceVoice->Start());
+	HRSOUND(_pSourceVoice->Start());
 	_playing = true;
 }
 
@@ -228,7 +228,7 @@ void AudioSource::Resume()
 	if (!_paused)
 		return;
 	
-	HRSOUND(pSourceVoice->Start());
+	HRSOUND(_pSourceVoice->Start());
 
 	_paused = false;
 }
@@ -240,7 +240,7 @@ void AudioSource::Pause()
 	if (!_playing || _paused)
 		return;
 
-	HRSOUND(pSourceVoice->Stop());
+	HRSOUND(_pSourceVoice->Stop());
 	
 	_paused = true;
 }
@@ -259,7 +259,7 @@ void AudioSource::Stop()
 {
 	CHECKSOURCE()
 		
-	HRSOUND(pSourceVoice->Stop());
+	HRSOUND(_pSourceVoice->Stop());
 	HRSOUND(Flush());
 
 	_playing = false;
@@ -276,7 +276,7 @@ HRESULT AudioSource::Flush()
 {
 	if (_hasBuffer)
 	{
-		HRSOUND(pSourceVoice->FlushSourceBuffers(), AudioManager::hr); // THIS LINE only triggers an end callback IF we flush an UNFINISHED buffer
+		HRSOUND(_pSourceVoice->FlushSourceBuffers(), AudioManager::hr); // THIS LINE only triggers an end callback IF we flush an UNFINISHED buffer
 
 		if (_playing) // so we're checking that here, and saying "hey, we terminated an unfinished buffer, expect an unnessary callback)
 			_ended = true;
@@ -291,7 +291,7 @@ HRESULT AudioSource::Submit()
 {
 	if (!_hasBuffer)
 	{
-		HRSOUND(pSourceVoice->SubmitSourceBuffer(&buffer), AudioManager::hr);
+		HRSOUND(_pSourceVoice->SubmitSourceBuffer(&_buffer), AudioManager::hr);
 
 		_hasBuffer = true;
 	}
@@ -324,7 +324,7 @@ void AudioSource::SetLooping(bool loop)
 	}
 	else
 	{
-		HRSOUND(pSourceVoice->ExitLoop());
+		HRSOUND(_pSourceVoice->ExitLoop());
 		_wasPlaying = false;
 	}
 }
@@ -333,15 +333,15 @@ void AudioSource::UpdateLooping()
 {
 	if (_isLooping)
 	{
-		buffer.LoopBegin = buffer.PlayBegin;
-		buffer.LoopLength = buffer.PlayLength;
-		buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
+		_buffer.LoopBegin = _buffer.PlayBegin;
+		_buffer.LoopLength = _buffer.PlayLength;
+		_buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
 	}
 	else
 	{
-		buffer.LoopBegin = 0;
-		buffer.LoopLength = 0;
-		buffer.LoopCount = 0;
+		_buffer.LoopBegin = 0;
+		_buffer.LoopLength = 0;
+		_buffer.LoopCount = 0;
 	}
 }
 
@@ -354,16 +354,16 @@ float AudioSource::GetVolume()
 
 void AudioSource::SetVolume(float volume)
 {
-	if (volume < MIN_VOLUME)
-		volume = MIN_VOLUME;
-	else if (volume > MAX_VOLUME)
-		volume = MAX_VOLUME;
+	if (volume < _minValue)
+		volume = _minValue;
+	else if (volume > _maxValue)
+		volume = _maxValue;
 	
 	_volume = volume;
 
 	CHECKSOURCE()
 
-	pSourceVoice->SetVolume(volume);
+	_pSourceVoice->SetVolume(volume);
 }
 
 // **************************** //

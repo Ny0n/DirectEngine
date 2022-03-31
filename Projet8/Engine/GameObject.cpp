@@ -122,7 +122,7 @@ bool GameObject::RemoveComponent(Component* componentIn)
 		return false;
 	}
 
-	if (Utils::Contains(&EngineComponent::unremovableEngineComponents, componentIn->GetType())) // unremovable components
+	if (Utils::Contains(&EngineComponent::_unremovableEngineComponents, componentIn->GetType())) // unremovable components
 	{
 		Utils::PrintErr("GameObject::RemoveComponent #4");
 		return false;

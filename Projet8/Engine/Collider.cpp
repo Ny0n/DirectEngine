@@ -2,12 +2,12 @@
 
 Collider::Collider()
 {
-	collidersWith = {};
+	_collidersWith = {};
 }
 
 Collider::~Collider()
 {
-	collidersWith.clear();
+	_collidersWith.clear();
 }
 
 bool Collider::IsColliding(Collider* other)
@@ -23,6 +23,6 @@ bool Collider::IsColliding(Collider* other)
 
 void Collider::RemoveCollideWith(Collider* collide)
 {
-	if (Utils::Contains(&collidersWith, collide))
-		collidersWith.remove(collide);
+	if (Utils::Contains(&_collidersWith, collide))
+		_collidersWith.remove(collide);
 }

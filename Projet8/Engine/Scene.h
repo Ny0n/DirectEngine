@@ -12,8 +12,8 @@ class Scene final
 	bool AddToScene(GameObject* go);
 	GameObject* RemoveFromScene(GameObject* go);
 
-	const string name;
-	list<GameObject*> gameObjects;
+	const string _name;
+	list<GameObject*> _gameObjects;
 
 public:
 	~Scene();
