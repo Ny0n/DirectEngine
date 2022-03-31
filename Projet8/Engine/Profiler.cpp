@@ -40,7 +40,7 @@ void Profiler::InitSystemTime()
     if (QueryPerformanceFrequency(&frequency) && frequency.QuadPart)
     {
         isPreciseTime = true;
-        precisefrequency = (float)frequency.QuadPart;
+        precisefrequency = static_cast<float>(frequency.QuadPart);
         LARGE_INTEGER counter;
         QueryPerformanceCounter(&counter);
         originalPreciseTime = counter.QuadPart;
@@ -72,20 +72,3 @@ float Profiler::GetFrameTime()
 {
     return frameTime;
 }
-
-/*void Profiler::AddFPS(float fpsIn)
-{
-    lastFps.push_back(fpsIn);
-    int size = lastFps.size();
-    if (size > 4000)
-        lastFps.pop_front();
-
-    float avg = 0.0f;
-    for (const float fps : lastFps)
-    {
-        avg += fps;
-    }
-    avg = avg / size;
-
-    currentFPS = avg;
-}*/
