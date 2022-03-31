@@ -35,5 +35,6 @@ private:
     D3DXQUATERNION _cubeQuat;
     int _nbStep = 0;
 
+    float _distanceMaxTarget = 1000.0f;
 };
 
