@@ -58,7 +58,7 @@ void DefaultScene::GenerateContent()
 
 	AddToScene(particle);
 
-	cam->SetParticle(particle);
+	fpCam->SetParticle(particle);
 
 #pragma endregion particle
 

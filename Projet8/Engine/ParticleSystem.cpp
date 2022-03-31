@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 
-#include <immintrin.h>
+#include <cassert>
 
 
 // Start is called before the first frame update
@@ -26,8 +26,8 @@ ParticleSystem::~ParticleSystem()
 {
 	if (_vb != nullptr)
 		_vb->Release();
-	if (_tex != nullptr)
-		_tex->Release();
+	if (_pTex != nullptr)
+		_pTex->Release();
 
 	for(auto att : _particles)
 	{
@@ -44,10 +44,12 @@ void ParticleSystem::Init(string texFileName)
 	// Create the texture
 	if (FAILED(D3DXCreateTextureFromFileA(d3ddev,
 		pathTexture.c_str(),
-		&_tex)))
+		&_pTex)))
 	{
 		MessageBox(0, L"Failed to load texture from disk", 0, 0);
 	}
+
+	assert(_pTex != nullptr);
 
 	_mat.Ambient.r = _mat.Ambient.g = _mat.Ambient.b = 0.0f;
 	_mat.Ambient.a = 1.0f;
@@ -61,14 +63,8 @@ void ParticleSystem::Init(string texFileName)
 		D3DPOOL_DEFAULT,
 		&_vb,
 		0);
-}
 
-void ParticleSystem::Reset()
-{
-	for (auto attribute : _particles)
-	{
-		ResetParticle(attribute);
-	}
+	assert(_vb != nullptr);
 }
 
 //resetParticule initialise a particle
@@ -91,7 +87,7 @@ void ParticleSystem::ResetParticle(Attribute* attribute)
 	attribute->_position.y = maxM.y;
 	// snowflakes fall downward and slightly to the left
 	attribute->_velocity.x = Utils::GetRandomFloat(0.0f, 1.0f) * -1.0f;
-	attribute->_velocity.y = Utils::GetRandomFloat(3.0f, 10.0f) * -10.0f;
+	attribute->_velocity.y = Utils::GetRandomFloat(8.0f, 12.0f) * -10.0f;
 	attribute->_velocity.z = 0.0f;
 
 	attribute->_age = 0.0f;
@@ -139,7 +135,7 @@ void ParticleSystem::Render()
 		PreRender();
 		d3ddev->SetMaterial(&_mat);
 
-		d3ddev->SetTexture(0, _tex);
+		d3ddev->SetTexture(0, _pTex);
 		d3ddev->SetFVF(FVF);
 		d3ddev->SetStreamSource(0, _vb, 0, sizeof(Particle));
 
@@ -259,7 +255,7 @@ void ParticleSystem::AnimateParticle()
 	}
 }
 
-
+//for now destroy the gameobject if all particle are dead
 void ParticleSystem::removeDeadParticles()
 {
 	bool noMoreAlive = true;

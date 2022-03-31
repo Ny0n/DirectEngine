@@ -25,33 +25,30 @@ struct Attribute
 class ParticleSystem : public EngineComponent
 {
 	string GetType() override { return NAMEOF(ParticleSystem); }
+	void EngineStart() override;
 	void EngineUpdate() final;
+	~ParticleSystem() override;
 
 
 	virtual void Init(string texFileName);
-	virtual void Reset();
 	virtual void ResetParticle(Attribute* attribute);
 	virtual void AddParticle();
 	virtual void PreRender();
 	virtual void Render();
 	virtual void PostRender();
 	virtual void AnimateParticle();
+	virtual void removeDeadParticles();
 
 	string _fileName = "pierre.png";
 
 protected:
-	void EngineStart() override;
-	~ParticleSystem() override;
-	virtual void removeDeadParticles();
 
 	const DWORD FVF = D3DFVF_XYZ | D3DFVF_DIFFUSE;
-	D3DXVECTOR3 _origin;
-	float _emitRate;
 	float _size = 0.8f;
 	float _sizeMax = 25.0f;
 	bool _attachMatrix = true;
 
-	IDirect3DTexture9* _tex;
+	IDirect3DTexture9* _pTex;
 	D3DMATERIAL9 _mat;
 	LPDIRECT3DVERTEXBUFFER9 _vb;
 

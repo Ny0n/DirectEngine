@@ -114,21 +114,22 @@ D3DXQUATERNION Utils::SLERP(const D3DXQUATERNION* a, const D3DXQUATERNION* b, co
 }
 
 float Utils::GetRandomFloat(float lowBound, float highBound)
-}
-	return (f * (highBound - lowBound)) + lowBound;
-	// return float in [lowBound, highBound] interval.
-	float f = (rand() % 10000) * 0.0001f;
-	// get random float in [0, 1] interval
-		return lowBound;
-	if (lowBound >= highBound) // bad input
+
 {
+	if (lowBound >= highBound) // bad input
+		return lowBound;
+	// get random float in [0, 1] interval
+	float f = (rand() % 10000) * 0.0001f;
+	// return float in [lowBound, highBound] interval.
+	return (f * (highBound - lowBound)) + lowBound;
+}
 
 
 void Utils::GetRandomVector(D3DXVECTOR3* out, D3DXVECTOR3* min, D3DXVECTOR3* max)
-	{
 {
+	{
 		out->x = GetRandomFloat(min->x, max->x);
 		out->y = GetRandomFloat(min->y, max->y);
 		out->z = GetRandomFloat(min->z, max->z);
-}
 	}
+}
