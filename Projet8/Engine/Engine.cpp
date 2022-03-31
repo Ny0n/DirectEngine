@@ -158,7 +158,7 @@ void Engine::CheckForNewFrame()
     }
 
     frameElapsed = Time::runTime() - _profiler->_lastFrameTime;
-    if (frameElapsed >= Application::targetFrameRate) // new frame
+    if (frameElapsed >= Application::_targetFrameRate) // new frame
         NewFrame();
 }
 

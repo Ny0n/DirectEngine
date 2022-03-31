@@ -76,6 +76,10 @@ void GameManager::Pause()
 void GameManager::Menu()
 {
 	_isPaused = false;
+
+	_score = 0;
+	_timer = Options::timerValue;
+
 	SceneManager::LoadScene(1);
 }
 
