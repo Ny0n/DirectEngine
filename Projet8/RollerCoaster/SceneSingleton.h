@@ -8,7 +8,7 @@ class SceneSingleton : public MonoBehaviour // if a script extends from this cla
 	string GetType() override { return NAMEOF(SceneSingleton); }
 
 	void Awake() final;
-    bool singletonDestroy = false;
+    bool _singletonDestroy = false;
 
 public:
     static T* Instance;
@@ -16,10 +16,10 @@ public:
     SceneSingleton() = default;
     ~SceneSingleton() override
 	{
-        if (!singletonDestroy)
+        if (!_singletonDestroy)
             Instance = nullptr;
 
-        singletonDestroy = false;
+        _singletonDestroy = false;
     }
 
 protected:
@@ -44,7 +44,7 @@ void SceneSingleton<T>::Awake()
     else
     {
         Utils::Println("DESTROY SINGLETON");
-        singletonDestroy = true;
+        _singletonDestroy = true;
         Destroy(gameObject);
     }
 }

@@ -7,7 +7,7 @@
 // Start is called before the first frame update
 void BulletMove::Start()
 {
-	currentTimer = maxTimer;
+	_currentTimer = _maxTimer;
 }
 
 // Update is called once per frame
@@ -16,17 +16,17 @@ void BulletMove::FixedUpdate()
 	auto dir = transform->GetForward();
 
 	D3DXVECTOR3 pos = transform->GetPosition();
-	pos += dir * bulletSpeed * Time::fixedDeltaTime;
+	pos += dir * _bulletSpeed * Time::fixedDeltaTime;
 
 	transform->SetPosition(pos);
 	transform->RotateRoll(-600.0f * Time::fixedDeltaTime);
 
-	if(currentTimer < 0)
+	if(_currentTimer < 0)
 	{
-		Destroy(gameObject); // throw an exception :/
+		Destroy(gameObject);
 	}else
 	{
-		currentTimer -= Time::deltaTime;
+		_currentTimer -= Time::deltaTime;
 	}
 
 }
@@ -41,5 +41,4 @@ void BulletMove::OnTriggerEnter(GameObject* collide)
 	}
 
 	Destroy(collide);
-	//collide->gameObject->Destroy();
 }

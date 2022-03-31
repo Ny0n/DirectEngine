@@ -65,9 +65,6 @@
     <ClInclude Include="BulletMove.h">
       <Filter>Game\Scripts\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="RealFPCam.h">
-      <Filter>Game\Scripts\Movement</Filter>
-    </ClInclude>
     <ClInclude Include="PauseScript.h">
       <Filter>Game\Scripts\UI</Filter>
     </ClInclude>
@@ -123,9 +120,6 @@
     </ClCompile>
     <ClCompile Include="BulletMove.cpp">
       <Filter>Game\Scripts\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="RealFPCam.cpp">
-      <Filter>Game\Scripts\Movement</Filter>
     </ClCompile>
     <ClCompile Include="PauseScript.cpp">
       <Filter>Game\Scripts\UI</Filter>

@@ -89,13 +89,11 @@ bool Component::SetEnabled(bool enabled)
 {
 	if (!Object::SetEnabled(enabled))
 	{
-		//Utils::PrintErr("Component::SetEnabled #1");
 		return false;
 	}
 
 	if (gameObject == nullptr) // just in case, but there SHOULD be a gameObject if we're here, because we can only get here if we're instantiated
 	{
-		//Utils::PrintErr("Component::SetEnabled #2");
 		return false;
 	}
 

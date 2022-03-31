@@ -8,7 +8,6 @@ class BackgroundMusic : public SceneSingleton<BackgroundMusic>
 	string GetType() override { return NAMEOF(BackgroundMusic); }
 
 	void Start() override;
-	void Update() override;
 
 public:
 	BackgroundMusic();
