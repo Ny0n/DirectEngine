@@ -9,13 +9,13 @@ public:
 	void Start() override;
 	void FixedUpdate() override;
 
-	void SetBulletSpeed(float speed) { bulletSpeed = speed; }
-	void SetmaxTimer(float time) { maxTimer = time; }
+	void SetBulletSpeed(float speed) { _bulletSpeed = speed; }
+	void SetmaxTimer(float time) { _maxTimer = time; }
 
 	void OnTriggerEnter(GameObject* collide) override;
 
 private:
-	float bulletSpeed = 30.0f;
-	float maxTimer = 10.0f; //time before destroy
-	float currentTimer;
+	float _bulletSpeed = 30.0f; //default bullet speed
+	float _maxTimer = 10.0f; //default time before destroy
+	float _currentTimer;
 };

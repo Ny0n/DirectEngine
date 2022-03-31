@@ -22,7 +22,7 @@ void MoveAlongRails::Update()
 		{
 			GameObject* toBeDeleted = targets.front();
 
-			if (Utils::DistanceWithOutSquareRoot(toBeDeleted->transform->GetPosition(), cube->transform->GetPosition()) < 1000)
+			if (Utils::DistanceWithOutSquareRoot(toBeDeleted->transform->GetPosition(), cube->transform->GetPosition()) < _distanceMaxTarget)
 			{
 				targets.pop_front();
 				Destroy(toBeDeleted);
