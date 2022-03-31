@@ -1,7 +1,6 @@
 #include "Shoot.h"
 
 #include "BulletMove.h"
-#include "Cube.h"
 #include "GameManager.h"
 
 void Shoot::Start()

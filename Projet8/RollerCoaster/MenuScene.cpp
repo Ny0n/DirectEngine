@@ -2,9 +2,7 @@
 
 #include "BackgroundMusic.h"
 #include "CheckBox.h"
-#include "DontDestroyOnLoad.h"
 #include "MainMenuScript.h"
-#include "SingletonTest.h"
 #include "InputField.h"
 
 string MenuScene::GetName()
