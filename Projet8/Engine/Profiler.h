@@ -13,16 +13,16 @@ class Profiler final {
 
     // *** Display *** //
 
-    float displayCooldown;
+    float _displayCooldown;
 
     void DisplayData();
 
     // *** Initialization *** //
 
-    float originalTime{};
-    bool isPreciseTime{};
-    float precisefrequency{};
-    LONGLONG originalPreciseTime{};
+    float _originalTime{};
+    bool _isPreciseTime{};
+    float _precisefrequency{};
+    LONGLONG _originalPreciseTime{};
 
     void InitSystemTime();
 
@@ -40,30 +40,30 @@ class Profiler final {
 
     // *** Timing Data *** //
 
-    int loopCount{};
+    int _loopCount{};
     
-    float lastFrameTime{-1};
-    float lastFixedTime{-1};
-    float lastDisplayTime{-1};
+    float _lastFrameTime{-1};
+    float _lastFixedTime{-1};
+    float _lastDisplayTime{-1};
 
-    float dummyTime{};
+    float _dummyTime{};
 
-    float frameTime{};
+    float _frameTime{};
 
-    float engineStartTime{};
-    float startTime{};
-    float fixedUpdateTime{};
-    float physicsTime{};
-    float inputTime{};
-    float updateTime{};
-    float lateUpdateTime{};
-    float engineUpdateTime{};
-    float presentTime{};
+    float _engineStartTime{};
+    float _startTime{};
+    float _fixedUpdateTime{};
+    float _physicsTime{};
+    float _inputTime{};
+    float _updateTime{};
+    float _lateUpdateTime{};
+    float _engineUpdateTime{};
+    float _presentTime{};
 
-    float time1{};
-    float time2{};
-    float time3{};
-    float time4{};
+    float _time1{};
+    float _time2{};
+    float _time3{};
+    float _time4{};
 
 };
 

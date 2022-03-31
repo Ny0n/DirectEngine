@@ -340,7 +340,7 @@ void MenuScene::GenerateContent()
 	GameObject* audio = CreateEmpty();
 
 	audio->AddComponent<BackgroundMusic>();
-	audio->AddComponent<AudioSource>(L"Audio\\giveitup.wav", true, 0.3f);
+	audio->AddComponent<AudioSource>(L"Audio\\bgmusic.wav", true, 0.3f);
 
 	AddToScene(audio);
 #pragma endregion Audio
