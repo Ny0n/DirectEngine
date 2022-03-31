@@ -1,5 +1,6 @@
 ﻿#include "UIManager.h"
 
+#include "App.h"
 #include "GameManager.h"
 #include "Options.h"
 
@@ -18,6 +19,8 @@ UIManager::~UIManager()
 
 void UIManager::Pause()
 {
+	Cursor::SetVisible(true);
+
 	_pauseGO->SetEnabled(true);
 	_crossGO->SetEnabled(false);
 	_cam->SetEnabled(false);
@@ -25,6 +28,8 @@ void UIManager::Pause()
 
 void UIManager::Resume()
 {
+	Cursor::SetVisible(false);
+
 	_pauseGO->SetEnabled(false);
 	_crossGO->SetEnabled(true);
 	_cam->SetEnabled(true);
@@ -56,7 +61,6 @@ void UIManager::ShowFPS()
 
 	_fpsCounter->text = L"FPS: " + to_wstring(fps / averageFPS.size());
 }
-
 
 void UIManager::ShowTimer()
 {
@@ -99,7 +103,6 @@ void UIManager::Update()
 {
 	auto isPaused = GameManager::IsPaused();
 
-	Utils::Println(to_wstring(isPaused));
 
 	if (Options::showScore)
 		UpdateScore();

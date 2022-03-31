@@ -26,15 +26,6 @@ MainMenuScript::~MainMenuScript()
 {
 }
 
-void MainMenuScript::MyFunc()
-{
-	/*auto randX = rand() % 400;
-	auto randY = rand() % 350;
-	_button->rectTopLeft = D3DXVECTOR2(randX, randY);
-	_button->rectBottomRight = D3DXVECTOR2(randX + 300, randY +50);*/
-	
-}
-
 void MainMenuScript::OnPlay()
 {
 	SceneManager::LoadScene("DefaultScene");
@@ -108,6 +99,10 @@ void MainMenuScript::DisableScore()
 		scoreInputField->SetEnabled(true);
 		_scoreIPText->SetEnabled(true);
 	}
+}
+
+void MainMenuScript::OnEnable()
+{
 }
 
 // **************************** //

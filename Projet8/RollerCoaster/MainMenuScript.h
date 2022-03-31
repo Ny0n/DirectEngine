@@ -14,8 +14,6 @@ public:
 	~MainMenuScript() override;
 
 private:
-	void MyFunc();
-
 	void OnPlay();
 	void OnOptions();
 	void OnCredits();
@@ -24,6 +22,7 @@ private:
 	void ToggleAudio();
 	void DisableTimer();
 	void DisableScore();
+	void OnEnable() override;
 
 	GameObject* _menuGO;
 	GameObject* _optionsGO;

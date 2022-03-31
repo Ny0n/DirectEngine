@@ -15,7 +15,10 @@ void Cursor::Unlock()
 
 void Cursor::SetVisible(bool visibility)
 {
-	ShowCursor(visibility);
+	if (visibility)
+		while (ShowCursor(true) < 0);
+	else
+		while (ShowCursor(false) >= 0);
 }
 
 void Cursor::CursorUpdate()
