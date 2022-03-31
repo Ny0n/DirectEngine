@@ -167,10 +167,60 @@ void DefaultScene::GenerateContent()
 	AddToScene(timerGO);
 #pragma endregion Timer
 
+#pragma region EndGame
+	auto endgameGO = CreateEmpty();
+
+	int yPadding = 30;
+
+	auto endgamePanel = endgameGO->AddComponent<Image>();
+	D3DXVECTOR2 endgamePanelPos;
+	endgamePanel->filePath = L"Image\\blanc.png";
+	endgamePanel->imageColor = D3DCOLOR_ARGB(120, 153, 153, 153);
+	endgamePanel->width = 900;
+	endgamePanel->height = 450;
+	endgamePanelPos.x = SCREEN_WIDTH * .5f - endgamePanel->width * .5f;
+	endgamePanelPos.y = 300;
+	endgamePanel->position = endgamePanelPos;
+
+	auto endgameTitle = endgameGO->AddComponent<Textbox>();
+	endgameTitle->text = L"FINISHED!";
+	endgameTitle->size.x += 50;
+	endgameTitle->position.x = endgamePanelPos.x + (endgamePanel->width * 0.5f) - endgameTitle->size.x * .5f;
+	endgameTitle->position.y = endgamePanel->position.y + yPadding;
+	endgameTitle->fontWeight = FW_BOLD;
+	endgameTitle->fontHeight = 60;
+	endgameTitle->textColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+
+	auto endgameDesc = endgameGO->AddComponent<Textbox>();
+	endgameDesc->text = L"Better luck next time Default User!";
+	endgameDesc->fontHeight = 30;
+	endgameDesc->size.x += 200;
+	endgameDesc->position.x = endgamePanelPos.x + (endgamePanel->width * 0.5f) - endgameDesc->size.x * .5f;
+	endgameDesc->position.y = endgameTitle->position.y + endgameTitle->size.y + 20;
+	endgameDesc->textColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+
+	auto endgameScore = endgameGO->AddComponent<Textbox>();
+	endgameScore->text = L"Score: 0000";
+	endgameScore->fontHeight = 40;
+	endgameScore->position.x = endgamePanelPos.x + (endgamePanel->width * 0.5f) - endgameScore->size.x * .5f;
+	endgameScore->position.y = endgameDesc->position.y + endgameDesc->size.y + 50;
+	endgameScore->textColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+	
+	auto endBtn = endgameGO->AddComponent<Button>();
+	endBtn->text = L"BACK TO MENU";
+	endBtn->size = D3DXVECTOR2(250, 60);
+	endBtn->position.x = endgamePanelPos.x + (endgamePanel->width * 0.5f) - endBtn->size.x * .5f;
+	endBtn->position.y = endgamePanelPos.y + endgamePanel->height - endBtn->size.y - yPadding;
+
+	endgameGO->SetEnabled(false);
+
+	AddToScene(endgameGO);
+#pragma endregion EndGame
+
 #pragma region UIManager
 	auto UIManagerGO = CreateEmpty();
 
-	const auto managerScript = new UIManager(pauseCanvas, crossGO, fpCam, fpsText, timerText, scoreText, listBtn);
+	const auto managerScript = new UIManager(pauseCanvas, crossGO, fpCam, fpsText, timerText, scoreText, listBtn, endgameGO);
 	UIManagerGO->AddComponent(managerScript);
 
 	AddToScene(UIManagerGO);

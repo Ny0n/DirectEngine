@@ -11,7 +11,7 @@ class UIManager : public MonoBehaviour
 	void Update() override;
 
 public:
-	explicit UIManager(GameObject* pauseGO, GameObject* crossGO, FPCam* cam, Textbox* fpsCounter, Textbox* timerText, Textbox* scoreText, Button* btnList[4]);
+	explicit UIManager(GameObject* pauseGO, GameObject* crossGO, FPCam* cam, Textbox* fpsCounter, Textbox* timerText, Textbox* scoreText, Button* btnList[4], GameObject* endgameGO);
 	~UIManager() override;
 
 private:
@@ -22,6 +22,7 @@ private:
 	void ShowTimer();
 	void UpdateScore();
 
+	GameObject* _endgameGO;
 	GameObject* _pauseGO;
 	GameObject* _crossGO;
 	FPCam* _cam;

@@ -105,6 +105,9 @@ void GameManager::Start()
 // Update is called once per frame
 void GameManager::Update()
 {
+	if (Engine::GetInstance()->window != GetForegroundWindow())
+		Pause();
+
 	if (Options::showTimer)
 	{
 		Timer();
@@ -122,8 +125,10 @@ void GameManager::Update()
 				Draw();
 		}
 	}
-	else if (_score >= Options::scoreMin)
+	else if (_score >= Options::scoreMin && Options::showScore)
 			Win();
+
+	//TODO CHECK IF GAME IS FINISHED
 
 	if (Input::GetKeyDown(KeyCode::Tab) || Input::GetKeyDown(KeyCode::Escape))
 	{

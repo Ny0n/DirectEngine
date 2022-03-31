@@ -4,8 +4,8 @@
 #include "GameManager.h"
 #include "Options.h"
 
-UIManager::UIManager(GameObject* pauseGO, GameObject* crossGO, FPCam* cam, Textbox* fpsCounter, Textbox* timerText, Textbox* scoreText, Button* btnList[4])
-	: _pauseGO(pauseGO), _crossGO(crossGO), _cam(cam), _fpsCounter(fpsCounter), _timerText(timerText), _scoreText(scoreText)
+UIManager::UIManager(GameObject* pauseGO, GameObject* crossGO, FPCam* cam, Textbox* fpsCounter, Textbox* timerText, Textbox* scoreText, Button* btnList[4], GameObject* endgameGO)
+	: _pauseGO(pauseGO), _crossGO(crossGO), _cam(cam), _fpsCounter(fpsCounter), _timerText(timerText), _scoreText(scoreText), _endgameGO(endgameGO)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -101,8 +101,12 @@ void UIManager::Start()
 // Update is called once per frame
 void UIManager::Update()
 {
-	auto isPaused = GameManager::IsPaused();
+	if (Input::GetKeyDown(KeyCode::A))
+	{
+		_endgameGO->SetEnabled(true);
+	}
 
+	auto isPaused = GameManager::IsPaused();
 
 	if (Options::showScore)
 		UpdateScore();
@@ -118,10 +122,7 @@ void UIManager::Update()
 		ShowFPS();
 	else
 		_fpsCounter->SetEnabled(false);
-
-	if (Engine::GetInstance()->window != GetForegroundWindow())
-		Pause();
-
+	
 	if (isPaused)
 		Pause();
 	else
