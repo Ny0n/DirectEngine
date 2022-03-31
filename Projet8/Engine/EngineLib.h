@@ -37,7 +37,6 @@
 #include "PointLight.h"
 
 // UI Components
-#include "Canvas.h"
 #include "Image.h"
 #include "Textbox.h"
 #include "InputField.h"

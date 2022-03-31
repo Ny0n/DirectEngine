@@ -113,9 +113,6 @@
     <ClInclude Include="Image.h">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Canvas.h">
-      <Filter>Source\Objects\Components\UI</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.tpp">
       <Filter>Source\Objects</Filter>
     </ClInclude>
@@ -221,9 +218,6 @@
       <Filter>Source\Objects\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp">
-      <Filter>Source\Objects\Components\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Canvas.cpp">
       <Filter>Source\Objects\Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="IScene.cpp">

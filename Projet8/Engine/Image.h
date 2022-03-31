@@ -2,13 +2,13 @@
 
 class Image final : public EngineComponent
 {
+	string GetType() override { return NAMEOF(Image); }
+	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
+
 	void EngineStart() override;
 	void EngineUpdate() override;
 
 public:
-	string GetType() override { return NAMEOF(Image); }
-	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
-
 	~Image() override;
 	Image();
 
@@ -27,9 +27,7 @@ public:
 private:
 	void Render();
 
-	Canvas* _canvas;
-
-	LPDIRECT3DTEXTURE9 ppTexture = nullptr;
-	LPD3DXSPRITE ppSprite = nullptr;
+	LPDIRECT3DTEXTURE9 _texture = nullptr;
+	LPD3DXSPRITE _sprite = nullptr;
 
 };

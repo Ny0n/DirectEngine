@@ -42,5 +42,5 @@ private:
 	Textbox* _endgameDesc;
 	Textbox* _endgameScore;
 	
-	list<int> averageFPS;
+	list<int> _averageFPS;
 };

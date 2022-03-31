@@ -57,19 +57,19 @@ private:
 
 	POINT mousePos;
 
-	UINT width;
-	UINT height;
+	UINT _width;
+	UINT _height;
 
-	D3DXVECTOR2 rectTopLeft;
-	D3DXVECTOR2 rectBottomRight;
+	D3DXVECTOR2 _rectTopLeft;
+	D3DXVECTOR2 _rectBottomRight;
 
-	D3DCOLOR textColor;
-	D3DCOLOR boxColor;
-	D3DCOLOR borderColor;
+	D3DCOLOR _textColor;
+	D3DCOLOR _boxColor;
+	D3DCOLOR _borderColor;
 
-	ID3DXLine* line = nullptr;
-	LPDIRECT3DTEXTURE9 texture;
-	LPD3DXSPRITE ppSprite = nullptr;
-	RECT textRect;
-	ID3DXFont* font = nullptr;
+	ID3DXLine* _pLine = nullptr;
+	LPDIRECT3DTEXTURE9 _texture;
+	LPD3DXSPRITE _ppSprite = nullptr;
+	RECT _textRect;
+	ID3DXFont* _pFont = nullptr;
 };

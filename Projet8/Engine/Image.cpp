@@ -2,8 +2,8 @@
 
 Image::~Image()
 {
-	ppTexture->Release();
-	ppSprite->Release();
+	_texture->Release();
+	_sprite->Release();
 }
 
 Image::Image(): EngineComponent()
@@ -36,10 +36,10 @@ void Image::EngineStart()
 		0xFF000000,
 		&info,
 		NULL,
-		&ppTexture))
+		&_texture))
 
 	
-	HR(D3DXCreateSprite(d3ddev, &ppSprite))
+	HR(D3DXCreateSprite(d3ddev, &_sprite))
 }
 
 void Image::EngineUpdate()
@@ -49,7 +49,7 @@ void Image::EngineUpdate()
 
 void Image::Render()
 {
-	if (ppTexture == NULL)
+	if (_texture == NULL)
 		return;
 
 	D3DXMATRIX Mat;
@@ -61,9 +61,9 @@ void Image::Render()
 	if (drawFromCenter)
 		center = D3DXVECTOR3(width * .5f, height * .5f, 0);
 
-	HR(ppSprite->Begin(D3DXSPRITE_ALPHABLEND))
-	HR(ppSprite->SetTransform(&Mat))
-	HR(ppSprite->Draw(ppTexture, NULL, &center, NULL, imageColor))
+	HR(_sprite->Begin(D3DXSPRITE_ALPHABLEND))
+	HR(_sprite->SetTransform(&Mat))
+	HR(_sprite->Draw(_texture, NULL, &center, NULL, imageColor))
 
-	HR(ppSprite->End())
+	HR(_sprite->End())
 }

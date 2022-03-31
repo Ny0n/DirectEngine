@@ -50,34 +50,34 @@ public:
 private:
 	bool UpdateMousePos();
 	void Render();
-	bool isAbove();
+	bool IsAbove();
 	void OnClick();
 	void ColorNormal();
 	void ColorDisabled();
 
-	LPCWSTR boxFilepath = L"Image\\blanc.png";
-	LPCWSTR checkedBoxFilepath = L"Image\\checked.png";
+	LPCWSTR _boxFilepath = L"Image\\blanc.png";
+	LPCWSTR _checkedBoxFilepath = L"Image\\checked.png";
 
 	bool _checked = false;
 	bool _drawBox = true;
 
-	POINT mousePos;
+	POINT _mousePos;
 
-	UINT width;
-	UINT height;
+	UINT _width;
+	UINT _height;
 
-	D3DXVECTOR2 rectTopLeft;
-	D3DXVECTOR2 rectBottomRight;
+	D3DXVECTOR2 _rectTopLeft;
+	D3DXVECTOR2 _rectBottomRight;
 
-	D3DCOLOR textColor;
-	D3DCOLOR boxColor;
-	D3DCOLOR borderColor;
+	D3DCOLOR _textColor;
+	D3DCOLOR _boxColor;
+	D3DCOLOR _borderColor;
 
-	ID3DXLine* line = nullptr;
-	LPDIRECT3DTEXTURE9 texture;
-	LPDIRECT3DTEXTURE9 textureChecked;
-	LPD3DXSPRITE ppSprite = nullptr;
-	RECT textRect;
-	RECT textPos;
-	ID3DXFont* font = nullptr;
+	ID3DXLine* _pLine = nullptr;
+	LPDIRECT3DTEXTURE9 _texture;
+	LPDIRECT3DTEXTURE9 _textureChecked;
+	LPD3DXSPRITE _sprite = nullptr;
+	RECT _textRect;
+	RECT _textPos;
+	ID3DXFont* _pFont = nullptr;
 };

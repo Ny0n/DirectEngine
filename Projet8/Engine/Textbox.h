@@ -2,13 +2,13 @@
 
 class Textbox final : public EngineComponent
 {
+	string GetType() override { return NAMEOF(Textbox); }
+	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
+
 	void EngineStart() override;
 	void EngineUpdate() override;
 
 public:
-	string GetType() override { return NAMEOF(Textbox); }
-	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
-
 	explicit Textbox();
 	~Textbox() override;
 
@@ -38,13 +38,13 @@ public:
 private:
 	void Render();
 	
-	D3DXVECTOR2 rectTopLeft;
-	D3DXVECTOR2 rectBottomRight;
+	D3DXVECTOR2 _rectTopLeft;
+	D3DXVECTOR2 _rectBottomRight;
 
-	ID3DXLine* line = nullptr;
-	LPDIRECT3DTEXTURE9 texture;
-	LPD3DXSPRITE ppSprite = nullptr;
-	RECT textRect;
-	ID3DXFont* font = nullptr;
+	ID3DXLine* _pLine = nullptr;
+	LPDIRECT3DTEXTURE9 _texture;
+	LPD3DXSPRITE _sprite = nullptr;
+	RECT _textRect;
+	ID3DXFont* _pFont = nullptr;
 };
 

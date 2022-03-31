@@ -2,6 +2,12 @@
 
 class InputField : public EngineComponent
 {
+	string GetType() override { return NAMEOF(InputField); }
+	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
+
+	void EngineStart() override;
+	void EngineUpdate() override
+	;
 public:
 	void SetText(wstring string);
 	wstring GetText();
@@ -11,7 +17,6 @@ public:
 	UINT fontWeight = FW_NORMAL;
 	BOOL fontItalic = false;
 	LPCWSTR textFont = L"Arial";
-
 	
 	wstring placeholderText = L"Placeholder text...";
 
@@ -41,41 +46,32 @@ public:
 	bool isPlaceholder = true;
 
 private:
-	string GetType() override { return NAMEOF(InputField); }
-	ComponentCategory GetCategory() override { return ComponentCategory::multiple; }
-
-	void EngineStart() override;
-	void EngineUpdate() override;
-
 	void Render();
-	bool isAbove();
+	bool IsAbove();
 	void Focus();
 	void HandleKeyInput();
 	void EnterFocus();
 	void ExitFocus();
 
-	wstring text;
+	wstring _text;
 
-	bool hasFocus = false;
-	bool maj;
+	bool _hasFocus = false;
+	bool _maj;
 
-	D3DXVECTOR2 rectTopLeft;
-	D3DXVECTOR2 rectBottomRight;
+	D3DXVECTOR2 _rectTopLeft;
+	D3DXVECTOR2 _rectBottomRight;
 
-	POINT mousePos;
+	POINT _mousePos;
 
-	D3DCOLOR textColor;
-	D3DCOLOR boxColor;
-	D3DCOLOR borderColor;
-
-	UINT width;
-	UINT height;
-
-	ID3DXLine* line = nullptr;
-	LPDIRECT3DTEXTURE9 texture;
-	LPD3DXSPRITE ppSprite = nullptr;
-	RECT textRect;
-	RECT txtRect;
-	ID3DXFont* font = nullptr;
+	D3DCOLOR _textColor;
+	D3DCOLOR _boxColor;
+	D3DCOLOR _borderColor;
+	
+	ID3DXLine* _pLine = nullptr;
+	LPDIRECT3DTEXTURE9 _texture;
+	LPD3DXSPRITE _sprite = nullptr;
+	RECT _textRect;
+	RECT _txtRect;
+	ID3DXFont* _pFont = nullptr;
 };
 

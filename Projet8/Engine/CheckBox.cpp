@@ -18,9 +18,9 @@ void CheckBox::SetCheck(bool b)
 {
 	_checked = b;
 
-	boxColor = checkedBoxColor;
-	borderColor = checkedBorderColor;
-	textColor = checkedTextColor;
+	_boxColor = checkedBoxColor;
+	_borderColor = checkedBorderColor;
+	_textColor = checkedTextColor;
 }
 
 // **************************** //
@@ -39,10 +39,10 @@ void CheckBox::EngineStart()
 		ANTIALIASED_QUALITY,
 		FF_DONTCARE,
 		textFont,
-		&font))
+		&_pFont))
 
 	D3DXIMAGE_INFO info;
-	HR(D3DXGetImageInfoFromFile(boxFilepath, &info))
+	HR(D3DXGetImageInfoFromFile(_boxFilepath, &info))
 
 
 	if (size.x <= 0 || size.y <= 0)
@@ -50,14 +50,14 @@ void CheckBox::EngineStart()
 		_drawBox = false;
 	}
 
-	HR(D3DXCreateSprite(d3ddev, &ppSprite))
-	HR(D3DXCreateLine(d3ddev, &line))
-	HR(line->SetWidth(borderThickness))
-	HR(line->SetAntialias(true))
+	HR(D3DXCreateSprite(d3ddev, &_sprite))
+	HR(D3DXCreateLine(d3ddev, &_pLine))
+	HR(_pLine->SetWidth(borderThickness))
+	HR(_pLine->SetAntialias(true))
 
-	HR(D3DXGetImageInfoFromFile(boxFilepath, &info))
+	HR(D3DXGetImageInfoFromFile(_boxFilepath, &info))
 	HR(D3DXCreateTextureFromFileEx(d3ddev,
-		boxFilepath,
+		_boxFilepath,
 		size.x,
 		size.y,
 		info.MipLevels,
@@ -69,13 +69,13 @@ void CheckBox::EngineStart()
 		0xFF000000,
 		&info,
 		NULL,
-		&texture))
+		&_texture))
 
 	D3DXIMAGE_INFO infoChecked;
-	HR(D3DXGetImageInfoFromFile(boxFilepath, &infoChecked))
-	HR(D3DXGetImageInfoFromFile(checkedBoxFilepath, &infoChecked))
+	HR(D3DXGetImageInfoFromFile(_boxFilepath, &infoChecked))
+	HR(D3DXGetImageInfoFromFile(_checkedBoxFilepath, &infoChecked))
 	HR(D3DXCreateTextureFromFileEx(d3ddev,
-		checkedBoxFilepath,
+		_checkedBoxFilepath,
 		size.x,
 		size.y,
 		infoChecked.MipLevels,
@@ -87,7 +87,7 @@ void CheckBox::EngineStart()
 		0xFF000000,
 		&infoChecked,
 		NULL,
-		&textureChecked))
+		&_textureChecked))
 }
 
 // EngineUpdate is called once per frame, after the MonoBehaviour Update & LateUpdate
@@ -98,7 +98,7 @@ void CheckBox::EngineUpdate()
 
 	Render();
 
-	if (isAbove() && !isDisabled)
+	if (IsAbove() && !isDisabled)
 	{
 		if (Input::GetKeyUp(KeyCode::Mouse0))
 			OnClick();
@@ -111,9 +111,9 @@ void CheckBox::EngineUpdate()
 
 bool CheckBox::UpdateMousePos()
 {
-	if (GetCursorPos(&mousePos))
+	if (GetCursorPos(&_mousePos))
 	{
-		if (ScreenToClient(Engine::GetInstance()->window, &mousePos))
+		if (ScreenToClient(Engine::GetInstance()->window, &_mousePos))
 		{
 			return true;
 		}
@@ -124,68 +124,68 @@ bool CheckBox::UpdateMousePos()
 
 void CheckBox::Render()
 {
-	rectTopLeft = position;
-	rectBottomRight = position + size;
+	_rectTopLeft = position;
+	_rectBottomRight = position + size;
 		
-	const auto result = SetRect(&textRect, rectTopLeft.x, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
+	const auto result = SetRect(&_textRect, _rectTopLeft.x, _rectTopLeft.y, _rectBottomRight.x, _rectBottomRight.y);
 	if (result <= 0)
 		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
 
 	if (_drawBox)
 	{
-		HR(ppSprite->Begin(D3DXSPRITE_ALPHABLEND))
+		HR(_sprite->Begin(D3DXSPRITE_ALPHABLEND))
 
-		auto spritePostion = D3DXVECTOR3(rectTopLeft.x, rectTopLeft.y, 0);
+		auto spritePostion = D3DXVECTOR3(_rectTopLeft.x, _rectTopLeft.y, 0);
 
 		if (drawBackground)
-			HR(ppSprite->Draw(texture, NULL, NULL, &spritePostion, backgroundBoxColor))
+			HR(_sprite->Draw(_texture, NULL, NULL, &spritePostion, backgroundBoxColor))
 
 		if (_checked)
 		{
-			HR(ppSprite->Draw(textureChecked, NULL, NULL, &spritePostion, boxColor))
+			HR(_sprite->Draw(_textureChecked, NULL, NULL, &spritePostion, _boxColor))
 		}
 		else
 		{
 			ColorNormal();
 		}
 
-		HR(ppSprite->End())
+		HR(_sprite->End())
 
-		HR(line->Begin())
+		HR(_pLine->Begin())
 
 		D3DXVECTOR2 linesList[] = {
-			D3DXVECTOR2(rectTopLeft.x - borderThickness * 0.5f, rectTopLeft.y),
-			D3DXVECTOR2(rectBottomRight.x + borderThickness * 0.5f, rectTopLeft.y),
-			D3DXVECTOR2(rectBottomRight.x, rectTopLeft.y),
-			D3DXVECTOR2(rectBottomRight.x, rectBottomRight.y),
-			D3DXVECTOR2(rectBottomRight.x + borderThickness * 0.5f, rectBottomRight.y),
-			D3DXVECTOR2(rectTopLeft.x - borderThickness * 0.5f, rectBottomRight.y),
-			D3DXVECTOR2(rectTopLeft.x, rectBottomRight.y),
-			D3DXVECTOR2(rectTopLeft.x, rectTopLeft.y),
+			D3DXVECTOR2(_rectTopLeft.x - borderThickness * 0.5f, _rectTopLeft.y),
+			D3DXVECTOR2(_rectBottomRight.x + borderThickness * 0.5f, _rectTopLeft.y),
+			D3DXVECTOR2(_rectBottomRight.x, _rectTopLeft.y),
+			D3DXVECTOR2(_rectBottomRight.x, _rectBottomRight.y),
+			D3DXVECTOR2(_rectBottomRight.x + borderThickness * 0.5f, _rectBottomRight.y),
+			D3DXVECTOR2(_rectTopLeft.x - borderThickness * 0.5f, _rectBottomRight.y),
+			D3DXVECTOR2(_rectTopLeft.x, _rectBottomRight.y),
+			D3DXVECTOR2(_rectTopLeft.x, _rectTopLeft.y),
 		};
 
-		HR(line->Draw(linesList, 8, borderColor))
+		HR(_pLine->Draw(linesList, 8, _borderColor))
 
-		HR(line->End())
+		HR(_pLine->End())
 	}
 
 	if (drawText)
 	{
-		const auto res = SetRect(&textPos, rectTopLeft.x + size.x + borderThickness + 5, rectTopLeft.y, rectBottomRight.x + textBoxWidth, rectBottomRight.y);
+		const auto res = SetRect(&_textPos, _rectTopLeft.x + size.x + borderThickness + 5, _rectTopLeft.y, _rectBottomRight.x + textBoxWidth, _rectBottomRight.y);
 		if (res <= 0)
 			Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
 
-		const int result = font->DrawText(NULL, text.c_str(), text.length(), &textPos, textFormat, textColor);
+		const int result = _pFont->DrawText(NULL, text.c_str(), text.length(), &_textPos, textFormat, _textColor);
 		if (result <= 0)
 			Utils::PrintError(__FILE__, __LINE__, L"DrawText() failed.");
 	}
 }
 
-bool CheckBox::isAbove()
+bool CheckBox::IsAbove()
 {
-	if (mousePos.x <= textPos.right && mousePos.x >= rectTopLeft.x)
+	if (_mousePos.x <= _textPos.right && _mousePos.x >= _rectTopLeft.x)
 	{
-		if (mousePos.y <= textPos.bottom && mousePos.y >= rectTopLeft.y)
+		if (_mousePos.y <= _textPos.bottom && _mousePos.y >= _rectTopLeft.y)
 		{
 			return true;
 		}
@@ -200,9 +200,9 @@ void CheckBox::OnClick()
 	else
 		_checked = false;
 
-	boxColor = checkedBoxColor;
-	borderColor = checkedBorderColor;
-	textColor = checkedTextColor;
+	_boxColor = checkedBoxColor;
+	_borderColor = checkedBorderColor;
+	_textColor = checkedTextColor;
 
 	if (onClick != nullptr && Input::GetKeyUp(KeyCode::Mouse0))
 	{
@@ -212,14 +212,14 @@ void CheckBox::OnClick()
 
 void CheckBox::ColorNormal()
 {
-	textColor = normalTextColor;
-	boxColor = normalBoxColor;
-	borderColor = normalBorderColor;
+	_textColor = normalTextColor;
+	_boxColor = normalBoxColor;
+	_borderColor = normalBorderColor;
 }
 
 void CheckBox::ColorDisabled()
 {
-	boxColor = disabledBoxColor;
-	borderColor = disabledBorderColor;
-	textColor = disabledTextColor;
+	_boxColor = disabledBoxColor;
+	_borderColor = disabledBorderColor;
+	_textColor = disabledTextColor;
 }

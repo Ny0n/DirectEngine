@@ -24,7 +24,7 @@ void Button::EngineStart()
 		ANTIALIASED_QUALITY,
 		FF_DONTCARE,
 		textFont,
-		&font))
+		&_pFont))
 
 	D3DXIMAGE_INFO info;
 	HR(D3DXGetImageInfoFromFile(boxFilepath, &info))
@@ -47,12 +47,12 @@ void Button::EngineStart()
 		0xFF000000,
 		&info,
 		NULL,
-		&texture))
+		&_texture))
 
-	HR(D3DXCreateSprite(d3ddev, &ppSprite))
-	HR(D3DXCreateLine(d3ddev, &line))
-	HR(line->SetWidth(borderThickness))
-	HR(line->SetAntialias(true))
+	HR(D3DXCreateSprite(d3ddev, &_ppSprite))
+	HR(D3DXCreateLine(d3ddev, &_pLine))
+	HR(_pLine->SetWidth(borderThickness))
+	HR(_pLine->SetAntialias(true))
 }
 
 // EngineUpdate is called once per frame, after the MonoBehaviour Update & LateUpdate
@@ -78,58 +78,58 @@ void Button::EngineUpdate()
 
 void Button::Render()
 {
-	rectTopLeft = position;
-	rectBottomRight = position + size;
+	_rectTopLeft = position;
+	_rectBottomRight = position + size;
 
-	const auto result = SetRect(&textRect, rectTopLeft.x, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
+	const auto result = SetRect(&_textRect, _rectTopLeft.x, _rectTopLeft.y, _rectBottomRight.x, _rectBottomRight.y);
 	if (result <= 0)
 		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
 
 	if (drawBox)
 	{
-		HR(ppSprite->Begin(D3DXSPRITE_ALPHABLEND))
+		HR(_ppSprite->Begin(D3DXSPRITE_ALPHABLEND))
 
-		auto spritePostion = D3DXVECTOR3(rectTopLeft.x, rectTopLeft.y, 0);
-		HR(ppSprite->Draw(texture, NULL, NULL, &spritePostion, boxColor))
+		auto spritePostion = D3DXVECTOR3(_rectTopLeft.x, _rectTopLeft.y, 0);
+		HR(_ppSprite->Draw(_texture, NULL, NULL, &spritePostion, _boxColor))
 
-		HR(ppSprite->End())
+		HR(_ppSprite->End())
 	}
 
 	if (drawBorder)
 	{
-		HR(line->Begin())
+		HR(_pLine->Begin())
 
 			D3DXVECTOR2 linesList[] = {
-					D3DXVECTOR2(rectTopLeft.x - borderThickness * 0.5f,rectTopLeft.y),
-					D3DXVECTOR2(rectBottomRight.x + borderThickness * 0.5f,rectTopLeft.y),
-					D3DXVECTOR2(rectBottomRight.x,rectTopLeft.y),
-					D3DXVECTOR2(rectBottomRight.x,rectBottomRight.y),
-					D3DXVECTOR2(rectBottomRight.x + borderThickness * 0.5f,rectBottomRight.y),
-					D3DXVECTOR2(rectTopLeft.x - borderThickness * 0.5f,rectBottomRight.y),
-					D3DXVECTOR2(rectTopLeft.x,rectBottomRight.y),
-					D3DXVECTOR2(rectTopLeft.x,rectTopLeft.y),
+					D3DXVECTOR2(_rectTopLeft.x - borderThickness * 0.5f,_rectTopLeft.y),
+					D3DXVECTOR2(_rectBottomRight.x + borderThickness * 0.5f,_rectTopLeft.y),
+					D3DXVECTOR2(_rectBottomRight.x,_rectTopLeft.y),
+					D3DXVECTOR2(_rectBottomRight.x,_rectBottomRight.y),
+					D3DXVECTOR2(_rectBottomRight.x + borderThickness * 0.5f,_rectBottomRight.y),
+					D3DXVECTOR2(_rectTopLeft.x - borderThickness * 0.5f,_rectBottomRight.y),
+					D3DXVECTOR2(_rectTopLeft.x,_rectBottomRight.y),
+					D3DXVECTOR2(_rectTopLeft.x,_rectTopLeft.y),
 		};
 
-		HR(line->Draw(linesList, 8, borderColor))
+		HR(_pLine->Draw(linesList, 8, _borderColor))
 
-		HR(line->End())
+		HR(_pLine->End())
 	}
 
-	const int res = font->DrawText(NULL, text.c_str(), text.length(), &textRect, textFormat, textColor);
+	const int res = _pFont->DrawText(NULL, text.c_str(), text.length(), &_textRect, textFormat, _textColor);
 	if (res <= 0)
 		Utils::PrintError(__FILE__, __LINE__, L"DrawText() failed.");
 }
 
 void Button::OnHover()
 {
-	boxColor = hoverBoxColor;
-	borderColor = hoverBorderColor;
+	_boxColor = hoverBoxColor;
+	_borderColor = hoverBorderColor;
 }
 
 void Button::OnClick()
 {
-	boxColor = clickBoxColor;
-	borderColor = clickBorderColor;
+	_boxColor = clickBoxColor;
+	_borderColor = clickBorderColor;
 
 	if (onClick != nullptr && Input::GetKeyUp(KeyCode::Mouse0))
 	{
@@ -139,9 +139,9 @@ void Button::OnClick()
 
 bool Button::isAbove()
 {
-	if (mousePos.x <= rectBottomRight.x && mousePos.x >= rectTopLeft.x)
+	if (mousePos.x <= _rectBottomRight.x && mousePos.x >= _rectTopLeft.x)
 	{
-		if (mousePos.y <= rectBottomRight.y && mousePos.y >= rectTopLeft.y)
+		if (mousePos.y <= _rectBottomRight.y && mousePos.y >= _rectTopLeft.y)
 		{
 			return true;
 		}
@@ -164,16 +164,16 @@ bool Button::UpdateMousePos()
 
 void Button::ColorDisabled()
 {
-	boxColor = disabledBoxColor;
-	borderColor = disabledBorderColor;
-	textColor = disabledTextColor;
+	_boxColor = disabledBoxColor;
+	_borderColor = disabledBorderColor;
+	_textColor = disabledTextColor;
 }
 
 void Button::ColorNormal()
 {
-	textColor = normalTextColor;
-	boxColor = normalBoxColor;
-	borderColor = normalBorderColor;
+	_textColor = normalTextColor;
+	_boxColor = normalBoxColor;
+	_borderColor = normalBorderColor;
 }
 
 

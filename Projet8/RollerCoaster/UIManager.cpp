@@ -44,22 +44,22 @@ void UIManager::ShowFPS()
 {
 	auto currFps = static_cast<int>(Time::currentFps());
 
-	if (averageFPS.size() >= 50)
+	if (_averageFPS.size() >= 50)
 	{
-		averageFPS.pop_front();
-		averageFPS.push_back(currFps);
+		_averageFPS.pop_front();
+		_averageFPS.push_back(currFps);
 	}
 	else
-		averageFPS.push_back(currFps);
+		_averageFPS.push_back(currFps);
 
 	int fps = 0;
 
-	for (auto e : averageFPS)
+	for (auto e : _averageFPS)
 	{
 		fps += e;
 	}
 
-	_fpsCounter->text = L"FPS: " + to_wstring(fps / averageFPS.size());
+	_fpsCounter->text = L"FPS: " + to_wstring(fps / _averageFPS.size());
 }
 
 void UIManager::ShowTimer()

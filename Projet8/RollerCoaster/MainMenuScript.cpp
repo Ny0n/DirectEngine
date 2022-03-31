@@ -159,7 +159,9 @@ void MainMenuScript::Start()
 	_creditsGO->SetEnabled(false);
 
 	_easterEggGO->SetEnabled(true);
+	_easterEggGO->GetComponent<Image>()->SetEnabled(true);
 	_easterEggGO->SetEnabled(false);
+	_easterEggGO->GetComponent<Image>()->SetEnabled(false);
 
 	_easterEggGO->GetComponent<Button>()->onClick = RUNNER(ToggleEasterEgg);
 

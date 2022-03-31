@@ -7,9 +7,9 @@ Textbox::Textbox()
 
 Textbox::~Textbox()
 {
-	font->Release();
-	ppSprite->Release();
-	line->Release();
+	_pFont->Release();
+	_sprite->Release();
+	_pLine->Release();
 }
 
 void Textbox::EngineStart()
@@ -25,7 +25,7 @@ void Textbox::EngineStart()
 		ANTIALIASED_QUALITY,
 		FF_DONTCARE,
 		textFont,
-		&font))
+		&_pFont))
 
 
 	D3DXIMAGE_INFO info;
@@ -49,13 +49,13 @@ void Textbox::EngineStart()
 		0xFF000000,
 		&info,
 		NULL,
-		&texture))
+		&_texture))
 
-	HR(D3DXCreateSprite(d3ddev, &ppSprite))
+	HR(D3DXCreateSprite(d3ddev, &_sprite))
 
-	HR(D3DXCreateLine(d3ddev, &line))
-	HR(line->SetWidth(borderThickness))
-	HR(line->SetAntialias(true))
+	HR(D3DXCreateLine(d3ddev, &_pLine))
+	HR(_pLine->SetWidth(borderThickness))
+	HR(_pLine->SetAntialias(true))
 }
 
 void Textbox::EngineUpdate()
@@ -65,44 +65,44 @@ void Textbox::EngineUpdate()
 
 void Textbox::Render()
 {
-	rectTopLeft = position;
-	rectBottomRight = position + size;
+	_rectTopLeft = position;
+	_rectBottomRight = position + size;
 
-	const auto res = SetRect(&textRect, rectTopLeft.x, rectTopLeft.y, rectBottomRight.x, rectBottomRight.y);
+	const auto res = SetRect(&_textRect, _rectTopLeft.x, _rectTopLeft.y, _rectBottomRight.x, _rectBottomRight.y);
 	if (res <= 0)
 		Utils::PrintError(__FILE__, __LINE__, L"SetRect() failed.");
 
 	if (drawBox)
 	{
-		HR(ppSprite->Begin(D3DXSPRITE_ALPHABLEND))
+		HR(_sprite->Begin(D3DXSPRITE_ALPHABLEND))
 
-		const auto spritePostion = D3DXVECTOR3(rectTopLeft.x, rectTopLeft.y, 0);
-		HR(ppSprite->Draw(texture, NULL, NULL, &spritePostion, boxColor))
+		const auto spritePostion = D3DXVECTOR3(_rectTopLeft.x, _rectTopLeft.y, 0);
+		HR(_sprite->Draw(_texture, NULL, NULL, &spritePostion, boxColor))
 
-		HR(ppSprite->End())
+		HR(_sprite->End())
 	}
 
 	if (drawBorder)
 	{
-		HR(line->Begin())
+		HR(_pLine->Begin())
 
 		D3DXVECTOR2 linesList[] = {
-			D3DXVECTOR2(rectTopLeft.x - borderThickness * 0.5f,rectTopLeft.y),
-			D3DXVECTOR2(rectBottomRight.x + borderThickness * 0.5f,rectTopLeft.y),
-			D3DXVECTOR2(rectBottomRight.x,rectTopLeft.y),
-			D3DXVECTOR2(rectBottomRight.x,rectBottomRight.y),
-			D3DXVECTOR2(rectBottomRight.x + borderThickness * 0.5f,rectBottomRight.y),
-			D3DXVECTOR2(rectTopLeft.x - borderThickness * 0.5f,rectBottomRight.y),
-			D3DXVECTOR2(rectTopLeft.x,rectBottomRight.y),
-			D3DXVECTOR2(rectTopLeft.x,rectTopLeft.y),
+			D3DXVECTOR2(_rectTopLeft.x - borderThickness * 0.5f,_rectTopLeft.y),
+			D3DXVECTOR2(_rectBottomRight.x + borderThickness * 0.5f,_rectTopLeft.y),
+			D3DXVECTOR2(_rectBottomRight.x,_rectTopLeft.y),
+			D3DXVECTOR2(_rectBottomRight.x,_rectBottomRight.y),
+			D3DXVECTOR2(_rectBottomRight.x + borderThickness * 0.5f,_rectBottomRight.y),
+			D3DXVECTOR2(_rectTopLeft.x - borderThickness * 0.5f,_rectBottomRight.y),
+			D3DXVECTOR2(_rectTopLeft.x,_rectBottomRight.y),
+			D3DXVECTOR2(_rectTopLeft.x,_rectTopLeft.y),
 		};
 
-		HR(line->Draw(linesList, 8, borderColor))
+		HR(_pLine->Draw(linesList, 8, borderColor))
 
-		HR(line->End())
+		HR(_pLine->End())
 	}
 	
-	const int result = font->DrawText(NULL, text.c_str(), text.length(), &textRect, textFormat, textColor);
+	const int result = _pFont->DrawText(NULL, text.c_str(), text.length(), &_textRect, textFormat, textColor);
 	if (result <= 0)
 		Utils::PrintError(__FILE__, __LINE__, L"DrawText() failed.");
 }
