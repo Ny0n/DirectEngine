@@ -30,14 +30,14 @@ private:
 	static float GetFrameRate(float fps);
 	static float GetMaxStep(float maxStep);
 
-	static float targetFPS;
-	static float targetFrameRate;
-	static float fixedTimestep;
-	static float maximumTimestep;
-	static bool quit;
-	static bool playing;
+	static float _targetFPS;
+	static float _targetFrameRate;
+	static float _fixedTimestep;
+	static float _maximumTimestep;
+	static bool _quit;
+	static bool _playing;
 
 	friend class Scene;
-	static bool generatingScene;
+	static bool _generatingScene;
 
 };

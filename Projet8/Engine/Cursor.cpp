@@ -1,16 +1,16 @@
 #include "pch.h"
 
-LockMode Cursor::cursorLockMode = LockMode::None;
+LockMode Cursor::_cursorLockMode = LockMode::None;
 
 void Cursor::Lock()
 {
 	SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-	cursorLockMode = LockMode::Locked;
+	_cursorLockMode = LockMode::Locked;
 }
 
 void Cursor::Unlock()
 {
-	cursorLockMode = LockMode::None;
+	_cursorLockMode = LockMode::None;
 }
 
 void Cursor::SetVisible(bool visibility)
@@ -23,7 +23,7 @@ void Cursor::SetVisible(bool visibility)
 
 void Cursor::CursorUpdate()
 {
-	switch (cursorLockMode)
+	switch (_cursorLockMode)
 	{
 		case LockMode::Locked:
 			{

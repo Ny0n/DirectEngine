@@ -2,9 +2,9 @@
 
 Scene::Scene(IScene* scene) : name(scene->GetName())
 {
-	Application::generatingScene = true;
+	Application::_generatingScene = true;
 	gameObjects = scene->GetContent();
-	Application::generatingScene = false;
+	Application::_generatingScene = false;
 }
 
 Scene::~Scene()

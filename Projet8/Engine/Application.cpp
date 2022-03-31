@@ -7,61 +7,61 @@ float Application::GetFrameRate(float fps)
 
 float Application::GetMaxStep(float maxStep)
 {
-	return maxStep <= fixedTimestep ? fixedTimestep : maxStep;
+	return maxStep <= _fixedTimestep ? _fixedTimestep : maxStep;
 }
 
-float Application::targetFPS = APPLICATION_DEFAULT_FPS;
-float Application::targetFrameRate = GetFrameRate(targetFPS);
-float Application::fixedTimestep = APPLICATION_DEFAULT_FIXED_TIMESTEP;
-float Application::maximumTimestep = GetMaxStep(APPLICATION_DEFAULT_MAXIMUM_TIMESTEP);
-bool Application::quit = false;
-bool Application::playing = false;
-bool Application::generatingScene = false;
+float Application::_targetFPS = APPLICATION_DEFAULT_FPS;
+float Application::_targetFrameRate = GetFrameRate(_targetFPS);
+float Application::_fixedTimestep = APPLICATION_DEFAULT_FIXED_TIMESTEP;
+float Application::_maximumTimestep = GetMaxStep(APPLICATION_DEFAULT_MAXIMUM_TIMESTEP);
+bool Application::_quit = false;
+bool Application::_playing = false;
+bool Application::_generatingScene = false;
 
 // **************************** //
 
 float Application::GetTargetFPS()
 {
-	return targetFPS;
+	return _targetFPS;
 }
 
 void Application::SetTargetFPS(float fps)
 {
-	targetFPS = fps;
-	targetFrameRate = GetFrameRate(fps);
+	_targetFPS = fps;
+	_targetFrameRate = GetFrameRate(fps);
 }
 
 float Application::GetFixedTimestep()
 {
-	return fixedTimestep;
+	return _fixedTimestep;
 }
 
 void Application::SetFixedTimestep(float timestep)
 {
-	fixedTimestep = timestep;
+	_fixedTimestep = timestep;
 }
 
 float Application::GetMaximumTimestep()
 {
-	return maximumTimestep;
+	return _maximumTimestep;
 }
 
 void Application::SetMaximumTimestep(float maxTimestep)
 {
-	maximumTimestep = GetMaxStep(maxTimestep);
+	_maximumTimestep = GetMaxStep(maxTimestep);
 }
 
 void Application::Quit()
 {
-	quit = true;
+	_quit = true;
 }
 
 bool Application::IsPlaying()
 {
-	return playing;
+	return _playing;
 }
 
 bool Application::IsGeneratingScene()
 {
-	return generatingScene;
+	return _generatingScene;
 }

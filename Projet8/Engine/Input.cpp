@@ -1,23 +1,23 @@
 #include "pch.h"
 
-map<KeyCode, Input::InputState*> Input::frameInputs = {};
+map<KeyCode, Input::InputState*> Input::_frameInputs = {};
 
 // **************************** //
 USHORT Input::lastKeyDown = -1;
 
 bool Input::GetKey(KeyCode key)
 {
-	return frameInputs[key]->key;
+	return _frameInputs[key]->key;
 }
 
 bool Input::GetKeyDown(KeyCode key)
 {
-	return frameInputs[key]->keyDown;
+	return _frameInputs[key]->keyDown;
 }
 
 bool Input::GetKeyUp(KeyCode key)
 {
-	return frameInputs[key]->keyUp;
+	return _frameInputs[key]->keyUp;
 }
 
 USHORT Input::GetLastKeyDown()
@@ -36,11 +36,11 @@ void Input::UpdateInputs()
 {
 	for (auto code : OptimizedKeyCodes::table)
 	{
-		InputState* state = frameInputs[code.first];
+		InputState* state = _frameInputs[code.first];
 		if (state == nullptr)
 		{
-			frameInputs[code.first] = new InputState();
-			state = frameInputs[code.first];
+			_frameInputs[code.first] = new InputState();
+			state = _frameInputs[code.first];
 		}
 
 		bool isDown = false;
@@ -58,6 +58,6 @@ void Input::UpdateInputs()
 
 void Input::Clean()
 {
-	Utils::DeleteMapSecond(frameInputs);
-	frameInputs.clear();
+	Utils::DeleteMapSecond(_frameInputs);
+	_frameInputs.clear();
 }

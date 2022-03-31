@@ -20,6 +20,6 @@ public:
 	static void CursorUpdate();
 
 private:
-	static LockMode cursorLockMode;
+	static LockMode _cursorLockMode;
 
 };

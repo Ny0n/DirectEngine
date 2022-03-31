@@ -97,7 +97,7 @@ void Engine::Run(HWND window)
 		return;
 	}
 
-    Application::playing = true;
+    Application::_playing = true;
 
     // *** Part 1: Initialization *** //
 
@@ -109,7 +109,7 @@ void Engine::Run(HWND window)
 
     // *** Part 2: Game Loop *** //
 
-    while (!Application::quit)
+    while (!Application::_quit)
     {
         // _profiler->loopCount++;
 
@@ -160,7 +160,7 @@ void Engine::CheckForNewFrame()
     }
 
     frameElapsed = Time::runTime() - _profiler->lastFrameTime;
-    if (frameElapsed >= Application::targetFrameRate) // new frame
+    if (frameElapsed >= Application::_targetFrameRate) // new frame
         NewFrame();
 }
 
@@ -235,7 +235,7 @@ void Engine::CheckForNewFixedUpdate()
 
     static float fixedElapsed;
 
-    const float timestep = Application::fixedTimestep; // => elapsed (constant)
+    const float timestep = Application::_fixedTimestep; // => elapsed (constant)
     Time::_fixedDeltaTime = timestep / abs(Time::timeScale);
     Time::_fixedUnscaledDeltaTime = timestep;
 
@@ -250,7 +250,7 @@ void Engine::CheckForNewFixedUpdate()
     {
         static float maxTimestepRemainder = 0.0f;
 
-        float maxTimestep = Application::maximumTimestep + maxTimestepRemainder;
+        float maxTimestep = Application::_maximumTimestep + maxTimestepRemainder;
         maxTimestepRemainder = 0.0f;
 
         while (fixedElapsed >= Time::fixedDeltaTime && maxTimestep >= Time::fixedDeltaTime) // new fixed update

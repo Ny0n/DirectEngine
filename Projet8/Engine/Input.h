@@ -13,16 +13,12 @@ public:
 	static void ResetLastKeyDown();
 
 	static USHORT lastKeyDown;
-	// GetAxis()
-	// GetAxisRaw()
-	// GetMouseButton()
-	// anyKey
-	// anyKeyDown
-	// anyKeyUp
-	// mousePosition
 private:
 	friend class Engine;
 	friend class Execution;
+
+	static void UpdateInputs();
+	static void Clean();
 
 	struct InputState
 	{
@@ -31,9 +27,5 @@ private:
 		bool keyUp = false;
 	};
 
-	static map<KeyCode, InputState*> frameInputs;
-
-	static void UpdateInputs();
-
-	static void Clean();
+	static map<KeyCode, InputState*> _frameInputs;
 };
