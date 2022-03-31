@@ -44,7 +44,7 @@ void Engine::InitD3D()
     d3d->CreateDevice(D3DADAPTER_DEFAULT,
         D3DDEVTYPE_HAL,
         _window,
-        D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+        D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_PUREDEVICE,
         &d3dpp,
         &d3ddev);
     
