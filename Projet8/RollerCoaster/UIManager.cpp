@@ -4,13 +4,9 @@
 #include "GameManager.h"
 #include "Options.h"
 
-UIManager::UIManager(GameObject* pauseGO, GameObject* crossGO, FPCam* cam, Textbox* fpsCounter, Textbox* timerText, Textbox* scoreText, Button* btnList[4], GameObject* endgameGO, Textbox* endgameTitle, Textbox* endgameDesc, Textbox* endgameScore)
+UIManager::UIManager(GameObject* pauseGO, GameObject* crossGO, FPCam* cam, Textbox* fpsCounter, Textbox* timerText, Textbox* scoreText, GameObject* endgameGO, Textbox* endgameTitle, Textbox* endgameDesc, Textbox* endgameScore)
 	: _pauseGO(pauseGO), _crossGO(crossGO), _cam(cam), _fpsCounter(fpsCounter), _timerText(timerText), _scoreText(scoreText), _endgameGO(endgameGO), _endgameTitle(endgameTitle), _endgameDesc(endgameDesc), _endgameScore(endgameScore)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		_listBtn[i] = btnList[i];
-	}
 }
 
 UIManager::~UIManager()
@@ -28,6 +24,7 @@ void UIManager::Pause()
 
 void UIManager::Resume()
 {
+
 	Cursor::SetVisible(false);
 
 	_pauseGO->SetEnabled(false);
@@ -137,10 +134,7 @@ void UIManager::Drew()
 
 // Start is called before the first frame update
 void UIManager::Start()
-{
-	_listBtn[0]->onClick = RUNNER(Resume);
-	_listBtn[1]->onClick = RUNNER(Restart);
-	
+{	
 	//An object whose never been enabled isnt destroyed
 	_endgameGO->SetEnabled(true);
 	_endgameGO->SetEnabled(false);

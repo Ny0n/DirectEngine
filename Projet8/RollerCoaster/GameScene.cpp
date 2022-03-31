@@ -225,7 +225,7 @@ void GameScene::GenerateContent()
 #pragma region UIManager
 	auto UIManagerGO = CreateEmpty();
 
-	const auto managerScript = new UIManager(pauseCanvas, crossGO, fpCam, fpsText, timerText, scoreText, listBtn, endgameGO, endgameTitle, endgameDesc, endgameScore);
+	const auto managerScript = new UIManager(pauseCanvas, crossGO, fpCam, fpsText, timerText, scoreText, endgameGO, endgameTitle, endgameDesc, endgameScore);
 	UIManagerGO->AddComponent(managerScript);
 
 	AddToScene(UIManagerGO);
@@ -234,7 +234,7 @@ void GameScene::GenerateContent()
 #pragma region GameManager
 	auto gameManagerGO = CreateEmpty();
 
-	const auto gameManagerScript = new GameManager(listBtn, endBtn);
+	const auto gameManagerScript = new GameManager(listBtn, endBtn, managerScript);
 	gameManagerGO->AddComponent(gameManagerScript);
 
 	AddToScene(gameManagerGO);

@@ -10,7 +10,7 @@ bool GameManager::_won = false;
 bool GameManager::_lost = false;
 bool GameManager::_drew = false;
 
-GameManager::GameManager(Button* listBtn[4], Button* endBtn) : _endBtn(endBtn)
+GameManager::GameManager(Button* listBtn[4], Button* endBtn, UIManager* uiManager) : _endBtn(endBtn), _uiManager(uiManager)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -85,6 +85,8 @@ void GameManager::Menu()
 
 void GameManager::Resume()
 {
+	_uiManager->Resume();
+
 	_isPaused = false;
 
 	Cursor::Lock();

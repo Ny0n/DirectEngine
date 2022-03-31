@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "EngineLib.h"
+#include "UIManager.h"
 
 class GameManager : public MonoBehaviour
 {
@@ -10,7 +11,7 @@ class GameManager : public MonoBehaviour
 	void Update() override;
 
 public:
-	GameManager(Button* listBtn[4], Button* endBtn);
+	GameManager(Button* listBtn[4], Button* endBtn, UIManager* uiManager);
 	~GameManager() override;
 	static float GetTimer();
 	static int GetScore();
@@ -40,4 +41,5 @@ private:
 
 	Button* _listBtn[4];
 	Button* _endBtn;
+	UIManager* _uiManager;
 };
