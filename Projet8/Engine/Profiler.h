@@ -40,8 +40,6 @@ class Profiler final {
 
     // *** Timing Data *** //
 
-    // void AddFPS(float fpsIn);
-
     int loopCount{};
     
     float lastFrameTime{-1};
