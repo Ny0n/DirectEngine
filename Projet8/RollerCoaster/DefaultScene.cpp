@@ -12,7 +12,7 @@
 #include "RailMaker.h"
 #include "RainbowBackground.h"
 #include "Rotate.h"
-#include "Score.h"
+#include "GameManager.h"
 #include "Shoot.h"
 #include "UIManager.h"
 
@@ -79,17 +79,21 @@ void DefaultScene::GenerateContent()
 #pragma endregion fpsCounter
 
 #pragma region Score
+	int Ypadding = 75;
+
+	//FPS Counter is not included in HUD
+	int hudTextSize = 50;
+	auto hudColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+
 	auto scoreGO = CreateEmpty();
 
 	auto scoreText = scoreGO->AddComponent<Textbox>();
-	scoreText->textColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+	scoreText->textColor = hudColor;
 	scoreText->text = L"Score: 0";
 	scoreText->size = D3DXVECTOR2(300, 50);
-	scoreText->fontHeight = 50;
-	scoreText->position = D3DXVECTOR2(SCREEN_WIDTH * .5f - scoreText->size.x * .5f, 75);
-
-	scoreGO->AddComponent<Score>(scoreText);
-
+	scoreText->fontHeight = hudTextSize;
+	scoreText->position = D3DXVECTOR2(SCREEN_WIDTH * .5f - scoreText->size.x * .5f, Ypadding);
+	
 	AddToScene(scoreGO);
 #pragma endregion Score
 
@@ -150,14 +154,35 @@ void DefaultScene::GenerateContent()
 	AddToScene(pauseCanvas);
 #pragma endregion pause
 
-	// UI Manager
+#pragma region Timer
+	auto timerGO = CreateEmpty();
+
+	auto timerText = timerGO->AddComponent<Textbox>();
+	timerText->text = L"000.00";
+	timerText->fontHeight = hudTextSize;
+	timerText->textColor = hudColor;
+	timerText->position.x = SCREEN_WIDTH * .5f - timerText->size.x * .5f;
+	timerText->position.y = SCREEN_HEIGHT - timerText->size.y - Ypadding;
+
+	AddToScene(timerGO);
+#pragma endregion Timer
+
+#pragma region UIManager
 	auto UIManagerGO = CreateEmpty();
 
-	const auto managerScript = new UIManager(pauseCanvas, crossGO, fpCam, listBtn, fpsText);
+	const auto managerScript = new UIManager(pauseCanvas, crossGO, fpCam, fpsText, timerText, scoreText, listBtn);
 	UIManagerGO->AddComponent(managerScript);
 
 	AddToScene(UIManagerGO);
+#pragma endregion UIManager
 
-	
+#pragma region GameManager
+	auto gameManagerGO = CreateEmpty();
+
+	const auto gameManagerScript = new GameManager(listBtn);
+	gameManagerGO->AddComponent(gameManagerScript);
+
+	AddToScene(gameManagerGO);
+#pragma endregion GameManager
 
 }

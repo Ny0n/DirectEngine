@@ -63,10 +63,11 @@ void MenuScene::GenerateContent()
 #pragma region Options Canvas
 	auto optionsCanvas = CreateEmpty();
 
-	InputField* inputOptionsList[3] = {nullptr};
-	CheckBox* checkboxOptionsList[5] = {nullptr};
+	InputField* inputOptionsList[4] = {nullptr};
+	CheckBox* checkboxOptionsList[6] = {nullptr};
 
 	int padding = 30;
+	int columnPadding = 190;
 
 	auto optionsPanel = optionsCanvas->AddComponent<Image>();
 	optionsPanel->filePath = L"Image\\blanc.png";
@@ -135,12 +136,13 @@ void MenuScene::GenerateContent()
 	timerCategory->size.x = 320;
 	timerCategory->textFormat = DT_LEFT | DT_VCENTER;
 	timerCategory->textColor = D3DCOLOR_ARGB(120, 255, 255, 255);
-	timerCategory->position.x = playerCategory->position.x + playerCategory->size.x + 350;
+	timerCategory->position.x = playerCategory->position.x + playerCategory->size.x + columnPadding;
 	timerCategory->position.y = optionsPanelPosition.y + padding + 170;
 
 	auto showTimer = optionsCanvas->AddComponent<CheckBox>();
-	showTimer->text = L"Show Timer";
+	showTimer->text = L"Play with Timer";
 	showTimer->fontHeight = 25;
+	showTimer->textBoxWidth += 10;
 	showTimer->position.x = timerCategory->position.x + padding * 2;
 	showTimer->position.y = timerCategory->position.y + padding * 3;
 	checkboxOptionsList[0] = showTimer;
@@ -208,6 +210,38 @@ void MenuScene::GenerateContent()
 	pulsingCrosshair->position.x = crosshairCategory->position.x + padding * 2;
 	pulsingCrosshair->position.y = rotatingCrosshair->position.y + 50;
 	checkboxOptionsList[4] = pulsingCrosshair;
+
+	auto scoreCategory = optionsCanvas->AddComponent<Textbox>();
+	scoreCategory->text = L"Score Options";
+	scoreCategory->fontHeight = 42;
+	scoreCategory->size.x = 320;
+	scoreCategory->textFormat = DT_LEFT | DT_VCENTER;
+	scoreCategory->textColor = D3DCOLOR_ARGB(120, 255, 255, 255);
+	scoreCategory->position.x = timerCategory->position.x + timerCategory->size.x + columnPadding;
+	scoreCategory->position.y = optionsPanelPosition.y + padding + 170;
+
+	auto showScore = optionsCanvas->AddComponent<CheckBox>();
+	showScore->text = L"Play for Score";
+	showScore->fontHeight = 25;
+	showScore->position.x = scoreCategory->position.x + padding * 2;
+	showScore->position.y = scoreCategory->position.y + padding * 3;
+	checkboxOptionsList[5] = showScore;
+
+	auto scoreMinValue = optionsCanvas->AddComponent<Textbox>();
+	scoreMinValue->text = L"Value: ";
+	scoreMinValue->position.x = scoreCategory->position.x + padding * 2;
+	scoreMinValue->position.y = showScore->position.y + 70;
+	scoreMinValue->textFormat = DT_LEFT | DT_VCENTER;
+	scoreMinValue->size.x = 80;
+	scoreMinValue->textColor = D3DCOLOR_ARGB(120, 255, 255, 255);
+
+	auto scoreInputField = optionsCanvas->AddComponent<InputField>();
+	scoreInputField->position.x = scoreMinValue->position.x + scoreMinValue->size.x;
+	scoreInputField->position.y = scoreMinValue->position.y + 5;
+	scoreInputField->size.x = 200;
+	scoreInputField->size.y = 40;
+	scoreInputField->textMaxCaracters = 4;
+	inputOptionsList[3] = scoreInputField;
 
 	AddToScene(optionsCanvas);
 #pragma endregion Options Canvas
@@ -279,7 +313,7 @@ void MenuScene::GenerateContent()
 #pragma endregion Credits Canvas
 
 	auto MenuManager = CreateEmpty();
-	const auto script = new MainMenuScript(menuCanvas, optionsCanvas, creditsCanvas, menuBtnList, inputOptionsList, checkboxOptionsList);
+	const auto script = new MainMenuScript(menuCanvas, optionsCanvas, creditsCanvas, menuBtnList, inputOptionsList, checkboxOptionsList, timerValue, scoreMinValue);
 	MenuManager->AddComponent(script);
 	AddToScene(MenuManager);
 

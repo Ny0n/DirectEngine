@@ -110,7 +110,7 @@
     <ClInclude Include="UIManager.h">
       <Filter>Game\Scripts\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Score.h">
+    <ClInclude Include="GameManager.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
     <ClInclude Include="SceneSingleton.h">
@@ -202,7 +202,7 @@
     <ClCompile Include="UIManager.cpp">
       <Filter>Game\Scripts\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Score.cpp">
+    <ClCompile Include="GameManager.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
     <ClCompile Include="SceneSingleton.cpp">

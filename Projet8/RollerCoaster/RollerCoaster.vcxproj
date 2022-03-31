@@ -172,7 +172,7 @@
     <ClInclude Include="RealFPCam.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Rotate.h" />
-    <ClInclude Include="Score.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="Shoot.h" />
     <ClInclude Include="SceneSingleton.h" />
     <ClInclude Include="SingletonTest.h" />
@@ -205,7 +205,7 @@
     <ClCompile Include="RainbowBackground.cpp" />
     <ClCompile Include="RealFPCam.cpp" />
     <ClCompile Include="Rotate.cpp" />
-    <ClCompile Include="Score.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Shoot.cpp" />
     <ClCompile Include="SceneSingleton.cpp" />
     <ClCompile Include="SingletonTest.cpp" />
