@@ -41,6 +41,12 @@ public:
 	static float Distance(D3DXVECTOR3 a, D3DXVECTOR3 b) ;
 
 	static D3DXQUATERNION SLERP(const D3DXQUATERNION* a, const D3DXQUATERNION* b, const float t);
+
+
+	static float GetRandomFloat(float lowBound, float highBound);
+	static void GetRandomVector(D3DXVECTOR3* out, D3DXVECTOR3* min, D3DXVECTOR3* max);
+	
+	static DWORD FToDword(float f) { return *((DWORD*)&f); }
 };
 
 #include "Utils.tpp"

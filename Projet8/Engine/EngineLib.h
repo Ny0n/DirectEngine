@@ -33,6 +33,7 @@
 #include "Collider.h"
 #include "AlignedBox.h"
 #include "AudioSource.h"
+#include "ParticleSystem.h"
 #include "PointLight.h"
 
 // UI Components

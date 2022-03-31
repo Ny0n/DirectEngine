@@ -68,6 +68,7 @@ void FPCam::LateUpdate()
 
     _pCart->transform->SetPosition(tmpPos);
     _pCart->transform->SetQuaternion(tmpQuat);
+    _pParticle->transform->SetPosition(tmpPos);
 
     _pCart->transform->RotateYaw(180); // temp before changing the .x file
 
