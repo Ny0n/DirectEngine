@@ -59,20 +59,11 @@
     <ClInclude Include="Rotate.h">
       <Filter>Game\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="InputTester.h">
-      <Filter>Game\Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="MenuScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="DontDestroyOnLoad.h">
       <Filter>Game\Scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="FlavienDevScene.h">
-      <Filter>Game\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="LionelScene.h">
-      <Filter>Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="RailMaker.h">
       <Filter>Game\Scripts\Rail</Filter>
@@ -151,20 +142,11 @@
     <ClCompile Include="Rotate.cpp">
       <Filter>Game\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="InputTester.cpp">
-      <Filter>Game\Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="MenuScene.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="DontDestroyOnLoad.cpp">
       <Filter>Game\Scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="FlavienDevScene.cpp">
-      <Filter>Game\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="LionelScene.cpp">
-      <Filter>Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="RailMaker.cpp">
       <Filter>Game\Scripts\Rail</Filter>

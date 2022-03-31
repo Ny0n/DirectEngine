@@ -5,7 +5,6 @@
 #include "DontDestroyOnLoad.h"
 #include "GoUp.h"
 #include "FPCam.h"
-#include "InputTester.h"
 #include "Move.h"
 #include "MoveAlongRails.h"
 #include "PauseScript.h"
@@ -23,22 +22,22 @@ string DefaultScene::GetName()
 
 void DefaultScene::GenerateContent()
 {
-	// tests
-	GameObject* mainCamera = CreateEmpty();
-	mainCamera->AddComponent<Camera>();
-	auto fpCam = mainCamera->AddComponent<FPCam>();
-	mainCamera->AddComponent<RailMaker>();
-	mainCamera->AddComponent<MoveAlongRails>();
-	mainCamera->AddComponent<Shoot>();
-	mainCamera->AddComponent<AlignedBox>();
-	auto light = mainCamera->AddComponent<PointLight>(D3DCOLOR_RGBA(255, 100, 0, 255), 100);
-	light->offset = DATASUPPLIER( mainCamera->transform->GetUp() * -5 );
-	AddToScene(mainCamera);
+#pragma region Player
+	// PlayerComponent
+	GameObject* playerGO = CreateEmpty();
 
-	// GameObject* inputTester = CreateEmpty();
-	// inputTester->AddComponent<InputTester>();
-	// AddToScene(inputTester);
+	playerGO->AddComponent<Camera>();
+	auto fpCam = playerGO->AddComponent<FPCam>();
+	playerGO->AddComponent<RailMaker>();
+	playerGO->AddComponent<MoveAlongRails>();
+	playerGO->AddComponent<Shoot>();
+	playerGO->AddComponent<AlignedBox>();
+	auto light = playerGO->AddComponent<PointLight>(D3DCOLOR_RGBA(255, 100, 0, 255), 100);
+	light->offset = DATASUPPLIER(playerGO->transform->GetUp() * -5);
 
+	AddToScene(playerGO);
+#pragma endregion Player
+	
 #pragma region cart
 	GameObject* cart = CreateEmpty();
 

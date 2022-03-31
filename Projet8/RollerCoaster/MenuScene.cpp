@@ -4,10 +4,8 @@
 #include "CheckBox.h"
 #include "DontDestroyOnLoad.h"
 #include "MainMenuScript.h"
-#include "InputTester.h"
 #include "SingletonTest.h"
-
-class InputField;
+#include "InputField.h"
 
 string MenuScene::GetName()
 {
@@ -330,17 +328,21 @@ void MenuScene::GenerateContent()
 	AddToScene(creditsCanvas);
 #pragma endregion Credits Canvas
 
+#pragma region MenuManager
 	auto MenuManager = CreateEmpty();
+
 	const auto script = new MainMenuScript(menuCanvas, optionsCanvas, creditsCanvas, menuBtnList, inputOptionsList, checkboxOptionsList, timerValue, scoreMinValue, easterEgg);
 	MenuManager->AddComponent(script);
-	AddToScene(MenuManager);
 
+	AddToScene(MenuManager);
+#pragma endregion MenuManager
+	
+#pragma region Audio
 	GameObject* audio = CreateEmpty();
+
 	audio->AddComponent<BackgroundMusic>();
 	audio->AddComponent<AudioSource>(L"Audio\\giveitup.wav", true, 0.6f);
-	AddToScene(audio);
 
-	// GameObject* stest = CreateEmpty();
-	// stest->AddComponent<SingletonTest>();
-	// AddToScene(stest);
+	AddToScene(audio);
+#pragma endregion Audio
 }
