@@ -11,7 +11,7 @@ Create an engine from scratch using DirectX 9 and then making a game from it.
 DirectX 9  
 C++
 
-#### Group
+#### Team
 Flavien MERITTO (me)  
 François CALVET  
 Lionel JANIN  
