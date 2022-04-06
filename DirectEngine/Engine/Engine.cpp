@@ -160,6 +160,20 @@ void Engine::CheckForNewFrame()
     frameElapsed = Time::runTime() - _profiler->_lastFrameTime;
     if (frameElapsed >= Application::_targetFrameRate) // new frame
         NewFrame();
+
+    // TDLATER: Code to optimize CPU usage
+    // if (frameElapsed < Application::_targetFrameRate)
+    // {
+    //     auto wait = Application::_targetFrameRate - frameElapsed;
+    //     UINT mwait = wait * 1000.0f; // to ms
+    //     UINT uwait = wait * 1000.0f * 1000.0f; // to us
+    //
+    //     timeBeginPeriod(1);
+    //     // Sleep(wait);
+    //     std::this_thread::sleep_for(std::chrono::milliseconds(mwait));
+    //     // std::this_thread::sleep_for(std::chrono::microseconds(uwait)); // MAYBE correct? recheck loop or exec time
+    //     timeEndPeriod(1);
+    // }
 }
 
 void Engine::NewFrame()

@@ -81,10 +81,13 @@ bool Object::IsAlive()
 	return !_markedForDestruction && _instantiatied && IsEnabled();
 }
 
-void Object::TryToDelete(Object* obj) // I'M NOT VERY PROUD OF THIS, but since i don't have the time to pententially pass everything to unique_ptr, this will do
+void Object::TryToDelete(Object* obj)
 {
 	try
 	{
+		// **************** <!> HEY YOU! <!> ****************
+		// This exception is handled:
+		// UNCHECK "Break when this exception type is thrown"
 		obj->ApplyDestruction();
 	}
 	catch (...)

@@ -1,23 +1,23 @@
-# Direct 8
-3D Rollercoaster shooter
+# DirectEngine - DirectX 9 Project
+3D Rollercoaster shooter made with a custom engine.
  
 ## Context
-This game has been made for educational purpose during the first year of the Msc Video Game programming in Gaming Campus with the supervision of Sylvain Seccia.  
+This game (and engine) have been made for educational purposes during the first year of the Msc Video Game programming in Gaming Campus with the supervision of Sylvain Seccia.  
 
 #### Objective
 Create an engine from scratch using DirectX 9 and then making a game from it.
 
 #### Technology used
-DirectX 9
+DirectX 9  
 C++
 
 #### Group
-Flavien MERITTO  
+Flavien MERITTO (me)  
 François CALVET  
 Lionel JANIN  
-Killian PEREZ (myself)
+Killian PEREZ
 
-#### Time to realize it
+#### Time to do it
 1 month
 
 ## Acquired skills

@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source\Engine">
+      <UniqueIdentifier>{0249155f-3c08-483d-bd9c-59a2a34f4f37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{fbd3c415-97c8-406c-9d57-3a3b042604f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib">
+      <UniqueIdentifier>{564fc13c-db87-4c0c-a4e6-8c2d3471cedd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Objects">
+      <UniqueIdentifier>{8c309721-f2ba-4ad3-beee-ff0905217aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Objects\Components">
+      <UniqueIdentifier>{0356116c-afe9-4788-beef-2b43df4194d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Objects\Components\Custom">
+      <UniqueIdentifier>{99281bfb-d79e-4004-9097-c43978088b4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\App Data">
+      <UniqueIdentifier>{b2c85d0f-737d-453c-a955-3ca5b12e49d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Objects\Components\UI">
+      <UniqueIdentifier>{08ac924a-d99f-4e7e-b6ea-4f27c55201ad}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Source\Objects\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Source\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineLib.h">
+      <Filter>Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Source\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Source\App Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Source\App Data</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyCodes.h">
+      <Filter>Source\App Data</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Source\App Data</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Source\App Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Profiler.h">
+      <Filter>Source\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Source\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineComponent.h">
+      <Filter>Source\Objects\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MonoBehaviour.h">
+      <Filter>Source\Objects\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AlignedBox.h">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="Execution.h">
+      <Filter>Source\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsEngine.h">
+      <Filter>Source\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Source\App Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Cursor.h">
+      <Filter>Source\App Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Textbox.h">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.tpp">
+      <Filter>Source\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.tpp">
+      <Filter>Source\App Data</Filter>
+    </ClInclude>
+    <ClInclude Include="IScene.h">
+      <Filter>Source\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Source\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Source\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSource.h">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="InputField.h">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckBox.h">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Source\Objects\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source\App Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source\App Data</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Source\App Data</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyCodes.cpp">
+      <Filter>Source\App Data</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source\App Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Profiler.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineComponent.cpp">
+      <Filter>Source\Objects\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MonoBehaviour.cpp">
+      <Filter>Source\Objects\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="AlignedBox.cpp">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="Execution.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsEngine.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source\App Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Cursor.cpp">
+      <Filter>Source\App Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Textbox.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="IScene.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSource.cpp">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="InputField.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckBox.cpp">
+      <Filter>Source\Objects\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>Source\Objects\Components\Custom</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
