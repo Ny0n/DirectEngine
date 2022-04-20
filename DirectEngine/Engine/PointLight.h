@@ -11,7 +11,7 @@ public:
 	PointLight(D3DXCOLOR color, float range = 50.0f, float attenuation = 0.1f);
 	~PointLight() override;
 
-	function<D3DXVECTOR3()> offset = DATASUPPLIER( D3DXVECTOR3(0.0f, 0.0f, 0.0f) );
+	Supplier(D3DXVECTOR3) offset = SUPPLIER(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 private:
 	static int _nbLights;

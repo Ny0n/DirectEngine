@@ -11,9 +11,9 @@ public:
 	static const int& frameCount;		// The current frame number
 	static const int& fixedUpdateCount; // The current fixed update number
 
-	static const function<float()> runTime;		// The time in seconds since the start of the game
-	static const function<float()> currentFps;	// The current FPS
-	static const function<float()> frameTime;	// The time that took the last frame
+	static const Supplier(float) runTime;		// The time in seconds since the start of the game
+	static const Supplier(float) currentFps;	// The current FPS
+	static const Supplier(float) frameTime;	// The time that took the last frame
 
 	static const float& time;				// The time in seconds at the beginning of the new frame
 	static const float& fixedTime;			// The time in seconds at the beginning of the new fixed update

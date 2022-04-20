@@ -53,15 +53,18 @@ void Engine::InitD3D()
 
     d3ddev->SetRenderState(D3DRS_ZENABLE, TRUE);    // turn on the z-buffer
 
+    d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);    // turn on the color blending
+    d3ddev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);    // set source factor
+    d3ddev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);    // set dest factor
+    d3ddev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);    // set the operation
+
     // Fog
     float Start = 60.0f, End = 100.0f; // Linear fog distances
     d3ddev->SetRenderState(D3DRS_FOGENABLE, TRUE); // Enable fog blending
     d3ddev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_XRGB(0, 0, 0)); // Set the fog color
     d3ddev->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_LINEAR);
     d3ddev->SetRenderState(D3DRS_FOGSTART, *(DWORD*)(&Start));
-        d3ddev->SetRenderState(D3DRS_FOGEND, *(DWORD*)(&End));
-
-    
+	d3ddev->SetRenderState(D3DRS_FOGEND, *(DWORD*)(&End));
 }
 
 void Engine::UninitD3D()
@@ -159,9 +162,12 @@ void Engine::CheckForNewFrame()
 
     frameElapsed = Time::runTime() - _profiler->_lastFrameTime;
     if (frameElapsed >= Application::_targetFrameRate) // new frame
-        NewFrame();
+    NewFrame();
+
+
 
     // TDLATER: Code to optimize CPU usage
+    // frameElapsed = Time::runTime() - _profiler->_lastFrameTime;
     // if (frameElapsed < Application::_targetFrameRate)
     // {
     //     auto wait = Application::_targetFrameRate - frameElapsed;
@@ -170,10 +176,11 @@ void Engine::CheckForNewFrame()
     //
     //     timeBeginPeriod(1);
     //     // Sleep(wait);
-    //     std::this_thread::sleep_for(std::chrono::milliseconds(mwait));
-    //     // std::this_thread::sleep_for(std::chrono::microseconds(uwait)); // MAYBE correct? recheck loop or exec time
+    //     this_thread::sleep_for(chrono::milliseconds(mwait));
+    //     // this_thread::sleep_for(chrono::microseconds(uwait)); // MAYBE correct? recheck loop or exec time
     //     timeEndPeriod(1);
     // }
+    // NewFrame();
 }
 
 void Engine::NewFrame()

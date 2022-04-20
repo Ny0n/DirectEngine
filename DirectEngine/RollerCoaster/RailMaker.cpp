@@ -102,6 +102,7 @@ void RailMaker::CreateLevelStep()
 
 		targetGo->AddComponent<MeshRenderer>(L"Mesh\\target.x");
 		targetGo->AddComponent<Collider>();
+		// targetGo->AddComponent<PointLight>(D3DCOLOR_RGBA(255, 255, 255, 255), 10);
 
 		const auto script = new Target(&_targets);
 		script->SetLookAt(transform);

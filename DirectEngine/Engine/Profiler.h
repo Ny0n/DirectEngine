@@ -31,12 +31,11 @@ class Profiler final {
     float GetSystemTime(); // Returns the current time since InitSystemTime() was last called
     float GetCurrentFPS();
     float GetFrameTime();
+    
+    nullptr_t TimedRunner(float& timeVar, const Runner& func);
 
     template<typename T>
-    void* TimedRunner(float& timeVar, const T& func);
-
-    template<typename T>
-    auto TimedSupplier(float& timeVar, const T& func);
+    T TimedSupplier(float& timeVar, const Supplier(T)& func);
 
     // *** Timing Data *** //
 
@@ -69,25 +68,23 @@ class Profiler final {
 
 // **************************** //
 
-template<typename T>
-void* Profiler::TimedRunner(float& timeVar, const T& func) {
+inline nullptr_t Profiler::TimedRunner(float& timeVar, const Runner& func) {
     // since returning void is causing problems, i'm transferring the func to an other one that returns void* through a lambda
     // (it's one way to do it)
-    auto voidFunc = [=]()
-    {
-        func();
-        return nullptr;
-    };
+    Supplier(nullptr_t) voidFunc = DELEGATE(
+	    func();
+		return nullptr;
+    );
 
     return TimedSupplier(timeVar, voidFunc);
 }
 
 template<typename T>
-auto Profiler::TimedSupplier(float& timeVar, const T& func) {
+T Profiler::TimedSupplier(float& timeVar, const Supplier(T)& func) {
 	const float start = GetSystemTime();
     // --------------------------------------
 
-    auto result = func(); // we run the given function
+    T result = func(); // we run the given function
 
     // --------------------------------------
 	const float end = GetSystemTime();

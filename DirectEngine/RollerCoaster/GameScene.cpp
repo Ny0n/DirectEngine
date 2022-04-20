@@ -27,7 +27,7 @@ void GameScene::GenerateContent()
 	playerGO->AddComponent<Shoot>();
 	playerGO->AddComponent<AlignedBox>();
 	auto light = playerGO->AddComponent<PointLight>(D3DCOLOR_RGBA(255, 100, 0, 255), 100);
-	light->offset = DATASUPPLIER(playerGO->transform->GetUp() * -5);
+	light->offset = SUPPLIER(playerGO->transform->GetUp() * -5);
 
 	AddToScene(playerGO);
 #pragma endregion Player

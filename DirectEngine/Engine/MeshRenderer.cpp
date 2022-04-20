@@ -47,6 +47,7 @@ void MeshRenderer::EngineStart()
 
         // Set the ambient color for the material (D3DX does not do this)
         _pMeshMaterials[i].Ambient = _pMeshMaterials[i].Diffuse;
+        // _pMeshMaterials[i].Specular = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
         _pMeshTextures[i] = NULL;
         if (d3dxMaterials[i].pTextureFilename != NULL &&

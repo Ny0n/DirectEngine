@@ -58,14 +58,23 @@
 
 using namespace std;
 
-// #DEFINE
+// #DEFINE DelegateToolBox
 
-#define RUNNER(func) [=] { func(); }
-#define SUPPLIER(func) [=] { return func(); }
-#define DATASUPPLIER(data) [=] { return data; }
-#define CONSUMER(param, func) [=](param) func
-#define CONSUMERN(func, param) [=](param) { func(param); }
-// #define FUNCTION(Param, func) [=]((Param)* param) { return func(param); }
+#define DELEGATE(exp) [=] { exp } // TODO pas =, mais du coup refaire dans gamescene le SUPPLIER, en fait faudrait faire une func ou jsais pas, parceque la ref est pas la meme
+
+#define Runner std::function<void()>
+#define RUNNER(func) DELEGATE(func();)
+#define Consumer(T) std::function<void(T)>
+#define Mixer(T) std::function<void((T)...)>
+
+#define Supplier(TResult) std::function<TResult()>
+#define SUPPLIER(data) DELEGATE(return data;)
+#define Producer(T, TResult) std::function<TResult(T)>
+#define Merger(T, TResult) std::function<TResult((T)...)>
+
+#define Predicate(T) std::function<bool(T)>
+
+// #DEFINE
 
 // gives the pure name of a class
 #define CLASSNAMEOF(T) string(typeid(T).name()).substr(6)
